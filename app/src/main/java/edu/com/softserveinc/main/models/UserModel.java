@@ -1,4 +1,4 @@
-package edu.com.softserveinc.user;
+package edu.com.softserveinc.main.models;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

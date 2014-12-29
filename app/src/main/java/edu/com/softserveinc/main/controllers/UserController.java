@@ -1,4 +1,4 @@
-package edu.com.softserveinc.user;
+package edu.com.softserveinc.main.controllers;
 import java.util.HashMap;
 import java.util.Map;
  
@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.com.softserveinc.user.UserModel;
+import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
 public class UserController{

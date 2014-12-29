@@ -1,5 +1,5 @@
-package edu.com.softserveinc.admin;
- import edu.com.softserveinc.user.UserModel;
+package edu.com.softserveinc.main.models;
+ import edu.com.softserveinc.main.models.UserModel;
 
 /**
  * 
