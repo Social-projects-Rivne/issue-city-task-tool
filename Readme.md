@@ -1,4 +1,4 @@
-                      Bawl Web application
+Bawl Web application
 
  What is it?
  -----------
