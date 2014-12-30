@@ -1,5 +1,5 @@
 window.onload = function(){
-	button = document.getElementById('add-user');
+	button = document.getElementById('add');
 	div = document.getElementById('popup');
 	bg = document.getElementById('background');
 	login = document.getElementsByName('login');
@@ -12,8 +12,9 @@ window.onload = function(){
 	sh = document.getElementById('submit-help');
 	aus = document.getElementById('add-user-submit');
 	
-	button.addEventListener('click', function(){
-		div.style.display = "block";
+	button.addEventListener('click', function(e){
+		e.preventDefault();
+		div.style.display = "block"; 
 		bg.style.display = "block";
 		bg.style.zIndex = "4";
 	}, false);
