@@ -1,5 +1,9 @@
 package edu.com.softserveinc.main.models;
- import edu.com.softserveinc.main.models.UserModel;
+
+import edu.com.softserveinc.main.dao.UserExist;
+import edu.com.softserveinc.main.implementation.AddUser;
+
+
 
 /**
  * 
@@ -8,16 +12,22 @@ package edu.com.softserveinc.main.models;
  * @author nazar
  *
  */
-public class AdminModel extends UserModel{
-	
-	public AdminModel(String name, String email, String login, int role_id,
-			String password, String avatar) {
-		super(name, email, login, role_id, password, avatar);
-		// TODO Auto-generated constructor stub
+public class AdminModel implements AddUser{
+
+
+/**
+ * Add new user in table 
+ * @param user
+ */
+	@Override // from
+	public void addUser(UserModel user) {
+		
+		if(new UserExist(user).isNotExist())
+		{
+			//TODO:add code with hibernate which will be adding new users in table
+		
+		
+		}
 	}
 
-
-	
-    
-    
 }
