@@ -46,7 +46,7 @@ public class UserExist{
 	 */
 	
 	// it works wrong :-( 
-	public boolean isNotExist(){
+	public boolean isNotExist(){ //throws HibernateException
 		try{
 			//TODO: create global session factory and remove this one
 			//open new session
