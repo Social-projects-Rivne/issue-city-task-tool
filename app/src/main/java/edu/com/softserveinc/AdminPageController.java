@@ -29,15 +29,17 @@ public class AdminPageController {
 	 */
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public String addUser(Locale locale, Model model) {
+		
+		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		UserModel user = new UserModel("Nazar","si@Ul.d","sss",1,"","");
-		
+
 		// test 
 		model.addAttribute("userName", user.getName());
 		model.addAttribute("userMail", "<b>"+user.getEmail()+"</b>");
 		model.addAttribute("userLogin", user.getLogin());
-		
+
 		try {
 				// on every loading it adds a new user in DB 
 				// try connect to db and create the SessionFactory from hibernate.cfg.xml
@@ -46,10 +48,8 @@ public class AdminPageController {
 	        catch (Throwable ex) {
 	        	
 	          System.err.println("Initial SessionFactory creation failed." + ex); // TODO: change it on logger
-	          throw new ExceptionInInitializerError(ex);
+	          
 	        }
-		
-		
 		
 		return "addUser";
 	}
