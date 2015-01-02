@@ -2,4 +2,5 @@
 .project
 .classpath
 .settings/*
-hibernate.cfg.xml
+app/src/main/resources/hibernate.cfg.xml
+*~
