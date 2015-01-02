@@ -21,6 +21,15 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+
+	<!-- Validation for new user  -->
+	<beans:bean id="userValidator" class="edu.com.softserveinc.main.controllers.UserValidator" />
+     
+    <beans:bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="classpath:message" />
+        <beans:property name="defaultEncoding" value="UTF-8" />
+    </beans:bean>
 	
 	<context:component-scan base-package="edu.com.softserveinc" />
 	

@@ -1,24 +1,49 @@
 package edu.com.softserveinc.main.models;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull; 
 import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 
+
+//import org.hibernate.annotations.Entity; //
+//import org.hibernate.annotations.Table;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
+//TODO:Add comments for annotation
+//TODO:Add more constructors
+
+@Entity
+@Table(name="users")
 public class UserModel {
+	/**
+	 * User ID
+	 */
+	@Id
+    @GeneratedValue //it will be auto incremented value in table 
+    @Column(unique=true, name="id")
+	protected int id;
 	
 	/**
 	 * Name max length = 30
 	 */
     @Size(max=30) 
-    @NotNull(message="It can't be empty")
+    @Column(name="name") //name of column in table
+    @NotNull(message="It can't be empty") // it needed for validation 
+    @NotEmpty  //annotation for hibernate, it is needed for that in DB this field couldn't be empty
     protected String name;
     
 	/**
 	 * E-mail
 	 */
     @Email 
-    @NotNull(message="It can't be empty")
+    @NotNull(message="It can't be empty") // 
+    @NotEmpty
+    @Column(unique=true, name="email") //name of column in table
     protected String email;
         
     /**
@@ -26,6 +51,8 @@ public class UserModel {
 	 */
     @Size(max = 30) 
     @NotNull(message="It can't be empty")
+    @NotEmpty
+    @Column(unique=true, name="login") //name of column in table
     protected String login;
     
     /**
@@ -33,6 +60,9 @@ public class UserModel {
 	 */ 
     @Size(min = 0, max = 3) 
     @NotNull(message="It can't be empty")
+    @NotEmpty
+    @Column(name="role_id") //name of column in table
+    //TODO: Add hibernate annotation for relation between tables
     protected int role_id;
     
      /**
@@ -40,11 +70,14 @@ public class UserModel {
 	 */
     @Size(min = 6, max = 32) 
     @NotNull(message="It can't be empty")
+    @NotEmpty
+    @Column(name="password") //name of column in table
     protected String password;
     
     /**
      * Avatar url
 	 */
+    @Column(name="avatar_url") //name of column in table
     protected String avatar;
     
     
@@ -73,6 +106,22 @@ public class UserModel {
      */
     public UserModel(){
     	
+    }
+    
+    //id get set
+    /**
+     * Method for setup user's id
+     * 
+     */
+    public void setId(int id) {
+		this.id = id;
+	}
+    /**
+     * Method for get user's id
+     * @return
+     */
+    public int getId(){
+    	return this.id;
     }
     
     //Email get set

@@ -121,6 +121,14 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.3.7.Final</version>
 		</dependency>
+				
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.34</version>
+		</dependency>
+
+		
 	</dependencies>
     <build>
         <plugins>
@@ -158,6 +166,7 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+           
         </plugins>
     </build>
 </project>

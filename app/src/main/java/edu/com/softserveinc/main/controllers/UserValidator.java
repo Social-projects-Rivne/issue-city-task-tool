@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
-public class UserController{
+public class UserValidator{
 	
 	 private Map<String, UserModel> users = null;
      
-	    public UserController(){
+	    public UserValidator(){
 	    	users = new HashMap<String, UserModel>();
 	    }
 	    
