@@ -19,7 +19,7 @@ import edu.com.softserveinc.main.models.UserModel;
 public class UserExist{
 	
 	private String name; //The name which will be checking
-	
+	private QueryBuilder queryBuilder = new QueryBuilder();
 	
 	//Constructors
 	/**
@@ -54,9 +54,19 @@ public class UserExist{
 			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
+			
+			queryBuilder.column("id, avatar_url, role_id, email, name, login, password")
+				.from("users").where("name = '" + name + "'");
+			String hql = queryBuilder.toString();
+			
+			System.out.println("=============== Builder ============== Builded query: "+queryBuilder.toString());
+			
 			//query to db
-			String hql = "SELECT * FROM users WHERE name = " + this.name;
+			//String hql = "SELECT * FROM users WHERE name = " + this.name;
+			
 			Query query = session.createQuery(hql);
+			
+			System.out.println("=============== Query succes ==============");
 			
 			session.close();
 			

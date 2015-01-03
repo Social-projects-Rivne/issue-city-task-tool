@@ -10,7 +10,7 @@
 
 <div id="background"></div>
 	<div id="popup">
-		<form action="" method="POST">
+		<form action="addUser.save" method="POST">
 			Login: <input class="add-user-form" type="text" name="login" /><br /><br />
 			<span id="login-help" class="help"></span>
 			Password: <input class="add-user-form" type="password" name="password" /><br /><br />

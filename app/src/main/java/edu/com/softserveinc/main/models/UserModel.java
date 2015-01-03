@@ -58,9 +58,9 @@ public class UserModel {
     /**
      * Reole id min = 0 max = 3
 	 */ 
-    @Size(min = 0, max = 3) 
+   /* @Size(min = 0, max = 3) 
     @NotNull(message="It can't be empty")
-    @NotEmpty
+    @NotEmpty*/
     @Column(name="role_id") //name of column in table
     //TODO: Add hibernate annotation for relation between tables
     protected int role_id;

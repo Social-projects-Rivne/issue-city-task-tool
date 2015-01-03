@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
+
 import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 
@@ -33,21 +35,34 @@ public class AdminPageController {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		UserModel user = new UserModel("Nazar","si@Ul.d","sss",1,"","");
+		UserModel user = new UserModel("Nazar","NazarMail@ukr.net","login",1,"1234567890","user_avatar.jpg");
 
-		// test 
+		// testing jsp
 		model.addAttribute("userName", user.getName());
 		model.addAttribute("userMail", "<b>"+user.getEmail()+"</b>");
 		model.addAttribute("userLogin", user.getLogin());
-
+			
+			// on every loading it adds a new user in DB 
+			// try connect to db and create the SessionFactory from hibernate.cfg.xml
+		
 		try {
-				// on every loading it adds a new user in DB 
-				// try connect to db and create the SessionFactory from hibernate.cfg.xml
-				new AdminModel().addUser(user);
+		
+			new AdminModel().addUser(user);
+			
 			}
-	        catch (Throwable ex) {
+		//TODO: Create annotation for those exception!  
+		catch(org.hibernate.exception.ConstraintViolationException ex){	
+			
+			//TODO:add here notification window
+			//TODO:chage it on logger
+			System.out.println("==================== !!! USER EXISTS !!! =================");
+			System.out.println(ex);
+			
+		}
+	        
+		catch (Throwable ex) {
 	        	
-	          System.err.println("Initial SessionFactory creation failed." + ex); // TODO: change it on logger
+	          System.out.println("Initial SessionFactory creation failed." + ex); // TODO: change it on logger
 	          
 	        }
 		
