@@ -1,11 +1,18 @@
 package edu.com.softserveinc.main.models;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
+//import org.hibernate.cfg.Configuration;
 
-import edu.com.softserveinc.main.dao.UserExist;
+import edu.com.softserveinc.main.dao.AddUserImpl;
+import edu.com.softserveinc.main.dao.DeleteUserImpl;
+import edu.com.softserveinc.main.dao.GetUserByIdImpl;
+//import edu.com.softserveinc.main.dao.UserExist;
+import edu.com.softserveinc.main.dao.EditUserImpl;
 import edu.com.softserveinc.main.implementation.AddUser;
+import edu.com.softserveinc.main.implementation.DeleteUser;
+import edu.com.softserveinc.main.implementation.EditUser;
+import edu.com.softserveinc.main.implementation.GetUserByID;
 
 
 
@@ -16,30 +23,51 @@ import edu.com.softserveinc.main.implementation.AddUser;
  * @author nazar
  *
  */
-public class AdminModel implements AddUser{
+public class AdminModel implements AddUser, EditUser, DeleteUser, GetUserByID{
 
-	
-
-/**
- * Add new user in table 
- * @param user
- */
-@Override
+	/**
+	 * Add new user in table 
+	 * @param user
+	 */
+	@Override
 	public void addUser(UserModel user) {
-	
-		if(new UserExist(user.getName()).isNotExist())
-		{
-			@SuppressWarnings("deprecation")
-			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-			Session session = sessionFactory.openSession();
-			session.beginTransaction();
-			session.save(user);
-			session.getTransaction().commit();
-			session.close();
 		
+			new AddUserImpl().addUser(user);
 		}
-
+	
+	/**
+	 * <h1>Method for editing users</h1>
+	 * <b> 
+	 * 	Very important!! Check that user id is not Null! 
+	 * </b>
+	 * 
+	 * @param user
+	 */
+	@Override
+	public void editUser(UserModel user) {
+		
+		new EditUserImpl().editUser(user);
+	}
+	
+	/**
+	 * Delete user from table 
+	 * @param userId
+	 */
+	@Override
+	public void deleteUser(int userId) {
+		new DeleteUserImpl().deleteUser(userId);
 	}
 
+	
+	/**
+	 * It returns user by his id
+	 * @param userId
+	 */
+	@Override
+	public UserModel getUserByID(int userId) {
+		return new GetUserByIdImpl().getUserByID(userId);
+	}
+	
+	
 
 }

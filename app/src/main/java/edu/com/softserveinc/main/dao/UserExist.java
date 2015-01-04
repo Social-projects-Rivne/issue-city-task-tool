@@ -1,17 +1,16 @@
 package edu.com.softserveinc.main.dao;
 
 import java.util.List; 
-import java.util.Iterator; 
 
-import org.hibernate.HibernateException; 
+//import org.hibernate.HibernateException; 
 import org.hibernate.Query;
 import org.hibernate.Session; 
-import org.hibernate.Transaction;
+//import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.models.UserModel;
-
+//TODO: Fix it later. Now we are checking  user existing via try-catch 
 /**
  * It checks is  existing user in DataBase 
  * @author nazar
@@ -56,10 +55,11 @@ public class UserExist{
 			session.beginTransaction();
 			
 			queryBuilder.column("id, avatar_url, role_id, email, name, login, password")
-				.from("users").where("name = '" + name + "'");
+				.from("users").where("login = '" + name + "'");
 			String hql = queryBuilder.toString();
 			
-			System.out.println("=============== Builder ============== Builded query: "+queryBuilder.toString());
+			System.out.println("=============== Builder ============== Builded query: "
+					+queryBuilder.toString());
 			
 			//query to db
 			//String hql = "SELECT * FROM users WHERE name = " + this.name;
@@ -73,7 +73,7 @@ public class UserExist{
 			UserModel user = null;
 			user.setName(name);
 			
-			List results = query.list();
+			List<UserModel> results = session.createQuery(hql).list();
 
 			//TODO: change it on logger
 			System.out.print("SUCCESS");

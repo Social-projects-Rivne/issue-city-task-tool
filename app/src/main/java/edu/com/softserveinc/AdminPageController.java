@@ -35,12 +35,10 @@ public class AdminPageController {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		UserModel user = new UserModel("Nazar","NazarMail@ukr.net","login",1,"1234567890","user_avatar.jpg");
+		UserModel user = new UserModel("Nazar","Nazarss3wwwMail@ukr.net","login100",1,"1234567890","");
 
 		// testing jsp
-		model.addAttribute("userName", user.getName());
-		model.addAttribute("userMail", "<b>"+user.getEmail()+"</b>");
-		model.addAttribute("userLogin", user.getLogin());
+	
 			
 			// on every loading it adds a new user in DB 
 			// try connect to db and create the SessionFactory from hibernate.cfg.xml
@@ -64,7 +62,25 @@ public class AdminPageController {
 	        	
 	          System.out.println("Initial SessionFactory creation failed." + ex); // TODO: change it on logger
 	          
-	        }
+	        }	
+		user = new AdminModel().getUserByID(1);
+		model.addAttribute("userName", user.getName());
+		model.addAttribute("userMail", "<b>"+user.getEmail()+"</b>");
+		model.addAttribute("userLogin", user.getId());
+		System.out.println("==================== add user2 =================");
+		
+		UserModel user2 = new UserModel("NazarKost","Nazar2Mail@ukr.net","login",1,"1234567890","user_avatar.jpg");
+		try{
+			user2.setId(1);
+			System.out.println("==================== user2 created =================");
+			new AdminModel().editUser(user2);
+			System.out.println("==================== user2 updated =================");
+		
+		} catch(Exception ex){
+			System.out.println("==================== user2 ERROR =================");
+			
+		}
+		
 		
 		return "addUser";
 	}
@@ -72,7 +88,7 @@ public class AdminPageController {
 	@RequestMapping(value="addUser.save", method=RequestMethod.POST)
     public String checkPersonInfo(@Valid UserModel user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "form";
+            return "home";
         }
         return "redirect:/";
     }
