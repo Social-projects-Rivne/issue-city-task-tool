@@ -5,9 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import edu.com.softserveinc.main.dao.QueryBuilder;
 import edu.com.softserveinc.main.models.UserModel;
+
 import java.util.List; 
- 
+
 import org.hibernate.HibernateException; 
 import org.hibernate.Session; 
 import org.hibernate.Transaction;
@@ -25,7 +27,8 @@ public class AdminToolpageController {
 		Session session = factory.openSession();
 	    Transaction tx = null;
 	    tx = session.beginTransaction();
-	    List users = session.createQuery("FROM UserModel").list();
+	    List users = session.createQuery(
+	    		new QueryBuilder().from("users").toString()).list(); // generate sql query by query builder
 	    model.addAttribute("Users", users);
 	    tx.commit();
 	    session.close();

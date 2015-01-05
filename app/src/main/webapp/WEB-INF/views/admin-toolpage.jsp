@@ -10,29 +10,38 @@
 	<div id="background"></div>
 	<br />
 	<div id="users-table">
-		<table>
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Login</th>
-			</tr>
+	<div class='buttons' id="add-user-button">
+		<button id="add" class='button'>Add new user</button>
+	</div>
+		<table  id="users">
+			<thead style="color: red;">
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Login</th>
+				</tr>	
+			</thead>
+			
 			<c:forEach items="${Users}" var="usr">
 				<tr>
 					<td><c:out value="${usr.id}"></c:out></td>
 					<td><c:out value="${usr.name}"></c:out></td>
 					<td><c:out value="${usr.email}"></c:out></td>
 					<td><c:out value="${usr.login}"></c:out></td>
-					<td><button>Edit</button><button>Delete</button></td>
+					<td>
+						<div>
+							<input type="submit" name="edit" value="edit" class='button'> 
+							<input type="submit" name="remove" value="remove" class='button'>
+						</div>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	
 	<br />
-	<div id="add-user-button">
-		<button id="add">Add</button>
-	</div>
+
 	
 	<div class='wrapper' id="popup">
 	<h1>Add User</h1>
