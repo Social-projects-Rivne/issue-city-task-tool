@@ -31,8 +31,7 @@ public class AdminToolpageController {
 		Session session = factory.openSession();
 	    Transaction tx = null;
 	    tx = session.beginTransaction();
-	    List users = session.createQuery(
-	    		new QueryBuilder().from("users").toString()).list(); // generate sql query by query builder
+	    List users = session.createQuery("FROM UserModel").list();
 	    model.addAttribute("Users", users);
 	    tx.commit();
 	    session.close();

@@ -75,7 +75,7 @@ h1 {
 	border:1px solid #269abc;
 }
 form {
-	display:block;
+	display:inline-block;
 	margin:0 auto;
 }
 #notification_message-check {

@@ -31,8 +31,8 @@
 					<td><c:out value="${usr.login}"></c:out></td>
 					<td>
 						<div>
-							<input type="submit" name="edit" value="edit" class='button'> 
-							<input type="submit" name="remove" value="remove" class='button'>
+							<form method="POST"><input type="hidden" value="<c:out value="${usr.id}"></c:out>" /><input type="submit" name="edit" value="edit" class='button' /></form>
+							<form method="POST" action="remove-user"><input name="remove-hidden" type="hidden" value="<c:out value="${usr.id}"></c:out>" /><input type="submit" name="remove" value="remove" class='button' /></form>
 						</div>
 					</td>
 				</tr>
@@ -46,7 +46,7 @@
 	<div class='wrapper' id="popup">
 	<h1>Add User</h1>
 		<div class='form-wrapper'>
-			<form method="POST" action="">
+			<form method="POST" action="add-user">
 				<div class='row'>
 					<div class='left'><label for "firstname"> UserName: </label></div>
 					<div class='right'><input type="text" id="name" name ="name" placeholder="enter your name"></div>
