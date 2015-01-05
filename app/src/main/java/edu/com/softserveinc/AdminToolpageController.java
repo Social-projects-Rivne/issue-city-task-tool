@@ -6,20 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
 import edu.com.softserveinc.main.dao.QueryBuilder;
-=======
 import edu.com.softserveinc.main.dao.AddUserImpl;
->>>>>>> 27900e2a74d60055b05961e7c9535734872ccecf
 import edu.com.softserveinc.main.models.UserModel;
 
 import java.util.List; 
 
-<<<<<<< HEAD
-=======
 import javax.servlet.http.HttpServletRequest;
 
->>>>>>> 27900e2a74d60055b05961e7c9535734872ccecf
 import org.hibernate.HibernateException; 
 import org.hibernate.Session; 
 import org.hibernate.Transaction;
