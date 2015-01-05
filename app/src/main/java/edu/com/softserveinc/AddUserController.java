@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.com.softserveinc.main.dao.AddUserImpl;
+import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
@@ -24,10 +24,18 @@ public class AddUserController extends HttpServlet {
 		int role_id = 1; 
 		String password = request.getParameter("password"); 
 		String avatar = request.getParameter("avatar");
-		
-		UserModel usr = new UserModel(name, email, login, role_id, password, avatar);
-		AddUserImpl addusr = new AddUserImpl();
-		addusr.addUser(usr);
+		try{
+		new AdminModel().addUser(
+				new UserModel(name, email, login, role_id, password, avatar));
+		}
+		catch(org.hibernate.exception.ConstraintViolationException ex){	
+				
+			//TODO:add here notification window
+			//TODO:chage it on logger
+			System.out.println("==================== !!! USER EXISTS !!! =================");
+			System.out.println(ex);
+				
+		}
 		
 		response.sendRedirect("http://localhost:8080/softserveinc/admin-toolpage");
 	}

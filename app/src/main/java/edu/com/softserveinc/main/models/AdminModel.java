@@ -4,15 +4,11 @@ package edu.com.softserveinc.main.models;
 //import org.hibernate.SessionFactory;
 //import org.hibernate.cfg.Configuration;
 
-import edu.com.softserveinc.main.dao.AddUserImpl;
-import edu.com.softserveinc.main.dao.DeleteUserImpl;
 import edu.com.softserveinc.main.dao.GetUserByIdImpl;
 //import edu.com.softserveinc.main.dao.UserExist;
-import edu.com.softserveinc.main.dao.EditUserImpl;
-import edu.com.softserveinc.main.implementation.AddUser;
-import edu.com.softserveinc.main.implementation.DeleteUser;
-import edu.com.softserveinc.main.implementation.EditUser;
+import edu.com.softserveinc.main.dao.UserServiceImpl;
 import edu.com.softserveinc.main.implementation.GetUserByID;
+import edu.com.softserveinc.main.implementation.UserService;
 
 
 
@@ -23,7 +19,7 @@ import edu.com.softserveinc.main.implementation.GetUserByID;
  * @author nazar
  *
  */
-public class AdminModel implements AddUser, EditUser, DeleteUser, GetUserByID{
+public class AdminModel implements UserService, GetUserByID{
 
 	/**
 	 * Add new user in table 
@@ -32,7 +28,7 @@ public class AdminModel implements AddUser, EditUser, DeleteUser, GetUserByID{
 	@Override
 	public void addUser(UserModel user) {
 		
-			new AddUserImpl().addUser(user);
+			new UserServiceImpl().addUser(user);
 		}
 	
 	/**
@@ -45,8 +41,9 @@ public class AdminModel implements AddUser, EditUser, DeleteUser, GetUserByID{
 	 */
 	@Override
 	public void editUser(UserModel user) {
-		
-		new EditUserImpl().editUser(user);
+		if(user.getId() != 0){
+			new UserServiceImpl().editUser(user);
+		}
 	}
 	
 	/**
@@ -55,7 +52,9 @@ public class AdminModel implements AddUser, EditUser, DeleteUser, GetUserByID{
 	 */
 	@Override
 	public void deleteUser(int userId) {
-		new DeleteUserImpl().deleteUser(userId);
+		
+		new UserServiceImpl().deleteUser(userId);
+		
 	}
 
 	
@@ -64,8 +63,10 @@ public class AdminModel implements AddUser, EditUser, DeleteUser, GetUserByID{
 	 * @param userId
 	 */
 	@Override
-	public UserModel getUserByID(int userId) {
+	public UserModel getUserByID(int userId){
+		
 		return new GetUserByIdImpl().getUserByID(userId);
+		
 	}
 	
 	

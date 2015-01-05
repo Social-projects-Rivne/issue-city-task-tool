@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.com.softserveinc.main.dao.QueryBuilder;
-import edu.com.softserveinc.main.dao.AddUserImpl;
 import edu.com.softserveinc.main.models.UserModel;
 
 import java.util.List; 
