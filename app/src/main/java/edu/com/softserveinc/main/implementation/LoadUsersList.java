@@ -1,6 +1,6 @@
 package edu.com.softserveinc.main.implementation;
 
-import java.awt.List;
+import java.util.List;
 
 public interface LoadUsersList {
 	

@@ -44,14 +44,14 @@ create table priorities (
 );
 
 create table problems (
-  problem_id  TINYINT AUTO_INCREMENT NOT NULL, 
-  problem_name VARCHAR(30) NOT NULL, 
+  id  TINYINT AUTO_INCREMENT NOT NULL, 
+  name VARCHAR(30) NOT NULL, 
   category_id TINYINT NOT NULL, 
-  problem_description text NOT NULL, 
-  problem_map_pointer VARCHAR(20) NOT NULL, 
-  problem_attachments VARCHAR(256), 
+  description text NOT NULL, 
+  map_pointer VARCHAR(20) NOT NULL, 
+  attachments VARCHAR(256), 
   priority_id TINYINT NOT NULL,
-  PRIMARY KEY (problem_id),
+  PRIMARY KEY (id),
   FOREIGN KEY (category_id) REFERENCES categories(category_id),
   FOREIGN KEY (priority_id) REFERENCES priorities(priority_id)
 );  
@@ -87,7 +87,7 @@ values ('Thefts'),('Fires'),('Murders');
 insert into priorities(priority_name) 
 values ('high'),('medium'),('low');
 
-insert into problems(problem_name, category_id, problem_description, problem_map_pointer, priority_id)
+insert into problems(name, category_id, description, map_pointer, priority_id)
 values ('Car theft', '1', 'Car theft by 3 oclock beside with', '3030', '3'), ('Fire', '2', 'Fire near with', '4080', '2'), ('Murder', '3', 'Murder in the region beside with', '9020', '1');  
 
 insert into history(problem_id, history_date, status_id, id)

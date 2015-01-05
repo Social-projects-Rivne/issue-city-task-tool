@@ -2,6 +2,7 @@ package edu.com.softserveinc.main.dao;
 
 import java.util.List; 
 
+
 //import org.hibernate.HibernateException; 
 import org.hibernate.Query;
 import org.hibernate.Session; 
@@ -9,9 +10,24 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 //TODO: Fix it later. Now we are checking  user existing via try-catch 
 /**
+ * <h1>DON'T USET IT!!!</h1>
+ * Check user's existing with try-catch construction!
+ * <br>
+ * <code>
+ * <br>
+ * try {<br>
+			new AdminModel().addUser(user);<br>
+		}
+		catch(org.hibernate.exception.ConstraintViolationException ex){	<br>
+			System.out.println(ex);<br>
+		}<br>
+ * </code>
+ * 
+ * 
  * It checks is  existing user in DataBase 
  * @author nazar
  */
@@ -54,8 +70,7 @@ public class UserExist{
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			
-			queryBuilder.column("id, avatar_url, role_id, email, name, login, password")
-				.from("users").where("login = '" + name + "'");
+			queryBuilder.column("id, avatar_url, role_id, email, name, login, password").from("UserModel").where("login = '" + name + "'");
 			String hql = queryBuilder.toString();
 			
 			System.out.println("=============== Builder ============== Builded query: "
@@ -64,17 +79,10 @@ public class UserExist{
 			//query to db
 			//String hql = "SELECT * FROM users WHERE name = " + this.name;
 			
-			Query query = session.createQuery(hql);
 			
-			System.out.println("=============== Query succes ==============");
-			
-			session.close();
-			
-			UserModel user = null;
-			user.setName(name);
-			
-			List<UserModel> results = session.createQuery(hql).list();
+			List results = session.createQuery(hql).list();
 
+			System.out.println("=============== Query succes ==============");
 			//TODO: change it on logger
 			System.out.print("SUCCESS");
 			
