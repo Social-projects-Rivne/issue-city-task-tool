@@ -9,6 +9,7 @@ window.onload = function(){
 	lh = document.getElementById('login-help');
 	ph = document.getElementById('password-help');
 	eh = document.getElementById('email-help');
+	rh = document.getElementById('role-help');
 	sh = document.getElementById('submit-help');
 	aus = document.getElementById('add-user-submit');
 	
@@ -26,24 +27,25 @@ window.onload = function(){
 	}, false);
 
 	login[0].addEventListener('blur', function(){
-		if(!/^\w+$/.test(login[0].value)) lh.innerHTML = "<center>Wrong Login!</center><br /><br />";
+		if(!/^\w+$/.test(login[0].value)) lh.innerHTML = "Wrong Login!";
 		else lh.innerHTML = "";
 	}, false);
 
 	password[0].addEventListener('blur', function(){
-		if(!/^.+$/.test(password[0].value)) ph.innerHTML = "<center>Wrong Password!</center><br /><br />";
+		if(!/^.+$/.test(password[0].value)) ph.innerHTML = "Wrong Password!";
 		else ph.innerHTML = "";
 	}, false);
 
 	email[0].addEventListener('blur', function(){
-		if(!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(email[0].value)) eh.innerHTML = "<center>Wrong Email!</center><br /><br />";
+		if(!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(email[0].value)) eh.innerHTML = "Wrong Email!";
 		else eh.innerHTML = "";
 	}, false);
+	
 
 	aus.addEventListener('click', function(event){
 		if((!/^\w+$/.test(login[0].value)) || (!/^.+$/.test(password[0].value)) || (!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(email[0].value))){
 			event.preventDefault();
-			sh.innerHTML = "<br /><center>Please, fill the form!</center>";
+			sh.innerHTML = "Please, fill the form!";
 		}
 	}, false);
 }
