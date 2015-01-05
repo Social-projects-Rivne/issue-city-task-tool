@@ -19,8 +19,7 @@ form{
     border: 1px solid #cccccc;
     border-radius: 5px;
     box-shadow: 2px 2px 5px #ccc;
-    margin: 20px auto;
-    width: 980px;
+    background-color: white;
 }
 .form-wrapper {
 	padding:20px;
@@ -86,12 +85,9 @@ form {
 #popup{
 	display:none; 
 	position:absolute; 
-	left:40%; 
-	top:10%;
-	border-radius: 20px;
-	padding: 20px;
+	left: 30%;
+	top: 10%;
 	z-index:5;
-	background-color:white;
 }
 
 #background{
@@ -106,4 +102,38 @@ form {
 #add-user{
 	z-index:3;
 	position:relative;
+}
+
+.helper {
+	font-size: 12px;
+	color: red;
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+#users-table > table {
+	text-align: left;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	border: 1px solid black;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#users-table > table > tbody > tr > td {
+	border: 1px solid black;
+	padding: 5px 25px;
+}
+
+#users-table > table > tbody > tr > th {
+	border: 1px solid black;
+	padding: 5px 25px;
+}
+
+#add-user-button > button {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }

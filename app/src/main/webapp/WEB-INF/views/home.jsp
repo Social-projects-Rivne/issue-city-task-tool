@@ -10,6 +10,6 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<a href="addUser">addUser</a>
+<a href="admin-toolpage">ToolPage</a>
 </body>
 </html>
