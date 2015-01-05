@@ -46,7 +46,7 @@
 	<div class='wrapper' id="popup">
 	<h1>Add User</h1>
 		<div class='form-wrapper'>
-			<form>
+			<form method="POST" action="">
 				<div class='row'>
 					<div class='left'><label for "firstname"> UserName: </label></div>
 					<div class='right'><input type="text" id="name" name ="name" placeholder="enter your name"></div>
