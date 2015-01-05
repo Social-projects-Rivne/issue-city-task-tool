@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void addUser(UserModel user) {
-	
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(user);

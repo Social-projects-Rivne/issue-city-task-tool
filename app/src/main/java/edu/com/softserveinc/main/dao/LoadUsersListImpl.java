@@ -1,6 +1,6 @@
 package edu.com.softserveinc.main.dao;
 
-import java.awt.List;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +16,7 @@ public class LoadUsersListImpl implements LoadUsersList{
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		return (List)session.createQuery("FROM users").list();
+		return session.createQuery("FROM UserModel").list();
 	}
 
 }

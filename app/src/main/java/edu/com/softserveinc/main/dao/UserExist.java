@@ -70,8 +70,7 @@ public class UserExist{
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			
-			queryBuilder.column("id, avatar_url, role_id, email, name, login, password")
-				.from("users").where("login = '" + name + "'");
+			queryBuilder.column("id, avatar_url, role_id, email, name, login, password").from("UserModel").where("login = '" + name + "'");
 			String hql = queryBuilder.toString();
 			
 			System.out.println("=============== Builder ============== Builded query: "
@@ -80,17 +79,10 @@ public class UserExist{
 			//query to db
 			//String hql = "SELECT * FROM users WHERE name = " + this.name;
 			
-			Query query = session.createQuery(hql);
 			
-			System.out.println("=============== Query succes ==============");
-			
-			session.close();
-			
-			UserModel user = null;
-			user.setName(name);
-			
-			List<UserModel> results = session.createQuery(hql).list();
+			List results = session.createQuery(hql).list();
 
+			System.out.println("=============== Query succes ==============");
 			//TODO: change it on logger
 			System.out.print("SUCCESS");
 			
