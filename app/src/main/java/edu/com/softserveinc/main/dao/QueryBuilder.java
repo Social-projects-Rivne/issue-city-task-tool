@@ -2,7 +2,17 @@ package edu.com.softserveinc.main.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 
+ * Use it for generate SQR queries
+ * 
+ * Example using QueryBuilder: 			
+ * 						queryBuilder.column("name").from("users").where("name = 'Nazar'");
+ *						String querySQL = queryBuilder.toString();			
+ * 
+ * @author nazar
+ *
+ */
 public class QueryBuilder {
 	
     private List<String> columns = new ArrayList<String>();
@@ -26,7 +36,7 @@ public class QueryBuilder {
     }
     
     /**
-     * Constructor. 
+     * Constructor. Set table name
      * 
      * @param table
      */

@@ -25,7 +25,7 @@ create table users (
   email VARCHAR(60) NOT NULL, 
   login VARCHAR(60) NOT NULL, 
   password VARCHAR(60) NOT NULL, 
-  avatar VARCHAR(60), 
+  avatar_url VARCHAR(60), 
   role_id TINYINT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (role_id) REFERENCES roles(role_id)
