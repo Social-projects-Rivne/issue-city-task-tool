@@ -2,6 +2,7 @@ package edu.com.softserveinc.main.dao;
 
 import java.util.List; 
 
+
 //import org.hibernate.HibernateException; 
 import org.hibernate.Query;
 import org.hibernate.Session; 
@@ -9,9 +10,24 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 //TODO: Fix it later. Now we are checking  user existing via try-catch 
 /**
+ * <h1>DON'T USET IT!!!</h1>
+ * Check user's existing with try-catch construction!
+ * <br>
+ * <code>
+ * <br>
+ * try {<br>
+			new AdminModel().addUser(user);<br>
+		}
+		catch(org.hibernate.exception.ConstraintViolationException ex){	<br>
+			System.out.println(ex);<br>
+		}<br>
+ * </code>
+ * 
+ * 
  * It checks is  existing user in DataBase 
  * @author nazar
  */
