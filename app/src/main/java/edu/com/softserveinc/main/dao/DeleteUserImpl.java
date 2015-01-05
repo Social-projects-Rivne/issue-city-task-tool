@@ -11,10 +11,12 @@ public class DeleteUserImpl implements DeleteUser {
 	@Override
 	public void deleteUser(int userId) {
 		@SuppressWarnings("deprecation")
+		GetUserByIdImpl getusr = new GetUserByIdImpl();
+		
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.delete(userId);
+		session.delete(getusr.getUserByID(userId));
 		session.getTransaction().commit();
 		session.close();
 
