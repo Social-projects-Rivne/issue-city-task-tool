@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.dao;
+package edu.com.softserveinc.main.dao.users;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

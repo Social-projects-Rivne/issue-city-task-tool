@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.dao;
+package edu.com.softserveinc.main.dao.users;
 
 import java.lang.annotation.Target;
 

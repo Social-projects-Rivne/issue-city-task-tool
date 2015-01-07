@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.com.softserveinc.main.dao.UserExist;
+import edu.com.softserveinc.main.dao.users.UserExist;
 import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 

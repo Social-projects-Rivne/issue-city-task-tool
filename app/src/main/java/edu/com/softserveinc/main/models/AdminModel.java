@@ -4,9 +4,9 @@ package edu.com.softserveinc.main.models;
 //import org.hibernate.SessionFactory;
 //import org.hibernate.cfg.Configuration;
 
-import edu.com.softserveinc.main.dao.GetUserByIdImpl;
 //import edu.com.softserveinc.main.dao.UserExist;
-import edu.com.softserveinc.main.dao.UserServiceImpl;
+import edu.com.softserveinc.main.dao.users.GetUserByIdImpl;
+import edu.com.softserveinc.main.dao.users.UserServiceImpl;
 import edu.com.softserveinc.main.implementation.GetUserByID;
 import edu.com.softserveinc.main.implementation.UserService;
 
@@ -49,9 +49,9 @@ public class AdminModel implements UserService, GetUserByID {
 	 * @param userId
 	 */
 	@Override
-	public void deleteUser(int userId) {
+	public void deleteUser(UserModel user) {
 
-		new UserServiceImpl().deleteUser(userId);
+		new UserServiceImpl().deleteUser(user);
 
 	}
 

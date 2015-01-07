@@ -1,6 +1,7 @@
-package edu.com.softserveinc.main.dao;
+package edu.com.softserveinc.main.dao.users;
 
 import java.util.List; 
+
 
 
 //import org.hibernate.HibernateException; 
@@ -10,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import edu.com.softserveinc.main.dao.QueryBuilder;
 import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 //TODO: Fix it later. Now we are checking  user existing via try-catch 

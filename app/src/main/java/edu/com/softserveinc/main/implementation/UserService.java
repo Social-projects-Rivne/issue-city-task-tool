@@ -16,7 +16,7 @@ public interface UserService {
 	 * 
 	 * @param userId
 	 */
-	public void deleteUser(int userId);
+	public void deleteUser(UserModel user);
 
 	/**
 	 * Change existing user's fields in Data Base

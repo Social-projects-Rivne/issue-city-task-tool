@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.com.softserveinc.main.models.AdminModel;
+import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
 public class RemoveUserController extends HttpServlet {
@@ -19,8 +20,10 @@ public class RemoveUserController extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int userId = Integer.parseInt(request.getParameter("remove-hidden"));
 		
+		UserModel user = new UserModel();
+		user.setId(userId);
 		
-		new AdminModel().deleteUser(userId);
+		new AdminModel().deleteUser(user);
 		
 		response.sendRedirect("http://localhost:8080/softserveinc/admin-toolpage");
 	}
