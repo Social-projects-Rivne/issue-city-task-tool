@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.dao;
+package edu.com.softserveinc.main.utils;
 
 import java.util.ArrayList;
 import java.util.List;

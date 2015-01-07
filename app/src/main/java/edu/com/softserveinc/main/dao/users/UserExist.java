@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 //import org.hibernate.HibernateException; 
 import org.hibernate.Query;
 import org.hibernate.Session; 
@@ -11,9 +12,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import edu.com.softserveinc.main.dao.QueryBuilder;
 import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.utils.QueryBuilder;
 //TODO: Fix it later. Now we are checking  user existing via try-catch 
 /**
  * <h1>DON'T USET IT!!!</h1>

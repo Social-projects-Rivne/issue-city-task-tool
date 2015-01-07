@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.com.softserveinc.main.dao.QueryBuilder;
 import edu.com.softserveinc.main.dao.users.LoadUsersListImpl;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.utils.QueryBuilder;
 
 import java.util.List; 
 
