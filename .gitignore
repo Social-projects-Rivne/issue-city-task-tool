@@ -1,6 +1,6 @@
 *.class
-../.project
-../.classpath
-../.settings/*
-../app/src/main/resources/hibernate.cfg.xml
+.project
+.classpath
+.settings/*
+hibernate.cfg.xml
 *~
