@@ -25,7 +25,7 @@ public class RemoveUserController extends HttpServlet {
 		
 		new AdminModel().deleteUser(user);
 		
-		response.sendRedirect("http://localhost:8080/softserveinc/admin-toolpage");
+		response.sendRedirect("admin-toolpage");
 	}
 	
 }
