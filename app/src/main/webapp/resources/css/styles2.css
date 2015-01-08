@@ -47,3 +47,8 @@
 	width:300px;
 	float:left;
 }
+.selectWrap .link{
+font-size:16px;
+color:#0066cc;
+border-bottom:1px dotted;
+}
