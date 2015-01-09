@@ -40,8 +40,13 @@
 	float:left;
 }
 .right {
-	width:300px;
+	width:350px;
 	float:left;
+}
+.right > span{
+	color: red;
+	font-size: 12px;
+	padding: 10px;
 }
 .right-radio {
 	width:300px;
