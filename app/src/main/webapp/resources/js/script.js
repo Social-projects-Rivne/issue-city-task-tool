@@ -1,6 +1,8 @@
 window.onload = function(){
-	button = document.getElementById('add');
-	div = document.getElementById('popup');
+	addButton = document.getElementById('add');
+	addPopup = document.getElementById('add-popup');
+	editButtons = document.getElementsByName('edit');
+	editPopup = document.getElementById('edit-popup');
 	bg = document.getElementById('background');
 	login = document.getElementsByName('login');
 	password = document.getElementsByName('password');
@@ -12,18 +14,33 @@ window.onload = function(){
 	rh = document.getElementById('role-help');
 	sh = document.getElementById('submit-help');
 	aus = document.getElementById('add-user-submit');
+	eus = document.getElementById('edit-user-submit');
+	notWnd = document.getElementById('notification-window');
+	notMsg= document.getElementById('notification-message');
 	
-	button.addEventListener('click', function(e){
+	for(var i = 0; i < editButtons.length; i++) {
+		editButtons[i].addEventListener('click', function(e){
+			e.preventDefault();
+			editPopup.style.display = "block"; 
+			bg.style.display = "block";
+			bg.style.zIndex = "4";
+		}, false);
+	};
+	
+	addButton.addEventListener('click', function(e){
 		e.preventDefault();
-		div.style.display = "block"; 
+		addPopup.style.display = "block"; 
 		bg.style.display = "block";
 		bg.style.zIndex = "4";
 	}, false);
 	
 	bg.addEventListener('click', function(){
-		div.style.display = "none";
+		addPopup.style.display = "none";
+		editPopup.style.display = "none";
 		bg.style.display = "none";
 		bg.style.zIndex = "1";
+		notMsg.innerHTML = "";
+		notWnd.style.display = "none";
 	}, false);
 
 	login[0].addEventListener('blur', function(){
@@ -48,4 +65,24 @@ window.onload = function(){
 			sh.innerHTML = "Please, fill the form!";
 		}
 	}, false);
+	
+	
+	if(location.search){
+		var str = location.search.substr(1);
+		var pos = str.indexOf('=');
+		var value = str.substr(pos + 1);
+		value = decodeURIComponent(value);
+		arr = value.split('+');
+		var message = "";
+		for(var elem in arr){
+			message += arr[elem] + ' ';
+		}
+		notMsg.innerHTML = message;
+	}
+	
+	if(notMsg.innerHTML){
+		notWnd.style.display = "block";
+		bg.style.display = "block";
+		bg.style.zIndex = "4";
+	}
 }
