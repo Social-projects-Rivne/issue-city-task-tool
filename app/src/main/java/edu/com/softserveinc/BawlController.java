@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.com.softserveinc.main.dao.LoadUsersListImpl;
-import edu.com.softserveinc.main.dao.UserServiceImpl;
+import edu.com.softserveinc.main.dao.users.GetUserByIdImpl;
+import edu.com.softserveinc.main.dao.users.LoadUsersListImpl;
+import edu.com.softserveinc.main.dao.users.UserServiceImpl;
 import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
@@ -40,9 +41,9 @@ public class BawlController {
 	}
 	
 	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
-	public String removeUser(@RequestParam("userId") int userId, UserServiceImpl userService, Model model) {
+	public String removeUser(@RequestParam("userId") int userId, UserServiceImpl userService, GetUserByIdImpl getUsr, Model model) {
 		
-		userService.deleteUser(userId);
+		userService.deleteUser(getUsr.getUserByID(userId));
 		model.addAttribute("notification", "User was succesfully removed!");
 		
 		return "redirect:admin-toolpage";
