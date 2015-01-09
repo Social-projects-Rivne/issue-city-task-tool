@@ -1,5 +1,6 @@
 package edu.com.softserveinc;
 
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,8 +18,16 @@ public class BawlController {
 	
 	@RequestMapping(value = "/admin-toolpage")
 	public String showUsersTable(LoadUsersListImpl usersList, Model model) {
-	    model.addAttribute("users", usersList.loadUsersList());
-	    
+		try{
+			model.addAttribute("users", usersList.loadUsersList());
+		}
+		catch(JDBCConnectionException ex){
+			//TODO: Change it on logger!
+			System.out.println("ERROR! Can't connect to database, try to change "
+					+ "your login and password from MySQL-server in hibernata.cfg.xml");
+
+			return "home"; //TODO: Change it on error page
+		}
 		return "admin-toolpage";
 	}
 	
