@@ -14,8 +14,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void deleteUser(UserModel user) {
-		
-		new DaoImpl().deleteFromDB(user);
+		if (user.getId() != 0) {
+			new DaoImpl().deleteFromDB(user);
+		}
 	}
 
 	@Override
