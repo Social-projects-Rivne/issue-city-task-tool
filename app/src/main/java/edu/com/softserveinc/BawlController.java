@@ -26,7 +26,7 @@ public class BawlController {
 			System.out.println("ERROR! Can't connect to database, try to change "
 					+ "your login and password from MySQL-server in hibernata.cfg.xml");
 
-			return "home"; //TODO: Change it on error page
+			return "error";
 		}
 		return "admin-toolpage";
 	}
