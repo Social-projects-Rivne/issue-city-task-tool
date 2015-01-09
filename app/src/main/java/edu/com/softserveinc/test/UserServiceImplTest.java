@@ -21,8 +21,8 @@ public class UserServiceImplTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.user = new UserModel("Name", "mail@m.com", "login", 1, "password",
-			"");
+		this.user = new UserModel("Name", "mail2@m.com", "login2", 1, "password",
+			"ava_url");
 	}
 
 	@Test
@@ -39,8 +39,11 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testDeleteUser() {
+		this.user.setId(id);
+		this.user.setName("ChangedName");
 		try {
-			
+			new AdminModel().editUser(this.user);
+			assertTrue("sucsess", true);
 		}
 		catch (Exception ex) {
 			assertTrue("sucsess", false);
@@ -50,7 +53,8 @@ public class UserServiceImplTest {
 	@Test
 	public void testEditUser() {
 		try {
-			
+			new AdminModel().deleteUser(this.user);
+			assertTrue("sucsess", true);
 		} catch (Exception ex) {
 			assertTrue("sucsess", false);
 		}
