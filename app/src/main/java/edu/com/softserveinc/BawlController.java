@@ -16,11 +16,13 @@ import edu.com.softserveinc.main.models.UserModel;
 @Controller
 public class BawlController {
 
+	//TODO: change  "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/admin-toolpage")
 	public String showUsersTable(LoadUsersListImpl usersList, Model model) {
 		try {
 			model.addAttribute("users", usersList.loadUsersList());
 		} catch (JDBCConnectionException ex) {
+			
 			// TODO: Change it on logger!
 			System.out
 					.println("ERROR! Can't connect to database, try to change "
@@ -30,7 +32,7 @@ public class BawlController {
 		}
 		return "admin-toolpage";
 	}
-
+	//TODO: change  "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/add-user", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl userService, Model model) {
@@ -41,6 +43,7 @@ public class BawlController {
 		return "redirect:admin-toolpage";
 	}
 
+	//TODO: change  "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/edit-user", method = RequestMethod.POST)
 	public String editUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl userService, Model model) {
@@ -53,6 +56,7 @@ public class BawlController {
 		return "redirect:admin-toolpage";
 	}
 
+	//TODO: change  "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
 	public String removeUser(@RequestParam("userId") int userId,
 			UserServiceImpl userService, GetUserByIdImpl getUsr, Model model) {
