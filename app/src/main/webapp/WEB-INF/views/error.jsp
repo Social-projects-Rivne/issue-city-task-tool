@@ -10,6 +10,7 @@
 Upss.. something crashed
 </h1>
 
+<a href="home">home</a>
 <a href="admin-toolpage">ToolPage</a>
 </body>
 </html>
