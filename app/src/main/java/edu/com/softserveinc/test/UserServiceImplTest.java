@@ -14,38 +14,25 @@ public class UserServiceImplTest {
 
 	@Autowired
 	private UserServiceImpl userService;
-	
-	
+
 	private UserModel user;
-	int id;
-	
+	private int id;
+
 	@Before
 	public void setUp() throws Exception {
-		this.user = new UserModel("Name", "mail2@m.com", "login2", 1, "password",
-			"ava_url");
+		this.user = new UserModel("Name","Email@mal.er","login1",1,"asdasdasd","avatar");
 	}
 
 	@Test
 	public void testAddUser() {
 		try {
-			new AdminModel().addUser(this.user);
-			assertTrue("sucsess", true);
+			new AdminModel().addUser(user);
 			this.id = user.getId();
 
-		} catch (Exception ex) {
-			assertTrue("sucsess", false);
-		}
-	}
-
-	@Test
-	public void testDeleteUser() {
-		this.user.setId(id);
-		this.user.setName("ChangedName");
-		try {
-			new AdminModel().editUser(this.user);
 			assertTrue("sucsess", true);
-		}
-		catch (Exception ex) {
+
+		} catch (Exception ex) {
+			System.out.println(ex);
 			assertTrue("sucsess", false);
 		}
 	}
@@ -53,11 +40,31 @@ public class UserServiceImplTest {
 	@Test
 	public void testEditUser() {
 		try {
-			new AdminModel().deleteUser(this.user);
+			user.setId(id);
+			user.setAvatar("new_avata_url");
+			
+			new AdminModel().editUser(user);
+			
 			assertTrue("sucsess", true);
+
 		} catch (Exception ex) {
+			System.out.println(ex);
 			assertTrue("sucsess", false);
 		}
 	}
 
+	@Test
+	public void testDeleteUser() {
+		try {
+			user.setId(id);
+			
+			new AdminModel().deleteUser(user);
+			
+			assertTrue("sucsess", true);
+
+		} catch (Exception ex) {
+
+			assertTrue("sucsess", false);
+		}
+	}
 }
