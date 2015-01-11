@@ -17,7 +17,7 @@ import edu.com.softserveinc.main.implementation.UserService;
  * @author nazar
  *
  */
-public class AdminModel implements UserService, GetUserByID {
+public class AdminService implements UserService, GetUserByID {
 
 	/**
 	 * Add new user in table
@@ -50,7 +50,7 @@ public class AdminModel implements UserService, GetUserByID {
 	 */
 	@Override
 	public void deleteUser(UserModel user) {
-
+		
 		new UserServiceImpl().deleteUser(user);
 
 	}

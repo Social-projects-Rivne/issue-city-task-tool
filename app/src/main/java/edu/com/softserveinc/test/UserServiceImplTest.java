@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.com.softserveinc.main.dao.users.UserServiceImpl;
-import edu.com.softserveinc.main.models.AdminModel;
 import edu.com.softserveinc.main.models.UserModel;
 
 public class UserServiceImplTest {
@@ -16,54 +15,29 @@ public class UserServiceImplTest {
 	private UserServiceImpl userService;
 
 	private UserModel user;
-	private int id;
 
 	@Before
 	public void setUp() throws Exception {
-		this.user = new UserModel("Name","Email@mal.er","login1",1,"asdasdasd","avatar");
+		this.user = new UserModel("Name", "Email@mal.er", "login1", 1,
+				"asdasdasd", "avatar");
 	}
 
 	@Test
-	public void testAddUser() {
+	public void testUserService() {
 		try {
-			new AdminModel().addUser(user);
-			this.id = user.getId();
-
-			assertTrue("sucsess", true);
-
-		} catch (Exception ex) {
-			System.out.println(ex);
-			assertTrue("sucsess", false);
-		}
-	}
-
-	@Test
-	public void testEditUser() {
-		try {
-			user.setId(id);
+			// add new user
+			userService.addUser(user);
+			// change user data
 			user.setAvatar("new_avata_url");
-			
-			new AdminModel().editUser(user);
-			
+			// editing user
+			userService.editUser(user);
+			// removing
+			userService.deleteUser(user);
+
 			assertTrue("sucsess", true);
 
 		} catch (Exception ex) {
 			System.out.println(ex);
-			assertTrue("sucsess", false);
-		}
-	}
-
-	@Test
-	public void testDeleteUser() {
-		try {
-			user.setId(id);
-			
-			new AdminModel().deleteUser(user);
-			
-			assertTrue("sucsess", true);
-
-		} catch (Exception ex) {
-
 			assertTrue("sucsess", false);
 		}
 	}

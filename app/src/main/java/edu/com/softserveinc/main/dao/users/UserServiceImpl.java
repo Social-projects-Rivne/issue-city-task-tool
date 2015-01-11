@@ -1,12 +1,11 @@
 package edu.com.softserveinc.main.dao.users;
 
-
 import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.implementation.UserService;
 import edu.com.softserveinc.main.models.UserModel;
 
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Override
 	public void addUser(UserModel user) {
 		new DaoImpl().addInDB(user);
@@ -21,8 +20,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void editUser(UserModel user) {
-
-		new DaoImpl().editInDB(user);
+		if (user.getId() != 0) {
+			new DaoImpl().editInDB(user);
+		}
 	}
 
 }
