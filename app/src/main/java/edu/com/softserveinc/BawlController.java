@@ -15,6 +15,7 @@ import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
 public class BawlController {
+	private String notificationMessage;
 
 	//TODO: change  "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/admin-toolpage")
@@ -30,6 +31,7 @@ public class BawlController {
 
 			return "error";
 		}
+		notificationMessage = "";
 		return "admin-toolpage";
 	}
 	//TODO: change  "UserServiceImpl" on "AdminService"
@@ -38,20 +40,25 @@ public class BawlController {
 			UserServiceImpl userService, Model model) {
 
 		userService.addUser(user);
-		model.addAttribute("notification", "New user was succesfully added!");
+		notificationMessage = "New user was succesfully added!";
 
 		return "redirect:admin-toolpage";
 	}
 
 	//TODO: change  "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/edit-user", method = RequestMethod.POST)
-	public String editUser(@ModelAttribute("user") UserModel user,
-			UserServiceImpl userService, Model model) {
+	public String editUser(@RequestParam("userId") int userId, @RequestParam("change_firstname") String name,
+			@RequestParam("change_email") String email, @RequestParam("change_login") String login,
+				UserServiceImpl userService, GetUserByIdImpl getUsr, UserModel user, Model model) {
 		try {
+			user = getUsr.getUserByID(userId);
+			user.setName(name);
+			user.setEmail(email);
+			user.setLogin(login);
 			userService.editUser(user);
-			model.addAttribute("notification", "User was succesfully edited!");
+			notificationMessage = "User was succesfully edited!";
 		} catch (Exception ex) {
-			model.addAttribute("notification", "error" + ex.getCause());
+			notificationMessage = "Error!" + ex.getCause();
 		}
 		return "redirect:admin-toolpage";
 	}
@@ -62,9 +69,14 @@ public class BawlController {
 			UserServiceImpl userService, GetUserByIdImpl getUsr, Model model) {
 
 		userService.deleteUser(getUsr.getUserByID(userId));
-		model.addAttribute("notification", "User was succesfully removed!");
+		notificationMessage = "User was succesfully removed!";
 
 		return "redirect:admin-toolpage";
+	}
+	
+	@ModelAttribute
+	public void addString(Model model) {
+		model.addAttribute("notMsg", notificationMessage);
 	}
 
 }

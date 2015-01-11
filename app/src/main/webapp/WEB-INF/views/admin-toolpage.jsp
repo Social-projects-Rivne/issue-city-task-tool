@@ -9,7 +9,7 @@
 
 	<div id="background"></div>
 	<div id="notification-window" class="wrapper">
-		<div id="notification-message"></div>
+		<div id="notification-message">${notMsg}</div>
 	</div>
 	<br />
 	
@@ -31,10 +31,7 @@
 			
 			<c:forEach items="${users}" var="usr">
 				<tr>
-					<td id="${usr.id}"><c:out value="${usr.id}"></c:out></td>
-					<td><c:out value="${usr.name}"></c:out></td>
-					<td><c:out value="${usr.email}"></c:out></td>
-					<td><c:out value="${usr.login}"></c:out></td>
+					<td id="${usr.id}"><c:out value="${usr.id}"></c:out></td><td><c:out value="${usr.name}"></c:out></td><td><c:out value="${usr.email}"></c:out></td><td><c:out value="${usr.login}"></c:out></td>
 					<td>
 						<div>
 							<form method="POST" action="edit-user"><input name="userId" type="hidden" value="<c:out value="${usr.id}"></c:out>" /><input type="submit" name="edit" value="edit" class="button" /></form>
@@ -105,6 +102,7 @@
 	<h1>Edit User</h1>
 		<div class='form-wrapper'>
 			<form method="POST" action="edit-user">
+				<input type="hidden" id="edit-user-id" name="userId" />
 				<div class='row'>
 					<div class='left'><label for "change_firstname"> Change User Name: </label></div>
 					<div class='right'><input type="text" id="change_firstname" name ="change_firstname" placeholder="enter your name" /></div>
@@ -121,24 +119,6 @@
 					<div class='left'><label for "change_login"> Change Login: </label></div>
 					<div class='right'><input type="text" id="change_login" name ="change_login" placeholder="enter your login"></div>
 				<br clear='all'>
-				</div>
-				
-				<div class='row'>
-					<div class='left'><label for "change_password"> Change User Password: </label></div>
-					<div class='right'><input type="password" id="change_password" name ="change_password" placeholder="enter your password"></div>
-				<br clear='all'>
-				</div>
-				
-				<div class='row'>
-					<div class='left'><label for "change_avatar"> Change Avatar: </label></div>
-					<div class='right'><input type="file" value="Browse" name="change_avatar"></div>
-				<br clear='all'>
-				</div>
-				
-				<div class='row'>
-					<div class='left'>Change Role: </div>
-					<div class='right-radio'><input type="radio" value="1" id="admin" name ="role"> Admin <input type="radio" value="2" id="manager" name ="role"> Manager <input type="radio" value="3" id="user" name ="role"> User </div>
-				<br clear='all'>		
 				</div>
 					
 				<div class='buttons'>

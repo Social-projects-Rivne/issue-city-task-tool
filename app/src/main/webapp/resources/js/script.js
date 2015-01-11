@@ -16,11 +16,20 @@ window.onload = function(){
 	aus = document.getElementById('add-user-submit');
 	eus = document.getElementById('edit-user-submit');
 	notWnd = document.getElementById('notification-window');
-	notMsg= document.getElementById('notification-message');
+	notMsg = document.getElementById('notification-message');
+	editUserId = document.getElementById('edit-user-id');
+	changeName = document.getElementById('change_firstname');
+	changeEmail = document.getElementById('change_email');
+	changeLogin = document.getElementById('change_login');
 	
 	for(var i = 0; i < editButtons.length; i++) {
 		editButtons[i].addEventListener('click', function(e){
 			e.preventDefault();
+			editUserId.value = this.previousSibling.value;
+			tmp = document.getElementById(this.previousSibling.value);
+			changeName.value = tmp.nextSibling.innerHTML;
+			changeEmail.value = tmp.nextSibling.nextSibling.innerHTML;
+			changeLogin.value = tmp.nextSibling.nextSibling.nextSibling.innerHTML;
 			editPopup.style.display = "block"; 
 			bg.style.display = "block";
 			bg.style.zIndex = "4";
@@ -65,20 +74,6 @@ window.onload = function(){
 			sh.innerHTML = "Please, fill the form!";
 		}
 	}, false);
-	
-	
-	if(location.search){
-		var str = location.search.substr(1);
-		var pos = str.indexOf('=');
-		var value = str.substr(pos + 1);
-		value = decodeURIComponent(value);
-		arr = value.split('+');
-		var message = "";
-		for(var elem in arr){
-			message += arr[elem] + ' ';
-		}
-		notMsg.innerHTML = message;
-	}
 	
 	if(notMsg.innerHTML){
 		notWnd.style.display = "block";
