@@ -1,6 +1,9 @@
 *.class
 .project
+.springBeans
 .classpath
-.settings/*
+.settings/
+.metadata/
+target/
 hibernate.cfg.xml
 *~
