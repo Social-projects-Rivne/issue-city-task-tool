@@ -1,1 +1,8 @@
-/target/
+*.class
+.project
+.springBeans
+.classpath
+.settings/
+.metadata/
+target/
+*~
