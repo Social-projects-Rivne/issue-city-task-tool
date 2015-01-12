@@ -12,15 +12,15 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />">
 </head>
 <body>
-	<div>
+	<div id="menu">
 		<a href="admin-toolpage">ToolPage</a>
 	</div>
 	
-	<div>
+	<div id="map">
 		<div id="map_canvas"></div>
 	</div>
 	
-	<div class="container-fluid" id="add-issue-form">
+	<div id="add-issue-form" class="container-fluid">
           
           <!-- Header -->
           <div class="row-fluid" id="header">

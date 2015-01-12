@@ -73,3 +73,11 @@ body {
 #add-issue-form {
 	display: none;
 }
+
+#menu {
+	height: 5%;
+}
+
+#map {
+	height: 95%;
+}
