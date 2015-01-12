@@ -69,3 +69,7 @@ body {
 #map_canvas {
 	width: auto; height: 100%; 
 }
+
+#add-issue-form {
+	display: none;
+}
