@@ -45,8 +45,7 @@ public class GetUserByIdImplTest {
 			assertTrue("sucsess", true);
 
 		} catch (Exception ex) {
-
-			assertTrue("sucsess", false);
+			assertTrue(ex.toString(), false);
 		}
 	}
 
