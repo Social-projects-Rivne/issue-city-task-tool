@@ -26,6 +26,7 @@
 					<th>Name</th>
 					<th>Email</th>
 					<th>Login</th>
+					<th>Actions</th>
 				</tr>	
 			</thead>
 			
