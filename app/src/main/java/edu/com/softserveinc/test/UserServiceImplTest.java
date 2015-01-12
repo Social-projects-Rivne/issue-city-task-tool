@@ -38,7 +38,7 @@ public class UserServiceImplTest {
 
 		} catch (Exception ex) {
 			System.out.println(ex);
-			assertTrue("sucsess", false);
+			assertTrue(ex.toString(), false);
 		}
 	}
 }
