@@ -72,6 +72,9 @@ body {
 
 #add-issue-form {
 	display: none;
+	position: absolute;
+	width: 50%;
+	top: 5%;
 }
 
 #menu {
