@@ -16,13 +16,13 @@ import edu.com.softserveinc.main.models.UserModel;
 @Controller
 public class BawlController {
 
-	//TODO: change  "UserServiceImpl" on "AdminService"
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/admin-toolpage")
 	public String showUsersTable(LoadUsersListImpl usersList, Model model) {
 		try {
 			model.addAttribute("users", usersList.loadUsersList());
 		} catch (JDBCConnectionException ex) {
-			
+
 			// TODO: Change it on logger!
 			System.out
 					.println("ERROR! Can't connect to database, try to change "
@@ -32,38 +32,46 @@ public class BawlController {
 		}
 		return "admin-toolpage";
 	}
-	//TODO: change  "UserServiceImpl" on "AdminService"
+
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/add-user", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl userService, Model model) {
 
-		userService.addUser(user);
-		model.addAttribute("notification", "New user was succesfully added!");
-
+		try {
+			userService.addUser(user);
+			model.addAttribute("notification",
+					"New user have succesfully added!");
+		} catch (Exception ex) {
+			model.addAttribute("notification", "Error " + ex.toString());
+		}
 		return "redirect:admin-toolpage";
 	}
 
-	//TODO: change  "UserServiceImpl" on "AdminService"
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/edit-user", method = RequestMethod.POST)
 	public String editUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl userService, Model model) {
 		try {
 			userService.editUser(user);
-			model.addAttribute("notification", "User was succesfully edited!");
+			model.addAttribute("notification", "User have succesfully edited!");
 		} catch (Exception ex) {
-			model.addAttribute("notification", "error" + ex.getCause());
+			model.addAttribute("notification", "User exists!");
 		}
 		return "redirect:admin-toolpage";
 	}
 
-	//TODO: change  "UserServiceImpl" on "AdminService"
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
 	public String removeUser(@RequestParam("userId") int userId,
 			UserServiceImpl userService, GetUserByIdImpl getUsr, Model model) {
 
-		userService.deleteUser(getUsr.getUserByID(userId));
-		model.addAttribute("notification", "User was succesfully removed!");
-
+		try {
+			userService.deleteUser(getUsr.getUserByID(userId));
+			model.addAttribute("notification", "User have succesfully removed!");
+		} catch (Exception ex) {
+			model.addAttribute("notification", "Erro! " + ex.toString());
+		}
 		return "redirect:admin-toolpage";
 	}
 
