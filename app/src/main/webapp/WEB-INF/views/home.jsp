@@ -20,7 +20,7 @@
 		<div id="map_canvas"></div>
 	</div>
 	
-	<div id="add-issue-form" class="container-fluid">
+	<form id="add-issue-form" class="container-fluid" method="POST" action="add-issue">
           
           <!-- Header -->
           <div class="row-fluid" id="header">
@@ -45,12 +45,14 @@
             <div class="span9 text"> 
                 <br>
 
+				  <input type="hidden" name="mapPointer" id="mapPointer" />	
+					
                   <div class='row'>
                     <div class='left'>
                       <label for "problem name"> Problem name: </label>
                     </div>
                     <div class='right'>
-                      <input type="text" id="problem_name" name ="problem_name" placeholder="enter name of problem"><span></span>
+                      <input type="text" id="problem_name" name ="name" placeholder="enter name of problem"><span></span>
                     </div>
                   </div>
                   
@@ -60,10 +62,10 @@
                     </div>
                     <div class='right'>
                         <div class="selectWrap">
-                          <select id="category_name">
-                          <option>Thefts</option>
-                          <option>Fires</option>
-                          <option>Murders</option>
+                          <select id="category_name" name="category">
+	                          <option>Thefts</option>
+	                          <option>Fires</option>
+	                          <option>Murders</option>
                           </select>
                         </div>    
                     </div>
@@ -83,7 +85,7 @@
                       <label for "problem name"> Attachments (url): </label>
                     </div>
                     <div class='right'>
-                      <input type="text" id="url_attachments" name ="url_attachments" placeholder="enter attachments (url):"><span></span>
+                      <input type="text" id="url_attachments" name ="attachments" placeholder="enter attachments (url):"><span></span>
                     </div>
                   </div>
 
@@ -92,9 +94,9 @@
                       Problem Priority: 
                     </div>
                     <div class='right-radio'>
-                      <input type="radio" value="low" id="low" name ="priority"> Low 
-                      <input type="radio" value="medium" id="medium" name ="priority"> Medium 
-                      <input type="radio" value="high" id="high" name ="priority" checked="checked"> High
+                      <input type="radio" value="1" id="low" name ="priorityId"> Low 
+                      <input type="radio" value="2" id="medium" name ="priorityId"> Medium 
+                      <input type="radio" value="3" id="high" name ="priorityId" checked="checked"> High
                     </div>
                   </div>
             </div>
@@ -106,6 +108,6 @@
             rv-009
             </div>
           </div>
-    </div>
+    </form>
 </body>
 </html>
