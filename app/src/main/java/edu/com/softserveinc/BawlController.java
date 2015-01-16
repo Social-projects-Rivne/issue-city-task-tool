@@ -75,9 +75,5 @@ public class BawlController {
 		return "redirect:admin-toolpage";
 	}
 	
-	@ModelAttribute
-	public void addString(Model model) {
-		model.addAttribute("notMsg", notificationMessage);
-	}
 
 }
