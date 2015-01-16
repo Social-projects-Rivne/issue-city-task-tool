@@ -15,15 +15,14 @@ import edu.com.softserveinc.main.models.UserModel;
 
 @Controller
 public class BawlController {
-	private String notificationMessage;
 
-	//TODO: change  "UserServiceImpl" on "AdminService"
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/admin-toolpage")
 	public String showUsersTable(LoadUsersListImpl usersList, Model model) {
 		try {
 			model.addAttribute("users", usersList.loadUsersList());
 		} catch (JDBCConnectionException ex) {
-			
+
 			// TODO: Change it on logger!
 			System.out
 					.println("ERROR! Can't connect to database, try to change "
@@ -31,46 +30,48 @@ public class BawlController {
 
 			return "error";
 		}
-		notificationMessage = "";
 		return "admin-toolpage";
 	}
-	//TODO: change  "UserServiceImpl" on "AdminService"
+
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/add-user", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl userService, Model model) {
 
-		userService.addUser(user);
-		notificationMessage = "New user was succesfully added!";
-
-		return "redirect:admin-toolpage";
-	}
-
-	//TODO: change  "UserServiceImpl" on "AdminService"
-	@RequestMapping(value = "/edit-user", method = RequestMethod.POST)
-	public String editUser(@RequestParam("userId") int userId, @RequestParam("change_firstname") String name,
-			@RequestParam("change_email") String email, @RequestParam("change_login") String login,
-				UserServiceImpl userService, GetUserByIdImpl getUsr, UserModel user, Model model) {
 		try {
-			user = getUsr.getUserByID(userId);
-			user.setName(name);
-			user.setEmail(email);
-			user.setLogin(login);
-			userService.editUser(user);
-			notificationMessage = "User was succesfully edited!";
+			userService.addUser(user);
+			model.addAttribute("notification",
+					"New user have succesfully added!");
 		} catch (Exception ex) {
-			notificationMessage = "Error!" + ex.getCause();
+			model.addAttribute("notification", "Error " + ex.toString());
 		}
 		return "redirect:admin-toolpage";
 	}
 
-	//TODO: change  "UserServiceImpl" on "AdminService"
+	// TODO: change "UserServiceImpl" on "AdminService"
+	@RequestMapping(value = "/edit-user", method = RequestMethod.POST)
+	public String editUser(@ModelAttribute("user") UserModel user,
+			UserServiceImpl userService, Model model) {
+		try {
+			userService.editUser(user);
+			model.addAttribute("notification", "User have succesfully edited!");
+		} catch (Exception ex) {
+			model.addAttribute("notification", "User exists!");
+		}
+		return "redirect:admin-toolpage";
+	}
+
+	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
 	public String removeUser(@RequestParam("userId") int userId,
 			UserServiceImpl userService, GetUserByIdImpl getUsr, Model model) {
 
-		userService.deleteUser(getUsr.getUserByID(userId));
-		notificationMessage = "User was succesfully removed!";
-
+		try {
+			userService.deleteUser(getUsr.getUserByID(userId));
+			model.addAttribute("notification", "User have succesfully removed!");
+		} catch (Exception ex) {
+			model.addAttribute("notification", "Erro! " + ex.toString());
+		}
 		return "redirect:admin-toolpage";
 	}
 	
