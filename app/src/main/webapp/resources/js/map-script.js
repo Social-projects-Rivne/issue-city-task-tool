@@ -1,7 +1,5 @@
-var gpos;
-
 function initialize() {
-	gpos = new google.maps.LatLng(50.620679, 26.244523);
+	var gpos = new google.maps.LatLng(50.620679, 26.244523);
   var mapOptions = {
     zoom: 12,
     center: gpos
@@ -45,5 +43,3 @@ function initialize() {
 	});
 
 }
-
-window.onload = initialize;

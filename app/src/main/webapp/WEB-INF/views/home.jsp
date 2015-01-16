@@ -7,7 +7,8 @@
 	<script src="<c:url value="/resources/js/map-script.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery-2.1.3.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/bootstrap.js" />" type="text/javascript"></script>
-    <!--<script src="<c:url value="/resources/js/validation-script.js" />" type="text/javascript"></script>-->
+    <script src="<c:url value="/resources/js/home-script.js" />" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/validation-script.js" />" type="text/javascript"></script>
 	<link href="<c:url value="/resources/css/styles2.css" />" rel="stylesheet">
 	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />">
 </head>

@@ -1,4 +1,4 @@
-window.onload = function(){
+function validate(){
 	var problemName = document.getElementById('problem_name');
 	var description = document.getElementById('description');
 	var urlAttachments = document.getElementById('url_attachments');
