@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.implementation;
+package edu.com.softserveinc.main.interfaces;
 
 public interface Dao {
 	

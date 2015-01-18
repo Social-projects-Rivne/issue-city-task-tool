@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="problems")
-public class ProblemModel {
+public class IssueModel {
 
 	@Id
 	@GeneratedValue
@@ -39,11 +39,11 @@ public class ProblemModel {
 	/**
 	 * Default constructor
 	 */
-	ProblemModel(){
+	IssueModel(){
 		
 	}
 
-	public ProblemModel(String name, String description, String mapPointer, String attachments, int priorityId) {
+	public IssueModel(String name, String description, String mapPointer, String attachments, int priorityId) {
 		this.name = name;
 		this.description = description;
 		this.mapPointer = mapPointer;

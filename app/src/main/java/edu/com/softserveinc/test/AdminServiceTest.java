@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.com.softserveinc.main.models.AdminService;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.services.AdminService;
 
 public class AdminServiceTest {
 

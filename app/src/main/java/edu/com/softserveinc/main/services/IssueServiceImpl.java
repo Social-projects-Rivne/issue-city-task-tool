@@ -1,8 +1,8 @@
-package edu.com.softserveinc.main.dao.problems;
+package edu.com.softserveinc.main.services;
 
 import edu.com.softserveinc.main.dao.DaoImpl;
-import edu.com.softserveinc.main.implementation.ProblemService;
-import edu.com.softserveinc.main.models.ProblemModel;
+import edu.com.softserveinc.main.interfaces.IssueService;
+import edu.com.softserveinc.main.models.IssueModel;
 
 /**
  * Class needs for working with problems
@@ -10,14 +10,14 @@ import edu.com.softserveinc.main.models.ProblemModel;
  * @author nazar
  *
  */
-public class ProblemServiceImpl implements ProblemService {
+public class IssueServiceImpl implements IssueService {
 
 	/**
 	 * Add new problem
 	 * @param problem
 	 */
 	@Override
-	public void addProblemm(ProblemModel problem) {
+	public void addProblemm(IssueModel problem) {
 		new DaoImpl().addInDB(problem);
 		
 	}
@@ -26,7 +26,7 @@ public class ProblemServiceImpl implements ProblemService {
 	 * @param problem
 	 */
 	@Override
-	public void editProblemm(ProblemModel problem) {
+	public void editProblemm(IssueModel problem) {
 		new DaoImpl().editInDB(problem);		
 	}
 	/**
@@ -34,7 +34,7 @@ public class ProblemServiceImpl implements ProblemService {
 	 * @param problem
 	 */
 	@Override
-	public void deletteProblemm(ProblemModel problem) {
+	public void deletteProblemm(IssueModel problem) {
 		new DaoImpl().deleteFromDB(problem);
 		
 	}

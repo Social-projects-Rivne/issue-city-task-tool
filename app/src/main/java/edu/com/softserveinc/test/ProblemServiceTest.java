@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.com.softserveinc.main.dao.problems.ProblemServiceImpl;
-import edu.com.softserveinc.main.models.ProblemModel;
+import edu.com.softserveinc.main.models.IssueModel;
+import edu.com.softserveinc.main.services.IssueServiceImpl;
 
 public class ProblemServiceTest {
 
@@ -18,7 +18,7 @@ public class ProblemServiceTest {
 	public void testAddProblemm() {
 		try {
 			System.out.println("start");
-			new ProblemServiceImpl().addProblemm(new ProblemModel(
+			new IssueServiceImpl().addProblemm(new IssueModel(
 					"first problem", "bigg problemm!!", "0, 0", "smth", 1));
 			
 			assertTrue("sucsess", true);

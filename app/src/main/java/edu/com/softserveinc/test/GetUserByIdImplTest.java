@@ -6,9 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.com.softserveinc.main.dao.users.GetUserByIdImpl;
-import edu.com.softserveinc.main.dao.users.UserServiceImpl;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.services.UserServiceImpl;
 
 public class GetUserByIdImplTest {
 
@@ -39,7 +38,7 @@ public class GetUserByIdImplTest {
 	public void testGetUserByID() {
 		try {
 			System.out.println("=====  stert to get user =====");
-			UserModel user2 = new GetUserByIdImpl().getUserByID(user.getId());
+			UserModel user2 = new UserServiceImpl().getUserByID(user.getId());
 			System.out.println("===== user getted =====" + user2.getEmail());
 
 			assertTrue("sucsess", true);

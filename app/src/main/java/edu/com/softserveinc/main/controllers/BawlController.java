@@ -1,4 +1,4 @@
-package edu.com.softserveinc;
+package edu.com.softserveinc.main.controllers;
 
 import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.stereotype.Controller;
@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.com.softserveinc.main.dao.users.GetUserByIdImpl;
-import edu.com.softserveinc.main.dao.users.LoadUsersListImpl;
-import edu.com.softserveinc.main.dao.users.UserServiceImpl;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.services.LoadUsersListImpl;
+import edu.com.softserveinc.main.services.UserServiceImpl;
 
 @Controller
 public class BawlController {
@@ -64,7 +63,7 @@ public class BawlController {
 	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
 	public String removeUser(@RequestParam("userId") int userId,
-			UserServiceImpl userService, GetUserByIdImpl getUsr, Model model) {
+			UserServiceImpl userService, UserServiceImpl getUsr, Model model) {
 
 		try {
 			userService.deleteUser(getUsr.getUserByID(userId));

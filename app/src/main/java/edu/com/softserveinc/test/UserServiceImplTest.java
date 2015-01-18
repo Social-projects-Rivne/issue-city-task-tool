@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import edu.com.softserveinc.main.dao.users.UserServiceImpl;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.services.UserServiceImpl;
 
 public class UserServiceImplTest {
 
