@@ -21,7 +21,7 @@
         <property name="hbm2ddl.auto">update</property>
         
         <mapping class="edu.com.softserveinc.main.models.UserModel"/>
-        <mapping class="edu.com.softserveinc.main.models.ProblemModel"/>
+        <mapping class="edu.com.softserveinc.main.models.IssueModel"/>
     </session-factory>
   
 </hibernate-configuration>
