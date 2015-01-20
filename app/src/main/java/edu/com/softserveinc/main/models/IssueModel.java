@@ -16,6 +16,9 @@ public class IssueModel {
 	@GeneratedValue
 	@Column(name="id")
 	private int id;
+	
+	@Column(name="category_id")
+	private int category_id;
 
 	@NotEmpty
 	@Column(name="name")
@@ -68,6 +71,21 @@ public class IssueModel {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+	/**
+	 * 
+	 * @return category id
+	 */
+	public int getCategory_id() {
+		return category_id;
+	}
+	/**
+	 * Setup category id of problem
+	 * 
+	 * @param category_id
+	 */
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
 	}
 
 	/**
