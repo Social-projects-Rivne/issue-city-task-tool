@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  */
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 public class CategoryModel {
 
 	public CategoryModel(String name) {
