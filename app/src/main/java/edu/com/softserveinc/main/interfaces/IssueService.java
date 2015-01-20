@@ -31,4 +31,13 @@ public interface IssueService {
 	 */
 	public void deletteProblemm(IssueModel problem);
 
+	/**
+	 * It gets issues by id
+	 * 
+	 * @param id
+	 * @return IssueModel
+	 */
+	public IssueModel getByID(int id);
+
+	
 }

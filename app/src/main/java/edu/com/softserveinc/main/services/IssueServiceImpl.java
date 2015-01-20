@@ -1,9 +1,12 @@
 package edu.com.softserveinc.main.services;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.interfaces.IssueService;
 import edu.com.softserveinc.main.models.IssueModel;
-
 /**
  * Class needs for working with problems
  * 
@@ -27,7 +30,7 @@ public class IssueServiceImpl implements IssueService {
 	 */
 	@Override
 	public void editProblemm(IssueModel problem) {
-		new DaoImpl().editInDB(problem);		
+		new DaoImpl().editInDB(problem);	
 	}
 	/**
 	 * Delete existing problem 
@@ -37,6 +40,16 @@ public class IssueServiceImpl implements IssueService {
 	public void deletteProblemm(IssueModel problem) {
 		new DaoImpl().deleteFromDB(problem);
 		
+	}
+	@Override
+	public IssueModel getByID(int id) {
+		@SuppressWarnings("deprecation")
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		IssueModel issue = (IssueModel)session.get(IssueModel.class, id);
+		session.close();
+		return issue;
 	}
 
 }
