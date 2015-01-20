@@ -29,7 +29,7 @@ public interface IssueService {
 	 * 
 	 * @param problem
 	 */
-	public void deletteProblemm(IssueModel problem);
+	public void deleteProblemm(IssueModel problem);
 
 	/**
 	 * It gets issues by id

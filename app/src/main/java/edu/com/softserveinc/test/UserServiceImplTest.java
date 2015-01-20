@@ -27,10 +27,13 @@ public class UserServiceImplTest {
 		try {
 			// add new user
 			userService.addUser(user);
+
 			// change user data
 			user.setAvatar("new_avata_url");
+
 			// editing user
 			userService.editUser(user);
+
 			// removing
 			userService.deleteUser(user);
 
