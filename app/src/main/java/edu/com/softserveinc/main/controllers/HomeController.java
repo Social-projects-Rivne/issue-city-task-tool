@@ -20,7 +20,7 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping(value = "add-issue", method = RequestMethod.GET)
+	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(@ModelAttribute("issue") IssueModel issue,
 			IssueServiceImpl service) {
 		if (new IssueValidator(issue).isValid()) {
