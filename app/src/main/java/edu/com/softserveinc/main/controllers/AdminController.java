@@ -1,5 +1,6 @@
 package edu.com.softserveinc.main.controllers;
 
+import org.hibernate.JDBCException;
 import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,8 @@ public class AdminController {
 		try {
 			userService.addUser(user);
 			notificationMessage = "New user was succesfully added!";
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			notificationMessage = "User exists";
 		}
 		return "redirect:admin-toolpage";
@@ -64,7 +66,11 @@ public class AdminController {
 			user.setLogin(login);
 			userService.editUser(user);
 			notificationMessage = "User was succesfully edited!";
-		} catch (Exception ex) {
+		} 
+		catch (JDBCException ex) {
+				notificationMessage = "User with that email or login exists ";
+		}
+		catch (Exception ex) {
 			notificationMessage = "Error! " + ex.getCause();
 		}
 		return "redirect:admin-toolpage";
