@@ -1,14 +1,8 @@
-package edu.com.softserveinc.main.models;
+package edu.com.softserveinc.main.services;
 
 //import org.hibernate.Session;
-//import org.hibernate.SessionFactory;
-//import org.hibernate.cfg.Configuration;
-
-//import edu.com.softserveinc.main.dao.UserExist;
-import edu.com.softserveinc.main.dao.users.GetUserByIdImpl;
-import edu.com.softserveinc.main.dao.users.UserServiceImpl;
-import edu.com.softserveinc.main.implementation.GetUserByID;
-import edu.com.softserveinc.main.implementation.UserService;
+import edu.com.softserveinc.main.interfaces.UserService;
+import edu.com.softserveinc.main.models.UserModel;
 
 /**
  * 
@@ -17,7 +11,7 @@ import edu.com.softserveinc.main.implementation.UserService;
  * @author nazar
  *
  */
-public class AdminModel implements UserService, GetUserByID {
+public class AdminService implements UserService {
 
 	/**
 	 * Add new user in table
@@ -50,7 +44,7 @@ public class AdminModel implements UserService, GetUserByID {
 	 */
 	@Override
 	public void deleteUser(UserModel user) {
-
+		
 		new UserServiceImpl().deleteUser(user);
 
 	}
@@ -63,7 +57,7 @@ public class AdminModel implements UserService, GetUserByID {
 	@Override
 	public UserModel getUserByID(int userId) {
 
-		return new GetUserByIdImpl().getUserByID(userId);
+		return new UserServiceImpl().getUserByID(userId);
 
 	}
 

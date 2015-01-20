@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.implementation;
+package edu.com.softserveinc.main.interfaces;
 
 import edu.com.softserveinc.main.models.UserModel;
 
@@ -25,4 +25,11 @@ public interface UserService {
 	 */
 	public void editUser(UserModel user);
 
+	/**
+	 * 
+	 * Get user's fields from Data Base by user_id
+	 *
+	 */
+	public UserModel getUserByID(int userId);
+	
 }

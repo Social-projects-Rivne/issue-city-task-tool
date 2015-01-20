@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.dao.users;
+package edu.com.softserveinc.main.services;
 
 import java.util.List;
 
@@ -6,10 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import edu.com.softserveinc.main.implementation.LoadUsersList;
+import edu.com.softserveinc.main.interfaces.LoadUsersList;
 
 public class LoadUsersListImpl implements LoadUsersList{
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List loadUsersList() {
 		@SuppressWarnings("deprecation")

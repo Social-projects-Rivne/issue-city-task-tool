@@ -2,56 +2,60 @@ package edu.com.softserveinc.main.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name="problems")
-public class ProblemModel {
+@Table(name = "problems")
+public class IssueModel {
 
 	@Id
-	@NotEmpty
-	@Column(name="id")
+	@GeneratedValue
+	@Column(name = "id")
 	private int id;
 
+	@Column(name = "category_id")
+	private int category_id;
+
 	@NotEmpty
-	@Column(name="name")
+	@Column(name = "name")
 	private String name;
 
 	@NotEmpty
-	@Column(name="description")
+	@Column(name = "description")
 	private String description;
 
 	@NotEmpty
-	@Column(name="mapPointer")
+	@Column(name = "mapPointer")
 	private String mapPointer;
 
-	@Column(name="attachments")
+	@Column(name = "attachments")
 	private String attachments;
 
-	@Column(name="priority_id")
+	@Column(name = "priority_id")
 	private int priorityId;
 
-	
 	/**
 	 * Default constructor
 	 */
-	ProblemModel(){
-		
+	IssueModel() {
+
 	}
 
-	public ProblemModel(String name, String description, String mapPointer, String attachments, int priorityId) {
+	public IssueModel(int category_id, String name, String description,
+			String mapPointer, String attachments, int priorityId) {
+		this.category_id = category_id;
 		this.name = name;
 		this.description = description;
 		this.mapPointer = mapPointer;
 		this.attachments = attachments;
 		this.priorityId = priorityId;
-		
+
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return id
@@ -70,9 +74,26 @@ public class ProblemModel {
 	}
 
 	/**
+	 * 
+	 * @return category id
+	 */
+	public int getCategory_id() {
+		return category_id;
+	}
+
+	/**
+	 * Setup category id of problem
+	 * 
+	 * @param category_id
+	 */
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
+
+	/**
 	 * It returns name of problem
 	 * 
-	 * @return name 
+	 * @return name
 	 */
 	public String getName() {
 		return name;
@@ -81,6 +102,7 @@ public class ProblemModel {
 	/**
 	 * 
 	 * Setup name of problem
+	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
@@ -113,7 +135,7 @@ public class ProblemModel {
 	public String getMapPointer() {
 		return mapPointer;
 	}
-	
+
 	/**
 	 * Setup map coordinates
 	 * 
@@ -125,12 +147,13 @@ public class ProblemModel {
 
 	/**
 	 * Setup attachment
+	 * 
 	 * @return
 	 */
 	public String getAttachments() {
 		return attachments;
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -139,7 +162,7 @@ public class ProblemModel {
 	public void setAttachments(String attachments) {
 		this.attachments = attachments;
 	}
-	
+
 	/**
 	 * Return priority id
 	 * 
@@ -148,7 +171,7 @@ public class ProblemModel {
 	public int getPriorityId() {
 		return priorityId;
 	}
-	
+
 	/**
 	 * Setup priority id
 	 * 
@@ -157,6 +180,5 @@ public class ProblemModel {
 	public void setPriorityId(int priority_id) {
 		this.priorityId = priority_id;
 	}
-
 
 }
