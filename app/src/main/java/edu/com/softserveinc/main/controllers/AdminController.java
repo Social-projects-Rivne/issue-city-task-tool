@@ -13,7 +13,7 @@ import edu.com.softserveinc.main.services.LoadUsersListImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
 
 @Controller
-public class BawlController {
+public class AdminController {
 
 	private String notificationMessage;
 
