@@ -5,6 +5,7 @@
 	<title>Home</title>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 	<script src="<c:url value="/resources/js/map-script.js" />"></script>
+	<script src="<c:url value="/resources/js/issue-script.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/home-script.js" />" type="text/javascript"></script>

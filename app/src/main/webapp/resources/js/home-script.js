@@ -7,5 +7,6 @@ window.onload = function() {
 	
 	map.addEventListener('click', function() {
 		issue.style.display = 'block';
+		getIssue(1);
 	}, false);
 }
