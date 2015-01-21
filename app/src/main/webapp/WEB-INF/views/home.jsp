@@ -5,17 +5,57 @@
 	<title>Home</title>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 	<script src="<c:url value="/resources/js/map-script.js" />"></script>
-	<script src="<c:url value="/resources/js/jquery-2.1.3.js" />" type="text/javascript"></script>
-    <script src="<c:url value="/resources/js/bootstrap.js" />" type="text/javascript"></script>
+	<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />" type="text/javascript"></script>
+    <script src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/home-script.js" />" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/validation-script.js" />" type="text/javascript"></script>
 	<link href="<c:url value="/resources/css/styles2.css" />" rel="stylesheet">
-	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />">
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 </head>
 <body>
-	<div id="menu">
-		<a href="admin-toolpage">ToolPage</a>
-	</div>
+<!-- 	<div id="menu"> -->
+<!-- 		<a href="admin-toolpage">ToolPage</a> -->
+
+
+<!-- <div class="container" id="navbar"> -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Bawl</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#">Cry out</a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Login</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+<!--     </div> -->
+
+
+
+	
 	
 	<div id="map">
 		<div id="map_canvas"></div>
@@ -50,7 +90,7 @@
 					
                   <div class='row'>
                     <div class='left'>
-                      <label for "problem name"> Problem name: </label>
+                      <label> Problem name: </label>
                     </div>
                     <div class='right'>
                       <input type="text" id="problem_name" name ="name" placeholder="enter name of problem"><span></span>
@@ -59,7 +99,7 @@
                   
                   <div class='row'>
                     <div class='left'>
-                      <label for "problem name"> Category name: </label>
+                      <label"> Category name: </label>
                     </div>
                     <div class='right'>
                         <div class="selectWrap">
@@ -74,7 +114,7 @@
                  
                   <div class='row'>
                     <div class='left'>
-                      <label for "problem name"> Description: </label>
+                      <label> Description: </label>
                     </div>
                     <div class='right'>
                       <input type="text" id="description" name ="description" placeholder="enter description"><span></span>
@@ -83,7 +123,7 @@
 
                   <div class='row'>
                     <div class='left'>
-                      <label for "problem name"> Attachments (url): </label>
+                      <label> Attachments (url): </label>
                     </div>
                     <div class='right'>
                       <input type="text" id="url_attachments" name ="attachments" placeholder="enter attachments (url):"><span></span>
@@ -110,5 +150,12 @@
             </div>
           </div>
     </form>
+    
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="resources/js/jquery-1.11.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="resources/js/bootstrap.min.js"></script>
+    
+    
 </body>
 </html>
