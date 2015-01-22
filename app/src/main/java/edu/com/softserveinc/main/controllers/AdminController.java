@@ -60,11 +60,7 @@ public class AdminController {
 			UserServiceImpl userService, UserServiceImpl getUsr,
 			UserModel user, Model model) {
 		try {
-			user = getUsr.getUserByID(userId);
-			user.setName(name);
-			user.setEmail(email);
-			user.setLogin(login);
-			userService.editUser(user);
+			
 			notificationMessage = "User was succesfully edited!";
 		} 
 		catch (JDBCException ex) {
