@@ -1,12 +1,18 @@
 window.onload = function() {
 	initialize();
-	validate();
+	//validate();
 	
+	var cryOut = document.getElementById('cry-out');
+	var issue = document.getElementById('grid-right');
 	var map = document.getElementById('map');
-	var issue = document.getElementById('add-issue-form');
 	
-	map.addEventListener('click', function() {
+	cryOut.addEventListener('click', function(event) {
+		event.preventDefault();
 		issue.style.display = 'block';
-		getIssue(1);
+	}, false);
+	
+	map.addEventListener('click', function(event) {
+		event.preventDefault();
+		issue.style.display = 'none';
 	}, false);
 }

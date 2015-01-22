@@ -6,7 +6,7 @@ padding-top: 50px;
 /*sidebar start */
 
 .grid {
- 
+  display: none;
   margin: 0;
   &:after {
     /* Or @extend clearfix */
@@ -54,7 +54,7 @@ padding-top: 50px;
 }
 /* text color navbar-brand */
 .navbar-default .navbar-brand {
-    color: #fff;
+    color: #fff !important;
 }
 /* navbar-brand color on haver and focus */
 .navbar-default .navbar-brand:hover,
@@ -63,7 +63,7 @@ padding-top: 50px;
 }
 /* navbar-nav text color */
 .navbar-default .navbar-nav > li > a {
-    color: #fff;
+    color: #fff !important;
 }
 /* navbar-nav hover, focus color */
 .navbar-default .navbar-nav > li > a:hover,
@@ -103,6 +103,14 @@ padding-top: 50px;
 /* Цвет полосочек в кнопочке, которая открывает меню */
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff;
+}
+
+.tabbable {
+	padding: 10px;
+}
+
+.tabbable > h4 {
+	text-align: center;
 }
  
 /*
