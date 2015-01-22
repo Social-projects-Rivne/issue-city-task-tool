@@ -1,5 +1,7 @@
 package edu.com.softserveinc.main.interfaces;
 
+import java.awt.List;
+
 public interface Dao {
 	
 	/**
@@ -22,5 +24,23 @@ public interface Dao {
 	 * @param obj
 	 */
 	public void deleteFromDB(Object obj);
+	
+	/**
+	 * It finds class's object by id
+	 * 
+	 * @param id 
+	 * @param null object of that class which you want to get
+	 * @return object
+	 */
+	public Object getById(int id, Object obj);
 
+	/**
+	 * It loads all objects of class
+	 * 
+	 * @param null object of that class which you want to get
+	 * @return List of objects
+	 */
+	public List getAll(Object obj);
+
+	
 }
