@@ -10,36 +10,35 @@ import edu.com.softserveinc.main.services.IssueServiceImpl;
 
 public class ProblemServiceTest {
 
+	private IssueServiceImpl issuService = new IssueServiceImpl();
+	IssueModel issue = null;
+
 	@Before
 	public void setUp() throws Exception {
+		issue = new IssueModel("first problem", "bigg problemm!!", "0, 0",
+				"smth", 1);
 	}
-
+	//TODO: add comments!!!
 	@Test
 	public void testAddProblemm() {
 		try {
 			System.out.println("start");
-			new IssueServiceImpl().addProblemm(new IssueModel(
-					"first problem", "bigg problemm!!", "0, 0", "smth", 1));
+			issuService.addProblemm(issue);
+
+			issue = issuService.getByID(1);
+
+			issue.setAttachments("add new attachments");
+
+			issuService.editProblemm(issue);
+
+			issuService.deletteProblemm(issue);
 			
 			assertTrue("sucsess", true);
 			
 		} catch (Exception ex) {
 			System.out.println(ex);
 			assertTrue(ex.toString(), false);
-			
+
 		}
 	}
-	
-	// it will be later
-/*
-	@Test
-	public void testEditProblemm() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDeletteProblemm() {
-		fail("Not yet implemented");
-	}
-*/
 }

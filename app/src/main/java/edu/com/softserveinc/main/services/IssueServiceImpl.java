@@ -51,5 +51,7 @@ public class IssueServiceImpl implements IssueService {
 		session.close();
 		return issue;
 	}
+	
+	//TODO: add method for get all categories !!! 
 
 }
