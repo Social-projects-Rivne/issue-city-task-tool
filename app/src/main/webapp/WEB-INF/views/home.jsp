@@ -75,16 +75,21 @@
                     <div class="tab-pane fade" id="tab2">
                         <p>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Short issue name</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" />
+                                <label for="issue-name">Short issue name</label>
+                                <input type="text" class="form-control" id="issue-name" />
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Issue category</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" />
+                                <label for="issue-category">Issue category</label>
+                                <input type="text" class="form-control" id="issue-category" list="categories" />
+                                <datalist id="categories">
+                                	<option>Category 1</option>
+                                	<option>Category 2</option>
+                                	<option>Category 3</option>
+                                </datalist>
                             </div>
                             <div class="form-group">
-                                <label for="problem_description">Issue description</label>
-                                <textarea class="form-control" rows="3" id="problem_description">
+                                <label for="issue-description">Issue description</label>
+                                <textarea class="form-control" rows="3" id="issue-description">
                                 </textarea>
                             </div>
                             <div class="form-group">
@@ -102,7 +107,7 @@
                             <input id="input-1" type="file" class="file">
                        
                         </div>
-                        <button type="submit" class="btn btn-default">Add</button>
+                        <button type="submit" class="btn btn-default" id="add-issue">Add</button><div></div>
 
                     </div>
                 </div>
