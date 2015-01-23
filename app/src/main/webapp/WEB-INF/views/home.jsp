@@ -55,6 +55,7 @@
 	<div class="grid" id="grid-right">
         <div class="col-1-3">
             <div class="tabbable">
+            <form method="POST" action="add-issue">
                 <!-- Only required for left/right tabs -->
                 <h4>Add issue</h4>
                 <ul class="nav nav-tabs">
@@ -76,11 +77,11 @@
                         <p>
                             <div class="form-group">
                                 <label for="issue-name">Short issue name</label>
-                                <input type="text" class="form-control" id="issue-name" />
+                                <input type="text" class="form-control" id="issue-name" name="issueName" />
                             </div>
                             <div class="form-group">
                                 <label for="issue-category">Issue category</label>
-                                <input type="text" class="form-control" id="issue-category" list="categories" />
+                                <input type="text" class="form-control" id="issue-category" list="categories" name="issueCategory" />
                                 <datalist id="categories">
                                 	<option>Category 1</option>
                                 	<option>Category 2</option>
@@ -89,12 +90,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="issue-description">Issue description</label>
-                                <textarea class="form-control" rows="3" id="issue-description">
-                                </textarea>
+                                <textarea class="form-control" rows="3" id="issue-description" name="issueDescription"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="propose">Resolution</label>
-                                <textarea class="form-control" rows="3" id="propose">
+                                <textarea class="form-control" rows="3" id="propose" name="issueResolution">
                                 </textarea>
                             </div>
                             <button class="btn">Next</button>
@@ -104,17 +104,17 @@
                         <p></p>
                         <div class="form-group">
                             <label for="exampleInputFile">Click to upload file</label>
-                            <input id="input-1" type="file" class="file">
-                       
+                            <input id="input-1" type="file" class="file" name="issueAttachments">
                         </div>
                         <button type="submit" class="btn btn-default" id="add-issue">Add</button><div></div>
 
                     </div>
                 </div>
+                </form>
             </div>
         </div>
 	</div>
-	
+
 	
 	<div id="map">
 		<div id="map_canvas"></div>
