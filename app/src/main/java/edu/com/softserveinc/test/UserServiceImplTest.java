@@ -18,6 +18,8 @@ public class UserServiceImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+
+		System.out.println("test start");
 		this.user = new UserModel("Name", "Email@mal.er", "login1", 1,
 				"asdasdasd", "avatar");
 	}
@@ -25,12 +27,20 @@ public class UserServiceImplTest {
 	@Test
 	public void testUserService() {
 		try {
+
+			System.out.println("add new user");
 			// add new user
 			userService.addUser(user);
+
+			System.out.println("change user data");
 			// change user data
 			user.setAvatar("new_avata_url");
+
+			System.out.println("editing user");
 			// editing user
 			userService.editUser(user);
+
+			System.out.println("removing");
 			// removing
 			userService.deleteUser(user);
 

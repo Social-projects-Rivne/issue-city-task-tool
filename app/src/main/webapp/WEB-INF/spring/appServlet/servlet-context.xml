@@ -31,5 +31,12 @@
 	<context:component-scan base-package="edu.com.softserveinc" />
 	
 	
+	<beans:bean id="encoder"
+		class="edu.com.softserveinc.main.utils.PasswordEncoder">
+	
+		<beans:constructor-arg name="strenhtg" value="11"/>
+	
+	</beans:bean>
+	
 	
 </beans:beans>
