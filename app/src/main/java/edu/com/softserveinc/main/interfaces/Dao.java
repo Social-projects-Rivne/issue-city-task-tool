@@ -1,6 +1,6 @@
 package edu.com.softserveinc.main.interfaces;
 
-import java.awt.List;
+import java.util.List;
 
 public interface Dao {
 	
@@ -40,6 +40,7 @@ public interface Dao {
 	 * @param null object of that class which you want to get
 	 * @return List of objects
 	 */
+	@SuppressWarnings("rawtypes")
 	public List getAll(Object obj);
 
 	

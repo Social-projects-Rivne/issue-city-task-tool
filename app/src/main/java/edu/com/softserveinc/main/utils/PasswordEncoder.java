@@ -32,7 +32,7 @@ public class PasswordEncoder {
 	 */
 	public String encode(){
 		
-		if(password.length()<67)
+		if(password.length()<61)
 			return encoder.encode(password);
 		else 
 			return password;
