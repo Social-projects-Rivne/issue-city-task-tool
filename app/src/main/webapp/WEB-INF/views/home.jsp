@@ -15,11 +15,8 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 </head>
 <body>
-<!-- 	<div id="menu"> -->
-<!-- 		<a href="admin-toolpage">ToolPage</a> -->
 
-
-<!-- <div class="container" id="navbar"> -->
+	<div class="container" id="navbar">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -36,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#">Cry out</a>
+                            <a href="#" id="cry-out">Cry out</a>
                         </li>
 
                     </ul>
@@ -52,111 +49,76 @@
                 </div>
             </div>
         </nav>
-<!--     </div> -->
+	</div>
 
 
+	<div class="grid" id="grid-right">
+        <div class="col-1-3">
+            <div class="tabbable">
+            <form method="POST" action="add-issue">
+                <!-- Only required for left/right tabs -->
+                <h4>Add issue</h4>
+                <ul class="nav nav-tabs">
 
-	
+                    <li class="active"><a href="#tab1" data-toggle="tab">Point</a>
+                    </li>
+
+                    <li><a href="#tab2" data-toggle="tab">Description</a>
+                    </li>
+                    <li><a href="#tab3" data-toggle="tab">Photo</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <p>Mark the place of issue on the map</p>
+                        <button class="btn">Next</button>
+                    </div>
+                    <div class="tab-pane fade" id="tab2">
+                        <p>
+                            <div class="form-group">
+                                <label for="issue-name">Short issue name</label>
+                                <input type="text" class="form-control" id="issue-name" name="issueName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="issue-category">Issue category</label>
+                                <input type="text" class="form-control" id="issue-category" list="categories" name="issueCategory" />
+                                <datalist id="categories">
+                                	<option>Category 1</option>
+                                	<option>Category 2</option>
+                                	<option>Category 3</option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="issue-description">Issue description</label>
+                                <textarea class="form-control" rows="3" id="issue-description" name="issueDescription"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="propose">Resolution</label>
+                                <textarea class="form-control" rows="3" id="propose" name="issueResolution">
+                                </textarea>
+                            </div>
+                            <button class="btn">Next</button>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab3">
+                        <p></p>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Click to upload file</label>
+                            <input id="input-1" type="file" class="file" name="issueAttachments">
+                        </div>
+                        <button type="submit" class="btn btn-default" id="add-issue">Add</button><div></div>
+
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
 	
 	<div id="map">
 		<div id="map_canvas"></div>
 	</div>
 	
-	<form id="add-issue-form" class="container-fluid" method="POST" action="add-issue">
-          
-          <!-- Header -->
-          <div class="row-fluid" id="header">
-            <div class="span12">
-            <h4>Bawl. User-> new issue form</h4>
-            </div>
-          </div>
-          
-          <!-- Content   -->
-          <!-- Content.Sidebar -->
-          <div class="row-fluid" id="content">
-            <div class="span3 sidebar">
-            <!-- User image -->
-            <img class="img-polaroid" src="<c:url value="/resources/img/avatar.png" />" width="120" height="120" />
-            <!-- Buttons -->
-            <button class="btn" type="submit">Fetch all issues</button><br>
-            <button class="btn" type="submit">Add new issue..</button><br>
-            <button class="btn" type="submit">..</button><br>
-            <button class="btn" type="submit">..</button><br>
-          <!-- Content. General Content Area     -->
-            </div>
-            <div class="span9 text"> 
-                <br>
-
-				  <input type="hidden" name="mapPointer" id="mapPointer" />	
-					
-                  <div class='row'>
-                    <div class='left'>
-                      <label> Problem name: </label>
-                    </div>
-                    <div class='right'>
-                      <input type="text" id="problem_name" name ="name" placeholder="enter name of problem"><span></span>
-                    </div>
-                  </div>
-                  
-                  <div class='row'>
-                    <div class='left'>
-                      <label"> Category name: </label>
-                    </div>
-                    <div class='right'>
-                        <div class="selectWrap">
-                          <select id="category_name" name="category">
-	                          <option>Thefts</option>
-	                          <option>Fires</option>
-	                          <option>Murders</option>
-                          </select>
-                        </div>    
-                    </div>
-                  </div>
-                 
-                  <div class='row'>
-                    <div class='left'>
-                      <label> Description: </label>
-                    </div>
-                    <div class='right'>
-                      <input type="text" id="description" name ="description" placeholder="enter description"><span></span>
-                    </div>
-                  </div>
-
-                  <div class='row'>
-                    <div class='left'>
-                      <label> Attachments (url): </label>
-                    </div>
-                    <div class='right'>
-                      <input type="text" id="url_attachments" name ="attachments" placeholder="enter attachments (url):"><span></span>
-                    </div>
-                  </div>
-
-                  <div class='row'>
-                    <div class='left'>
-                      Problem Priority: 
-                    </div>
-                    <div class='right-radio'>
-                      <input type="radio" value="1" id="low" name ="priorityId"> Low 
-                      <input type="radio" value="2" id="medium" name ="priorityId"> Medium 
-                      <input type="radio" value="3" id="high" name ="priorityId" checked="checked"> High
-                    </div>
-                  </div>
-            </div>
-          </div>
-
-          <!-- Footer -->
-          <div class="row-fluid" id="footer">
-            <div class="span12">
-            rv-009
-            </div>
-          </div>
-    </form>
-    
-     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="resources/js/jquery-1.11.1.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="resources/js/bootstrap.min.js"></script>
-    
-    
 </body>
 </html>

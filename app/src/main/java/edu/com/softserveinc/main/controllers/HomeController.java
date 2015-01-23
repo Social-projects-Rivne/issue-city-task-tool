@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,15 +26,24 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
-	public String addIssue(@ModelAttribute("issue") IssueModel issue,
-			IssueServiceImpl service) {
-		if (new IssueValidator(issue).isValid()) {
+	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
+		String issueName = request.getParameter("issueName");
+		String issueCategory = request.getParameter("issueCategory");
+		String issueDescription = request.getParameter("issueDescription");
+		String issueResolution = request.getParameter("issueResolution");
+		String issueAttachments = request.getParameter("issueAttachments");
+		System.out.println(issueName);
+		System.out.println(issueCategory);
+		System.out.println(issueDescription);
+		System.out.println(issueResolution);
+		System.out.println(issueAttachments);
+		/*if (new IssueValidator(issue).isValid()) {
 			try {
 				service.addProblemm(issue);
 			} catch (Exception ex) {
 				System.out.println("ERROR" + ex.toString());
 			}
-		}
+		}*/
 		//TODO: add here notification method! 
 		return "home";
 	}
