@@ -1,13 +1,13 @@
 package edu.com.softserveinc.main.dao;
 
-import java.awt.List;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.interfaces.Dao;
-import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.utils.QueryBuilder;
 
 public class DaoImpl implements Dao {
 
@@ -17,11 +17,9 @@ public class DaoImpl implements Dao {
 	public DaoImpl() {
 		sessionFactory = new Configuration().configure().buildSessionFactory();
 	}
-	
-	
+
 	/**
-	 * <h1>Method for adding object in database</h1>
-	 * Method is untested! 
+	 * <h1>Method for adding object in database</h1> Method is untested!
 	 */
 	@Override
 	public void addInDB(Object obj) {
@@ -33,8 +31,7 @@ public class DaoImpl implements Dao {
 	}
 
 	/**
-	 * <h1>Method for editing object in database</h1>
-	 * Method is untested! 
+	 * <h1>Method for editing object in database</h1> Method is untested!
 	 */
 	@Override
 	public void editInDB(Object obj) {
@@ -44,12 +41,10 @@ public class DaoImpl implements Dao {
 		session.getTransaction().commit();
 		session.close();
 	}
-	
-	
-	//TODO: Test it MANUAL!!! 
+
+	// TODO: Test it MANUAL!!!
 	/**
-	 * <h1>Method for editing object in database</h1>
-	 * Method is untested! 
+	 * <h1>Method for editing object in database</h1> Method is untested!
 	 */
 	@Override
 	public void deleteFromDB(Object obj) {
@@ -60,23 +55,30 @@ public class DaoImpl implements Dao {
 		session.close();
 	}
 
-
 	@Override
 	public Object getById(int id, Object obj) {
 		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		SessionFactory sessionFactory = new Configuration().configure()
+				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Object object = (Object)session.get(obj.getClass(), id);
+		Object object = (Object) session.get(obj.getClass(), id);
 		session.close();
 		return object;
 	}
 
-
+	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List getAll(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("deprecation")
+		SessionFactory sessionFactory = new Configuration().configure()
+				.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		return session.createQuery(
+				new QueryBuilder().from(obj.getClass().getName()).toString())
+				.list();
 	}
 
 }

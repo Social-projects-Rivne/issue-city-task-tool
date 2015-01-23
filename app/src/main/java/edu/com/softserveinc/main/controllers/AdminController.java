@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.com.softserveinc.main.models.UserModel;
-import edu.com.softserveinc.main.services.LoadUsersListImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
 
 @Controller
@@ -20,7 +19,7 @@ public class AdminController {
 
 	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/admin-toolpage")
-	public String showUsersTable(LoadUsersListImpl usersList, Model model) {
+	public String showUsersTable(UserServiceImpl usersList, Model model) {
 
 		try {
 			model.addAttribute("users", usersList.loadUsersList());
