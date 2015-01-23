@@ -11,9 +11,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordEncoder {
 
 	private String password;
-
+	private BCryptPasswordEncoder encoder;	
+	
+	public PasswordEncoder(int strenhtg) {
+		encoder = new BCryptPasswordEncoder(strenhtg);
+	}
+	
 	public PasswordEncoder(String password) {
 			this.password = password;
+			encoder = new BCryptPasswordEncoder(11);
 	}
 	
 	public void setPassvord(String password){
@@ -27,7 +33,7 @@ public class PasswordEncoder {
 	public String encode(){
 		
 		if(password.length()<67)
-			return new BCryptPasswordEncoder().encode(password);
+			return encoder.encode(password);
 		else 
 			return password;
 	}

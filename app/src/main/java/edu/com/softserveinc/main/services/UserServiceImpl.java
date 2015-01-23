@@ -1,6 +1,5 @@
 package edu.com.softserveinc.main.services;
 
-
 import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.interfaces.UserService;
 import edu.com.softserveinc.main.models.UserModel;
@@ -10,16 +9,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addUser(UserModel user) {
-		//Encode password
-	new DaoImpl().addInDB(user);
+		// Encode password in SHA-512
+		if (user.getPassword().length() < 67)
+			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
+		new DaoImpl().addInDB(user);
 	}
 
 	@Override
 	public void deleteUser(UserModel user) {
-		//Encode password
-		if(user.getPassword().length() < 67)
-			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
-		
+
 		if (user.getId() != 0) {
 			new DaoImpl().deleteFromDB(user);
 		}
@@ -27,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void editUser(UserModel user) {
+		// Encode password in SHA-512
+		if (user.getPassword().length() < 67)
+			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
 		if (user.getId() != 0) {
 			new DaoImpl().editInDB(user);
 		}
@@ -36,6 +37,5 @@ public class UserServiceImpl implements UserService {
 	public UserModel getUserByID(int id) {
 		return (UserModel) new DaoImpl().getById(id, new UserModel());
 	}
-	
 
 }
