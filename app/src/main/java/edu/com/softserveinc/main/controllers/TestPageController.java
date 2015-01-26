@@ -19,7 +19,7 @@ import edu.com.softserveinc.main.services.CommentServiceImpl;
 @RequestMapping("/cont")
 public class TestPageController {
 
-	/* @RequestMapping(value = "/testPage", method = RequestMethod.GET)
+	 @RequestMapping(value = "/testPage", method = RequestMethod.GET)
 	public String testPage() {
 		return "testPage";
 	}
@@ -29,7 +29,7 @@ public class TestPageController {
 		
 		return "testPage";
 	}
-	*/
+	
 	
 	@RequestMapping(method = RequestMethod.GET)
 	  public @ResponseBody UserModel get(HttpServletResponse res) {
