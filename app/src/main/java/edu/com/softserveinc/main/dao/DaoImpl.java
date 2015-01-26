@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.interfaces.Dao;
-import edu.com.softserveinc.main.utils.QueryBuilder;
 
 public class DaoImpl implements Dao {
 
