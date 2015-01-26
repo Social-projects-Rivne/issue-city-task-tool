@@ -13,6 +13,7 @@
 	<link href="<c:url value="/resources/css/styles2.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
+	<link href='http://fonts.googleapis.com/css?family=Jura:400,600|Averia+Sans+Libre:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -80,13 +81,14 @@
                                 <input type="text" class="form-control" id="issue-name" name="issueName" />
                             </div>
                             <div class="form-group">
-                                <label for="issue-category">Issue category</label>
+                               <label for="issue-category">Issue category</label>
                                 <input type="text" class="form-control" id="issue-category" list="categories" name="issueCategory" />
                                 <datalist id="categories">
                                 	<option>Category 1</option>
                                 	<option>Category 2</option>
                                 	<option>Category 3</option>
                                 </datalist>
+                         
                             </div>
                             <div class="form-group">
                                 <label for="issue-description">Issue description</label>
@@ -94,8 +96,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="propose">Resolution</label>
-                                <textarea class="form-control" rows="3" id="propose" name="issueResolution">
-                                </textarea>
+                                <textarea class="form-control" rows="3" id="propose" name="issueResolution"></textarea>
                             </div>
                             <button class="btn">Next</button>
                     </div>
@@ -104,7 +105,8 @@
                         <p></p>
                         <div class="form-group">
                             <label for="exampleInputFile">Click to upload file</label>
-                            <input id="input-1" type="file" class="file" name="issueAttachments">
+                            <input id="input-1" type="file" class="input-file" name="issueAttachments">
+                            <!-- <input id="fileInput" class="input-file" type="file"> -->
                         </div>
                         <button type="submit" class="btn btn-default" id="add-issue">Add</button><div></div>
 
