@@ -67,7 +67,6 @@ public class DaoImpl implements Dao {
 		return object;
 	}
 
-	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List getAll(Object obj) {
@@ -76,9 +75,6 @@ public class DaoImpl implements Dao {
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		return session.createQuery(
-				new QueryBuilder().from(obj.getClass().getName()).toString())
-				.list();
+		return session.createQuery("From " + obj.getClass().getName().toString()).list();
 	}
-
 }
