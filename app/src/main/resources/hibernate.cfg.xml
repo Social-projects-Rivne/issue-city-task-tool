@@ -9,8 +9,8 @@
         
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bawl</property>
      
-        <property name="hibernate.connection.username">user</property>
-        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">Install_new!</property>
         
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		
@@ -23,6 +23,8 @@
         <mapping class="edu.com.softserveinc.main.models.UserModel"/>
         <mapping class="edu.com.softserveinc.main.models.IssueModel"/>
         <mapping class="edu.com.softserveinc.main.models.CategoryModel"/>
+        <mapping class="edu.com.softserveinc.main.models.CommentModel"/>
+        
     </session-factory>
   
 </hibernate-configuration>
