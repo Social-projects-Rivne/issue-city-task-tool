@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.com.softserveinc.main.models.CommentModel;
+import edu.com.softserveinc.main.models.IssueModel;
 import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
+import edu.com.softserveinc.main.services.IssueServiceImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
 
 /**
@@ -23,36 +25,83 @@ public class TestPageController {
 
 	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
 	public String testPage() {
-		new CommentServiceImpl().addComment(new CommentModel("asdads", "asa", "ss@ss.s", 1));
+
+		new CommentServiceImpl().addComment(new CommentModel("sa", "user", "ma@w.s", 2));
 		return "testPage";
 	}
 
-	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
-	public String addComment(HttpServletRequest request,
-			CommentServiceImpl commentService) {
-
-		return "testPage";
+	@RequestMapping(value = "testPage", method = RequestMethod.POST, consumes = { "application/json;charset=UTF-8" }, produces = { "application/json;charset=UTF-8" })
+	public @ResponseBody CommentModel addComment(
+			@RequestBody final CommentModel comment) {
+		new CommentServiceImpl().addComment(comment);
+		System.out.println("added in DB comment: " + comment.getId());
+		return comment;
 	}
 
-	@RequestMapping(value = "person", method = RequestMethod.POST)
-	public @ResponseBody UserModel post(@RequestBody final UserModel user) {
-
-		System.out.println(user.getId() + " " + user.getName());
-		return user;
+	@RequestMapping(value = "testPage", method = RequestMethod.PUT)
+	public @ResponseBody IssueModel addComment(
+			@RequestBody final IssueModel comment, int id) {
+		new IssueServiceImpl().addProblemm(comment);
+		System.out.println("added in DB comment: " + comment.getDescription());
+		return comment;
 	}
 
-	@RequestMapping(value = "testPage", method = RequestMethod.POST)
-	public @ResponseBody UserModel createUser(@RequestBody final UserModel user) {
-		new UserServiceImpl().addUser(user);
-		System.out.println("user: " + user.getName());
-		return user;
-	}
+	/*
+	 * 
+	 * @RequestMapping(value = "testPage", method = RequestMethod.POST) public
+	 * @ResponseBody IssueModel addComment(@RequestBody final IssueModel
+	 * comment) { new IssueServiceImpl().addProblemm(comment);
+	 * System.out.println("added in DB comment: " + comment.getDescription());
+	 * return comment; }
+	 */
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "user/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public java.util.List getById(@PathVariable int id) {
+	public IssueModel getById(@PathVariable int id) {
 
-		return new UserServiceImpl().loadUsersList();
+		return new IssueServiceImpl().getByID(id);
+	}
+
+	@RequestMapping(value = "comment/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public CommentModel getCommentById(@PathVariable int id) {
+
+		return new CommentModel("bla bla bla", "supermen", "m@m.c", 1);
 	}
 }
+
+/*
+ * @RequestMapping(value = "add-comment", method = RequestMethod.POST) public
+ * @ResponseBody CommentModel addComment(@RequestBody final CommentModel
+ * comment) {
+ * 
+ * new CommentServiceImpl().addComment(new CommentModel("asdads", "asa",
+ * "ss@ss.s", 1));
+ * 
+ * new CommentServiceImpl().addComment(comment); System.out.println("comment: "
+ * + comment.getComment()); return comment; }
+ * 
+ * 
+ * @RequestMapping(value = "person", method = RequestMethod.POST) public
+ * @ResponseBody UserModel post(@RequestBody final UserModel user) {
+ * 
+ * System.out.println(user.getId() + " " + user.getName()); return user; }
+ */
+/*
+ * @RequestMapping(value = "add-comment", method = RequestMethod.POST) public
+ * @ResponseBody CommentModel addComment(@RequestBody final CommentModel
+ * comment) {
+ * 
+ * new CommentServiceImpl().addComment(new CommentModel("asdads", "asa",
+ * "ss@ss.s", 1));
+ * 
+ * new CommentServiceImpl().addComment(comment); System.out.println("comment: "
+ * + comment.getComment()); return comment; }
+ * 
+ * 
+ * @RequestMapping(value = "person", method = RequestMethod.POST) public
+ * @ResponseBody UserModel post(@RequestBody final UserModel user) {
+ * 
+ * System.out.println(user.getId() + " " + user.getName()); return user; }
+ */

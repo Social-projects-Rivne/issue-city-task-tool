@@ -1,4 +1,3 @@
-
 jQuery(document).ready(function($) {
 	sendAjax();
 });
@@ -7,14 +6,13 @@ function sendAjax() {
 
 	$
 			.ajax({
-				url : "/Bawl/cont/add-comment",
+				url : "/Bawl/cont/testPage",
 				type : 'POST',
 				dataType : 'json',
-				data : '{"email":"bbb5b@vv.cz","login":"122","role_id":0,"avatar":null,"password":"$2a$11$MBy8F2zEL.RvR5yvRFJqEekGoMJpn4q6boxTuJqPt99NhGTJ.kyXu","name":"motir"}',
-				contentType : 'application/json',
-				mimeType : 'application/json',
+				data : '{"name":""}',
+				contentType : 'application/json ; charset=utf-8',
 				success : function(data) {
-					alert(data.id + " " + data.name);
+					alert(data + " " + data.userName);
 				},
 				error : function(data, status, er) {
 					alert("error: " + data + " status: " + status + " er:" + er);
@@ -22,22 +20,27 @@ function sendAjax() {
 			});
 }
 
-
 var CommentModel = Backbone.Model.extend({
-	
-	  id: 0,
-	
-	  comment: "",
-	
-	  userName: "",
-		 
-	  email: "",
-	
-	  issueId: ""
+	id : 0,
+	comment : "",
+	userName : "",
+	email : "",
+	issueId : ""
+
+});
+
+var CommentView = Backbone.View.extend({
+	tagName : 'li',
+	className : 'comment',
+	id : 'add-comment'
 
 });
 
 var CommentsCollection = Backbone.Collection.extend({
-	
+
 });
 
+var commentModel = new CommentModel();
+var commentView = new CommentView({
+	model : commentModel
+});

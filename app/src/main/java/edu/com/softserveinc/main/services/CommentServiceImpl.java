@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List getCommentsByIssueId(int issueId) {
-		return sessionFactory.getCurrentSession().createQuery("FROM CommentModel WHERE issueId="
-			+ issueId).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM CommentModel WHERE issueId='"
+			+ issueId+"'").list();
 	}
 }

@@ -6,14 +6,14 @@
 <html>
 <head>
 
-	<!-- delete it later or add to project -->
+<!-- delete it later or add to project -->
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	
-	<!-- UNDESCORE.JS -->
+
+<!-- UNDESCORE.JS -->
 <script src="<c:url value="/resources/js/underscore.js" />"
 	type="text/javascript"></script>
-	
-	<!-- BACKBONE.JS -->
+
+<!-- BACKBONE.JS -->
 <script src="<c:url value="/resources/js/backbone.js" />"
 	type="text/javascript"></script>
 
@@ -24,8 +24,6 @@
 	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <script src="<c:url value="/resources/js/map-script.js" />"></script>
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
-<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"
-	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"
 	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/home-script.js" />"
@@ -106,29 +104,29 @@
 					class="comment_name"> He always breaks. </label>
 				<hr width="100%" size="2">
 
+				<div class="comment" id="add-comment">
+					<h4>Your comment</h4>
 
-				<h4>Your comment</h4>
+					<form method="POST" action="add-comment">
+						<div>
+							<label>Name</label> <input type="text" name="name">
+						</div>
 
-				<form method="POST" action="add-comment">
-					<div>
-						<label>Name</label> <input type="text" name="name">
-					</div>
+						<div>
+							<label>Email</label> <input type="text" name="email">
+						</div>
 
-					<div>
-						<label>Email</label> <input type="text" name="email">
-					</div>
-
-					<div>
-						<label>Comment</label>
-						<textarea rows="3"></textarea>
-					</div>
-
-					<br>
-					<div align="center">
-						<button type="submit" class="btn btn-small" id="resolve_button">Comment</button>
-					</div>
-				</form>
-
+						<div>
+							<label>Comment</label>
+							<textarea rows="3"></textarea>
+						</div>
+							
+						<br>
+						<div align="center">
+							<button type="submit" class="btn btn-small" id="resolve_button">Comment</button>
+						</div>
+					</form>
+				</div>
 
 
 

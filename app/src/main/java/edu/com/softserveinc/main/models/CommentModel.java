@@ -16,24 +16,24 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class CommentModel {
 
 	@Id
-	@GeneratedValue
+	//@GeneratedValue
 	@Column(name="id")
 	private int id;
 	
-	@NotNull
-	@NotEmpty
+	//@NotNull
+	//@NotEmpty
 	@Column(name="comment")
 	private String comment;
 	
-	@Size(min=2, max=30)
-	@NotNull
-	@NotEmpty
+	//@Size(min=2, max=30)
+	//@NotNull
+	//@NotEmpty
 	@Column(name="user_name")
 	private String userName;
 	
-	@Email
-	@NotNull
-	@NotEmpty
+	//@Email
+	//@NotNull
+	//@NotEmpty
 	@Column(name="email")
 	private String email;
 	
