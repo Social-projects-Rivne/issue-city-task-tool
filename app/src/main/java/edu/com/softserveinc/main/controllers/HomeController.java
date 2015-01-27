@@ -1,16 +1,19 @@
 package edu.com.softserveinc.main.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.com.softserveinc.main.models.IssueModel;
+import edu.com.softserveinc.main.services.CategoryServiceImpl;
 import edu.com.softserveinc.main.services.IssueServiceImpl;
 import edu.com.softserveinc.main.utils.IssueValidator;
 
@@ -20,8 +23,11 @@ import edu.com.softserveinc.main.utils.IssueValidator;
 @Controller
 public class HomeController {
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
+	public String home(Model model, CategoryServiceImpl service) {
+		List categoriesList = service.loadCategoriesList();
+		model.addAttribute("categories", categoriesList);
 		return "home";
 	}
 

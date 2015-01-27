@@ -83,9 +83,9 @@
                                <label for="issue-category">Issue category</label>
                                 <input type="text" class="form-control" id="issue-category" list="categories" name="issueCategory" />
                                 <datalist id="categories">
-                                	<option>Category 1</option>
-                                	<option>Category 2</option>
-                                	<option>Category 3</option>
+                                	<c:forEach items="${categories}" var="category">
+                                		<option>${category.name}</option>
+                                	</c:forEach>
                                 </datalist>
                          
                             </div>

@@ -18,6 +18,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "categories")
 public class CategoryModel {
 
+	public CategoryModel() {}
+	
 	public CategoryModel(String name) {
 		this.name = name;
 	}
@@ -31,11 +33,11 @@ public class CategoryModel {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "count_Of_problems")
+	/*@Column(name = "count_Of_problems")
 	private int countOfProblems;
 
 	@Column(name = "cont_Of_Resolved_problems")
-	private int countOfResolvedProblems;
+	private int countOfResolvedProblems;*/
 
 	public int getId() {
 		return id;
@@ -53,7 +55,7 @@ public class CategoryModel {
 		this.name = name;
 	}
 
-	public int getCountOfProblems() {
+	/*public int getCountOfProblems() {
 		return countOfProblems;
 	}
 
@@ -67,6 +69,6 @@ public class CategoryModel {
 
 	public void setCountOfResolvedProblems(int countOfResolvedProblems) {
 		this.countOfResolvedProblems = countOfResolvedProblems;
-	}
+	}*/
 
 }
