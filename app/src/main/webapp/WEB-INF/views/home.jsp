@@ -60,18 +60,18 @@
                 <h4>Add issue</h4>
                 <ul class="nav nav-tabs">
 
-                    <li class="active"><a href="#tab1" data-toggle="tab">Point</a>
+                    <li class="active" id="tab1-title"><a href="#tab1" data-toggle="tab">Point</a>
                     </li>
 
-                    <li><a href="#tab2" data-toggle="tab">Description</a>
+                    <li id="tab2-title"><a href="#tab2" data-toggle="tab">Description</a>
                     </li>
-                    <li><a href="#tab3" data-toggle="tab">Photo</a>
+                    <li id="tab3-title"><a href="#tab3" data-toggle="tab">Photo</a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab1">
                         <p>Mark the place of issue on the map</p>
-                        <button class="btn">Next</button>
+                        <button class="btn" id="next-to-description">Next</button>
                     </div>
                     <div class="tab-pane fade" id="tab2">
                         <p>
@@ -97,7 +97,7 @@
                                 <label for="propose">Resolution</label>
                                 <textarea class="form-control" rows="3" id="propose" name="issueResolution"></textarea>
                             </div>
-                            <button class="btn">Next</button>
+                            <button class="btn" id="next-to-photo">Next</button>
                     </div>
 
                     <div class="tab-pane fade" id="tab3">
