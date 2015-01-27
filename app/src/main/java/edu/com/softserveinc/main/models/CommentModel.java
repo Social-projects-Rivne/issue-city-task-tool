@@ -47,6 +47,13 @@ public class CommentModel {
 		this.issueId = issueId;
 	}
 	
+	public CommentModel(String comment, String userName, String email, String issueI) {
+		this.comment = comment;
+		this.userName = userName;
+		this.email = email;
+		this.issueId = (int)issueId;
+	}
+
 	public int getId() {
 		return id;
 	}

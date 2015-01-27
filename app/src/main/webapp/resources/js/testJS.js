@@ -1,18 +1,18 @@
 jQuery(document).ready(function($) {
-	sendAjax();
+sendAjax();
 });
 
 function sendAjax() {
 
-	$
-			.ajax({
-				url : "/Bawl/cont/testPage",
+$
+.ajax({				url : "/Bawl/cont/testPage",
 				type : 'POST',
 				dataType : 'json',
-				data : '{"name":""}',
-				contentType : 'application/json ; charset=utf-8',
+				data : '{"email":"bbb5b@vv.cz","userName":"motir", "comment": "adsfasdfasdf ", "issueId":"1"}',
+				contentType : 'application/json',
+				mimeType : 'application/json',
 				success : function(data) {
-					alert(data + " " + data.userName);
+					alert(data.email + " " + data.issueId );
 				},
 				error : function(data, status, er) {
 					alert("error: " + data + " status: " + status + " er:" + er);
@@ -21,26 +21,19 @@ function sendAjax() {
 }
 
 var CommentModel = Backbone.Model.extend({
+
 	id : 0,
+
 	comment : "",
+
 	userName : "",
+
 	email : "",
+
 	issueId : ""
-
-});
-
-var CommentView = Backbone.View.extend({
-	tagName : 'li',
-	className : 'comment',
-	id : 'add-comment'
 
 });
 
 var CommentsCollection = Backbone.Collection.extend({
 
-});
-
-var commentModel = new CommentModel();
-var commentView = new CommentView({
-	model : commentModel
 });
