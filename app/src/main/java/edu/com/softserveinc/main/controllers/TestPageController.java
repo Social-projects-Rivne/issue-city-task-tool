@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.models.CommentModel;
+import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
 
 /**
@@ -21,15 +23,13 @@ public class TestPageController {
 
 	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
 	public String testPage() {
-		
 		return "testPage";
 	}
 
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "all-comments", method = RequestMethod.GET)
+	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public List getAllByIssueId(@PathVariable int id) {
-		return new CommentServiceImpl().getCommentsByIssueId(id);
+		return new DaoImpl().getAll(new CommentModel());
 	}
 
 	@SuppressWarnings("rawtypes")

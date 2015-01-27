@@ -40,6 +40,8 @@ public class CommentModel {
 	@Column(name="issue_id")
 	private int issueId;
 
+	public CommentModel(){};
+	
 	public CommentModel(String comment, String userName, String email, int issueId) {
 		this.comment = comment;
 		this.userName = userName;

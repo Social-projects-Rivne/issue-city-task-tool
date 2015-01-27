@@ -122,8 +122,11 @@
 						</div>
 							
 						<br>
+						<script type="text/javascript">
+						
+						</script>
 						<div align="center">
-							<button type="submit" class="btn btn-small" id="resolve_button">Comment</button>
+							<button type="submit" class="btn btn-small" id="resolve_button" onclick="sendComment()">Comment</button>
 						</div>
 					</form>
 				</div>
