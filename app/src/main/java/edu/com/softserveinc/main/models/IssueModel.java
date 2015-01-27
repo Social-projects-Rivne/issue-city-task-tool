@@ -2,6 +2,7 @@ package edu.com.softserveinc.main.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,12 +10,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="problems")
-public class ProblemModel {
+public class IssueModel {
 
 	@Id
-	@NotEmpty
+	@GeneratedValue
 	@Column(name="id")
 	private int id;
+	
+	@Column(name="category_id")
+	private int category_id;
 
 	@NotEmpty
 	@Column(name="name")
@@ -38,11 +42,11 @@ public class ProblemModel {
 	/**
 	 * Default constructor
 	 */
-	ProblemModel(){
+	public IssueModel(){
 		
 	}
 
-	public ProblemModel(String name, String description, String mapPointer, String attachments, int priorityId) {
+	public IssueModel(String name, String description, String mapPointer, String attachments, int priorityId) {
 		this.name = name;
 		this.description = description;
 		this.mapPointer = mapPointer;
@@ -67,6 +71,21 @@ public class ProblemModel {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+	/**
+	 * 
+	 * @return category id
+	 */
+	public int getCategory_id() {
+		return category_id;
+	}
+	/**
+	 * Setup category id of problem
+	 * 
+	 * @param category_id
+	 */
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
 	}
 
 	/**

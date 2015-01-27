@@ -6,4 +6,5 @@
 .metadata/
 target/
 hibernate.cfg.xml
+Servers
 *~

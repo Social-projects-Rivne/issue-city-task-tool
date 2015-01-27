@@ -1,4 +1,6 @@
-package edu.com.softserveinc.main.implementation;
+package edu.com.softserveinc.main.interfaces;
+
+import java.util.List;
 
 import edu.com.softserveinc.main.models.UserModel;
 
@@ -25,4 +27,19 @@ public interface UserService {
 	 */
 	public void editUser(UserModel user);
 
+	/**
+	 * 
+	 * Get user's fields from Data Base by user_id
+	 *
+	 */
+	public UserModel getUserByID(int userId);
+	
+	/**
+	 * Get all users from Data Base;
+	 * 
+	 * @param user
+	 * @return list of all users
+	 */
+	@SuppressWarnings("rawtypes")
+	public List loadUsersList();
 }
