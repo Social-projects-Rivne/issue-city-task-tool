@@ -12,9 +12,6 @@ import edu.com.softserveinc.main.interfaces.CommentService;
 import edu.com.softserveinc.main.models.CommentModel;
 
 public class CommentServiceImpl implements CommentService {
-	@Autowired
-	SessionFactory sessionFactory;
-
 	@Override
 	public void addComment(CommentModel comment) {
 		new DaoImpl().addInDB(comment);
@@ -33,7 +30,11 @@ public class CommentServiceImpl implements CommentService {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List getCommentsByIssueId(int issueId) {
-		return sessionFactory.getCurrentSession().createQuery("FROM CommentModel WHERE issueId='"
-			+ issueId+"'").list();
+		@SuppressWarnings("deprecation")
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		return session.createQuery("FROM CommentModel WHERE issueId="
+			+ issueId).list();
 	}
 }
