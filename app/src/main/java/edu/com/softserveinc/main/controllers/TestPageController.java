@@ -29,7 +29,7 @@ public class TestPageController {
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public List getAllByIssueId(@PathVariable int id) {
-		return new DaoImpl().getAll(new CommentModel());
+		return new CommentServiceImpl().getCommentsByIssueId(id);
 	}
 
 	@SuppressWarnings("rawtypes")

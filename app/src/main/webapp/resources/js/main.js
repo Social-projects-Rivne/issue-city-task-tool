@@ -1,7 +1,3 @@
-jQuery(document).ready(function($) {
-	sendAjax();
-});
-
 function sendNewComment(){
 	var comment = new CommentModel();
 	sendAjax();

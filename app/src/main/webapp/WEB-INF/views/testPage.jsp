@@ -18,6 +18,7 @@
 	type="text/javascript"></script>
 
 <script src="<c:url value="/resources/js/testJS.js" />"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript"
@@ -107,9 +108,8 @@
 				<div class="comment" id="add-comment">
 					<h4>Your comment</h4>
 
-					<form method="POST" action="add-comment">
 						<div>
-							<label>Name</label> <input type="text" name="name">
+							<label>Name</label> <input type="text" name="userName">
 						</div>
 
 						<div>
@@ -118,17 +118,10 @@
 
 						<div>
 							<label>Comment</label>
-							<textarea rows="3"></textarea>
+							<textarea name="comment-text" rows="3"></textarea>
 						</div>
 							
-						<br>
-						<script type="text/javascript">
 						
-						</script>
-						<div align="center">
-							<button type="submit" class="btn btn-small" id="resolve_button" onclick="sendComment()">Comment</button>
-						</div>
-					</form>
 				</div>
 
 
