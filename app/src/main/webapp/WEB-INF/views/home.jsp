@@ -107,7 +107,7 @@
                             <input id="input-1" type="file" class="input-file" name="issueAttachments">
                             <!-- <input id="fileInput" class="input-file" type="file"> -->
                         </div>
-                        <button type="submit" class="btn btn-default" id="add-issue">Add</button><div></div>
+                        <button type="submit" class="btn btn-default" id="add-issue-button">Add</button><div></div>
 
                     </div>
                 </div>
