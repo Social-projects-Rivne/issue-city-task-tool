@@ -1,6 +1,6 @@
 package edu.com.softserveinc.main.controllers;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.com.softserveinc.main.models.CommentModel;
-import edu.com.softserveinc.main.models.IssueModel;
-import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
-import edu.com.softserveinc.main.services.IssueServiceImpl;
-import edu.com.softserveinc.main.services.UserServiceImpl;
 
 /**
  * Handles requests for the application home page.
@@ -25,21 +21,30 @@ public class TestPageController {
 
 	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
 	public String testPage() {
-		// new CommentServiceImpl().addComment(new CommentModel("sa", "user",
-		// "ma@w.s", 2));
+		
 		return "testPage";
 	}
 
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "all-comments", method = RequestMethod.GET)
+	@ResponseBody
+	public List getAllByIssueId(@PathVariable int id) {
+		return new CommentServiceImpl().getCommentsByIssueId(id);
+	}
+
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "testPage", method = RequestMethod.POST)
-	public @ResponseBody java.util.LinkedHashMap createUser(
+	public @ResponseBody java.util.LinkedHashMap addComment(
 			@RequestBody final java.util.LinkedHashMap comment) {
 		int id = Integer.parseInt(comment.get("issueId").toString());
 		new CommentServiceImpl().addComment(new CommentModel(comment.get(
 				"comment").toString(), comment.get("userName").toString(),
 				comment.get("email").toString(), id));
-		System.out.println("email: " + comment.get("email") + "issue id: " + comment.get("issueId"));
+		System.out.println("email: " + comment.get("email") + "issue id: "
+				+ comment.get("issueId"));
 		return comment;
 	}
+
 }
 // Test
 /*
@@ -70,8 +75,9 @@ public class TestPageController {
  * new IssueServiceImpl().addProblemm(comment);
  * System.out.println("added in DB comment: " + comment.getDescription());
  * return comment; }
- */
-/*
+ * 
+ * /*
+ * 
  * @SuppressWarnings("rawtypes")
  * 
  * @RequestMapping(value = "user/{id}", method = RequestMethod.GET)

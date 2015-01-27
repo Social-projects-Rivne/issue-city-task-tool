@@ -23,7 +23,7 @@
         <mapping class="edu.com.softserveinc.main.models.UserModel"/>
         <mapping class="edu.com.softserveinc.main.models.IssueModel"/>
         <mapping class="edu.com.softserveinc.main.models.CategoryModel"/>
-        <mapping class="edu.com.softserveinc.main.models.CoomentModel"/>
+        <mapping class="edu.com.softserveinc.main.models.CommentModel"/>
         
     </session-factory>
   
