@@ -18,6 +18,8 @@ padding-top: 50px;
 	float: right;
     background: white;
     width: 23.0%;
+    overflow: scroll;
+	height: 100%;
 }
 
 /* Responsive for 1366 laptops, 800 pads, 320 mobile screens */
@@ -122,3 +124,10 @@ padding-top: 50px;
 background-color: #ffffff;
 }
 
+#add-issue {
+	display: none;
+}
+
+#issue-details {
+	display: none;
+}

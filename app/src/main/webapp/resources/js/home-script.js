@@ -3,11 +3,17 @@ window.onload = function() {
 	validate();
 	
 	var cryOut = document.getElementById('cry-out');
-	var issue = document.getElementById('grid-right');
+	var addIssue = document.getElementById('add-issue');
+	var issueDetails = document.getElementById('issue-details');
 	var map = document.getElementById('map');
 	
 	cryOut.addEventListener('click', function(event) {
 		event.preventDefault();
-		issue.style.display = 'block';
+		addIssue.style.display = 'block';
+	}, false);
+	
+	map.addEventListener('click', function(event) {
+		event.preventDefault();
+		issueDetails.style.display = 'block';
 	}, false);
 }
