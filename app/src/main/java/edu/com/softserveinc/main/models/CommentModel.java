@@ -36,9 +36,7 @@ public class CommentModel {
 	@NotEmpty
 	@Column(name="email")
 	private String email;
-
-	@NotNull
-	@NotEmpty
+	
 	@Column(name="issue_id")
 	private int issueId;
 

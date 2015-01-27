@@ -142,10 +142,10 @@ $(document).ready(function(){
 function sendAjax() {
  
 $.ajax({ 
-    url: "/Bawl/cont/user", 
+    url: "/Bawl/cont/testPage", 
     type: 'POST', 
     dataType: 'json', 
-    data: "{\"name\":\"hmkcode\",\"id\":2}", 
+    data: '{"email":"bbb5b@vv.cz","login":"122","role_id":0,"avatar":null,"password":"$2a$11$MBy8F2zEL.RvR5yvRFJqEekGoMJpn4q6boxTuJqPt99NhGTJ.kyXu","name":"motir"}', 
     contentType: 'application/json',
     mimeType: 'application/json',
     success: function(data) { 
