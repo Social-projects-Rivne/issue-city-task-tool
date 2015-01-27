@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.com.softserveinc.main.models.CommentModel;
 import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
@@ -22,6 +23,7 @@ public class TestPageController {
 
 	@RequestMapping(value = "/testPage", method = RequestMethod.GET)
 	public String testPage() {
+		new CommentServiceImpl().addComment(new CommentModel("asdads", "asa", "ss@ss.s", 1));
 		return "testPage";
 	}
 
@@ -39,9 +41,10 @@ public class TestPageController {
 		return user;
 	}
 
-	@RequestMapping(value = "pp", method = RequestMethod.POST)
+	@RequestMapping(value = "testPage", method = RequestMethod.POST)
 	public @ResponseBody UserModel createUser(@RequestBody final UserModel user) {
 		new UserServiceImpl().addUser(user);
+		System.out.println("user: " + user.getName());
 		return user;
 	}
 
