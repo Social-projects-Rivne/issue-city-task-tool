@@ -51,9 +51,8 @@
             </div>
         </nav>
 	</div>
-
-
-	<div class="grid" id="grid-right">
+<div>
+	<div class="grid" id="add-issue">
         <div class="col-1-3">
             <div class="tabbable">
             <form method="POST" action="add-issue">
@@ -108,7 +107,7 @@
                             <input id="input-1" type="file" class="input-file" name="issueAttachments">
                             <!-- <input id="fileInput" class="input-file" type="file"> -->
                         </div>
-                        <button type="submit" class="btn btn-default" id="add-issue">Add</button><div></div>
+                        <button type="submit" class="btn btn-default" id="add-issue-button">Add</button><div></div>
 
                     </div>
                 </div>
@@ -116,10 +115,80 @@
             </div>
         </div>
 	</div>
-
 	
+	
+	<div class="grid" id="issue-details">
+        <div class="col-1-3">
+            <div class="tabbable">
+                
+                                <div align = right>
+                                    <button type ="submit" class="btn btn-small" id="resolve_button">Resolve</button>
+                                </div>
+
+                                <h4><label id="issue_name">Traffic light doesn't work. </label></h4>
+
+                                <label id="issue_description">
+                                    Not working traffic lights at the intersection of Soborna-Kievskaya.
+                                </label>
+                                
+                                <!-- <div class="thumbnail"> -->
+                                  <img src="http://placehold.it/130x70">
+                                  <img src="http://placehold.it/130x70">
+                                <!-- </div> -->
+
+                                <br>
+                                <h4>Comments</h4>
+
+                                <label class="comments_user_name">
+                                    Alex
+                                </label><br>
+                                <label class="comment_name">
+                                    He always breaks.
+                                </label>
+                                <hr width="100%" size="2">
+                                <label class="comments_user_name">
+                                    Alex
+                                </label><br>
+                                <label class="comment_name">
+                                    He always breaks.
+                                </label>
+                                <hr width="100%" size="2">
+
+                                
+                                <h4>Your comment</h4>
+
+                                <div>
+                                    <label>Name</label>
+                                    <input type="text" name="search" placeholder="name">
+                                </div>
+                                
+                                <div>
+                                    <label>Email</label>
+                                    <input type="text" name="search" placeholder="name">
+                                </div>
+
+                                <div>
+                                    <label>Comment</label>
+                                    <textarea rows="3">                                 </textarea>    
+                                </div>
+                              
+                                <br>                                            
+                                <div align = "center">
+                                    <button type ="submit" class="btn btn-small" id="resolve_button">Comment</button>
+                                </div>
+               
+      
+               
+                 
+
+              
+                </div>
+            </div>
+        </div>
+
 	<div id="map">
 		<div id="map_canvas"></div>
+	</div>
 	</div>
 	
 </body>

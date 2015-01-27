@@ -1,5 +1,5 @@
 function validate(){
-	var submitButton = document.getElementById('add-issue');
+	var submitButton = document.getElementById('add-issue-button');
 	var issueName = document.getElementById('issue-name');
 	var issueCategory = document.getElementById('issue-category');
 	
