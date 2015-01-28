@@ -6,6 +6,7 @@ requirejs.config({
 		backbone: 'js/lib/backbone',
 		model: 'js/app/model',
 		view: 'js/app/view',
+		collection: 'js/app/collection',
 	}
 });
 

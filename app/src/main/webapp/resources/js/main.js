@@ -3,9 +3,12 @@ define([
         'underscore',
         'backbone',
         'model/CommentModel',
-        'view/CommentView']
-, function($,_,Backbone,CommentModel,CommentViev) {
+        'view/CommentView',
+        'collection/CommentCollection'
+        ]
+, function($,_,Backbone,CommentModel,CommentViev,CommentCollection) {
 });
+
 //separate this function to another file
 function sendAjax(comment) {
 
@@ -56,3 +59,4 @@ function sendNewComment(){
 			'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
 			'", "issueId":"1"}');
 }
+//var comments = new CommentCollection;

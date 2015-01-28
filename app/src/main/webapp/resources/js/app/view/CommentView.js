@@ -1,5 +1,11 @@
-var CommentViev = Backbone.View
-		.extend({
+define([
+        'underscore',
+        'backbone',
+        'model/CommentModel'
+        ], 
+   function(_,Backbone,CommentModel) {
+
+var CommentView = Backbone.View.extend({
 			initilize : function() {
 
 			},
@@ -15,3 +21,4 @@ var CommentViev = Backbone.View
 
 			}
 		});
+});
