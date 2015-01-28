@@ -1,3 +1,5 @@
+var comments = new CommentsCollection();
+
 function sendNewComment(){
 	
 	var comment = new CommentModel({
@@ -50,6 +52,3 @@ function sendAjax(comment) {
 }
 
 
-var CommentsCollection = Backbone.Collection.extend({
-
-});
