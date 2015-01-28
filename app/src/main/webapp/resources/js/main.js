@@ -1,4 +1,4 @@
-var comments = new CommentsCollection();
+var comments = new CommentCollection();
 
 function sendNewComment(){
 	
@@ -9,7 +9,7 @@ function sendNewComment(){
 		'issueId' : ""
 		
 	});
-	
+	comments.add(comment.toJSON);
 	var commentView = new CommentViev({
 		model : comment
 	});
