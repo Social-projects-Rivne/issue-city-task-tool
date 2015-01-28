@@ -80,6 +80,7 @@ public class HomeController {
 	}
 	
 	//fetch all comments for issue-id
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public List getAllByIssueId(@PathVariable int id) {
@@ -88,7 +89,7 @@ public class HomeController {
 
 	// adding comment for issue
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "testPage", method = RequestMethod.POST)
+	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
 	public @ResponseBody java.util.LinkedHashMap addComment(
 			@RequestBody final java.util.LinkedHashMap comment) {
 		int id = Integer.parseInt(comment.get("issueId").toString());

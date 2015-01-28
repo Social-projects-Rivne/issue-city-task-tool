@@ -5,24 +5,26 @@
 <title>Home</title>
 
 <!-- delete it later or add to project -->
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 
 <!-- UNDESCORE.JS -->
-<script src="<c:url value="/resources/js/underscore.js" />"
+<script src="<c:url value="/resources/js/lib/underscore.js" />"
 	type="text/javascript"></script>
 
 <!-- BACKBONE.JS -->
-<script src="<c:url value="/resources/js/backbone.js" />"
+<script src="<c:url value="/resources/js/lib/backbone.js" />"
 	type="text/javascript"></script>
 
 <script src="<c:url value="/resources/js/main.js" />"></script>
+
+<script src="<c:url value="/resources/js/app/model/CommentModel.js" />"></script>
+<script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
+
 
 <script type="text/javascript"
 	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <script src="<c:url value="/resources/js/map-script.js" />"></script>
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
-<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"
-	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"
 	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/home-script.js" />"
@@ -164,15 +166,10 @@
 
 					<br>
 					<h4>Comments</h4>
-
-					<label class="comments_user_name"> Alex </label><br> <label
-						class="comment_name"> He always breaks. </label>
-					<hr width="100%" size="2">
-					<label class="comments_user_name"> Alex </label><br> <label
-						class="comment_name"> He always breaks. </label>
-					<hr width="100%" size="2">
-
-
+					<div class="comments">
+					
+					
+					</div>
 					<div class="comment" id="add-comment">
 						<h4>Your comment</h4>
 
