@@ -7,18 +7,20 @@
 <head>
 
 <!-- delete it later or add to project -->
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 
 <!-- UNDESCORE.JS -->
-<script src="<c:url value="/resources/js/underscore.js" />"
+<script src="<c:url value="/resources/js/lib/underscore.js" />"
 	type="text/javascript"></script>
 
 <!-- BACKBONE.JS -->
-<script src="<c:url value="/resources/js/backbone.js" />"
+<script src="<c:url value="/resources/js/lib/backbone.js" />"
 	type="text/javascript"></script>
 
 <script src="<c:url value="/resources/js/testJS.js" />"></script>
 
+<script src="<c:url value="/resources/js/app/model/CommentModel.js" />"
+	type="text/javascript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript"
@@ -97,31 +99,32 @@
 
 				<br>
 				<h4>Comments</h4>
+				<div class="comments">
+					<label class="comments_user_name"> Alex </label><br> <label
+						class="comment_name"> He always breaks. </label>
+					<hr width="100%" size="2">
+					<label class="comments_user_name"> Alex </label><br> <label
+						class="comment_name"> He always breaks. </label>
+					<hr width="100%" size="2">
 
-				<label class="comments_user_name"> Alex </label><br> <label
-					class="comment_name"> He always breaks. </label>
-				<hr width="100%" size="2">
-				<label class="comments_user_name"> Alex </label><br> <label
-					class="comment_name"> He always breaks. </label>
-				<hr width="100%" size="2">
-
+				</div>
 				<div class="comment" id="add-comment">
 					<h4>Your comment</h4>
 
-						<div>
-							<label>Name</label> <input type="text" name="userName">
-						</div>
+					<div>
+						<label>Name</label> <input type="text" name="userName">
+					</div>
 
-						<div>
-							<label>Email</label> <input type="text" name="email">
-						</div>
+					<div>
+						<label>Email</label> <input type="text" name="email">
+					</div>
 
-						<div>
-							<label>Comment</label>
-							<textarea name="comment-text" rows="3"></textarea>
-						</div>
-							
-						
+					<div>
+						<label>Comment</label>
+						<textarea name="comment-text" rows="3"></textarea>
+					</div>
+
+
 				</div>
 
 
