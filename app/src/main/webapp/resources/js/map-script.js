@@ -16,51 +16,60 @@ var setMarker = function (obMap, obPos, icon)
 			});
 }
 function initialize() {
-	// set user position
-	gpos = new google.maps.LatLng(50.620679, 26.244523);
-  
-	// set default map options
-	var mapOptions = {
-	    zoom: 12,
-	    center: gpos
-	    //mapTypeId: google.maps.MapTypeId.ROADMAP
-	}
-	// initialise map object to #map_canvas
-	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-	
-	// creating OSM Layer object
-	var openStreet = new google.maps.ImageMapType({
-		getTileUrl: function(ll, z) {
-			var X = ll.x % (1 << z);  // wrap
-			return "http://tile.openstreetmap.org/" + z + "/" + X + "/" + ll.y + ".png";
-		},
-		tileSize: new google.maps.Size(256, 256),
-		isPng: true,
+	var map = L.map('map').setView([50.620679, 26.244523], 13);
+
+	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 		maxZoom: 18,
-		name: "OpenStreetMap",
-		alt: "Слой с Open Streetmap"
-	}); 
- 
-	// adding OSM map type with self layer 
-	map.mapTypes.set('osm', openStreet);
-	// init map type with created OSM Layer
-	map.setMapTypeId('osm');
- 
-	/*map.setOptions({
-		mapTypeControlOptions: {
-			mapTypeIds: [
-			             'osm',
-						  //google.maps.MapTypeId.ROADMAP,
-						  //google.maps.MapTypeId.TERRAIN,
-						  //google.maps.MapTypeId.SATELLITE,
-						  //google.maps.MapTypeId.HYBRID
-			             ],
-            //style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-			}
-	});*/
-	google.maps.event.addListenerOnce(map, 'idle', function() {
-		obMarkers['one'] = setMarker(map, gpos);
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery В© <a href="http://mapbox.com">Mapbox</a>',
+		id: 'examples.map-i875mjb7'
+	}).addTo(map);
+
+
+	//TEST MARKERS:
+	//L.marker([50.620679, 26.244523]).addTo(map)
+  //.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+	//L.marker([50.622222, 26.245444]).addTo(map)
+
+	var popup = L.popup();
+
+	function onMapClick(e) {
+		popup
+			.setLatLng(e.latlng)
+			.setContent("You clicked the map at " + e.latlng.toString())
+			.openOn(map);
+	}
+
+	map.on('click', onMapClick);
+
+
+
+	var someMarker = L.AwesomeMarkers.icon({
+		prefix:'fa',
+		icon:'coffee',
+		markercolor:'darkpuple'
 	});
+	// Creates a red marker with the coffee icon
+	var redMarker = L.AwesomeMarkers.icon({
+		prefix:'fa',
+		icon: 'bed',
+		markerColor: 'red',
+
+	});
+
+	// Creates black spinner marker
+	var spinnerMarker = L.AwesomeMarkers.icon({
+		prefix:'fa',
+		icon:'spinner',
+		markerColor:'black',
+		spin: 'true'
+	});
+
+	// Creating instance of markers on map
+	L.marker([50.636833,26.262323], {icon: redMarker}).addTo(map);
+	L.marker([50.62224, 26.23415], {icon: spinnerMarker}).addTo(map);
+	L.marker([50.62224, 26.26419], {icon: someMarker}).addTo(map);
 }
 
 
