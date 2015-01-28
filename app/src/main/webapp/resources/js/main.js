@@ -1,34 +1,12 @@
-var comments = new CommentCollection();
-
-function sendNewComment(){
-	
-	var comment = new CommentModel({
-		'userName':$(document.getElementsByName('userName')[0]).val(),
-		'comment':$(document.getElementsByName('comment-text')[0]).val(),
-		'email' : $(document.getElementsByName('email')[0]).val(),
-		'issueId' : ""
-		
-	});
-	comments.add(comment.toJSON);
-	var commentView = new CommentViev({
-		model : comment
-	});
-	
-	commentView.render();
-	
-	$(document.body.getElementsByClassName('comments')[0]).append(commentView.el);
-	
-	console.log(comment.toJSON());
-	
-	console.log(comment),
-	
-	sendAjax( '{"email":"' + document.getElementsByName("email")[0].value +
-			'","userName":"' + document.getElementsByName("userName")[0].value  +
-			'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
-			'", "issueId":"1"}');
-}
-
-
+define([
+        'jquery',
+        'underscore',
+        'backbone',
+        'model/CommentModel',
+        'view/CommentView']
+, function($,_,Backbone,CommentModel,CommentViev) {
+});
+//separate this function to another file
 function sendAjax(comment) {
 
 	$
@@ -51,4 +29,30 @@ function sendAjax(comment) {
 			});
 }
 
-
+function sendNewComment(){
+	
+	var comment = new CommentModel({
+		'userName':$(document.getElementsByName('userName')[0]).val(),
+		'comment':$(document.getElementsByName('comment-text')[0]).val(),
+		'email' : $(document.getElementsByName('email')[0]).val(),
+		'issueId' : ""
+		
+	});
+	
+	var commentView = new CommentViev({
+		model : comment
+	});
+	
+	commentView.render();
+	
+	$(document.body.getElementsByClassName('comments')[0]).append(commentView.el);
+	
+	console.log(comment.toJSON());
+	
+	console.log(comment),
+	
+	sendAjax('{"email":"' + document.getElementsByName("email")[0].value +
+			'","userName":"' + document.getElementsByName("userName")[0].value  +
+			'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
+			'", "issueId":"1"}');
+}
