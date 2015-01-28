@@ -36,19 +36,14 @@ public class HomeController {
 
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
+		String mapPointer = request.getParameter("mapPointer");
 		String issueName = request.getParameter("issueName");
 		String issueCategory = request.getParameter("issueCategory");
 		String issueDescription = request.getParameter("issueDescription");
 		String issueResolution = request.getParameter("issueResolution");
 		String issueAttachments = request.getParameter("issueAttachments");
 		
-		System.out.println(issueName);
-		System.out.println(issueCategory);
-		System.out.println(issueDescription);
-		System.out.println(issueResolution);
-		System.out.println(issueAttachments);
-		
-		IssueModel issue = new IssueModel(issueName, issueDescription, "0, 0",
+		IssueModel issue = new IssueModel(issueName, issueDescription, mapPointer,
 				issueAttachments, 1);
 		
 		if (new IssueValidator(issue).isValid()) {
