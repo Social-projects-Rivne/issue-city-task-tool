@@ -21,6 +21,17 @@
 <script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
 
 
+
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src="<c:url value="/resources/js/leaflet.awesome-markers.js" />"></script>
+<script src="<c:url value="/resources/js/leaflet.awesome-markers.min.js" />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/font-awesome-4.3.0/css/font-awesome.min.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
+<link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css">
+
+
+
 <script type="text/javascript"
 	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <script src="<c:url value="/resources/js/map-script.js" />"></script>
@@ -133,8 +144,7 @@
 									<!-- <input id="fileInput" class="input-file" type="file"> -->
 								</div>
 								<button type="submit" class="btn btn-default"
-									id="add-issue-button">Add</button>
-								<div></div>
+									id="add-issue-button">Add</button><div></div>
 
 							</div>
 						</div>
@@ -196,9 +206,43 @@
 			</div>
 		</div>
 
-		<div id="map">
-			<div id="map_canvas"></div>
-		</div>
+		<div id="map" style="height: 100%; position: relative;" class="leaflet-container leaflet-fade-anim" tabindex="0"><div class="leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);">
+		<div id="div22" style=" width: 10%; height: 100%; position: relative; margin-left:1px; border:2px solid grey; background-color: #f3f3f3; color: #494949; border: 2px solid; border-radius: 25px;">
+		<div class="leaflet-tile-pane">
+			<div class="leaflet-layer">
+				<div class="leaflet-tile-container"></div>
+			<!--	<div class="leaflet-tile-container leaflet-zoom-animated"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: 56px; top: -91px;" src="./Leaflet Quick Start Guide Example_files/2723.png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: 312px; top: -91px;" src="./Leaflet Quick Start Guide Example_files/2723(1).png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: 56px; top: 165px;" src="./Leaflet Quick Start Guide Example_files/2724.png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: 312px; top: 165px;" src="./Leaflet Quick Start Guide Example_files/2724(1).png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: -200px; top: -91px;" src="./Leaflet Quick Start Guide Example_files/2723(2).png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: 568px; top: -91px;" src="./Leaflet Quick Start Guide Example_files/2723(3).png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: -200px; top: 165px;" src="./Leaflet Quick Start Guide Example_files/2724(2).png"><img class="leaflet-tile leaflet-tile-loaded" style="height: 256px; width: 256px; left: 568px; top: 165px;" src="./Leaflet Quick Start Guide Example_files/2724(3).png">
+			-->	</div>
+  		</div>
+	 </div>
+				<div class="leaflet-objects-pane">
+					<div class="leaflet-shadow-pane"><img src="./Leaflet Quick Start Guide Example_files/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(300px, 247px, 0px);">
+					</div>
+					<div class="leaflet-overlay-pane"><svg class="leaflet-zoom-animated" width="1200" height="800" viewBox="-300 -200 1200 800" style="transform: translate3d(-300px, -200px, 0px);"><g><path stroke-linejoin="round" stroke-linecap="round" fill-rule="evenodd" stroke="red" stroke-opacity="0.5" stroke-width="5" fill="#f03" fill-opacity="0.5" class="leaflet-clickable" d="M183,130A42,42,0,1,1,182.9,130 z">
+					</path></g>
+					<g><path stroke-linejoin="round" stroke-linecap="round" fill-rule="evenodd" stroke="#0033ff" stroke-opacity="0.5" stroke-width="5" fill="#0033ff" fill-opacity="0.2" class="leaflet-clickable" d="M358 163L474 219L550 153z">
+					</path></g></svg></div>
+					<div class="leaflet-marker-pane"><img src="./Leaflet Quick Start Guide Example_files/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(300px, 247px, 0px); z-index: 247;"></div>
+						<div class="leaflet-popup-pane">
+							<div class="leaflet-popup  leaflet-zoom-animated" style="opacity: 1; transform: translate3d(300px, 247px, 0px); bottom: 27px; left: -56px;"><a class="leaflet-popup-close-button" href="http://leafletjs.com/examples/quick-start-example.html#close"></a>
+								<div class="leaflet-popup-content-wrapper">
+									<div class="leaflet-popup-content" style="width: 74px;"><b>Hello world!</b><br>I am a popup.</div>
+							 </div>
+									<div class="leaflet-popup-tip-container">
+										<div class="leaflet-popup-tip"></div>
+								 </div>
+						 </div>
+						</div>
+				</div>
+									</div>
+									<div class="leaflet-control-container">
+										<div class="leaflet-top leaflet-left">
+											<div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="http://leafletjs.com/examples/quick-start-example.html#" title="Zoom in">+</a><a class="leaflet-control-zoom-out" href="http://leafletjs.com/examples/quick-start-example.html#" title="Zoom out">-</a></div>
+											</div>
+											<div class="leaflet-top leaflet-right"></div>
+											<div class="leaflet-bottom leaflet-left"></div>
+											</div>
+											</div>
 	</div>
 
 </body>
