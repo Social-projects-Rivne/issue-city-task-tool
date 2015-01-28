@@ -39,7 +39,7 @@ window.onload = function() {
 		event.preventDefault();
 		tab2Title.className = '';
 		tab3Title.className = 'active';
-		tab2.className = 'tab-pane';
+		tab2.className = 'tab-pane fade';
 		tab3.className = 'tab-pane fade active in';
 	}, false);
 }
