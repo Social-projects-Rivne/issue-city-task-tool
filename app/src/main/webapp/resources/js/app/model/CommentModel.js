@@ -1,13 +1,17 @@
-var CommentModel = Backbone.Model.extend({
-defaults:{
-	id : 0,
+define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
-	comment : "",
+	var CommentModel = Backbone.Model.extend({
+		defaults : {
+			id : 0,
 
-	userName : "",
+			comment : "",
 
-	email : "",
+			userName : "",
 
-	issueId : ""
-},
+			email : "",
+
+			issueId : ""
+		},
+	});
+	return CommentModel;
 });

@@ -188,8 +188,7 @@
 
 						<br>
 						<div align="center">
-							<button type="submit" class="btn btn-small" id="resolve_button"
-								onclick="sendNewComment()">Comment</button>
+							<button type="submit" class="btn btn-small" id="add_comment_button">Comment</button>
 						</div>
 					</div>
 				</div>
@@ -198,6 +197,10 @@
 
 		<div id="map"></div>
 	</div>
-
+<!-- Placed at the end of the document so the pages load faster -->
+	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
+	<script>
+ require(['main']);
+ </script>
 </body>
 </html>
