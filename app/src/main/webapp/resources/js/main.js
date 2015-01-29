@@ -8,20 +8,6 @@ require([
         ]
 , function($,_,Backbone,CommentModel,CommentViev,CommentCollection) {
 	function sendNewComment(){
-
-jQuery(document).ready(function($) {
-	comments = new CommentCollection();
-});
-
-var comments = null;
-
-function sendNewComment(){
-	
-	var comment = new CommentModel({
-		'userName':$(document.getElementsByName('userName')[0]).val(),
-		'comment':$(document.getElementsByName('comment-text')[0]).val(),
-		'email' : $(document.getElementsByName('email')[0]).val(),
-		'issueId' : ""
 		
 		var comment = new CommentModel({
 			'userName':$(document.getElementsByName('userName')[0]).val(),
@@ -73,12 +59,4 @@ function sendAjax(comment) {
 				}
 			});
 }
-/*
- * comments.fetch();
- * comments.length;
- * comments.each(function(obj,index){var commV = new CommentViev({model:obj}); commV.render(); commV.el;}); 
- * 
- * comments.each(function(obj,index){var commV = new CommentViev({model:obj}); commV.render(); commV.el; $(document.body.getElementsByClassName('comments')[0]).append(commV.el);});
- * 
- */
 
