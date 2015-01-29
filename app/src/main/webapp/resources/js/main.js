@@ -7,6 +7,10 @@ require([
         'collection/CommentCollection'
         ]
 , function($,_,Backbone,CommentModel,CommentViev,CommentCollection) {
+	var comments = null;
+	jQuery(document).ready(function($) {
+		comments = new CommentCollection();
+		});
 	
 	document.getElementById('add_comment_button').addEventListener('click', function(event) {
 		event.preventDefault();
@@ -22,11 +26,17 @@ require([
 			'issueId' : ""
 			
 		});
-		
+		comments.fetch();
+		comments.each(function(obj,index){
+					var commV = new CommentViev({model:obj}); 
+					commV.render(); 
+					console.log(obj.toJSON()); 
+					$(document.body.getElementsByClassName('comments')[0]).append(commV.el);});
+			
 		var commentView = new CommentViev({
 			model : comment
 		});
-		
+		comments.add(comment);
 		commentView.render();
 		
 		$(document.body.getElementsByClassName('comments')[0]).append(commentView.el);
@@ -40,10 +50,10 @@ require([
 				'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
 				'", "issueId":"1"}');
 	}
-	//var comments = new CommentCollection;
+	// var comments = new CommentCollection;
 });
 
-//separate this function to another file
+// separate this function to another file
 function sendAjax(comment) {
 
 	$
@@ -51,7 +61,13 @@ function sendAjax(comment) {
 				url : "/Bawl/add-comment",
 				type : 'POST',
 				dataType : 'json',
-				//data : '{"email":"' + document.getElementsByName("email")[0].value + '","userName":"' + document.getElementsByName("userName")[0].value  + '", "comment": "' + document.getElementsByName("comment-text")[0].value  + '", "issueId":"1"}',
+				// data : '{"email":"' +
+				// document.getElementsByName("email")[0].value +
+				// '","userName":"' +
+				// document.getElementsByName("userName")[0].value + '",
+				// "comment": "' +
+				// document.getElementsByName("comment-text")[0].value + '",
+				// "issueId":"1"}',
 				data: comment,
 				contentType : 'application/json',
 				mimeType : 'application/json',
