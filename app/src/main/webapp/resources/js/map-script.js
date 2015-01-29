@@ -1,14 +1,19 @@
 function mapDraw() {
 	map = L.map('map').setView([50.62, 26.25], 13);
 	tempMarker = null;
+	issueList = null;
 	
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	    maxZoom: 18
 	}).addTo(map);
 	
 	function onMarkerClick(e) {
-		if(!issueDetails.style.display)
+		if(!issueDetails.style.display) {
 			issueDetails.style.display = 'block';
+			
+			$('#issue_name').text(issueList[this.title - 1].name);
+			$('#issue_description').text(issueList[this.title - 1].description);
+		}
 		else
 			issueDetails.style.display = '';
 	}
@@ -32,8 +37,11 @@ function mapDraw() {
 		mimeType: 'application/json',
 		dataType: 'json',
 		success: function(data) {
+			issueList = data;
 			data.forEach(function(element, index, array) {
-				L.marker(element.mapPointer.substr(7, element.mapPointer.length - 1).split(', ')).addTo(map).on('click', onMarkerClick);
+				var tmp = L.marker(element.mapPointer.substr(7, element.mapPointer.length - 1)
+						.split(', ')).addTo(map).on('click', onMarkerClick);
+				tmp.title = element.id;
 			});
 		}
 	});

@@ -154,16 +154,15 @@
 					</div>
 
 					<h4>
-						<label id="issue_name">Traffic light doesn't work. </label>
+						<label id="issue_name"></label>
 					</h4>
 
-					<label id="issue_description"> Not working traffic lights
-						at the intersection of Soborna-Kievskaya. </label>
+					<label id="issue_description"></label>
 
-					<!-- <div class="thumbnail"> -->
+					<!-- <div class="thumbnail">
 					<img src="http://placehold.it/130x70"> <img
 						src="http://placehold.it/130x70">
-					<!-- </div> -->
+					</div> -->
 
 					<br>
 					<h4>Comments</h4>
