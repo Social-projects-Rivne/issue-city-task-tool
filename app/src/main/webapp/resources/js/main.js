@@ -7,6 +7,12 @@ require([
         'collection/CommentCollection'
         ]
 , function($,_,Backbone,CommentModel,CommentViev,CommentCollection) {
+	
+	document.getElementById('add_comment_button').addEventListener('click', function(event) {
+		event.preventDefault();
+		sendNewComment();
+	}, false);
+	
 	function sendNewComment(){
 		
 		var comment = new CommentModel({

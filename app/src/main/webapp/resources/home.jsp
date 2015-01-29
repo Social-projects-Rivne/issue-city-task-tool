@@ -174,7 +174,7 @@
 
 						<br>
 						<div align="center">
-							<button type="submit" class="btn btn-small" id="resolve_button"
+							<button type="submit" class="btn btn-small" id="add_comment_button"
 								onclick="sendNewComment()">Comment</button>
 						</div>
 					</div>
