@@ -45,7 +45,6 @@ require([
 			
 	
 		
-		$(document.body.getElementsByClassName('comments')[0]).append(commentView.el);
 		
 		console.log(comment.toJSON());
 		
