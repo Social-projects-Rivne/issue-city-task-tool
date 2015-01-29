@@ -15,7 +15,10 @@ function mapDraw() {
 	function onMapClick(e) {
 		if(addIssue.style.display == 'block') {
 			mapPointer.value = e.latlng;
-			L.marker(e.latlng).addTo(map).on('click', onMarkerClick);
+			if(!tempMarker)
+				tempMarker = L.marker(e.latlng).addTo(map).on('click', onMarkerClick);
+			else
+				tempMarker.setLatLng(e.latlng);
 		}
 	}
 
