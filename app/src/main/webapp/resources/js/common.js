@@ -1,5 +1,5 @@
 requirejs.config({
-	baseUrl:"",
+	baseUrl:"resources",
 	paths:{
 		jquery: 'js/lib/jquery',
 		underscore: 'js/lib/underscore',

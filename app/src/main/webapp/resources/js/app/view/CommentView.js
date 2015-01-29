@@ -17,7 +17,7 @@ define(
 						render : function() {
 							// console.log('Render fnction worcking');
 							this.$el.html(this.template(this.model.toJSON()));
-							$(document.body.getElementsByClassName('comments')[0]).append(commentView.el);
+							$(document.body.getElementsByClassName('comments')[0]).append(this.el);
 						}
 					});
 			return CommentView;
