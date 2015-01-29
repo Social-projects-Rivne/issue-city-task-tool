@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -94,5 +97,14 @@ public class HomeController {
 		System.out.println("email: " + comment.get("email") + "issue id: "
 				+ comment.get("issueId"));
 		return comment;
+	}
+	
+	@RequestMapping("get-markers")
+	public @ResponseBody List getMarkers() {
+		@SuppressWarnings("deprecation")
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		return session.createQuery("From IssueModel").list();
 	}
 }

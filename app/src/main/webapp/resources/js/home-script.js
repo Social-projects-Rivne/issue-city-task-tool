@@ -1,6 +1,4 @@
 window.onload = function() {
-	tempMarker = null;
-	
 	cryOut = document.getElementById('cry-out');
 	addIssue = document.getElementById('add-issue');
 	issueDetails = document.getElementById('issue-details');
