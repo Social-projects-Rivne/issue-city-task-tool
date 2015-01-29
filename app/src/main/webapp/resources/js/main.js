@@ -1,7 +1,3 @@
-jQuery(document).ready(function($) {
-	comments = new CommentCollection();
-});
-
 var comments = null;
 
 function sendNewComment(){
@@ -13,18 +9,14 @@ function sendNewComment(){
 		'issueId' : ""
 		
 	});
-		comments.fetch();
-		
+	if(comments==null){
+		comments = new CommentCollection();
 		comments.add(comment);
-		
-		comments.each(function(obj,index){
-			var commV = new CommentViev({model:obj}); 
-			commV.render(); 
-			console.log(obj.toJSON()); 
-			$(document.body.getElementsByClassName('comments')[0]).append(commV.el);});
-
+	}else{
+		comments.add(comment);
+	}
 	var commentView = new CommentViev({
-		model : comment
+		model : comments
 	});
 	
 	commentView.render();
@@ -63,12 +55,5 @@ function sendAjax(comment) {
 				}
 			});
 }
-/*
- * comments.fetch();
- * comments.length;
- * comments.each(function(obj,index){var commV = new CommentViev({model:obj}); commV.render(); commV.el;}); 
- * 
- * comments.each(function(obj,index){var commV = new CommentViev({model:obj}); commV.render(); commV.el; $(document.body.getElementsByClassName('comments')[0]).append(commV.el);});
- * 
- */
+
 

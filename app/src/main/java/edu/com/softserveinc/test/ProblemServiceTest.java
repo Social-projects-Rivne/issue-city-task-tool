@@ -25,7 +25,7 @@ public class ProblemServiceTest {
 			System.out.println("start");
 			issuService.addProblemm(issue);
 
-			issue = issuService.getByID(1);
+			issue = issuService.getByID(issue.getId());
 
 			issue.setAttachments("add new attachments");
 

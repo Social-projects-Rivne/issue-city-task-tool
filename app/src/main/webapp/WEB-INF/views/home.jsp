@@ -15,11 +15,11 @@
 <script src="<c:url value="/resources/js/lib/backbone.js" />"
 	type="text/javascript"></script>
 
-<script src="<c:url value="/resources/js/main.js" />"></script>
+<!--<script src="<c:url value="/resources/js/main.js" />"></script>
 
 <script src="<c:url value="/resources/js/app/model/CommentModel.js" />"></script>
 <script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
-<script src="<c:url value="/resources/js/app/collection/CommentCollection.js" />"></script>
+<script src="<c:url value="/resources/js/app/collection/CommentCollection.js" />"></script>-->
 
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -96,7 +96,7 @@
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
 								<p>Mark the place of issue on the map</p>
-								<input type="text" name="mapPointer" id="map-pointer" class="form-control" disabled />
+								<input type="text" name="mapPointer" id="map-pointer" class="form-control" />
 								<br />
 								<button class="btn" id="next-to-description">Next</button>
 							</div>
