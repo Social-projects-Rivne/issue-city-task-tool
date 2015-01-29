@@ -1,11 +1,8 @@
 window.onload = function() {
-	initialize();
-	validate();
-	
-	var cryOut = document.getElementById('cry-out');
-	var addIssue = document.getElementById('add-issue');
-	var issueDetails = document.getElementById('issue-details');
-	var map = document.getElementById('map');
+	cryOut = document.getElementById('cry-out');
+	addIssue = document.getElementById('add-issue');
+	issueDetails = document.getElementById('issue-details');
+	mapPointer = document.getElementById('map-pointer');
 	
 	var tab1Title = document.getElementById('tab1-title');
 	var tab2Title = document.getElementById('tab2-title');
@@ -20,11 +17,6 @@ window.onload = function() {
 	cryOut.addEventListener('click', function(event) {
 		event.preventDefault();
 		addIssue.style.display = 'block';
-	}, false);
-	
-	map.addEventListener('click', function(event) {
-		event.preventDefault();
-		issueDetails.style.display = 'block';
 	}, false);
 	
 	nextToDescription.addEventListener('click', function(event) {
@@ -42,4 +34,7 @@ window.onload = function() {
 		tab2.className = 'tab-pane fade';
 		tab3.className = 'tab-pane fade active in';
 	}, false);
+	
+	mapDraw();
+	validate();
 }
