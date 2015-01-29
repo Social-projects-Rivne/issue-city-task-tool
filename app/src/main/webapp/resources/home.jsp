@@ -5,7 +5,8 @@
 <title>Home</title>
 
 <!-- Download IT!!! -->
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<link rel="stylesheet"
+	href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
 <script type="text/javascript"
@@ -120,7 +121,8 @@
 									<!-- <input id="fileInput" class="input-file" type="file"> -->
 								</div>
 								<button type="submit" class="btn btn-default"
-									id="add-issue-button">Add</button><div></div>
+									id="add-issue-button">Add</button>
+								<div></div>
 
 							</div>
 						</div>
@@ -152,10 +154,7 @@
 
 					<br>
 					<h4>Comments</h4>
-					<div class="comments">
-					
-					
-					</div>
+					<div class="comments"></div>
 					<div class="comment" id="add-comment">
 						<h4>Your comment</h4>
 
@@ -174,8 +173,8 @@
 
 						<br>
 						<div align="center">
-							<button type="submit" class="btn btn-small" id="resolve_button"
-								onclick="sendNewComment()">Comment</button>
+							<button type="submit" class="btn btn-small"
+								id="add_comment_button">Comment</button>
 						</div>
 					</div>
 				</div>
@@ -184,10 +183,10 @@
 
 		<div id="map"></div>
 	</div>
-	
- <!-- Placed at the end of the document so the pages load faster -->
-    <script data-main="js/common" src="js/lib/require.js"></script>
- <script>
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script data-main="js/common" src="js/lib/require.js"></script>
+	<script>
  require(['main']);
  </script>
 </body>

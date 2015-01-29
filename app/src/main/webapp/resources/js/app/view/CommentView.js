@@ -5,8 +5,9 @@ define(
 			var CommentView = Backbone.View
 					.extend({
 						initilize : function() {
-
+							
 						},
+						
 						tagName : 'div',
 						className : 'comment',
 						template : _
@@ -16,7 +17,7 @@ define(
 						render : function() {
 							// console.log('Render fnction worcking');
 							this.$el.html(this.template(this.model.toJSON()));
-
+							$(document.body.getElementsByClassName('comments')[0]).append(commentView.el);
 						}
 					});
 			return CommentView;

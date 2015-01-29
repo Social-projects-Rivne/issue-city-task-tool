@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,26 +39,21 @@ public class HomeController {
 
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
+		String mapPointer = request.getParameter("mapPointer");
 		String issueName = request.getParameter("issueName");
 		String issueCategory = request.getParameter("issueCategory");
 		String issueDescription = request.getParameter("issueDescription");
 		String issueResolution = request.getParameter("issueResolution");
 		String issueAttachments = request.getParameter("issueAttachments");
 		
-		System.out.println(issueName);
-		System.out.println(issueCategory);
-		System.out.println(issueDescription);
-		System.out.println(issueResolution);
-		System.out.println(issueAttachments);
-		
-		IssueModel issue = new IssueModel(issueName, issueDescription, "0, 0",
+		IssueModel issue = new IssueModel(issueName, issueDescription, mapPointer,
 				issueAttachments, 1);
-		
 		if (new IssueValidator(issue).isValid()) {
 			try {
 				service.addProblemm(issue);
+				System.out.println("MAP POINTER +++++++++++  = "+mapPointer);
 			} catch (Exception ex) {
-				System.out.println("ERROR" + ex.toString());
+				System.out.println("ERROR! Issue is not valid!!!!! " + ex.toString());
 			}
 		}
 		else{
@@ -99,5 +97,14 @@ public class HomeController {
 		System.out.println("email: " + comment.get("email") + "issue id: "
 				+ comment.get("issueId"));
 		return comment;
+	}
+	
+	@RequestMapping("get-markers")
+	public @ResponseBody List getMarkers() {
+		@SuppressWarnings("deprecation")
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		return session.createQuery("From IssueModel").list();
 	}
 }
