@@ -43,7 +43,6 @@ public class HomeController {
 		String issueName = request.getParameter("issueName");
 		String issueCategory = request.getParameter("issueCategory");
 		String issueDescription = request.getParameter("issueDescription");
-		String issueResolution = request.getParameter("issueResolution");
 		String issueAttachments = request.getParameter("issueAttachments");
 		
 		IssueModel issue = new IssueModel(issueName, issueDescription, mapPointer,

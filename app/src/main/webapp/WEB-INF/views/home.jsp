@@ -123,11 +123,6 @@
 									<textarea class="form-control" rows="3" id="issue-description"
 										name="issueDescription"></textarea>
 								</div>
-								<div class="form-group">
-									<label for="propose">Resolution</label>
-									<textarea class="form-control" rows="3" id="propose"
-										name="issueResolution"></textarea>
-								</div>
 								<button class="btn" id="next-to-photo">Next</button>
 							</div>
 
