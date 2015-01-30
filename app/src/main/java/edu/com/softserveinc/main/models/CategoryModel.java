@@ -18,11 +18,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "categories")
 public class CategoryModel {
 
-	public CategoryModel() {}
-	
-	public CategoryModel(String name) {
-		this.name = name;
-	}
+
 	//TODO: add annotation for connect this class to IssueModel
 	@Id
 	@GeneratedValue
@@ -30,7 +26,7 @@ public class CategoryModel {
 	int id;
 
 	@NotEmpty
-	@Column(name = "name")
+	@Column(unique=true, name = "name")
 	private String name;
 
 	/*@Column(name = "count_Of_problems")
@@ -38,7 +34,13 @@ public class CategoryModel {
 
 	@Column(name = "cont_Of_Resolved_problems")
 	private int countOfResolvedProblems;*/
-
+	
+	public CategoryModel() {}
+	
+	public CategoryModel(String name) {
+		this.name = name;
+	}
+	
 	public int getId() {
 		return id;
 	}

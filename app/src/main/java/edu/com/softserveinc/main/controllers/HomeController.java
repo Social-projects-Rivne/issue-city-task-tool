@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.com.softserveinc.main.models.CategoryModel;
 import edu.com.softserveinc.main.models.CommentModel;
 import edu.com.softserveinc.main.models.IssueModel;
 import edu.com.softserveinc.main.services.CategoryServiceImpl;
@@ -37,25 +38,41 @@ public class HomeController {
 		return "home";
 	}
 
+	// add new problem
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
 		String mapPointer = request.getParameter("mapPointer");
 		String issueName = request.getParameter("issueName");
-		String issueCategory = request.getParameter("issueCategory");
+		String issueCategoryName = request.getParameter("issueCategory");
 		String issueDescription = request.getParameter("issueDescription");
 		String issueAttachments = request.getParameter("issueAttachments");
-		
-		IssueModel issue = new IssueModel(issueName, issueDescription, mapPointer,
-				issueAttachments, 1);
+
+		issueCategoryName.toLowerCase();
+		CategoryModel category = new CategoryModel(issueCategoryName);
+
+		try {
+			new CategoryServiceImpl().addCategory(category);
+			System.out.println("category created with id" + category.getId());
+		}
+		// org.hibernate.exception
+		catch (Exception ex) {
+			category = new CategoryServiceImpl()
+					.getCategoryByName(issueCategoryName);
+			System.out.println("category loaded");
+		}
+
+		IssueModel issue = new IssueModel(category.getId(), issueName,
+				issueDescription, mapPointer, issueAttachments, 1);
+
 		if (new IssueValidator(issue).isValid()) {
 			try {
 				service.addProblemm(issue);
-				System.out.println("MAP POINTER +++++++++++  = "+mapPointer);
+				System.out.println("MAP POINTER +++++++++++  = " + mapPointer);
 			} catch (Exception ex) {
-				System.out.println("ERROR! Issue is not valid!!!!! " + ex.toString());
+				System.out.println("ERROR! Issue is not valid!!!!! "
+						+ ex.toString());
 			}
-		}
-		else{
+		} else {
 
 			System.out.println("Error! Issue is not valid!!!");
 		}
@@ -75,12 +92,12 @@ public class HomeController {
 
 		return issue;
 	}
-	
-	//fetch all comments for issue-id
+
+	// fetch all comments for issue-id
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public List getAllByIssueId(@PathVariable int id) {
+	public List getAllCommentsByIssueId(@PathVariable int id) {
 		return new CommentServiceImpl().getCommentsByIssueId(id);
 	}
 
@@ -88,23 +105,25 @@ public class HomeController {
 	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
 	public @ResponseBody CommentModel addComment(
 			@RequestBody final CommentModel comment) {
-		
+
 		new CommentServiceImpl().addComment(comment);
 		return comment;
 	}
-	
+
 	@RequestMapping(value = "add-comment", method = RequestMethod.PUT)
 	public @ResponseBody CommentModel updateComment(
 			@RequestBody final CommentModel comment) {
-		
+
 		new CommentServiceImpl().addComment(comment);
 		return comment;
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("get-markers")
 	public @ResponseBody List getMarkers() {
 		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		SessionFactory sessionFactory = new Configuration().configure()
+				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		return session.createQuery("From IssueModel").list();
