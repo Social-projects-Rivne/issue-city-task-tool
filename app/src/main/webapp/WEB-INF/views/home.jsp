@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
 <script src="<c:url value="/resources/js/leaflet.js" />"></script>
 
-<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+<link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
 <script src="<c:url value="/resources/js/leaflet.awesome-markers.js" />"></script>
 
