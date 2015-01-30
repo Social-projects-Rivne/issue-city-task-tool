@@ -1,14 +1,30 @@
-define([ 'underscore', 'backbone', 'model/CommentModel' ], function(_,
-		Backbone, CommentModel) {
+define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], function(_,
+		Backbone, CommentModel, CommentView) {
 
 	var CommentCollection = Backbone.Collection.extend({
-		intialize : function(issue_id) {
-			this.issue_id = issue_id; 
+		intialize : function(issueId) {
+			this.issueId = issueId;
+			this.fetch();
+			console.log('commentsCollection initializes');
 		},
-		issue_id : '',
-		url: 'http://localhost:8080/Bawl/all-comments/1', /* add here issue_id*/
-		model : CommentModel
+		issueId : '1',
+		url : 'http://localhost:8080/Bawl/all-comments/1', /* add here issueId */
+		model : CommentModel,
+		
+		//TODO: render from collection is incorrect! Remove it later
+		render : function() {
+			this.each(function(obj, index) {
+				var commV = new CommentView({
+					model : obj
+				});
+				commV.render();
+				console.log(obj.toJSON());
+				$(document.body.getElementsByClassName('comments')[0]).append(
+						commV.el);
+			});
+		}
 	});
+
 	return CommentCollection;
 
 });

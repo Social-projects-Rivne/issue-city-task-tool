@@ -6,13 +6,37 @@ require([
         'view/CommentView',
         'collection/CommentCollection'
         ]
-, function($,_,Backbone,CommentModel,CommentViev,CommentCollection) {
+, function($,_,Backbone,CommentModel,CommentView,CommentCollection) {
 	
 	var comments = null;
 	
 	jQuery(document).ready(function($) {
-		comments = new CommentCollection();
+		console.log('comments initialization');
+		comments = new CommentCollection({'issueId':'1'});
+		comments.initialize();
+		console.log('comments  init done');
+		comments.fetch();
+		console.log('comments fetched');
+		console.log('comments render');
+		global = comments;
+		console.log('comments render done');
 	});
+
+	function onMarkerClick(e) {
+
+			
+		if(!issueDetails.style.display) {
+			issueDetails.style.display = 'block';
+
+			comments.render();
+			$('#issue_name').text(issueList[this.title - 1].name);
+			$('#issue_description').text(issueList[this.title - 1].description);
+			
+	
+		}
+		else
+			issueDetails.style.display = '';
+	}
 
 	document.getElementById('add_comment_button').addEventListener('click', function(event) {
 		event.preventDefault();
@@ -31,23 +55,17 @@ require([
 		});
 		
 		//fetch comments from server
-		comments.fetch();
+		
 		
 		// add comment to collection
 		comments.add(comment);
-		
-		
 		comments.each(function(obj,index){
-					var commV = new CommentViev({model:obj}); 
-					commV.render(); 
-					console.log(obj.toJSON()); 
-					$(document.body.getElementsByClassName('comments')[0]).append(commV.el);});
-			
-	
-		
-		
+			var commV = new CommentView({model:obj}); 
+			commV.render(); 
+			console.log(obj.toJSON()); 
+			$(document.body.getElementsByClassName('comments')[0]).append(commV.el);
+	});
 		console.log(comment.toJSON());
-		
 		console.log(comment),
 		
 		sendAjax('{"email":"' + document.getElementsByName("email")[0].value +
@@ -87,3 +105,4 @@ function sendAjax(comment) {
 			});
 }
 
+var global;
