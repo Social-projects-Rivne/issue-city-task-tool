@@ -8,7 +8,7 @@ define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], f
 			console.log('commentsCollection initializes');
 		},
 		issueId : '1',
-		url : 'http://localhost:8088/Bawl/all-comments/1', /* add here issueId */
+		url : '/Bawl/all-comments/1', /* add here issueId */
 		model : CommentModel,
 		
 		//TODO: render from collection is incorrect! Remove it later
