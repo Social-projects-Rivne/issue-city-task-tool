@@ -26,7 +26,7 @@ public class CategoryModel {
 	int id;
 
 	@NotEmpty
-	@Column(name = "name")
+	@Column(unique=true, name = "name")
 	private String name;
 
 	/*@Column(name = "count_Of_problems")

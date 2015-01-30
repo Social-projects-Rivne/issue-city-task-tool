@@ -37,7 +37,8 @@ public class HomeController {
 		model.addAttribute("categories", categoriesList);
 		return "home";
 	}
-
+	
+	//add new problem
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
 		String mapPointer = request.getParameter("mapPointer");
@@ -45,25 +46,26 @@ public class HomeController {
 		String issueCategoryName = request.getParameter("issueCategory");
 		String issueDescription = request.getParameter("issueDescription");
 		String issueAttachments = request.getParameter("issueAttachments");
-		CategoryModel category = new CategoryModel();
+		
+		
 		
 		issueCategoryName.toLowerCase();
+		CategoryModel category = new CategoryModel(issueCategoryName);
 		
-		if (new CategoryServiceImpl().isExixis(issueCategoryName)) {
-			category = new CategoryServiceImpl()
-					.getCategoryByName(issueCategoryName);
-
-			System.out.println("category loaded");
-		} else {
-
-			category.setName(issueCategoryName);
-			new CategoryServiceImpl().addCategory(category);
-
-			System.out.println("category created with id"+category.getId());
+		try{
+			 new CategoryServiceImpl().addCategory(category);
+			 System.out.println("category created with id"+category.getId());
 		}
-
+		//org.hibernate.exception
+		catch(Exception ex){
+			category = new CategoryServiceImpl().getCategoryByName(issueCategoryName);
+			System.out.println("category loaded");
+		}
+		
 		IssueModel issue = new IssueModel(category.getId(), issueName,
 				issueDescription, mapPointer, issueAttachments, 1);
+		
+		
 		if (new IssueValidator(issue).isValid()) {
 			try {
 				service.addProblemm(issue);
@@ -97,7 +99,7 @@ public class HomeController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public List getAllByIssueId(@PathVariable int id) {
+	public List getAllCommentsByIssueId(@PathVariable int id) {
 		return new CommentServiceImpl().getCommentsByIssueId(id);
 	}
 
