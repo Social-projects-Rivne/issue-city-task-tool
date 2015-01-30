@@ -6,7 +6,7 @@ define([ 'underscore', 'backbone', 'model/CommentModel' ], function(_,
 			this.issue_id = issue_id; 
 		},
 		issue_id : '',
-		url: 'http://localhost:8080/Bawl/add-comment', /* add here issue_id*/
+		url: 'http://localhost:8080/Bawl/all-comments/1', /* add here issue_id*/
 		model : CommentModel
 	});
 	return CommentCollection;
