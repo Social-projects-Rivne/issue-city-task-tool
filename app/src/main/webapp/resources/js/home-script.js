@@ -35,6 +35,6 @@ window.onload = function() {
 		tab3.className = 'tab-pane fade active in';
 	}, false);
 	
-	mapDraw();
+//	mapDraw();
 	validate();
 }
