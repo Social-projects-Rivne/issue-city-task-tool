@@ -1,5 +1,6 @@
 package edu.com.softserveinc.main.controllers;
 
+import org.hibernate.JDBCException;
 import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.com.softserveinc.main.models.UserModel;
-import edu.com.softserveinc.main.services.LoadUsersListImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
 
 @Controller
@@ -19,7 +19,7 @@ public class AdminController {
 
 	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/admin-toolpage")
-	public String showUsersTable(LoadUsersListImpl usersList, Model model) {
+	public String showUsersTable(UserServiceImpl usersList, Model model) {
 
 		try {
 			model.addAttribute("users", usersList.loadUsersList());
@@ -43,7 +43,8 @@ public class AdminController {
 		try {
 			userService.addUser(user);
 			notificationMessage = "New user was succesfully added!";
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			notificationMessage = "User exists";
 		}
 		return "redirect:admin-toolpage";
@@ -58,13 +59,13 @@ public class AdminController {
 			UserServiceImpl userService, UserServiceImpl getUsr,
 			UserModel user, Model model) {
 		try {
-			user = getUsr.getUserByID(userId);
-			user.setName(name);
-			user.setEmail(email);
-			user.setLogin(login);
-			userService.editUser(user);
+			
 			notificationMessage = "User was succesfully edited!";
-		} catch (Exception ex) {
+		} 
+		catch (JDBCException ex) {
+				notificationMessage = "User with that email or login exists ";
+		}
+		catch (Exception ex) {
 			notificationMessage = "Error! " + ex.getCause();
 		}
 		return "redirect:admin-toolpage";

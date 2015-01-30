@@ -1,45 +1,42 @@
-function initialize() {
-	var gpos = new google.maps.LatLng(50.620679, 26.244523);
-  var mapOptions = {
-    zoom: 12,
-    center: gpos
-    //mapTypeId: google.maps.MapTypeId.ROADMAP
-  }
-  var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-  var openStreet = new google.maps.ImageMapType({
-	  getTileUrl: function(ll, z) {
-		var X = ll.x % (1 << z);  // wrap
-		return "http://tile.openstreetmap.org/" + z + "/" + X + "/" + ll.y + ".png";
-	  },
-	  tileSize: new google.maps.Size(256, 256),
-	  isPng: true,
-	  maxZoom: 18,
-	  name: "OpenStreetMap",
-	  alt: "Слой с Open Streetmap"
-			}); 
- 
-			//adding OpenStreetMap layer
- 
-		map.mapTypes.set('osm', openStreet);
-	map.setMapTypeId('osm');
- 
-		map.setOptions({
-		  mapTypeControlOptions: {
-			mapTypeIds: [
-			  'osm',
-		  //google.maps.MapTypeId.ROADMAP,
-		  //google.maps.MapTypeId.TERRAIN,
-		  //google.maps.MapTypeId.SATELLITE,
-		  //google.maps.MapTypeId.HYBRID
-		],
-		//style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-	  }
-	});
+function mapDraw() {
+	map = L.map('map').setView([50.62, 26.25], 13);
+	tempMarker = null;
+	issueList = null;
+	
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	    maxZoom: 18
+	}).addTo(map);
+	
 
-	var gMarker = new google.maps.Marker({
-	  position: gpos,
-	  map: map
-	  //icon: 'img_src.png';
-	});
+	
+	function onMapClick(e) {
+		if(addIssue.style.display == 'block') {
+			mapPointer.value = e.latlng;
+			if(!tempMarker)
+				tempMarker = L.marker(e.latlng).addTo(map);
+			else
+				tempMarker.setLatLng(e.latlng);
+		}
+	}
 
+	map.on('click', onMapClick);
+	
+	$.ajax({
+		url: 'get-markers',
+		type: 'GET',
+		contentType: 'application/json',
+		mimeType: 'application/json',
+		dataType: 'json',
+		success: function(data) {
+			issueList = data;
+			data.forEach(function(element, index, array) {
+				var tmp = L.marker(element.mapPointer.substr(7, element.mapPointer.length - 1)
+						.split(', ')).addTo(map).on('click', onMarkerClick);
+				tmp.title = element.id;
+			});
+		}
+	});
 }
+
+
+

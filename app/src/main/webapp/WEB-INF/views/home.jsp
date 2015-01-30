@@ -1,114 +1,208 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
 <html>
 <head>
-	<title>Home</title>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-	<script src="<c:url value="/resources/js/map-script.js" />"></script>
-	<script src="<c:url value="/resources/js/jquery-2.1.3.js" />" type="text/javascript"></script>
-    <script src="<c:url value="/resources/js/bootstrap.js" />" type="text/javascript"></script>
-    <script src="<c:url value="/resources/js/home-script.js" />" type="text/javascript"></script>
-    <script src="<c:url value="/resources/js/validation-script.js" />" type="text/javascript"></script>
-	<link href="<c:url value="/resources/css/styles2.css" />" rel="stylesheet">
-	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css" />">
+<title>Home</title>
+
+<!-- delete it later or add to project -->
+<script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+
+<!-- UNDESCORE.JS -->
+<script src="<c:url value="/resources/js/lib/underscore.js" />"
+	type="text/javascript"></script>
+
+<!-- BACKBONE.JS -->
+<script src="<c:url value="/resources/js/lib/backbone.js" />"
+	type="text/javascript"></script>
+
+<!--<script src="<c:url value="/resources/js/main.js" />"></script>
+
+<script src="<c:url value="/resources/js/app/model/CommentModel.js" />"></script>
+<script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
+<script src="<c:url value="/resources/js/app/collection/CommentCollection.js" />"></script>-->
+
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
+<script src="<c:url value="/resources/js/leaflet.js" />"></script>
+
+<link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
+<script src="<c:url value="/resources/js/leaflet.awesome-markers.js" />"></script>
+
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<script src="<c:url value="/resources/js/map-script.js" />"></script>
+<script src="<c:url value="/resources/js/issue-script.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js" />"
+	type="text/javascript"></script>
+<script src="<c:url value="/resources/js/home-script.js" />"
+	type="text/javascript"></script>
+<script src="<c:url value="/resources/js/validation-script.js" />"
+	type="text/javascript"></script>
+<link href="<c:url value="/resources/css/styles2.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/bootstrap.min.css" />">
+<link
+	href='http://fonts.googleapis.com/css?family=Jura:400,600|Averia+Sans+Libre:400,700'
+	rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<div id="menu">
-		<a href="admin-toolpage">ToolPage</a>
-	</div>
-	
-	<div id="map">
-		<div id="map_canvas"></div>
-	</div>
-	
-	<form id="add-issue-form" class="container-fluid" method="POST" action="add-issue">
-          
-          <!-- Header -->
-          <div class="row-fluid" id="header">
-            <div class="span12">
-            <h4>Bawl. User-> new issue form</h4>
-            </div>
-          </div>
-          
-          <!-- Content   -->
-          <!-- Content.Sidebar -->
-          <div class="row-fluid" id="content">
-            <div class="span3 sidebar">
-            <!-- User image -->
-            <img class="img-polaroid" src="<c:url value="/resources/img/avatar.png" />" width="120" height="120" />
-            <!-- Buttons -->
-            <button class="btn" type="submit">Fetch all issues</button><br>
-            <button class="btn" type="submit">Add new issue..</button><br>
-            <button class="btn" type="submit">..</button><br>
-            <button class="btn" type="submit">..</button><br>
-          <!-- Content. General Content Area     -->
-            </div>
-            <div class="span9 text"> 
-                <br>
 
-				  <input type="hidden" name="mapPointer" id="mapPointer" />	
+	<div class="container" id="navbar">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar-collapse">
+						<span class="sr-only"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Bawl</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="#" id="cry-out">Cry out</a></li>
+
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Login</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">About</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div>
+		<div class="grid" id="add-issue">
+			<div class="col-1-3">
+				<div class="tabbable">
+					<form method="POST" action="add-issue">
+						<!-- Only required for left/right tabs -->
+						<h4>Add issue</h4>
+						<ul class="nav nav-tabs">
+
+							<li class="active" id="tab1-title"><a href="#tab1"
+								data-toggle="tab">Point</a></li>
+
+							<li id="tab2-title"><a href="#tab2" data-toggle="tab">Description</a>
+							</li>
+							<li id="tab3-title"><a href="#tab3" data-toggle="tab">Photo</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="tab1">
+								<p>Mark the place of issue on the map</p>
+								<input type="text" name="mapPointer" id="map-pointer" class="form-control" readonly />
+								<br />
+								<button class="btn" id="next-to-description">Next</button>
+							</div>
+							<div class="tab-pane fade" id="tab2">
+								<p>
+								<div class="form-group">
+									<label for="issue-name">Short issue name</label> <input
+										type="text" class="form-control" id="issue-name"
+										name="issueName" />
+								</div>
+								<div class="form-group">
+									<label for="issue-category">Issue category</label> <input
+										type="text" class="form-control" id="issue-category"
+										list="categories" name="issueCategory" />
+									<datalist id="categories">
+										<c:forEach items="${categories}" var="category">
+											<option>${category.name}</option>
+										</c:forEach>
+									</datalist>
+
+								</div>
+								<div class="form-group">
+									<label for="issue-description">Issue description</label>
+									<textarea class="form-control" rows="3" id="issue-description"
+										name="issueDescription"></textarea>
+								</div>
+								<button class="btn" id="next-to-photo">Next</button>
+							</div>
+
+							<div class="tab-pane fade" id="tab3">
+								<p></p>
+								<div class="form-group">
+									<label for="exampleInputFile">Click to upload file</label> <input
+										id="input-1" type="file" class="input-file"
+										name="issueAttachments">
+									<!-- <input id="fileInput" class="input-file" type="file"> -->
+								</div>
+								<button type="submit" class="btn btn-default"
+									id="add-issue-button">Add</button><div></div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="grid" id="issue-details">
+			<div class="col-1-3">
+				<div class="tabbable">
+
+					<div align=right>
+						<button type="submit" class="btn btn-small" id="resolve_button">Resolve</button>
+					</div>
+
+					<h4>
+						<label id="issue_name"></label>
+					</h4>
+
+					<label id="issue_description"></label>
+
+					<!-- <div class="thumbnail">
+					<img src="http://placehold.it/130x70"> <img
+						src="http://placehold.it/130x70">
+					</div> -->
+
+					<br>
+					<h4>Comments</h4>
+					<div class="comments">
 					
-                  <div class='row'>
-                    <div class='left'>
-                      <label for "problem name"> Problem name: </label>
-                    </div>
-                    <div class='right'>
-                      <input type="text" id="problem_name" name ="name" placeholder="enter name of problem"><span></span>
-                    </div>
-                  </div>
-                  
-                  <div class='row'>
-                    <div class='left'>
-                      <label for "problem name"> Category name: </label>
-                    </div>
-                    <div class='right'>
-                        <div class="selectWrap">
-                          <select id="category_name" name="category">
-	                          <option>Thefts</option>
-	                          <option>Fires</option>
-	                          <option>Murders</option>
-                          </select>
-                        </div>    
-                    </div>
-                  </div>
-                 
-                  <div class='row'>
-                    <div class='left'>
-                      <label for "problem name"> Description: </label>
-                    </div>
-                    <div class='right'>
-                      <input type="text" id="description" name ="description" placeholder="enter description"><span></span>
-                    </div>
-                  </div>
+					
+					</div>
+					<div class="comment" id="add-comment">
+						<h4>Your comment</h4>
 
-                  <div class='row'>
-                    <div class='left'>
-                      <label for "problem name"> Attachments (url): </label>
-                    </div>
-                    <div class='right'>
-                      <input type="text" id="url_attachments" name ="attachments" placeholder="enter attachments (url):"><span></span>
-                    </div>
-                  </div>
+						<div>
+							<label>Name</label> <input type="text" name="userName">
+						</div>
 
-                  <div class='row'>
-                    <div class='left'>
-                      Problem Priority: 
-                    </div>
-                    <div class='right-radio'>
-                      <input type="radio" value="1" id="low" name ="priorityId"> Low 
-                      <input type="radio" value="2" id="medium" name ="priorityId"> Medium 
-                      <input type="radio" value="3" id="high" name ="priorityId" checked="checked"> High
-                    </div>
-                  </div>
-            </div>
-          </div>
+						<div>
+							<label>Email</label> <input type="text" name="email">
+						</div>
 
-          <!-- Footer -->
-          <div class="row-fluid" id="footer">
-            <div class="span12">
-            rv-009
-            </div>
-          </div>
-    </form>
+						<div>
+							<label>Comment</label>
+							<textarea name="comment-text" rows="3"></textarea>
+						</div>
+
+						<br>
+						<div align="center">
+							<button type="submit" class="btn btn-small" id="add_comment_button">Comment</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="map"></div>
+	</div>
+<!-- Placed at the end of the document so the pages load faster -->
+	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
+	<script>
+ require(['main']);
+ </script>
 </body>
 </html>

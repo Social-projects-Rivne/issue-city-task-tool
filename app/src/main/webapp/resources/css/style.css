@@ -4,26 +4,59 @@ padding-top: 50px;
 }
 
 /*sidebar start */
-
 .grid {
- 
+  display: block;
   margin: 0;
   &:after {
     /* Or @extend clearfix */
     content: "";
     display: table;
     clear: both;
-}
+	}
 }
 .col-1-3 {
 	float: right;
     background: white;
     width: 23.0%;
+    overflow: scroll;
+	height: 100%;
 }
 
-/*end of sidebar*/
+/* Responsive for 1366 laptops, 800 pads, 320 mobile screens */
+@media only screen and (max-width:1200px) {
+	.col-1-3 {
+		max-width: 400px;
+	}
+}
+@media only screen and (max-width:1024px) {
+	.col-1-3 {
+		width: 400px;
+	}
+}
+@media only screen and (max-width:768px) {
+	.col-1-3 {
+		width: 400px;
+	}
+}
+@media only screen and (max-width:600px) {
+	.col-1-3 {
+		width: 400px;
+	}
+}
+@media only screen and (max-width:480px) {
+	.col-1-3 {
+		width: 400px;
+	}
+}
+@media only screen and (max-width:320px) {
+	.col-1-3 {
+		width: 400px;
+	}
+}
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+
+
+/* .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: #ea556f;
     -moz-border-right-colors: #ea556f;
@@ -39,13 +72,16 @@ padding-top: 50px;
     border-top-width: 2px;
     color: #555;
     cursor: default;
-}
-
+} */
 
 /*navbar bordercolor and background*/
 .navbar-default {
     border-color: #fff;
-    background: linear-gradient(to right, #d5445c, #ea556f);  
+    background: -moz-linear-gradient(to right, #d5445c, #ea556f);
+    background: -ms-linear-gradient(to right, #d5445c, #ea556f);
+    background: -o-linear-gradient(to right, #d5445c, #ea556f);
+    background: -webkit-linear-gradient(to right, #d5445c, #ea556f);
+    background: linear-gradient(to right, #d5445c, #ea556f); 
 }
 #sidebar:row {
   	background: #7e7e7e;
@@ -54,7 +90,16 @@ padding-top: 50px;
 }
 /* text color navbar-brand */
 .navbar-default .navbar-brand {
-    color: #fff;
+    color: #fff !important;
+    /* font-family: 'Jura', sans-serif; */
+    font-family: 'Averia Sans Libre', cursive;
+    font-size:2.5em;
+    font-weight: bolder;
+}
+.tabbable{
+	font-family: 'Averia Sans Libre', cursive;
+    font-size:1em;
+    font-weight: bold;
 }
 /* navbar-brand color on haver and focus */
 .navbar-default .navbar-brand:hover,
@@ -63,58 +108,43 @@ padding-top: 50px;
 }
 /* navbar-nav text color */
 .navbar-default .navbar-nav > li > a {
-    color: #fff;
+    color: #fff !important;
+    font-family: 'Averia Sans Libre', cursive;
+    font-size:1.2em;
+    font-weight: bold;
+    
 }
 /* navbar-nav hover, focus color */
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #d9d7d7;
 }
-/* Цвет стрелочки (треугольничка) у раскрывающихся пунктов меню */
-.navbar-default .navbar-nav > .dropdown > a .caret {
-    border-top-color: #777;
-    border-bottom-color: #777;
+
+.tabbable {
+	padding: 10px;
 }
-/* Цвет стрелочки (треугольничка) при поднесении к нему курсора мышки или при его нахождении в фокусе */
-.navbar-default .navbar-nav > .dropdown > a:hover .caret,
-.navbar-default .navbar-nav > .dropdown > a:focus .caret {
-    border-top-color: #333;
-    border-bottom-color: #333;
+
+.tabbable > h4 {
+	text-align: center;
 }
-/*
- Цвет стрелочки (треугольничка), открывшегося пункта меню 
-.navbar-default .navbar-nav > .open > a .caret, 
-.navbar-default .navbar-nav > .open > a:hover .caret, 
-.navbar-default .navbar-nav > .open > a:focus .caret {
-    border-top-color: #fffbfb;
-    border-bottom-color: #d4c1c1;
+
+.btn-default {
+	display: block !important;
+	margin: 0 auto !important;
 }
-*/
-/* CSS стили для мобильных устройств */
-/* Цвет рамки у кнопки, которая открывает меню */
-.navbar-default .navbar-toggle {
-    border-color: #fff;
+
+.btn {
+	display: block !important;
+	margin: 0 auto !important;
 }
-/* Цвет фона кнопки (которая открывает меню) при поднесении к ней курсора мышки или при нахождении её в фокусе */
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
-    background-color: #d5445c;
-}
-/* Цвет полосочек в кнопочке, которая открывает меню */
 .navbar-default .navbar-toggle .icon-bar {
-    background-color: #fff;
+background-color: #ffffff;
 }
- 
-/*
-@media (max-width: 767px) {
- Цвет пунктов меню в раскрывающихся списках 
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-        color: #777;
-    }
- Цвет и фон пункта меню в раскрывающихся списках, при поднесении к нему курсора мышки или при нахождении его в фокусе 
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-        color: #333;
-        background-color: transparent;
-    }
-}*/
+
+#add-issue {
+	display: none;
+}
+
+#issue-details {
+	display: none;
+}
