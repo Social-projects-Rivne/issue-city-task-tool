@@ -37,6 +37,4 @@
 		<beans:constructor-arg name="strenhtg" value="11"/>
 	
 	</beans:bean>
-	
-	
 </beans:beans>

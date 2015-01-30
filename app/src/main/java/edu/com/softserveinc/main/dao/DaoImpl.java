@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.interfaces.Dao;
-import edu.com.softserveinc.main.utils.QueryBuilder;
 
 public class DaoImpl implements Dao {
 
@@ -67,7 +66,6 @@ public class DaoImpl implements Dao {
 		return object;
 	}
 
-	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List getAll(Object obj) {
@@ -76,9 +74,6 @@ public class DaoImpl implements Dao {
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		return session.createQuery(
-				new QueryBuilder().from(obj.getClass().getName()).toString())
-				.list();
+		return session.createQuery("From " + obj.getClass().getName().toString()).list();
 	}
-
 }

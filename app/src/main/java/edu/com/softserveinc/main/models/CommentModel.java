@@ -16,32 +16,32 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class CommentModel {
 
 	@Id
-	@GeneratedValue
+	//@GeneratedValue
 	@Column(name="id")
 	private int id;
 	
-	@NotNull
-	@NotEmpty
+	//@NotNull
+	//@NotEmpty
 	@Column(name="comment")
 	private String comment;
 	
-	@Size(min=2, max=30)
-	@NotNull
-	@NotEmpty
+	//@Size(min=2, max=30)
+	//@NotNull
+	//@NotEmpty
 	@Column(name="user_name")
 	private String userName;
 	
-	@Email
-	@NotNull
-	@NotEmpty
+	//@Email
+	//@NotNull
+	//@NotEmpty
 	@Column(name="email")
 	private String email;
-
-	@NotNull
-	@NotEmpty
+	
 	@Column(name="issue_id")
 	private int issueId;
 
+	public CommentModel(){};
+	
 	public CommentModel(String comment, String userName, String email, int issueId) {
 		this.comment = comment;
 		this.userName = userName;
@@ -49,6 +49,13 @@ public class CommentModel {
 		this.issueId = issueId;
 	}
 	
+	public CommentModel(String comment, String userName, String email, String issueI) {
+		this.comment = comment;
+		this.userName = userName;
+		this.email = email;
+		this.issueId = (int)issueId;
+	}
+
 	public int getId() {
 		return id;
 	}
