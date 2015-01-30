@@ -17,6 +17,7 @@ public class IssueModel {
 	@Column(name="id")
 	private int id;
 	
+	@NotEmpty
 	@Column(name="category_id")
 	private int category_id;
 
@@ -34,7 +35,8 @@ public class IssueModel {
 
 	@Column(name="attachments")
 	private String attachments;
-
+	
+	@NotEmpty
 	@Column(name="priority_id")
 	private int priorityId;
 
@@ -55,7 +57,14 @@ public class IssueModel {
 		
 	}
 	
-	
+	public IssueModel(int category_id, String name, String description, String mapPointer, String attachments, int priorityId) {
+		this.name = name;
+		this.description = description;
+		this.mapPointer = mapPointer;
+		this.attachments = attachments;
+		this.priorityId = priorityId;
+		this.category_id = category_id;
+	}
 	/**
 	 * 
 	 * @return id
