@@ -96,7 +96,7 @@
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
 								<p>Mark the place of issue on the map</p>
-								<input type="text" name="mapPointer" id="map-pointer" class="form-control" />
+								<input type="text" name="mapPointer" id="map-pointer" class="form-control" readonly />
 								<br />
 								<button class="btn" id="next-to-description">Next</button>
 							</div>
