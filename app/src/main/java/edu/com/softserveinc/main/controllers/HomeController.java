@@ -85,16 +85,11 @@ public class HomeController {
 	}
 
 	// adding comment for issue
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
-	public @ResponseBody java.util.LinkedHashMap addComment(
-			@RequestBody final java.util.LinkedHashMap comment) {
-		int id = Integer.parseInt(comment.get("issueId").toString());
-		new CommentServiceImpl().addComment(new CommentModel(comment.get(
-				"comment").toString(), comment.get("userName").toString(),
-				comment.get("email").toString(), id));
-		System.out.println("email: " + comment.get("email") + "issue id: "
-				+ comment.get("issueId"));
+	public @ResponseBody CommentModel addComment(
+			@RequestBody final CommentModel comment) {
+		
+		new CommentServiceImpl().addComment(comment);
 		return comment;
 	}
 	
