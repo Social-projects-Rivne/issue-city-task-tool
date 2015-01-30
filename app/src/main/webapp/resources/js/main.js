@@ -50,11 +50,10 @@ require([
 		
 		console.log(comment),
 		
-		comment.save()
-	/*	sendAjax('{"email":"' + document.getElementsByName("email")[0].value +
+		sendAjax('{"email":"' + document.getElementsByName("email")[0].value +
 				'","userName":"' + document.getElementsByName("userName")[0].value  +
 				'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
-				'", "issueId":"1"}');*/
+				'", "issueId":"1"}');
 	}
 	// var comments = new CommentCollection;
 });

@@ -93,6 +93,14 @@ public class HomeController {
 		return comment;
 	}
 	
+	@RequestMapping(value = "add-comment", method = RequestMethod.PUT)
+	public @ResponseBody CommentModel updateComment(
+			@RequestBody final CommentModel comment) {
+		
+		new CommentServiceImpl().addComment(comment);
+		return comment;
+	}
+	
 	@RequestMapping("get-markers")
 	public @ResponseBody List getMarkers() {
 		@SuppressWarnings("deprecation")
