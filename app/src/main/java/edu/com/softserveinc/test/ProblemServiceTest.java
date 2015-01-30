@@ -31,7 +31,7 @@ public class ProblemServiceTest {
 
 			issuService.editProblemm(issue);
 
-			issuService.deletteProblemm(issue);
+			issuService.deleteProblemm(issue);
 			
 			assertTrue("sucsess", true);
 			

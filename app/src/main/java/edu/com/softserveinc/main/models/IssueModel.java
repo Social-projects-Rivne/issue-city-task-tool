@@ -42,7 +42,7 @@ public class IssueModel {
 	/**
 	 * Default constructor
 	 */
-	IssueModel() {
+	public IssueModel() {
 
 	}
 
