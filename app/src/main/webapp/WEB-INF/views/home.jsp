@@ -21,10 +21,12 @@
 <script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
 <script src="<c:url value="/resources/js/app/collection/CommentCollection.js" />"></script>-->
 
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<!-- <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
-<script src="<c:url value="/resources/js/leaflet.js" />"></script> -->
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
+<script src="<c:url value="/resources/js/leaflet.js" />"></script>
+
+<link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
+<script src="<c:url value="/resources/js/leaflet.awesome-markers.js" />"></script>
 
 <script type="text/javascript"
 	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
@@ -96,7 +98,7 @@
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab1">
 								<p>Mark the place of issue on the map</p>
-								<input type="text" name="mapPointer" id="map-pointer" class="form-control" />
+								<input type="text" name="mapPointer" id="map-pointer" class="form-control" readonly />
 								<br />
 								<button class="btn" id="next-to-description">Next</button>
 							</div>

@@ -2,6 +2,7 @@ function mapDraw() {
 	map = L.map('map').setView([50.62, 26.25], 13);
 	tempMarker = null;
 	issueList = null;
+	L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 	
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	    maxZoom: 18
@@ -39,8 +40,13 @@ function mapDraw() {
 		success: function(data) {
 			issueList = data;
 			data.forEach(function(element, index, array) {
+				var greenMarker = L.AwesomeMarkers.icon({
+				    icon: 'home',
+				    markerColor: 'green'
+				  });
+				
 				var tmp = L.marker(element.mapPointer.substr(7, element.mapPointer.length - 1)
-						.split(', ')).addTo(map).on('click', onMarkerClick);
+						.split(', '), {icon: greenMarker}).addTo(map).on('click', onMarkerClick);
 				tmp.title = element.id;
 			});
 		}
