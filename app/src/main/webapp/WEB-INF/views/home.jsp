@@ -21,10 +21,12 @@
 <script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
 <script src="<c:url value="/resources/js/app/collection/CommentCollection.js" />"></script>-->
 
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<!-- <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
-<script src="<c:url value="/resources/js/leaflet.js" />"></script> -->
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
+<script src="<c:url value="/resources/js/leaflet.js" />"></script>
+
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+<link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
+<script src="<c:url value="/resources/js/leaflet.awesome-markers.js" />"></script>
 
 <script type="text/javascript"
 	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
