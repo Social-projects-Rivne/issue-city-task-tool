@@ -4,9 +4,16 @@ require([
         'backbone',
         'model/CommentModel',
         'view/CommentView',
-        'collection/CommentCollection'
+        'collection/CommentCollection',
+        'bootstrap',
+        'validation',
+        'map',
+        'markers',
+        'homeScript',
+        'leaflet'
+        
         ]
-, function($,_,Backbone,CommentModel,CommentView,CommentCollection) {
+, function($,_,Backbone,CommentModel,CommentView,CommentCollection, Bootstrap, Validation, Map, Markers) {
 	
 	var comments = null;
 	

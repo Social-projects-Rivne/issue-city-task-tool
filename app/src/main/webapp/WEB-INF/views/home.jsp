@@ -7,37 +7,13 @@
 <!-- delete it later or add to project -->
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 
-<!-- UNDESCORE.JS -->
-<script src="<c:url value="/resources/js/lib/underscore.js" />"
-	type="text/javascript"></script>
-
-<!-- BACKBONE.JS -->
-<script src="<c:url value="/resources/js/lib/backbone.js" />"
-	type="text/javascript"></script>
-
-<!--<script src="<c:url value="/resources/js/main.js" />"></script>
-
-<script src="<c:url value="/resources/js/app/model/CommentModel.js" />"></script>
-<script src="<c:url value="/resources/js/app/view/CommentView.js" />"></script>
-<script src="<c:url value="/resources/js/app/collection/CommentCollection.js" />"></script>-->
-
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
-<script src="<c:url value="/resources/js/leaflet.js" />"></script>
 
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
-<script src="<c:url value="/resources/js/leaflet.awesome-markers.js" />"></script>
 
-<script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-<script src="<c:url value="/resources/js/map-script.js" />"></script>
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"
-	type="text/javascript"></script>
-<script src="<c:url value="/resources/js/home-script.js" />"
-	type="text/javascript"></script>
-<script src="<c:url value="/resources/js/validation-script.js" />"
-	type="text/javascript"></script>
+
 <link href="<c:url value="/resources/css/styles2.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">

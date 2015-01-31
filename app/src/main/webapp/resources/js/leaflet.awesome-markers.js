@@ -8,6 +8,8 @@
 
 /*global L*/
 
+require(['leaflet'], 
+    function(){
 (function (window, document, undefined) {
     "use strict";
     /*
@@ -121,5 +123,5 @@
 
 }(this, document));
 
-
+});
 
