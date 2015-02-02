@@ -6,4 +6,11 @@
 .metadata/
 target/
 hibernate.cfg.xml
+Servers
 *~
+Servers/Tomcat v8.0 Server at localhost-config/catalina.policy
+Servers/Tomcat v8.0 Server at localhost-config/catalina.properties
+Servers/Tomcat v8.0 Server at localhost-config/context.xml
+Servers/Tomcat v8.0 Server at localhost-config/server.xml
+Servers/Tomcat v8.0 Server at localhost-config/tomcat-users.xml
+Servers/Tomcat v8.0 Server at localhost-config/web.xml

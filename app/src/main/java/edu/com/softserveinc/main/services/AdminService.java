@@ -1,6 +1,8 @@
 package edu.com.softserveinc.main.services;
 
 //import org.hibernate.Session;
+import java.util.List;
+
 import edu.com.softserveinc.main.interfaces.UserService;
 import edu.com.softserveinc.main.models.UserModel;
 
@@ -59,6 +61,13 @@ public class AdminService implements UserService {
 
 		return new UserServiceImpl().getUserByID(userId);
 
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List loadUsersList() {
+		
+		return new UserServiceImpl().loadUsersList();
 	}
 
 }

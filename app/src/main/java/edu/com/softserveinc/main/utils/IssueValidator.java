@@ -17,7 +17,7 @@ public class IssueValidator {
 
 	public boolean isValid() {
 
-		if (issue.getDescription() != "" && issue.getMapPointer() == ""
+		if (issue.getDescription() != "" && issue.getMapPointer() != ""
 				&& issue.getName() != "" && issue.getPriorityId() >= 0
 				&& issue.getCategory_id() >= 0) {
 

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -41,10 +42,30 @@ public class IssueModel {
 	/**
 	 * Default constructor
 	 */
-	IssueModel() {
+	public IssueModel() {
 
 	}
 
+	public IssueModel(String name, String description, String mapPointer,
+			String attachments, int priorityId) {
+		this.name = name;
+		this.description = description;
+		this.mapPointer = mapPointer;
+		this.attachments = attachments;
+		this.priorityId = priorityId;
+
+	}
+	
+	/**
+	 * Constructor with field category_id
+	 * 
+	 * @param category_id
+	 * @param name
+	 * @param description
+	 * @param mapPointer
+	 * @param attachments
+	 * @param priorityId
+	 */
 	public IssueModel(int category_id, String name, String description,
 			String mapPointer, String attachments, int priorityId) {
 		this.category_id = category_id;

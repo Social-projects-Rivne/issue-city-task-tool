@@ -68,7 +68,7 @@ public class UserModel {
      /**
 	 * Passvord min length = 6, max length = 32
 	 */
-    @Size(min = 6, max = 32) 
+    //@Size(min = 6, max = 32) 
     @NotNull(message="It can't be empty")
     @NotEmpty
     @Column(name="password") //name of column in table

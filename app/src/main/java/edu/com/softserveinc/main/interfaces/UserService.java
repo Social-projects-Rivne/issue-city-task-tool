@@ -1,5 +1,7 @@
 package edu.com.softserveinc.main.interfaces;
 
+import java.util.List;
+
 import edu.com.softserveinc.main.models.UserModel;
 
 public interface UserService {
@@ -32,4 +34,12 @@ public interface UserService {
 	 */
 	public UserModel getUserByID(int userId);
 	
+	/**
+	 * Get all users from Data Base;
+	 * 
+	 * @param user
+	 * @return list of all users
+	 */
+	@SuppressWarnings("rawtypes")
+	public List loadUsersList();
 }
