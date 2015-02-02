@@ -4,16 +4,9 @@ require([
         'backbone',
         'model/CommentModel',
         'view/CommentView',
-        'collection/CommentCollection',
-        'bootstrap',
-        'validation',
-        'map',
-        'markers',
-        'homeScript',
-        'leaflet'
-        
+        'collection/CommentCollection'
         ]
-, function($,_,Backbone,CommentModel,CommentView,CommentCollection, Bootstrap, Validation, Map, Markers) {
+, function($,_,Backbone,CommentModel,CommentView,CommentCollection) {
 	
 	var comments = null;
 	
@@ -107,12 +100,11 @@ require([
 		
 		// add comment to collection
 		comments.add(comment);
-		comments.each(function(obj,index){
-			var commV = new CommentView({model:obj}); 
-			commV.render(); 
-			console.log(obj.toJSON()); 
-			$(document.body.getElementsByClassName('comments')[0]).append(commV.el);
-	});
+		
+		var commentView = new CommentView({
+					model : comment
+				});
+		commentView.render();
 		console.log(comment.toJSON());
 		console.log(comment),
 		
