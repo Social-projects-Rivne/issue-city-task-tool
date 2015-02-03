@@ -3,6 +3,7 @@ requirejs.config({
 
 	shim : {
 		// add here another modules for correct functionflity
+		
 		bootstrap : { 
 			deps :['jquery']
 		},
@@ -11,9 +12,13 @@ requirejs.config({
 			deps :['text']
 		}, 
 		
+		main:{
+			deps :['js/issue-script','markers']
+		},
+		
 		map:{
 			deps :['markers'],
-		}
+		},
     },
 	paths:{
 
