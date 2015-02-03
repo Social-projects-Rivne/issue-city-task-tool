@@ -26,7 +26,7 @@ require([
 		comments.fetch();
 		console.log('comments fetched');
 		console.log('comments render');
-		global = new IssueView(); //FOR DEBUG
+		global = new IssueView; //FOR DEBUG
 		console.log('comments render done');
 	});
 	
@@ -41,16 +41,12 @@ require([
 		}).addTo(map);
 		
 		function onMarkerClick(e) {
-			if(!issueDetails.style.display) {
-				issueDetails.style.display = 'block';
-
+			
 				comments.render();
 
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
-			}
-			else
-				issueDetails.style.display = '';
+			
 		}
 		
 		function onMapClick(e) {
@@ -86,10 +82,12 @@ require([
 			}
 		});
 	}
-	document.getElementById('add_comment_button').addEventListener('click', function(event) {
+	//replace it in comment view
+	/*document.getElementById('add_comment_button').addEventListener('click', function(event) {
 		event.preventDefault();
 		sendNewComment();
 	}, false);
+	*/
 	
 	//add this 
 	function sendNewComment(){

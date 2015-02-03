@@ -2,8 +2,8 @@ require(['validation'],
 	function(validation){
 
 		window.onload = function() {
-		cryOut = document.getElementById('cry-out');
-		addIssue = document.getElementById('add-issue');
+			
+		addIssue = document.getElementById('add-issue-form');
 		issueDetails = document.getElementById('issue-details');
 		mapPointer = document.getElementById('map-pointer');
 		
@@ -17,10 +17,7 @@ require(['validation'],
 		var nextToDescription = document.getElementById('next-to-description');
 		var nextToPhoto = document.getElementById('next-to-photo');
 		
-		cryOut.addEventListener('click', function(event) {
-			event.preventDefault();
-			addIssue.style.display = 'block';
-		}, false);
+		
 		
 		nextToDescription.addEventListener('click', function(event) {
 			event.preventDefault();
