@@ -56,6 +56,10 @@
 	</div>
 	<div>
 		<div class="grid" id="add-issue">
+		 <div class="grid" id="issue-form">
+              
+                       <button id="myForestGump">RUN FOREST! RUN!!!</button>
+		
 			<div class="col-1-3">
 				<div class="tabbable">
 					<form method="POST" action="add-issue">
@@ -124,7 +128,7 @@
 
 
 		<div id="map"></div>
-	</div>
+	</div></div>
 <!-- Placed at the end of the document so the pages load faster -->
 	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 	<script>
