@@ -4,7 +4,9 @@ require([
         'backbone',
         'model/CommentModel',
         'view/CommentView',
-        'collection/CommentCollection'
+        'collection/CommentCollection',
+        'map',
+        'homeScript',
         ]
 , function($,_,Backbone,CommentModel,CommentView,CommentCollection) {
 	

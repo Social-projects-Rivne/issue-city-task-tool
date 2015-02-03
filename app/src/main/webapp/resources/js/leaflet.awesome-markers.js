@@ -123,5 +123,6 @@ require(['leaflet'],
 
 }(this, document));
 
+    return L;
 });
 
