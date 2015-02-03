@@ -11,18 +11,13 @@ define([ 'jquery', 'underscore', 'backbone',
 
 				IssueDetailsTemplate : _.template(IssueDetailsTemplate),
 				AddIssueTemplate : _.template(AddIssueTemplate),
-
+				
 				events : {
 					'click #cry-out' : 'addIssueForm',
 					'click #myForestGump' : 'issueDetailsForm',
 					'click .leaflet-clickable' : 'issueDetailsForm',
 				},
-
-				/*addIssueForm : function(e){
-					console.log('cry-out button event');
-					this.render();
-				},*/
-
+				
 				runForest : function(e) {
 					alert('I`m runninig! ');
 				},
@@ -31,6 +26,7 @@ define([ 'jquery', 'underscore', 'backbone',
 					console.log('Render function working');
 
 				},
+				
 				//this.model.toJSON())
 				issueDetailsForm : function() {
 					// clear block with form

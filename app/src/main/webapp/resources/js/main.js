@@ -6,6 +6,7 @@ require([
         'model/CommentModel',
         'view/CommentView',
         'collection/CommentCollection',
+        'model/IssueModel',
         'map',
         'homeScript',
         ]
@@ -13,7 +14,8 @@ require([
 	IssueView,
 	CommentModel,
 	CommentView,
-	CommentCollection) {
+	CommentCollection,
+	IssueModel) {
 	
 	var comments = null;
 	
@@ -28,6 +30,7 @@ require([
 		console.log('comments render');
 		global = new IssueView; //FOR DEBUG
 		console.log('comments render done');
+		IssueModel = new IssueModel;
 	});
 	
 	function mapDraw() {
@@ -40,23 +43,24 @@ require([
 		    maxZoom: 18
 		}).addTo(map);
 		
+		//click on issue marker
 		function onMarkerClick(e) {
 			
 				comments.render();
-
+				
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
-			
+				
 		}
 		
+		//marker for adding new issues 
 		function onMapClick(e) {
-			if(addIssue.style.display == 'block') {
+			
 				mapPointer.value = e.latlng;
 				if(!tempMarker)
 					tempMarker = L.marker(e.latlng).addTo(map);
 				else
 					tempMarker.setLatLng(e.latlng);
-			}
 		}
 
 		map.on('click', onMapClick);
@@ -117,6 +121,7 @@ require([
 				'","userName":"' + document.getElementsByName("userName")[0].value  +
 				'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
 				'", "issueId":"1"}');
+		alert("Thanks for your comment");
 	}
 	// var comments = new CommentCollection;
 });
@@ -149,5 +154,5 @@ function sendAjax(comment) {
 				}
 			});
 }
-
+var IssueModel;
 var global;
