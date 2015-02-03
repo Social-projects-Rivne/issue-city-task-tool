@@ -7,7 +7,7 @@ define([ 'jquery', 'underscore', 'backbone',
 
 				model : IssueModel,
 				//className :'grid',
-				//el: '#issue-form',
+				el: '#issue-form',
 
 				IssueDetailsTemplate : _.template(IssueDetailsTemplate),
 				AddIssueTemplate : _.template(AddIssueTemplate),

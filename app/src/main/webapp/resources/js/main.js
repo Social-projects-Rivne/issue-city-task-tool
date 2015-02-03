@@ -7,6 +7,7 @@ require([
         'view/CommentView',
         'collection/CommentCollection',
         'model/IssueModel',
+        'view/IssueView',
         'map',
         'homeScript',
         ]
@@ -15,7 +16,8 @@ require([
 	CommentModel,
 	CommentView,
 	CommentCollection,
-	IssueModel) {
+	IssueModel,
+	IssueView) {
 	
 	var comments = null;
 	
@@ -31,6 +33,10 @@ require([
 		global = new IssueView; //FOR DEBUG
 		console.log('comments render done');
 		IssueModel = new IssueModel;
+		
+		//initialize new issue marker
+		mapPointer.value = e.latlng;
+		
 	});
 	
 	function mapDraw() {
@@ -45,9 +51,15 @@ require([
 		
 		//click on issue marker
 		function onMarkerClick(e) {
-			
-				comments.render();
-				
+				var issue; 
+			/*	issue = new IssueModel;
+				issue.set({id : issueList[this.title - 1].id, 
+					name : issueList[this.title - 1].name,
+					description : issueList[this.title - 1].description,
+					attachments : issueList[this.title - 1].attachments,});
+				*/
+				var issueView = new IssueView({model : issue});
+				issueView.issueDetailsForm();
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
 				
