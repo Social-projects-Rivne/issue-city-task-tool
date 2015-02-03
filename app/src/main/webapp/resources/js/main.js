@@ -2,13 +2,18 @@ require([
         'jquery',
         'underscore',
         'backbone',
+        'view/IssueView',
         'model/CommentModel',
         'view/CommentView',
         'collection/CommentCollection',
         'map',
         'homeScript',
         ]
-, function($,_,Backbone,CommentModel,CommentView,CommentCollection) {
+, function($, _, Backbone, 
+	IssueView,
+	CommentModel,
+	CommentView,
+	CommentCollection) {
 	
 	var comments = null;
 	
@@ -21,7 +26,7 @@ require([
 		comments.fetch();
 		console.log('comments fetched');
 		console.log('comments render');
-		global = comments; //FOR DEBUG
+		global = new IssueView(); //FOR DEBUG
 		console.log('comments render done');
 	});
 	

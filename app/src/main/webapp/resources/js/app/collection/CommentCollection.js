@@ -2,15 +2,18 @@ define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], f
 		Backbone, CommentModel, CommentView) {
 
 	var CommentCollection = Backbone.Collection.extend({
+		
+		issueId : '1',
+		url : '/Bawl/all-comments/1', /* add here issueId */
+		model : CommentModel,
+		
+
 		intialize : function(issueId) {
 			this.issueId = issueId;
 			//this.fetch();
 			console.log('commentsCollection initializes');
 		},
 		
-		issueId : '1',
-		url : '/Bawl/all-comments/1', /* add here issueId */
-		model : CommentModel,
 		
 		//TODO: render from collection is incorrect! Remove it later
 		render : function() {
