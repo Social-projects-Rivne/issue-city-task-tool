@@ -7,6 +7,7 @@ define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], f
 			//this.fetch();
 			console.log('commentsCollection initializes');
 		},
+		
 		issueId : '1',
 		url : '/Bawl/all-comments/1', /* add here issueId */
 		model : CommentModel,
@@ -19,8 +20,6 @@ define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], f
 				});
 				commV.render();
 				console.log(obj.toJSON());
-				$(document.body.getElementsByClassName('comments')[0]).append(
-						commV.el);
 			});
 		}
 	});
