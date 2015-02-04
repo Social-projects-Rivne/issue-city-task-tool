@@ -4,9 +4,16 @@ define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], f
 	var CommentCollection = Backbone.Collection.extend({
 		
 		issueId : '1',
-		url : '/Bawl/all-comments/1', /* add here issueId */
 		model : CommentModel,
 		
+		url :function(){
+		    return '/Bawl/all-comments/' + this.issueId; 
+		} ,
+		  
+		events : {
+			'click #add_comment_button' : 'addComment',
+			
+		},
 
 		intialize : function(issueId) {
 			this.issueId = issueId;
@@ -24,6 +31,10 @@ define([ 'underscore', 'backbone', 'model/CommentModel', 'view/CommentView' ], f
 				commV.render();
 				console.log(obj.toJSON());
 			});
+		}
+		
+		addComment: function() {
+			
 		}
 	});
 

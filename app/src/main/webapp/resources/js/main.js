@@ -30,12 +30,13 @@ require([
 		comments.fetch();
 		console.log('comments fetched');
 		console.log('comments render');
-		global = new IssueView; //FOR DEBUG
+		global = comments; //FOR DEBUG
 		console.log('comments render done');
 		IssueModel = new IssueModel;
 		
+		//very important to init marker! 
 		//initialize new issue marker
-		mapPointer.value = e.latlng;
+		//mapPointer.value = e.latlng;
 		
 	});
 	
@@ -59,6 +60,13 @@ require([
 					attachments : issueList[this.title - 1].attachments,});
 				*/
 				var issueView = new IssueView({model : issue});
+				
+				console.log(issueList[this.title - 1].id);
+				
+				comments = new CommentCollection({'issueId': issueList[this.title - 1].id}); 
+				comments.fetch();
+				comments.render();
+				
 				issueView.issueDetailsForm();
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
@@ -106,35 +114,7 @@ require([
 	*/
 	
 	//add this 
-	function sendNewComment(){
-		
-		//create new comment 
-		var comment = new CommentModel({
-			'userName':$(document.getElementsByName('userName')[0]).val(),
-			'comment':$(document.getElementsByName('comment-text')[0]).val(),
-			'email' : $(document.getElementsByName('email')[0]).val(),
-			'issueId' : ""
-		});
-		
-		//fetch comments from server
-		
-		
-		// add comment to collection
-		comments.add(comment);
-		
-		var commentView = new CommentView({
-					model : comment
-				});
-		commentView.render();
-		console.log(comment.toJSON());
-		console.log(comment),
-		
-		sendAjax('{"email":"' + document.getElementsByName("email")[0].value +
-				'","userName":"' + document.getElementsByName("userName")[0].value  +
-				'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
-				'", "issueId":"1"}');
-		alert("Thanks for your comment");
-	}
+	
 	// var comments = new CommentCollection;
 });
 
