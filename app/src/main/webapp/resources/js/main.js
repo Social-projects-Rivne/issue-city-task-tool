@@ -63,9 +63,9 @@ require([
 				commentCollection.setID(issueList[this.title - 1].id);
 				commentCollection.fetch(); 
 				setTimeout(function(){
-					alert('Please wait, comments are loading! '); 
+				//	alert('Please wait, comments are loading! '); 
 					commentCollection.render();
-					}, 2000);
+					}, 500);
 
 				console.log('done');
 		}

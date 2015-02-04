@@ -52,6 +52,4 @@ requirejs.config({
 
 
 //Load our app module and pass it to our definition function
-require(['main'], function(main) {
-        main._public.start();
-    });
+require(['main']);
