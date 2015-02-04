@@ -20,20 +20,13 @@ require([
 	IssueView) {
 	
 	var comments = null;
-	
 	jQuery(document).ready(function($) {
-		 mapDraw();
-		console.log('comments initialization');
-		comments = new CommentCollection({'issueId':'1'});
-		comments.initialize();
-		console.log('comments  init done');
-		comments.fetch();
-		console.log('comments fetched');
-		console.log('comments render');
-		global = comments; //FOR DEBUG
-		console.log('comments render done');
-		IssueModel = new IssueModel;
-		
+		mapDraw();
+		// for debug
+		issueModel = new IssueModel;
+		CommentView = new CommentView;
+		commentCollection = new CommentCollection;
+		issueView = new IssueView();
 		//very important to init marker! 
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;
@@ -53,24 +46,25 @@ require([
 		//click on issue marker
 		function onMarkerClick(e) {
 				var issue; 
-			/*	issue = new IssueModel;
+				
+				
+				issue = new IssueModel;
 				issue.set({id : issueList[this.title - 1].id, 
 					name : issueList[this.title - 1].name,
 					description : issueList[this.title - 1].description,
 					attachments : issueList[this.title - 1].attachments,});
-				*/
+				
 				var issueView = new IssueView({model : issue});
-				
-				console.log(issueList[this.title - 1].id);
-				
-				comments = new CommentCollection({'issueId': issueList[this.title - 1].id}); 
-				comments.fetch();
-				comments.render();
-				
+				console.log('start');
 				issueView.issueDetailsForm();
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
 				
+				commentCollection.setID(issueList[this.title - 1].id);
+				console.log(commentCollection.fetch()); 
+				commentCollection.render();
+				
+				console.log('done');
 		}
 		
 		//marker for adding new issues 
@@ -146,5 +140,8 @@ function sendAjax(comment) {
 				}
 			});
 }
-var IssueModel;
+var commentCollection;
+var commentView = null;
+var issueView = null;
+var issueModel;
 var global;

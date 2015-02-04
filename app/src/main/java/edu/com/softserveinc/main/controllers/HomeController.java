@@ -89,7 +89,6 @@ public class HomeController {
 
 		IssueModel issue = new IssueModel();
 		issue.setId(1);
-
 		return issue;
 	}
 

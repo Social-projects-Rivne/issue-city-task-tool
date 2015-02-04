@@ -24,9 +24,6 @@ define(
 							$(document.body.getElementsByClassName('comments')[0]).append(this.el);
 						},
 						
-						addComment: function() {
-							console.log('add comment button event')
-						},
 					});
 			return CommentView;
 		});
