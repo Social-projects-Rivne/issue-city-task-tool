@@ -52,10 +52,6 @@ requirejs.config({
 
 
 //Load our app module and pass it to our definition function
-require(['main']);
-	/*
-
-        	
-        	'js/home-script',
-        	'js/issue-script',
-        	*/
+require(['main'], function(main) {
+        main._public.start();
+    });

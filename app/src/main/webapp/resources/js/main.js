@@ -17,10 +17,11 @@ require([
 	CommentView,
 	CommentCollection,
 	IssueModel,
-	IssueView) {
+	IssueView){
 	
 	var comments = null;
-	jQuery(document).ready(function($) {
+	
+	jQuery(document).ready(function($){
 		mapDraw();
 		// for debug
 		issueModel = new IssueModel;
@@ -30,7 +31,6 @@ require([
 		//very important to init marker! 
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;
-		
 	});
 	
 	function mapDraw() {
@@ -61,9 +61,12 @@ require([
 				$('#issue_description').text(issueList[this.title - 1].description);
 				
 				commentCollection.setID(issueList[this.title - 1].id);
-				console.log(commentCollection.fetch()); 
-				commentCollection.render();
-				
+				commentCollection.fetch(); 
+				setTimeout(function(){
+					alert('Please wait, comments are loading! '); 
+					commentCollection.render();
+					}, 2000);
+
 				console.log('done');
 		}
 		
@@ -110,6 +113,7 @@ require([
 	//add this 
 	
 	// var comments = new CommentCollection;
+	return _public.start();
 });
 
 // separate this function to another file
