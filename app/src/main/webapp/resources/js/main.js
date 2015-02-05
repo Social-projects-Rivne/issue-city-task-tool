@@ -28,7 +28,7 @@ require([
 		issueView = new IssueView();
 		//very important to init marker! 
 		//initialize new issue marker
-		mapPointer.value = e.latlng;
+		//mapPointer.value = e.latlng;
 	});
 	
 	function mapDraw() {
