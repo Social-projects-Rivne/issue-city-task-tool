@@ -4,7 +4,7 @@ define([ 'underscore', 'backbone', 'model/IssueModel' ], function(_,
 	var IssueCollection = Backbone.Collection.extend({
 		
 		model : IssueModel,
-		url : ''
+		url : 'get-issues'
 	});
 
 	return IssueCollection;
