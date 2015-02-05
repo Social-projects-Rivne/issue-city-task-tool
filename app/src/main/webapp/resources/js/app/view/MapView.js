@@ -10,6 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
+					that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 					    maxZoom: 18
@@ -17,10 +18,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					
 					map.on('click', onMapClick);
 					
-					this.model.each(function(issue) {
-						L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
-								.split(', ')).addTo(map).on('click', onMarkerClick).title = issue.get("id");
-					});
+					setTimeout(markersRender, 1000);
 					
 					return this;
 				}
@@ -35,6 +33,13 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					marker = L.marker(e.latlng).addTo(map);
 				else
 					marker.setLatLng(e.latlng);
+			}
+			
+			function markersRender() {
+				that.model.each(function(issue) {
+					L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
+							.split(', ')).addTo(map).on('click', onMarkerClick).title = issue.get("id");
+				});
 			}
 			
 			return MapView;

@@ -9,11 +9,18 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel',
 				render : function(id) {
 					this.model.set("id", id);
 					this.model.fetch();
-					this.$el.html(this.model.toJSON());
+					
+					that = this;
+					
+					setTimeout(issueDetailsRender, 1000);
 					
 					return this;
 				}
 			});	
+			
+			function issueDetailsRender() {
+				that.$el.html(that.model.toJSON());
+			}
 			
 			return IssueDetaisView;
 		})

@@ -23,7 +23,7 @@ require([
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView;
-		//mapView.render()
+		mapView.render();
 		//mapDraw();
 		// for debug
 		issueModel = new IssueModel;
