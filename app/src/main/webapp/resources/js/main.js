@@ -7,7 +7,6 @@ require([
         'view/CommentView',
         'collection/CommentCollection',
         'model/IssueModel',
-        'view/IssueView',
         'map',
         'homeScript',
         ]
@@ -16,8 +15,7 @@ require([
 	CommentModel,
 	CommentView,
 	CommentCollection,
-	IssueModel,
-	IssueView){
+	IssueModel){
 	
 	var comments = null;
 	
@@ -27,7 +25,7 @@ require([
 		issueModel = new IssueModel;
 		CommentView = new CommentView;
 		commentCollection = new CommentCollection;
-		issueView = new IssueView();
+		//issueView = new IssueView();
 		//very important to init marker! 
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;
@@ -55,8 +53,10 @@ require([
 					attachments : issueList[this.title - 1].attachments,});
 				
 				var issueView = new IssueView({model : issue});
+				issueView.setIssueId(issue.get('id'));
 				console.log('start');
 				issueView.issueDetailsForm();
+				
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
 				
@@ -113,7 +113,6 @@ require([
 	//add this 
 	
 	// var comments = new CommentCollection;
-	return _public.start();
 });
 
 // separate this function to another file
@@ -124,14 +123,9 @@ function sendAjax(comment) {
 				url : "/Bawl/add-comment",
 				type : 'POST',
 				dataType : 'json',
-				// data : '{"email":"' +
-				// document.getElementsByName("email")[0].value +
-				// '","userName":"' +
-				// document.getElementsByName("userName")[0].value + '",
-				// "comment": "' +
-				// document.getElementsByName("comment-text")[0].value + '",
-				// "issueId":"1"}',
-				data: comment,
+				 data : '{"email":"' +
+				 document.getElementsByName("email")[0].value + '","userName":"' + document.getElementsByName("userName")[0].value + '","comment": "' +document.getElementsByName("comment-text")[0].value + '","issueId":"1"}',
+				//data: comment,
 				contentType : 'application/json',
 				mimeType : 'application/json',
 				success : function(data) {
