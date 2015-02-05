@@ -9,7 +9,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				render : function() {
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
-					issueDetailsView = new IssueDetailsView;
+					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 					    maxZoom: 18

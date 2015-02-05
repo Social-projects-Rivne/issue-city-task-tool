@@ -53,82 +53,12 @@
 			</div>
 		</nav>
 	</div>
-	<div>
-		<div class="grid" id="add-issue">
-		 <div class="grid" id="issue-form">
-              
-                       <button id="myForestGump">RUN FOREST! RUN!!!</button>
-		
-			<div class="col-1-3">
-				<div class="tabbable">
-					<form method="POST" action="add-issue">
-						<!-- Only required for left/right tabs -->
-						<h4>Add issue</h4>
-						<ul class="nav nav-tabs">
-
-							<li class="active" id="tab1-title"><a href="#tab1"
-								data-toggle="tab">Point</a></li>
-
-							<li id="tab2-title"><a href="#tab2" data-toggle="tab">Description</a>
-							</li>
-							<li id="tab3-title"><a href="#tab3" data-toggle="tab">Photo</a>
-							</li>
-						</ul>
-						<div class="tab-content">
-							<div class="tab-pane active" id="tab1">
-								<p>Mark the place of issue on the map</p>
-								<input type="text" name="mapPointer" id="map-pointer" class="form-control" readonly />
-								<br />
-								<button class="btn" id="next-to-description">Next</button>
-							</div>
-							<div class="tab-pane fade" id="tab2">
-								<p>
-								<div class="form-group">
-									<label for="issue-name">Short issue name</label> <input
-										type="text" class="form-control" id="issue-name"
-										name="issueName" />
-								</div>
-								<div class="form-group">
-									<label for="issue-category">Issue category</label> <input
-										type="text" class="form-control" id="issue-category"
-										list="categories" name="issueCategory" />
-									<datalist id="categories">
-										<c:forEach items="${categories}" var="category">
-											<option>${category.name}</option>
-										</c:forEach>
-									</datalist>
-
-								</div>
-								<div class="form-group">
-									<label for="issue-description">Issue description</label>
-									<textarea class="form-control" rows="3" id="issue-description"
-										name="issueDescription"></textarea>
-								</div>
-								<button class="btn" id="next-to-photo">Next</button>
-							</div>
-
-							<div class="tab-pane fade" id="tab3">
-								<p></p>
-								<div class="form-group">
-									<label for="exampleInputFile">Click to upload file</label> <input
-										id="input-1" type="file" class="input-file"
-										name="issueAttachments">
-									<!-- <input id="fileInput" class="input-file" type="file"> -->
-								</div>
-								<button type="submit" class="btn btn-default"
-									id="add-issue-button">Add</button><div></div>
-
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-
-		
-	</div>
-	<div id="map"></div></div>
+	
+	<div id="map"></div>
+	<div id="form-container"></div>
+	
+	
+	
 <!-- Placed at the end of the document so the pages load faster -->
 	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 	<script>

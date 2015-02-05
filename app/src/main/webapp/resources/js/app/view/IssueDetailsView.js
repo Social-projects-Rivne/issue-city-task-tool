@@ -9,7 +9,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel',
 				render : function(id) {
 					this.model.set("id", id);
 					this.model.fetch();
-					this.$el.html(this.model.get("name"));
+					this.$el.html(this.model.toJSON());
 					
 					return this;
 				}
