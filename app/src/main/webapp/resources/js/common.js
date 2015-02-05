@@ -32,7 +32,7 @@ requirejs.config({
 		view: 'js/app/view',
 		collection: 'js/app/collection',
 		templates: 'js/app/templates',
-
+		
 		//bad scripts
 		homeScript: 'js/home-script',
         validation: 'js/validation-script',

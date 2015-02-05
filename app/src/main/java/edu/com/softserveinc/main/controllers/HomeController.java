@@ -118,8 +118,8 @@ public class HomeController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@RequestMapping("get-markers")
-	public @ResponseBody List getMarkers() {
+	@RequestMapping("get-issues")
+	public @ResponseBody List getIssues() {
 		@SuppressWarnings("deprecation")
 		SessionFactory sessionFactory = new Configuration().configure()
 				.buildSessionFactory();

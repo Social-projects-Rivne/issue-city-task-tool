@@ -4,31 +4,35 @@ require([
         'backbone',
         'view/IssueView',
         'model/CommentModel',
-        'view/CommentView',
+        'view/MapView',
         'collection/CommentCollection',
         'model/IssueModel',
+        'view/MapView',
         'map',
         'homeScript',
+        
         ]
 , function($, _, Backbone, 
 	IssueView,
 	CommentModel,
 	CommentView,
 	CommentCollection,
-	IssueModel){
+	IssueModel, MapView){
 	
 	var comments = null;
 	
 	jQuery(document).ready(function($){
-		mapDraw();
+		mapView = new MapView;
+		//mapDraw();
 		// for debug
 		issueModel = new IssueModel;
-		CommentView = new CommentView;
+		commentView = new CommentView;
 		commentCollection = new CommentCollection;
 		issueView = new IssueView();
 		//very important to init marker! 
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;
+		//setTimeout(mapView.render(),500);
 	});
 	
 	function mapDraw() {
@@ -138,6 +142,7 @@ function sendAjax(comment) {
 				}
 			});
 }
+var mapView;
 var commentCollection;
 var commentView = null;
 var issueView = null;
