@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone',
 		'text!templates/IssueDetails.html', 'text!templates/AddIssue.html',
-		'model/IssueModel','model/CommentModel',],
-		function($, _, Backbone, IssueDetailsTemplate, AddIssueTemplate, IssueModel,CommentModel) {
+		'model/IssueModel','model/CommentModel', 'view/CommentView'],
+		function($, _, Backbone, IssueDetailsTemplate, AddIssueTemplate, IssueModel,CommentModel, CommentView) {
 
 			var IssueView = Backbone.View.extend({
 
@@ -67,8 +67,16 @@ define([ 'jquery', 'underscore', 'backbone',
 						'email' : $(document.getElementsByName('email')[0]).val(),
 						'issueId' : this.issueId});
 					//console.log(model);
+					
 					console.log(this.model.get('id'));
 					//console.log(this.model);
+					var commentView = new CommentView({
+						model : comment
+					});
+					
+					commentView.render();
+					
+					//change it on comment.save();
 					$.ajax({
 						url : "/Bawl/add-comment",
 						type : 'POST',
@@ -81,14 +89,19 @@ define([ 'jquery', 'underscore', 'backbone',
 						contentType : 'application/json',
 						mimeType : 'application/json',
 						success : function(data) {
-							//alert(data.email + " " + data.issueId);
+							alert(data.userName + ", thanks you for yours comment!" );
 							console.log(data);
+							document.getElementsByName('email')[0].value = "";
+							document.getElementsByName('userName')[0].value = "";
+							document.getElementsByName('comment-text')[0].value = "";
 						},
 						error : function(data, status, er) {
 							console.log(data);	
 						//	alert("error: " + data + " status: " + status + " er:" + er);
 						}
 					});
+
+					
 				}
 			});
 
