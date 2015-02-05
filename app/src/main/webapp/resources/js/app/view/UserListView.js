@@ -1,5 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'collection/UserCollection' ],
-		function($, _, Backbone, UserModel, UserCollection) {
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 
+        'collection/UserCollection', 'view/UserView' ],
+		function($, _, Backbone, UserModel, UserCollection, UserView) {
 			var UserListView = Backbone.View.extend({
 				initialize : function() {
 					this.model = new UserCollection();
