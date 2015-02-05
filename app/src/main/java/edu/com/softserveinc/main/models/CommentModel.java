@@ -2,6 +2,7 @@ package edu.com.softserveinc.main.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 public class CommentModel {
 
 	@Id
-	//@GeneratedValue
+	@GeneratedValue
 	@Column(name="id")
 	private int id;
 	
