@@ -19,7 +19,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel',
 			});	
 			
 			function issueDetailsRender() {
-				that.$el.html(that.model.toJSON());
+				that.$el.html(that.model.get("name") + " " + that.model.get("description"));
 			}
 			
 			return IssueDetaisView;
