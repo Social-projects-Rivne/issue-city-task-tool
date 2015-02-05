@@ -23,7 +23,7 @@ require([
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView;
-		mapView.render()
+		//mapView.render()
 		//mapDraw();
 		// for debug
 		issueModel = new IssueModel;
@@ -36,7 +36,7 @@ require([
 		//setTimeout(mapView.render(),500);
 	});
 	
-	function mapDraw() {
+	/*function mapDraw() {
 		map = L.map('map').setView([50.62, 26.25], 13);
 		tempMarker = null;
 		issueList = null;
@@ -107,7 +107,7 @@ require([
 				});
 			}
 		});
-	}
+	}*/
 	//replace it in comment view
 	/*document.getElementById('add_comment_button').addEventListener('click', function(event) {
 		event.preventDefault();

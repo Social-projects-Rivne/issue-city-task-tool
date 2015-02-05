@@ -7,18 +7,32 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection' ],
 				},
 				
 				render : function() {
-					var map = L.map('map').setView([50.62, 26.25], 13);
+					map = L.map('map').setView([50.62, 26.25], 13);
+					marker = null;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 					    maxZoom: 18
 					}).addTo(map);
 					
+					map.on('click', onMapClick);
+					
 					this.model.each(function(issue) {
-						var tempMarker = L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
-								.split(', ')).addTo(map);
+						L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
+								.split(', ')).addTo(map).on('click', onMarkerClick).title = issue.get("id");
 					});
 				}
-			});	
+			});
+			
+			function onMarkerClick(e) {
+				console.log(this.title);
+			}
+			
+			function onMapClick(e) {
+				if(!marker)
+					marker = L.marker(e.latlng).addTo(map);
+				else
+					marker.setLatLng(e.latlng);
+			}
 			
 			return MapView;
 		})
