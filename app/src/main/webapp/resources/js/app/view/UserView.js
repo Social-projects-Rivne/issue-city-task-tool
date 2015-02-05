@@ -8,9 +8,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
 				},
 				
 				render : function() {
-					this.$el.html("<td>" + this.model.get(login) + "</td>" +
-							"<td>" + this.model.get(email) + "</td>" +
-							"<td>" + this.model.get(name) + "</td>");
+					this.$el.html("<td>" + this.model.get("login") + "</td>" +
+							"<td>" + this.model.get("email") + "</td>" +
+							"<td>" + this.model.get("name") + "</td>");
 					
 					return this;
 				}

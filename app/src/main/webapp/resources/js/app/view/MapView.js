@@ -13,7 +13,6 @@ define([ 'jquery', 'underscore', 'backbone', 'leaflet', 'collection/IssueCollect
 					    maxZoom: 18
 					}).addTo(map);
 					
-					var that = this;
 					this.model.each(function(issue) {
 						var tempMarker = L.marker(issue.get("mapPointer").substr(7, element.mapPointer.length - 1)
 								.split(', ')).addTo(map);
