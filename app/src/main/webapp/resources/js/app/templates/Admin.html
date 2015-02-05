@@ -1,0 +1,125 @@
+<!--manager HTML-cut for backbone template-->
+<div class="row">
+    <!--left admin panel-->
+    <div id="left_admin_panel" class="col-lg-3">
+
+        <div class="col-lg-3">
+            <img src="http://lorempixel.com/60/60/people/" class="img-thumbnail" alt="attachment_1">
+        </div>
+        <div class="col-lg-9">
+            <b><label id="admin_name">Admin name</label></b>
+            <br>
+            <button type="submit" class="btn btn-mini" id="admin_log_out">Log out</button>
+        </div>
+        <!--left panel menu-->
+        <div class="col-lg-12">
+            <ul>
+                <li><a href="#" id="admin_new_issues">New issues</a> 
+                </li>
+                <li><a href="#" id="admin_all_issues">All issues</a> 
+                </li>
+                <li><a href="#" id="admin_resolved_issues">Resolved issues</a> 
+                </li>
+                <li><a href="#" id="admin_add_category">Add category</a> 
+                </li>
+                <li><a href="#" id="admin_new">? New</a> 
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!--main block with table-->
+    <div class="col-lg-9">
+
+        <div class="col-xs-12">
+            <div class="input-group input-group-sm" id="input_search">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Search</button>
+                    </span>
+            </div>
+        </div>
+        <!--table-->
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>Callagan</td>
+                    <td>john@yahoo.com</td>
+                    <td>04.02.2015</td>
+                    <td>New</td>
+                    <td>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <button class="btn"><span class="glyphicon glyphicon-file">1</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-pencil">2</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-thumbs-up">3</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-thumbs-down">4</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Peter</td>
+                    <td>Redsnapp</td>
+                    <td>peter@yahoo.com</td>
+                    <td>04.02.2015</td>
+                    <td>Approved</td>
+                    <td>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <button class="btn"><span class="glyphicon glyphicon-file">1</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-pencil">2</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-thumbs-up">3</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-thumbs-down">4</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Douglas</td>
+                    <td>Murphy</td>
+                    <td>douglas@yahoo.com</td>
+                    <td>04.02.2015</td>
+                    <td>Resolved</td>
+                    <td>
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <button class="btn"><span class="glyphicon glyphicon-file">1</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-pencil">2</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-thumbs-up">3</span>
+                                </button>
+                                <button class="btn"><span class="glyphicon glyphicon-thumbs-down">4</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
