@@ -25,10 +25,10 @@ require([
 		issueModel = new IssueModel;
 		CommentView = new CommentView;
 		commentCollection = new CommentCollection;
-		//issueView = new IssueView();
+		issueView = new IssueView();
 		//very important to init marker! 
 		//initialize new issue marker
-		//mapPointer.value = e.latlng;
+		mapPointer.value = e.latlng;
 	});
 	
 	function mapDraw() {
@@ -52,7 +52,7 @@ require([
 					description : issueList[this.title - 1].description,
 					attachments : issueList[this.title - 1].attachments,});
 				
-				var issueView = new IssueView({model : issue});
+				issueView.model = issue;
 				issueView.setIssueId(issue.get('id'));
 				console.log('start');
 				issueView.issueDetailsForm();

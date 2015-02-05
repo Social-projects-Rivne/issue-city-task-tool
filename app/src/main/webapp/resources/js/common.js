@@ -13,7 +13,7 @@ requirejs.config({
 		}, 
 		
 		main:{
-			deps :['js/issue-script','markers']
+			deps :['leaflet','js/issue-script','markers']
 		},
 		
 		map:{

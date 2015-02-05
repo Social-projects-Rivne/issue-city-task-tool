@@ -21,8 +21,8 @@ define([ 'jquery', 'underscore', 'backbone',
 				},
 				
 				initialize: function() {
-					console.log('initialized');
-
+					console.log('initialized issue view');
+					el: 'body';
 			        this.model = new IssueModel();
 			    },
 				
