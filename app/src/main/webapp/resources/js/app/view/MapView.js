@@ -1,13 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'leaflet', 'collection/IssueCollection' ],
-		function($, _, Backbone, L, IssueCollection) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection' ],
+		function($, _, Backbone, IssueCollection) {
 			var MapView = Backbone.View.extend({
 				initialize : function() {
-					console.log('start');
 					this.model = new IssueCollection();
-
-					console.log('start fetch');
 					this.model.fetch();
-					setTimeout(console.log(this.model.toJSON()),1000);
 				},
 				
 				render : function() {

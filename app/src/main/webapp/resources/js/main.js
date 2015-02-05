@@ -23,6 +23,7 @@ require([
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView;
+		mapView.render()
 		//mapDraw();
 		// for debug
 		issueModel = new IssueModel;
@@ -87,7 +88,7 @@ require([
 		map.on('click', onMapClick);
 		
 		$.ajax({
-			url: 'get-markers',
+			url: 'get-issues',
 			type: 'GET',
 			contentType: 'application/json',
 			mimeType: 'application/json',

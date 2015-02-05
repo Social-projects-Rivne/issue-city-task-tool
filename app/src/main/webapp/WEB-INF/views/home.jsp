@@ -24,7 +24,6 @@
 	rel='stylesheet' type='text/css'>
 </head>
 <body>
-
 	<div class="container" id="navbar">
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
@@ -127,8 +126,9 @@
 		</div>
 
 
-		<div id="map"></div>
-	</div></div>
+		
+	</div>
+	<div id="map"></div></div>
 <!-- Placed at the end of the document so the pages load faster -->
 	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 	<script>
