@@ -1,10 +1,10 @@
-define([ 'underscore', 'backbone', 'model/IssueModel', 'view/issueView' ], function(_,
-		Backbone, IssueModel, IssueView) {
+define([ 'underscore', 'backbone', 'model/IssueModel' ], function(_,
+		Backbone, IssueModel) {
 
 	var IssueCollection = Backbone.Collection.extend({
 		
 		model : IssueModel,
-		url : 'Bawl/issues'
+		url : ''
 	});
 
 	return IssueCollection;
