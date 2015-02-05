@@ -1,8 +1,6 @@
 package edu.com.softserveinc.main.controllers;
 
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Session;
@@ -80,16 +78,9 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "get-issue", method = RequestMethod.POST)
-	public @ResponseBody IssueModel getIssue(
-			@RequestBody Map<String, Object> request,
-			IssueServiceImpl issueService) {
-
-		System.out.println(request.get("id"));
-
-		IssueModel issue = new IssueModel();
-		issue.setId(1);
-		return issue;
+	@RequestMapping("get-issue/{id}")
+	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id, IssueServiceImpl service) {
+		return service.getByID(id);
 	}
 
 	// fetch all comments for issue-id
