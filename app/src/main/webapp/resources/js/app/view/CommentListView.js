@@ -7,7 +7,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/CommentModel',
 				},
 				
 				render : function(id) {
+					this.model.fetch( { data: {issueId: id} } );
 					var that = this;
+					
 					this.model.each(function(comment) {
 						var commentView = new CommentView( { model: comment } );
 						that.$el.append(commentView.render().$el);
