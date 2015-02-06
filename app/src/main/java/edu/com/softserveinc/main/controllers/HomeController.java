@@ -122,7 +122,7 @@ public class HomeController {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "get-comments", method = RequestMethod.POST)
+	@RequestMapping("get-comments")
 	public @ResponseBody List getCommentsByIssueId(@RequestParam("issueId") int id,
 			CommentServiceImpl service) {
 		return service.getCommentsByIssueId(id);

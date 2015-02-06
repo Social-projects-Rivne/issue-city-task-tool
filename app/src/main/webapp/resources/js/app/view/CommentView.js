@@ -1,15 +1,15 @@
 define(
-		[ 'underscore', 'backbone', 'collection/CommentCollection', 'model/CommentModel', 'text!templates/Comment.html'],
+		[ 'underscore', 'backbone', 'model/CommentModel', 'text!templates/Comment.html'],
 		function(_, Backbone, CommentModel, CommentTemplate) {
 			var CommentView = Backbone.View
 					.extend({
-						template : _.template(CommentTemplate),
+						template: _.template(CommentTemplate),
 						
-						initilize : function() {
+						initilize: function() {
 							this.model = new CommentModel();
 						},
 						
-						render : function() {
+						render: function() {
 							this.$el.html(this.template(this.model.toJSON()));
 							
 							return this;
