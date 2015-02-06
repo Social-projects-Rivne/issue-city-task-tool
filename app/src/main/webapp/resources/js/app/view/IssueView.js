@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'backbone',
+/*define([ 'jquery', 'underscore', 'backbone',
 		'text!templates/IssueDetails.html', 'text!templates/AddIssue.html',
 		'model/IssueModel','model/CommentModel', 'view/CommentView'],
 		function($, _, Backbone, IssueDetailsTemplate, AddIssueTemplate, IssueModel,CommentModel, CommentView) {
@@ -109,3 +109,4 @@ define([ 'jquery', 'underscore', 'backbone',
 			return IssueView;
 
 		});
+*/

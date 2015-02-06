@@ -2,22 +2,23 @@ require([
         'jquery',
         'underscore',
         'backbone',
-        'view/IssueView',
-        'model/CommentModel',
+        /*'view/IssueView',
+        'model/CommentModel',*/
         'view/MapView',
-        'collection/CommentCollection',
+        /*'collection/CommentCollection',
         'model/IssueModel',
         'view/MapView',
         'map',
-        'homeScript',
+        'homeScript',*/
         
         ]
 , function($, _, Backbone, 
-	IssueView,
-	CommentModel,
-	CommentView,
-	CommentCollection,
-	IssueModel, MapView){
+	//IssueView,
+	//CommentModel,
+	//CommentView,
+	//CommentCollection,
+	//IssueModel, 
+	MapView) {
 	
 	var comments = null;
 	
