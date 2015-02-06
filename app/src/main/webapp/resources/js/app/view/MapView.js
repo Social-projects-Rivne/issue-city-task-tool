@@ -1,5 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView' ],
-		function($, _, Backbone, IssueCollection, IssueDetailsView) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
+         'view/IssueDetailsView', 'view/CommentListView' ],
+		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView) {
 			var MapView = Backbone.View.extend({
 				initialize : function() {
 					this.model = new IssueCollection();
@@ -10,6 +11,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
+					commentListView = new CommentListView( { el: "#form-container" } );
 					that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -26,6 +28,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 			
 			function onMarkerClick(e) {
 				issueDetailsView.render(this.title);
+				commentListView.render(this.title);
 			}
 			
 			function onMapClick(e) {
