@@ -15,8 +15,8 @@ public class ProblemServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		issue = new IssueModel("first problem", "bigg problemm!!", "0, 0",
-				"smth", 1);
+		issue = new IssueModel("PROBLEM WITH INSERTD ATTACHMENT", "bigg problemm!!", "LatLng(50.63542, 26.30058)",
+				"https://pp.vk.me/c6045/v6045569/de2e/vLPjT4Nj8eo.jpg", 1);
 	}
 	//TODO: add comments!!!
 	@Test
@@ -27,7 +27,7 @@ public class ProblemServiceTest {
 
 			issue = issuService.getByID(issue.getId());
 
-			issue.setAttachments("add new attachments");
+			issue.setDescription("add new attachments");
 
 			issuService.editProblemm(issue);
 
