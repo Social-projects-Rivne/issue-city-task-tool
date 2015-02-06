@@ -28,7 +28,6 @@ require([
 		mapView = new MapView;
 		mapView.render();
 		addIssueView = new AddIssueView( { el: '#form-container'} );
-		addIssueView.render();
 		//mapDraw();
 		// for debug
 		//issueModel = new IssueModel;
