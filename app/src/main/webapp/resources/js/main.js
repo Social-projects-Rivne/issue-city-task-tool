@@ -51,13 +51,16 @@ require([
 					name : issueList[this.title - 1].name,
 					description : issueList[this.title - 1].description,
 					attachments : issueList[this.title - 1].attachments,});
+				console.log('issue'+issue.toJSON());
+					
+				issueView = new IssueView({model : issue, issueId : issue.get('id')});
 				
-				issueView.model = issue;
-				issueView.setIssueId(issue.get('id'));
+			//	issueView.setIssueId(issue.get('id'));
+				
 				console.log('start');
 				issueView.issueDetailsForm();
 				
-				$('#issue_name').text(issueList[this.title - 1].name);
+			//	$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
 				
 				commentCollection.setID(issueList[this.title - 1].id);
