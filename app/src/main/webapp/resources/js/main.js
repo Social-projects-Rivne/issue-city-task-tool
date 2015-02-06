@@ -20,9 +20,15 @@ require([
 	var comments = null;
 	
 	jQuery(document).ready(function($){
-		mapView = new MapView;
-		mapView.render();
-		
+		mapDraw();
+		// for debug
+		issueModel = new IssueModel;
+		CommentView = new CommentView;
+		commentCollection = new CommentCollection;
+		issueView = new IssueView();
+		//very important to init marker! 
+		//initialize new issue marker
+		mapPointer.value = e.latlng;
 	});
 	
 	function mapDraw() {
@@ -80,7 +86,7 @@ require([
 		map.on('click', onMapClick);
 		
 		$.ajax({
-			url: 'get-issues',
+			url: 'get-markers',
 			type: 'GET',
 			contentType: 'application/json',
 			mimeType: 'application/json',
