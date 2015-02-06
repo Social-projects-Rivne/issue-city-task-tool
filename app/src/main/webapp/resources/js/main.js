@@ -2,25 +2,33 @@ require([
         'jquery',
         'underscore',
         'backbone',
+        'view/IssueView',
         'model/CommentModel',
         'view/CommentView',
-        'collection/CommentCollection'
+        'collection/CommentCollection',
+        'model/IssueModel',
+        'map',
+        'homeScript',
         ]
-, function($,_,Backbone,CommentModel,CommentView,CommentCollection) {
+, function($, _, Backbone, 
+	IssueView,
+	CommentModel,
+	CommentView,
+	CommentCollection,
+	IssueModel){
 	
 	var comments = null;
 	
-	jQuery(document).ready(function($) {
-		 mapDraw();
-		console.log('comments initialization');
-		comments = new CommentCollection({'issueId':'1'});
-		comments.initialize();
-		console.log('comments  init done');
-		comments.fetch();
-		console.log('comments fetched');
-		console.log('comments render');
-		global = comments; //FOR DEBUG
-		console.log('comments render done');
+	jQuery(document).ready(function($){
+		mapDraw();
+		// for debug
+		issueModel = new IssueModel;
+		CommentView = new CommentView;
+		commentCollection = new CommentCollection;
+		issueView = new IssueView();
+		//very important to init marker! 
+		//initialize new issue marker
+		mapPointer.value = e.latlng;
 	});
 	
 	function mapDraw() {
@@ -33,27 +41,43 @@ require([
 		    maxZoom: 18
 		}).addTo(map);
 		
+		//click on issue marker
 		function onMarkerClick(e) {
-			if(!issueDetails.style.display) {
-				issueDetails.style.display = 'block';
-
-				comments.render();
-
+				var issue; 
+				
+				
+				issue = new IssueModel;
+				issue.set({id : issueList[this.title - 1].id, 
+					name : issueList[this.title - 1].name,
+					description : issueList[this.title - 1].description,
+					attachments : issueList[this.title - 1].attachments,});
+				
+				issueView.model = issue;
+				issueView.setIssueId(issue.get('id'));
+				console.log('start');
+				issueView.issueDetailsForm();
+				
 				$('#issue_name').text(issueList[this.title - 1].name);
 				$('#issue_description').text(issueList[this.title - 1].description);
-			}
-			else
-				issueDetails.style.display = '';
+				
+				commentCollection.setID(issueList[this.title - 1].id);
+				commentCollection.fetch(); 
+				setTimeout(function(){
+				//	alert('Please wait, comments are loading! '); 
+					commentCollection.render();
+					}, 500);
+
+				console.log('done');
 		}
 		
+		//marker for adding new issues 
 		function onMapClick(e) {
-			if(addIssue.style.display == 'block') {
+			
 				mapPointer.value = e.latlng;
 				if(!tempMarker)
 					tempMarker = L.marker(e.latlng).addTo(map);
 				else
 					tempMarker.setLatLng(e.latlng);
-			}
 		}
 
 		map.on('click', onMapClick);
@@ -79,41 +103,15 @@ require([
 			}
 		});
 	}
-	document.getElementById('add_comment_button').addEventListener('click', function(event) {
+	//replace it in comment view
+	/*document.getElementById('add_comment_button').addEventListener('click', function(event) {
 		event.preventDefault();
 		sendNewComment();
 	}, false);
+	*/
 	
 	//add this 
-	function sendNewComment(){
-		
-		//create new comment 
-		var comment = new CommentModel({
-			'userName':$(document.getElementsByName('userName')[0]).val(),
-			'comment':$(document.getElementsByName('comment-text')[0]).val(),
-			'email' : $(document.getElementsByName('email')[0]).val(),
-			'issueId' : ""
-		});
-		
-		//fetch comments from server
-		
-		
-		// add comment to collection
-		comments.add(comment);
-		comments.each(function(obj,index){
-			var commV = new CommentView({model:obj}); 
-			commV.render(); 
-			console.log(obj.toJSON()); 
-			$(document.body.getElementsByClassName('comments')[0]).append(commV.el);
-	});
-		console.log(comment.toJSON());
-		console.log(comment),
-		
-		sendAjax('{"email":"' + document.getElementsByName("email")[0].value +
-				'","userName":"' + document.getElementsByName("userName")[0].value  +
-				'", "comment": "' + document.getElementsByName("comment-text")[0].value  + 
-				'", "issueId":"1"}');
-	}
+	
 	// var comments = new CommentCollection;
 });
 
@@ -125,14 +123,9 @@ function sendAjax(comment) {
 				url : "/Bawl/add-comment",
 				type : 'POST',
 				dataType : 'json',
-				// data : '{"email":"' +
-				// document.getElementsByName("email")[0].value +
-				// '","userName":"' +
-				// document.getElementsByName("userName")[0].value + '",
-				// "comment": "' +
-				// document.getElementsByName("comment-text")[0].value + '",
-				// "issueId":"1"}',
-				data: comment,
+				 data : '{"email":"' +
+				 document.getElementsByName("email")[0].value + '","userName":"' + document.getElementsByName("userName")[0].value + '","comment": "' +document.getElementsByName("comment-text")[0].value + '","issueId":"1"}',
+				//data: comment,
 				contentType : 'application/json',
 				mimeType : 'application/json',
 				success : function(data) {
@@ -145,5 +138,8 @@ function sendAjax(comment) {
 				}
 			});
 }
-
+var commentCollection;
+var commentView = null;
+var issueView = null;
+var issueModel;
 var global;

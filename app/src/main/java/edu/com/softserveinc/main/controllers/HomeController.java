@@ -81,7 +81,7 @@ public class HomeController {
 			System.out.println("Error! Issue is not valid!!!");
 		}
 		// TODO: add here notification method!
-		return "home";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "get-issue", method = RequestMethod.POST)
@@ -93,7 +93,6 @@ public class HomeController {
 
 		IssueModel issue = new IssueModel();
 		issue.setId(1);
-
 		return issue;
 	}
 

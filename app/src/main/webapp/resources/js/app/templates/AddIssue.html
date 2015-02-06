@@ -1,0 +1,84 @@
+    <!--right panel add issue-->
+    <div class="col-lg-3">
+      
+     			
+     			<!-- WILL USE id="add-issue"-->
+      			<div class="col-xs-12" style="padding-left: 5px; padding-right: 5px;">
+				
+					<form method="POST" action="add-issue">
+						<!-- Only required for left/right tabs -->
+						<h4>Add issue</h4>
+						  
+                        <!--navtabs-->
+                        <ul class="nav nav-tabs">
+
+							<li class="active" id="tab1-title"><a href="#tab1"
+								data-toggle="tab">Point</a></li>
+
+							<li id="tab2-title"><a href="#tab2" data-toggle="tab">Description</a>
+							</li>
+							<li id="tab3-title"><a href="#tab3" data-toggle="tab">Photo</a>
+							</li>
+						</ul>
+						
+						<!--tab1-->
+						<div class="tab-content">
+							<div class="tab-pane active" id="tab1">
+								<!--mark the place issue on the map-->
+								<div class="form-group">
+                                    <br/>
+                                    <label for="map-pointer">Mark the place of issue on the map</label>
+                                    <input type="text" class="form-control input-sm" name="mapPointer" 
+                                    id="map-pointer" placeholder="place of issue">
+                                </div>
+								<button type="submit" class="btn btn-mini" id="next-to-description">Next</button>
+							</div>
+							
+							<!--tab2-->
+							<div class="tab-pane fade" id="tab2">
+                                <br/>
+                                <!-- short issue name form group -->
+								<div class="form-group">
+									<label for="issue-name">Short issue name</label> <input
+										type="text" class="form-control input-sm" id="issue-name"
+										name="issueName" placeholder="short name" />
+								</div>
+                                <!-- issue category form group -->
+								<div class="form-group">
+									<label for="issue-category">Issue category</label> <input
+										type="text" class="form-control input-sm" id="issue-category"
+										list="categories" name="issueCategory" placeholder="category" />
+									<datalist id="categories">
+										<c:forEach items="${categories}" var="category">
+											<option>${category.name}</option>
+										</c:forEach>
+									</datalist>
+
+								</div>
+                                <!-- issue description form group -->
+								<div class="form-group">
+									<label for="issue-description">Issue description</label>
+									<textarea class="form-control input-sm" rows="3" id="issue-description"
+										name="issueDescription" placeholder="description"></textarea>
+								</div>
+								<button class="btn btn-mini" id="next-to-photo">Next</button>
+							</div>
+                            
+                            
+                            <!--tab3-->
+							<div class="tab-pane fade" id="tab3">
+								<br/>
+                                <!-- file input form group -->
+								<div class="form-group">
+									<label for="exampleInputFile">Click to upload file</label> <input
+										id="input-1" type="file" class="input-file input-sm"
+										name="issueAttachments">
+								</div>
+								<button type="submit" class="btn btn-mini"
+									id="add-issue-button">Add</button><div></div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
