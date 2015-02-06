@@ -61,7 +61,7 @@ require([
 				issueView.issueDetailsForm();
 				
 			//	$('#issue_name').text(issueList[this.title - 1].name);
-				$('#issue_description').text(issueList[this.title - 1].description);
+			//	$('#issue_description').text(issueList[this.title - 1].description);
 				
 				commentCollection.setID(issueList[this.title - 1].id);
 				commentCollection.fetch(); 

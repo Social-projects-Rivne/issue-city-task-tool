@@ -20,10 +20,10 @@ define([ 'jquery', 'underscore', 'backbone',
 					'click .leaflet-clickable' : 'issueDetailsForm',
 				},
 				
-				initialize: function() {
+				initialize: function(IssueModel) {
 					console.log('initialized issue view');
 					el: 'body';
-			        this.model = new IssueModel();
+			        console.log(this.model.toJSON());
 			    },
 				
 				runForest : function(e) {
@@ -41,7 +41,7 @@ define([ 'jquery', 'underscore', 'backbone',
 					$('.grid #issue-form').innerHTML = '';
 					var temp = this.$el;
 					this.$el = $("#issue-form");
-					this.$el.html(this.IssueDetailsTemplate);
+					this.$el.html(this.IssueDetailsTemplate(this.model.toJSON()));
 					this.$el = temp;
 					console.log('apended');
 				},
@@ -54,6 +54,7 @@ define([ 'jquery', 'underscore', 'backbone',
 					this.$el.html(this.AddIssueTemplate);
 					this.$el = temp;
 					console.log('apended');
+
 				},
 				
 				setIssueId : function(issueId) {
