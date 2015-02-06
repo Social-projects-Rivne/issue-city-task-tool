@@ -17,7 +17,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/CommentModel',
 			function commentsRender() {
 				that.model.each(function(comment) {
 					var commentView = new CommentView( { model: comment } );
-					that.$el.append(commentView.render().$el);
+					//that.$el.append(commentView.render().$el);
+
+					$(document.body.getElementsByClassName('comments')[0]).append(commentView.render().$el);
 				});
 			}
 			
