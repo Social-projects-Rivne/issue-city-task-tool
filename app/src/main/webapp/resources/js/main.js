@@ -5,6 +5,7 @@ require([
         /*'view/IssueView',
         'model/CommentModel',*/
         'view/MapView',
+        'view/AddIssueView',
         /*'collection/CommentCollection',
         'model/IssueModel',
         'view/MapView',
@@ -18,13 +19,16 @@ require([
 	//CommentView,
 	//CommentCollection,
 	//IssueModel, 
-	MapView) {
+	MapView,
+	AddIssueView) {
 	
 	//var comments = null;
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView;
 		mapView.render();
+		addIssueView = new AddIssueView( { el: '#form-container'} );
+		addIssueView.render();
 		//mapDraw();
 		// for debug
 		//issueModel = new IssueModel;
