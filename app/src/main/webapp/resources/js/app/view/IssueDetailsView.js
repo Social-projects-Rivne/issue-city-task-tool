@@ -1,7 +1,8 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel',
-         'text!templates/IssueDetails.html' ],
-		function($, _, Backbone, IssueModel) {
+define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/IssueDetails.html' ],
+		function($, _, Backbone, IssueModel, IssueDetailsTemplate) {
 			var IssueDetaisView = Backbone.View.extend({
+				template: _.template(IssueDetailsTemplate),
+				
 				initialize : function() {
 					this.model = new IssueModel();
 				},
@@ -19,7 +20,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel',
 			});	
 			
 			function issueDetailsRender() {
-				that.$el.html(that.model.get("name") + " " + that.model.get("description"));
+				that.$el.html(that.template(that.model.toJSON()));
 			}
 			
 			return IssueDetaisView;
