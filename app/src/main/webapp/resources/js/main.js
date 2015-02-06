@@ -53,9 +53,9 @@ require([
 					attachments : issueList[this.title - 1].attachments,});
 				console.log('issue'+issue.toJSON());
 					
-				issueView = new IssueView({model : issue, issueId : issue.get('id')});
+				issueView = new IssueView({model : issue});
 				
-			//	issueView.setIssueId(issue.get('id'));
+				issueView.setIssueId(issue.get('id'));
 				
 				console.log('start');
 				issueView.issueDetailsForm();
