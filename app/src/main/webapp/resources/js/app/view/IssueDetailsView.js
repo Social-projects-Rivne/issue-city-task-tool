@@ -20,7 +20,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 			});	
 			
 			function issueDetailsRender() {
-				that.$el.html(that.template(that.model.toJSON()));
+				that.$el.html(that.template);
 			}
 			
 			return IssueDetaisView;
