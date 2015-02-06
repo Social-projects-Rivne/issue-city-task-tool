@@ -26,10 +26,10 @@ require([
 		mapView.render();
 		//mapDraw();
 		// for debug
-		issueModel = new IssueModel;
-		commentView = new CommentView;
-		commentCollection = new CommentCollection;
-		issueView = new IssueView();
+		//issueModel = new IssueModel;
+		//commentView = new CommentView;
+		//commentCollection = new CommentCollection;
+		//issueView = new IssueView();
 		//very important to init marker! 
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;

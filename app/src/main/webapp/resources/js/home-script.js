@@ -1,4 +1,4 @@
-require(['validation'], 
+/*require(['validation'], 
 	function(validation){
 
 		window.onload = function() {
@@ -38,4 +38,4 @@ require(['validation'],
 	//	mapDraw();
 		validate();
 	}
-});
+});*/

@@ -54,10 +54,10 @@
 		</nav>
 	</div>
 	
-	<div id="map"></div>
-	<div id="form-container"></div>
-	
-	
+	<div>
+		<div><div id="map"></div></div>
+		<div id="form-container"></div>
+	</div>
 	
 <!-- Placed at the end of the document so the pages load faster -->
 	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>

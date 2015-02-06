@@ -8,14 +8,18 @@ define([ 'jquery', 'underscore', 'backbone', 'model/CommentModel',
 				
 				render : function(id) {
 					this.model.fetch( { data: {issueId: id} } );
-					var that = this;
+					that = this;
 					
-					this.model.each(function(comment) {
-						var commentView = new CommentView( { model: comment } );
-						that.$el.append(commentView.render().$el);
-					});
+					setTimeout(commentsRender, 1000);
 				}
 			});	
+			
+			function commentsRender() {
+				that.model.each(function(comment) {
+					var commentView = new CommentView( { model: comment } );
+					that.$el.append(commentView.render().$el);
+				});
+			}
 			
 			return CommentListView;
 		})
