@@ -20,7 +20,7 @@ require([
 	//IssueModel, 
 	MapView) {
 	
-	var comments = null;
+	//var comments = null;
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView;
@@ -125,7 +125,7 @@ require([
 });
 
 // separate this function to another file
-function sendAjax(comment) {
+/*function sendAjax(comment) {
 
 	$
 			.ajax({
@@ -152,4 +152,4 @@ var commentCollection;
 var commentView = null;
 var issueView = null;
 var issueModel;
-var global;
+var global;*/

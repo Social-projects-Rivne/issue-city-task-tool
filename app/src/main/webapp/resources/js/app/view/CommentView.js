@@ -1,5 +1,5 @@
 define(
-		[ 'underscore', 'backbone', 'model/CommentModel', 'text!templates/Comment.html'],
+		[ 'underscore', 'backbone', 'model/CommentModel', 'text!templates/Comment.html' ],
 		function(_, Backbone, CommentModel, CommentTemplate) {
 			var CommentView = Backbone.View
 					.extend({
