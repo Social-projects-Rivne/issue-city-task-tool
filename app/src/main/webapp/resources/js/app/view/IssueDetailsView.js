@@ -19,7 +19,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				},
 				
 				events: {
-					
+					'click #add_comment_button': 'addComment'
 				},
 				
 				addComment : function() {
