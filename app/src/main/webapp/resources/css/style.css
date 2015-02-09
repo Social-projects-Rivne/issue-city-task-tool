@@ -3,6 +3,10 @@ body
 padding-top: 50px;
 }
 
+#form-container {
+	float: right;
+}
+
 .container {
     width: 100%;
     padding-left: 0px;

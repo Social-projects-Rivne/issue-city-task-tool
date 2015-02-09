@@ -55,8 +55,8 @@
 	</div>
 	
 	<div>
-		<div><div id="map"></div></div>
 		<div id="form-container"></div>
+		<div id="map"></div>
 	</div>
 	
 <!-- Placed at the end of the document so the pages load faster -->
