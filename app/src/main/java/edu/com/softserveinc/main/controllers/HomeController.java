@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,19 +96,9 @@ public class HomeController {
 
 	// adding comment for issue
 	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
-	public @ResponseBody CommentModel addComment(
-			@RequestBody final CommentModel comment) {
-
-		new CommentServiceImpl().addComment(comment);
-		return comment;
-	}
-
-	@RequestMapping(value = "add-comment", method = RequestMethod.PUT)
-	public @ResponseBody CommentModel updateComment(
-			@RequestBody final CommentModel comment) {
-
-		new CommentServiceImpl().addComment(comment);
-		return comment;
+	public void addComment(@ModelAttribute CommentModel comment, CommentServiceImpl service) {
+		service.addComment(comment);
+		return;
 	}
 
 	@SuppressWarnings("rawtypes")
