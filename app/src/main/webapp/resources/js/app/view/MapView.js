@@ -10,7 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
-					commentListView = new CommentListView( { el: "#form-container" } );
+					commentListView = new CommentListView( { el: ".comments" } );
 					var that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
