@@ -9,12 +9,17 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				
 				render: function(id) {
 					var that = this;
+					
 					this.model.set("id", id);
 					this.model.fetch( { success: function() {
 						that.$el.html(that.template(that.model.toJSON()));
 					} } );
 
 					return this;
+				},
+				
+				events: {
+					
 				},
 				
 				addComment : function() {

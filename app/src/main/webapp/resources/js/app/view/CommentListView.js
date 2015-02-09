@@ -7,21 +7,16 @@ define([ 'jquery', 'underscore', 'backbone', 'model/CommentModel',
 				},
 				
 				render : function(id) {
-					this.model.fetch( { data: {issueId: id} } );
-					that = this;
+					var that = this;
 					
-					setTimeout(commentsRender, 1000);
+					this.model.fetch( { data: {issueId: id}, success: function() {
+						that.model.each(function(comment) {
+							var commentView = new CommentView( { model: comment } );
+							that.$el.append(commentView.render().$el);
+						});
+					} } );
 				}
 			});	
-			
-			function commentsRender() {
-				that.model.each(function(comment) {
-					var commentView = new CommentView( { model: comment } );
-					//that.$el.append(commentView.render().$el);
-
-					$(document.body.getElementsByClassName('comments')[0]).append(commentView.render().$el);
-				});
-			}
 			
 			return CommentListView;
 		})
