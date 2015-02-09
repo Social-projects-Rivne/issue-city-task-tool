@@ -12,7 +12,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/CommentModel',
 					this.model.fetch( { data: {issueId: id}, success: function() {
 						that.model.each(function(comment) {
 							var commentView = new CommentView( { model: comment } );
-							that.$el.append(commentView.render().$el);
+							that.$el.find('.comments').append(commentView.render().$el);
 						});
 					} } );
 				}
