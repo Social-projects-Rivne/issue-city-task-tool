@@ -13,9 +13,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				render: function(id) {
 					this.model.set("id", id);
 					this.model.fetch();
-					
 					console.log('st');
-					setTimeout(this.$el.html(this.template(this.model.toJSON())), 1000);
+					this.$el.html(this.template(this.model.toJSON()));
 					console.log('end');
 					this.$el.html(that.template);
 				},
