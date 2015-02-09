@@ -96,9 +96,14 @@ public class HomeController {
 
 	// adding comment for issue
 	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
-	public void addComment(@ModelAttribute CommentModel comment, CommentServiceImpl service) {
-		service.addComment(comment);
-		return;
+	public @ResponseBody CommentModel addComment(HttpServletRequest request, CommentServiceImpl service, CommentModel model) {
+		model.setComment(request.getParameter("comment"));
+		model.setUserName(request.getParameter("userName"));
+		model.setEmail(request.getParameter("email"));
+		model.setIssueId(Integer.parseInt(request.getParameter("issueId")));
+		
+		service.addComment(model);
+		return model;
 	}
 
 	@SuppressWarnings("rawtypes")

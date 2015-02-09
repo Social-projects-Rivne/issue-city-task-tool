@@ -24,12 +24,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				
 				addComment : function() {
 					
-				 comment = new CommentModel({
-					 "email": $(document.getElementsByName('email')[0]).val(),
-					 "userName": $(document.getElementsByName('userName')[0]).val(),
-					 "comment":  $(document.getElementsByName('comment-text')[0]).val(),
-					 "issueId": +  this.model.id });
+				 var comment = new CommentModel();
+				 comment.set("email", document.getElementsByName('email')[0].value);
+				 comment.set("userName", document.getElementsByName('userName')[0].value);
+				 comment.set("comment", document.getElementsByName('comment-text')[0].value);
+				 comment.set("issueId", this.model.get("id"));
 				 try{
+					 console.log(comment);
 					 comment.save();
 					 console.log('comment add function');
 					
