@@ -8,19 +8,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				},
 				
 				render: function(id) {
+					var that = this;
 					this.model.set("id", id);
-					this.model.fetch();
-					
-					that = this;
-
-					setTimeout(issueDetailsRender, 1000);
+					this.model.fetch( { success: function() {
+						that.$el.html(that.template(that.model.toJSON()));
+					} } );
 
 					return this;
-
-					console.log('st');
-					setTimeout(this.$el.html(this.template(this.model.toJSON())), 1000);
-					console.log('end');
-					this.$el.html(that.template);
 				},
 				
 				addComment : function() {
@@ -53,10 +47,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				}
 				
 			});	
-			
-			function issueDetailsRender() {
-				that.$el.html(that.template);
-			}
 			
 			return IssueDetaisView;
 		})
