@@ -12,7 +12,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 				},
 				
 				render: function() {
-					that = this;
 					this.$el.html(this.template);
 					
 					return this;
