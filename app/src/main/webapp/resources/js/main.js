@@ -2,6 +2,7 @@ require([
         'jquery',
         'underscore',
         'backbone',
+        'router',
         /*'view/IssueView',
         'model/CommentModel',*/
         'view/MapView',
@@ -14,6 +15,7 @@ require([
         
         ]
 , function($, _, Backbone, 
+	Router,
 	//IssueView,
 	//CommentModel,
 	//CommentView,
@@ -25,6 +27,8 @@ require([
 	//var comments = null;
 	
 	jQuery(document).ready(function($){
+		
+		console.log('router initialazed');
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		//mapDraw();
@@ -37,6 +41,9 @@ require([
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;
 		//setTimeout(mapView.render(),500);
+		Backbone.history.start()
+		router = new Router();
+		
 	});
 	
 	/*function mapDraw() {
@@ -155,3 +162,4 @@ var commentView = null;
 var issueView = null;
 var issueModel;
 var global;*/
+var router = null;
