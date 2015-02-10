@@ -6,10 +6,6 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
 					this.model = new IssueCollection();
 				},
 				
-				events: {
-					'click #cry-out': 'addIssueForm'
-				},
-				
 				render : function() {
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
@@ -33,11 +29,6 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
 					
 					return this;
 				},
-				
-				addIssueForm: function(e) {
-					e.preventDefault();
-					addIssueView.render();
-				}
 			});
 			
 			function onMarkerClick(e) {

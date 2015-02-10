@@ -42,7 +42,7 @@ require([
 		//setTimeout(mapView.render(),500);
 		Backbone.history.start()
 		router = new Router();
-		
+		router.navigate("", {trigger: true});
 	});
 	
 	/*function mapDraw() {
