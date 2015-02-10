@@ -16,7 +16,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
 					addIssueView = new AddIssueView( { el: "#form-container" } );
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
 					commentListView = new CommentListView( { el: ".comments" } );
-					var that = this;
+					that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 					    maxZoom: 18
@@ -52,6 +52,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
 					marker = L.marker(e.latlng).addTo(map);
 				else
 					marker.setLatLng(e.latlng);
+				that.$el.find('#map-pointer').val(e.latlng);
 			}
 			
 			return MapView;
