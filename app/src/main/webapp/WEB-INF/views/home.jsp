@@ -39,7 +39,7 @@
 
 				<div class="collapse navbar-collapse" id="navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="#" id="cry-out">Cry out</a></li>
+						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
 
 					</ul>
 
