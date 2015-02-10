@@ -1,14 +1,19 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
-         'view/IssueDetailsView', 'view/CommentListView' ],
-		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView) {
+         'view/IssueDetailsView', 'view/CommentListView', 'view/AddIssueView' ],
+		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView, AddIssueView) {
 			var MapView = Backbone.View.extend({
 				initialize : function() {
 					this.model = new IssueCollection();
 				},
 				
+				events: {
+					'click #cry-out': 'addIssueForm'
+				},
+				
 				render : function() {
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
+					addIssueView = new AddIssueView( { el: "#form-container" } );
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
 					commentListView = new CommentListView( { el: ".comments" } );
 					var that = this;
@@ -27,6 +32,11 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection',
 					} } );
 					
 					return this;
+				},
+				
+				addIssueForm: function(e) {
+					e.preventDefault();
+					addIssueView.render();
 				}
 			});
 			

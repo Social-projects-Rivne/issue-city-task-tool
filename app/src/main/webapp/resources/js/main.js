@@ -25,9 +25,8 @@ require([
 	//var comments = null;
 	
 	jQuery(document).ready(function($){
-		mapView = new MapView;
+		mapView = new MapView( { el: "body" } );
 		mapView.render();
-		addIssueView = new AddIssueView( { el: '#form-container'} );
 		//mapDraw();
 		// for debug
 		//issueModel = new IssueModel;
