@@ -13,7 +13,7 @@ requirejs.config({
 		}, 
 		
 		main:{
-			deps :['leaflet','js/issue-script','markers']
+			deps :['leaflet','js/issue-script','markers','router']
 		},
 		
 		map:{
@@ -28,6 +28,7 @@ requirejs.config({
 		backbone: 'js/lib/backbone',
 		text: 'js/lib/text',
 
+		router: 'js/app/router',
 		model: 'js/app/model',
 		view: 'js/app/view',
 		collection: 'js/app/collection',
