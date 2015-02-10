@@ -25,8 +25,7 @@ var Router = Backbone.Router.extend({
 	  commentListView.render(id);
 	},
 
-  cryOut: function(e) {
-  	e.preventDefault();
+  cryOut: function() {
 	addIssueView.render();
 },
 
