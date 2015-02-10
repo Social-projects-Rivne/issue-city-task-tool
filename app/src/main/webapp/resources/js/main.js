@@ -27,7 +27,6 @@ require([
 	//var comments = null;
 	
 	jQuery(document).ready(function($){
-		console.log('router initialazed');
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		//mapDraw();
@@ -40,9 +39,9 @@ require([
 		//initialize new issue marker
 		//mapPointer.value = e.latlng;
 		//setTimeout(mapView.render(),500);
-		Backbone.history.start()
+		//Backbone.history.start();
 		router = new Router();
-		router.navigate("", {trigger: true});
+		//router.navigate("", {trigger: true});
 	});
 	
 	/*function mapDraw() {
