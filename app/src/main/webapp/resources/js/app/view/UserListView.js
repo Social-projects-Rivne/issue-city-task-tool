@@ -4,15 +4,17 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 			var UserListView = Backbone.View.extend({
 				initialize : function() {
 					this.model = new UserCollection();
-					this.model.fetch();
 				},
 				
 				render : function() {
 					var that = this;
-					this.model.each(function(user) {
-						var userView = new UserView({model: user});
-						that.$el.append(userView.render().$el);
-					});
+					
+					this.model.fetch( { success: function() {
+						that.model.each(function(user) {
+							var userView = new UserView( { model: user } );
+							that.$el.append(userView.render().$el);
+						});
+					} } );
 				}
 			});	
 			

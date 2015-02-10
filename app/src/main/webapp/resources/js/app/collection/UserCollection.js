@@ -4,7 +4,7 @@ define([ 'underscore', 'backbone', 'model/UserModel' ], function(_,
 	var UserCollection = Backbone.Collection.extend({
 		
 		model : UserModel,
-		url : ''
+		url : 'get-users'
 	});
 
 	return UserCollection;

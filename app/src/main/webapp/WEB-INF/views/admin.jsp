@@ -1,17 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false"%>
 <html>
 <head>
 	<title> Administrator Toolpage</title>
 	<link href="<c:url value="/resources/css/styles.css" />" rel="stylesheet">
-	<script src="<c:url value="/resources/js/script.js" />"></script>
+	<%-- <script src="<c:url value="/resources/js/script.js" />"></script> --%>
 </head>
 <body>
-
-	<div id="background"></div>
-	<div id="notification-window" class="wrapper">
-		<div id="notification-message">${notMsg}</div>
-	</div>
-	<br />
 	
 	<div id="users-table">
 	
@@ -19,29 +14,7 @@
 			<button id="add" class='button'>Add new user</button>
 		</div>
 		
-		<table id="users">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Login</th>
-					<th>Actions</th>
-				</tr>	
-			</thead>
-			
-			<c:forEach items="${users}" var="usr">
-				<tr>
-					<td id="${usr.id}"><c:out value="${usr.id}"></c:out></td><td><c:out value="${usr.name}"></c:out></td><td><c:out value="${usr.email}"></c:out></td><td><c:out value="${usr.login}"></c:out></td>
-					<td>
-						<div>
-							<form method="POST" action="edit-user"><input name="userId" type="hidden" value="<c:out value="${usr.id}"></c:out>" /><input type="submit" name="edit" value="edit" class="button" /></form>
-							<form method="POST" action="remove-user"><input name="userId" type="hidden" value="<c:out value="${usr.id}"></c:out>" /><input type="submit" name="remove" value="remove" class="button" /></form>
-						</div>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
+		<table id="users"></table>
 	</div>
 	
 	<br />
@@ -128,6 +101,15 @@
 			</form>
 		</div>
 	</div>
-
+<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
+<script>
+require( [ 'jquery', 'underscore', 'backbone', 'view/UserListView' ],
+		function($, _, Backbone, UserListView) {
+		 	$(document).ready(function() {
+		 		var userListView = new UserListView( { el: "#users" } );
+		 		userListView.render();
+		 	});
+})
+</script>
 </body>
 </html>

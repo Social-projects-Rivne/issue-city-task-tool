@@ -1,39 +1,31 @@
 package edu.com.softserveinc.main.controllers;
 
+import java.util.List;
+
 import org.hibernate.JDBCException;
-import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.UserServiceImpl;
 
 @Controller
 public class AdminController {
+	
+	@RequestMapping("admin")
+	public String admin() {
+		return "admin";
+	}
 
-	private String notificationMessage;
-
-	// TODO: change "UserServiceImpl" on "AdminService"
-	@RequestMapping(value = "/admin-toolpage")
-	public String showUsersTable(UserServiceImpl usersList, Model model) {
-
-		try {
-			model.addAttribute("users", usersList.loadUsersList());
-		} catch (JDBCConnectionException ex) {
-
-			// TODO: Change it on logger!
-			System.out
-					.println("ERROR! Can't connect to database, try to change "
-							+ "your login and password from MySQL-server in hibernata.cfg.xml");
-
-			return "error";
-		}
-		notificationMessage = "";
-		return "admin-toolpage";
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("get-users")
+	public @ResponseBody List getUsers(UserServiceImpl service) {
+		return service.loadUsersList();
 	}
 
 	// TODO: change "UserServiceImpl" on "AdminService"
@@ -42,10 +34,8 @@ public class AdminController {
 			UserServiceImpl userService, Model model) {
 		try {
 			userService.addUser(user);
-			notificationMessage = "New user was succesfully added!";
 		}
 		catch (Exception ex) {
-			notificationMessage = "User exists";
 		}
 		return "redirect:admin-toolpage";
 	}
@@ -59,14 +49,10 @@ public class AdminController {
 			UserServiceImpl userService, UserServiceImpl getUsr,
 			UserModel user, Model model) {
 		try {
-			
-			notificationMessage = "User was succesfully edited!";
 		} 
 		catch (JDBCException ex) {
-				notificationMessage = "User with that email or login exists ";
 		}
 		catch (Exception ex) {
-			notificationMessage = "Error! " + ex.getCause();
 		}
 		return "redirect:admin-toolpage";
 	}
@@ -78,15 +64,9 @@ public class AdminController {
 		try {
 
 			userService.deleteUser(getUsr.getUserByID(userId));
-			notificationMessage = "User was succesfully removed!";
 		} catch (Exception ex) {
-			notificationMessage = "Error! " + ex.getCause();
 		}
 		return "redirect:admin-toolpage";
 	}
 
-	@ModelAttribute
-	public void addString(Model model) {
-		model.addAttribute("notMsg", notificationMessage);
-	}
 }
