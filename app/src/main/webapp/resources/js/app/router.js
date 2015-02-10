@@ -3,7 +3,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 var Router = Backbone.Router.extend({
 
   routes: {
-    "issue":"issue",    // #issue
+    "issue/:id":"issue",    // #issue
   },
 
   nitialize: function(){

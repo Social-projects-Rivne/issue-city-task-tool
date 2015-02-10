@@ -27,7 +27,6 @@ require([
 	//var comments = null;
 	
 	jQuery(document).ready(function($){
-		
 		console.log('router initialazed');
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
