@@ -97,6 +97,7 @@ public class HomeController {
 	// adding comment for issue
 	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
 	public void addComment(@ModelAttribute CommentModel comment, CommentServiceImpl service) {
+		System.out.println(comment.toString());
 		service.addComment(comment);
 		return;
 	}

@@ -28,11 +28,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					 "email": $(document.getElementsByName('email')[0]).val(),
 					 "userName": $(document.getElementsByName('userName')[0]).val(),
 					 "comment":  $(document.getElementsByName('comment-text')[0]).val(),
-					 "issueId": +  this.model.id });
+					 "issueId":  this.model.id });
 				 try{
-					 comment.save();
 					 console.log('comment add function');
-					
+					 comment.save();
+					 
 					 var commentView = new CommentView({
 							model : comment
 					 });
