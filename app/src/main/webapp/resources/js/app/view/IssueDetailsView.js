@@ -30,8 +30,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					 "comment":  $(document.getElementsByName('comment-text')[0]).val(),
 					 "issueId":  this.model.id });
 				 try{
-					 console.log('comment add function');
 					 comment.save();
+					 console.log('comment add function');
+					 
 					 
 					 var commentView = new CommentView({
 							model : comment
