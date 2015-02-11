@@ -20,7 +20,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					userListView = new UserListView({el: "#container"});
 
 					usersFilter = userListView.model;
-					usersList = userListView.model;
+					usersList = new  UserCollection(usersFilter);
 				},
 				
 				render: function() {
@@ -38,8 +38,10 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				//it reset filters and render all users without filters
 				resetFilter: function(){
 					alert('we try to reset filter');
-					userListView.model = new UserCollection(usersList);
-					userListView.render();
+					userListView.model.fetch({success: function(){
+							userListView.render();
+						}
+					});
 				},
 				
 			});	
