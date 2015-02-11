@@ -138,11 +138,11 @@ padding-right: 0px;
 }
 
 .col-lg-3 {
-    margin-top: 20px;
+    padding-top: 20px;
     }
 
 .col-lg-9 {
-     margin-top: 20px;
+     /* margin-top: 20px; */
 }
 
 .img-thumbnail {
@@ -168,8 +168,8 @@ a {
 }
 
 .row {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 .btn-default {
     background-color: #ea556f;
