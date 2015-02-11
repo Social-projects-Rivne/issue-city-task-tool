@@ -3,7 +3,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 	var Router = Backbone.Router.extend({
 
 		routes : {
-			"search/:name" : "search",
+			"admin/search/:name" : "search",
 			"" : "home",
 			"cry-out" : "cryOut",
 			"admin" : "admin",
@@ -33,7 +33,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 		
 		admin : function() {
-			userListView.render();
+			adminView.render();
 		},
 
 		search : function(name) {
