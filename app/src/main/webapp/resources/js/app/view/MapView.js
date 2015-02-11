@@ -1,8 +1,11 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView',
-         'view/CommentListView', 'view/AddIssueView', 'view/UserListView', 'view/UserView' ],
+         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView' ],
 		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView,
-				AddIssueView, UserListView, UserView) {
-			var MapView = Backbone.View.extend({
+				AddIssueView, AdminView, UserView) {
+
+	var that = null;
+
+	var MapView = Backbone.View.extend({
 				initialize : function() {
 					this.model = new IssueCollection();
 				},
@@ -13,7 +16,9 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					addIssueView = new AddIssueView( { el: "#form-container" } );
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
 					commentListView = new CommentListView( { el: ".comments" } );
-					userListView = new UserListView( { el: "#container" } );
+					
+					adminView = new AdminView( { el: "#container" } );
+
 					that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
