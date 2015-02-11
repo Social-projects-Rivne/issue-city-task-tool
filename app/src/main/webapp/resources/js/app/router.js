@@ -6,6 +6,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			"search/:name" : "search",
 			"" : "home",
 			"cry-out" : "cryOut",
+			"admin" : "admin",
 			"issue/:id" : "issue", // #issue/1
 		},
 
@@ -29,6 +30,10 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		cryOut : function() {
 			addIssueView.render();
+		},
+		
+		admin : function() {
+			userListView.render();
 		},
 
 		search : function(name) {

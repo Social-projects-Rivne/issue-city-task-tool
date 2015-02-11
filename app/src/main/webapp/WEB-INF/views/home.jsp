@@ -40,7 +40,7 @@
 				<div class="collapse navbar-collapse" id="navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
-
+						<li><a href="#admin" id="admin">Admin</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -54,7 +54,7 @@
 		</nav>
 	</div>
 	
-	<div>
+	<div id=container>
 		<div id="form-container"></div>
 		<div id="map"></div>
 	</div>

@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +22,7 @@ import edu.com.softserveinc.main.models.IssueModel;
 import edu.com.softserveinc.main.services.CategoryServiceImpl;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
 import edu.com.softserveinc.main.services.IssueServiceImpl;
+import edu.com.softserveinc.main.services.UserServiceImpl;
 import edu.com.softserveinc.main.utils.IssueValidator;
 
 /**
@@ -37,6 +37,12 @@ public class HomeController {
 		List categoriesList = service.loadCategoriesList();
 		model.addAttribute("categories", categoriesList);
 		return "home";
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("get-users")
+	public @ResponseBody List getUsers(UserServiceImpl service) {
+		return service.loadUsersList();
 	}
 
 	// add new problem

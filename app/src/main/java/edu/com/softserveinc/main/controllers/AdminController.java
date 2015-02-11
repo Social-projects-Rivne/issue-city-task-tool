@@ -22,12 +22,6 @@ public class AdminController {
 		return "admin";
 	}
 
-	@SuppressWarnings("rawtypes")
-	@RequestMapping("get-users")
-	public @ResponseBody List getUsers(UserServiceImpl service) {
-		return service.loadUsersList();
-	}
-
 	// TODO: change "UserServiceImpl" on "AdminService"
 	@RequestMapping(value = "/add-user", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") UserModel user,
