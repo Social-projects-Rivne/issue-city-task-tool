@@ -29,9 +29,14 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				},
 				
 				//function which will be search users by their name
-				search: function(){
-					alert('we try to find user ' + $('.form-control').val());
-					usersFilter = userListView.model.findWhere({name: $('.form-control').val()});
+				search: function(userName){
+					var name = userName;
+					if(userName){
+						name = $('.form-control').val();
+					}
+					//router.navigate('admin/search/' + name);
+					usersFilter = userListView.model.findWhere({name: name});
+					
 					userListView.model = new UserCollection(usersFilter);
 					userListView.render();
 				},
@@ -39,6 +44,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				resetFilter: function(){
 					alert('we try to reset filter');
 					userListView.model.fetch({success: function(){
+							router.navigate('admin');
 							userListView.render();
 						}
 					});
