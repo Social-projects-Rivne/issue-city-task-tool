@@ -1,13 +1,17 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/UserListView', 'text!templates/search.html', ],
-		function($, _, Backbone, UserCollection, UserListView, SearchTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/UserListView', 'text!templates/search.html', 'text!templates/Add_user.html', ],
+		function($, _, Backbone, UserCollection, UserListView, SearchTemplate, AddUserTemplate) {
 			var AdminView = Backbone.View.extend({
 				
 				events: {
 					'click #search-user': 'search',
 					'click #reset-filter': 'resetFilter',
+					'click #add-user': 'addUser',
+					
 				},
 				
 				template: _.template(SearchTemplate),
+				addUserTemplate: _.template(AddUserTemplate),
+						  
 
 				//view of table
 				userListView: null,
@@ -49,6 +53,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 						}
 					});
 				},
+				// function which adding users 
+				addUser: function(){
+					this.$el.html(this.addUserTemplate);
+					console.log ("function run");
+				}
+					
 				
 			});	
 			
