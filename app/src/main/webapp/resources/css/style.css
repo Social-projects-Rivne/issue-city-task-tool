@@ -3,6 +3,10 @@ body
 padding-top: 50px;
 }
 
+#remove_user {
+	display: block !important;
+}
+
 #form-container {
 	float: right;
 }
