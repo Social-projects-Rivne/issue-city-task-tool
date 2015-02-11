@@ -9,7 +9,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				render : function() {
 					var that = this;
 					
-					this.model.fetch( { success: function() { console.log(this.model);
+					this.model.fetch( { success: function() {
 						that.$el.html("<table>");
 						that.model.each(function(user) {
 							var userView = new UserView( { model: user } );
