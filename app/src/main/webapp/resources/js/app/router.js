@@ -17,6 +17,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		home : function() {
 			alert('welcome home');
+			mapView.render();
 		},
 
 		issue : function(id) {
