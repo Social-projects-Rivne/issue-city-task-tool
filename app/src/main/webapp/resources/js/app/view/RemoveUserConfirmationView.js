@@ -20,7 +20,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 				
 				confirmRemove: function(e) {
 					this.model.set('id', e.currentTarget.name);
-					this.model.destroy( { url: 'remove-user' } );
+					this.model.destroy( { url: 'remove-user/' + this.model.get('id') } );
 				},
 			});	
 			
