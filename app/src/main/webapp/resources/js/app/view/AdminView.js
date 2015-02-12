@@ -1,12 +1,13 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/UserListView', 'text!templates/search.html', 'text!templates/Add_user.html', ],
-		function($, _, Backbone, UserCollection, UserListView, SearchTemplate, AddUserTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/UserListView', 'text!templates/search.html', 'text!templates/Add_user.html', 'model/UserModel'],
+		function($, _, Backbone, UserCollection, UserListView, SearchTemplate, AddUserTemplate, UserModel) {
 			var AdminView = Backbone.View.extend({
 				
 				events: {
 					'click #search-user': 'search',
 					'click #reset-filter': 'resetFilter',
 					'click #add-user': 'addUser',
-					
+					'click #add-new-user': 'addNewUser',
+					'click #edit-user': 'editUser',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -57,10 +58,30 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				addUser: function(){
 					this.$el.html(this.addUserTemplate);
 					console.log ("function run");
+				},
+				
+				// function which confirm add user on addUserTemplate  
+				addNewUser: function(){
+					
+					userModel = new UserModel({
+						 "name": $(document.getElementsByName('name')[0]).val(),
+						 "email": $(document.getElementsByName('email')[0]).val(),
+						 "login":  $(document.getElementsByName('login')[0]).val(),
+						 "password":  $(document.getElementsByName('password')[0]).val(),
+						 "avatar":  $(document.getElementsByName('avatar')[0]).val()
+					});
+					userModel.save();
+					console.log (userModel);
+				},	
+				
+				// function which editing users
+				editUser: function(){
+					var editUser = new UserModel({id:id})	
+										
+					//console.log ("function run");
 				}
 					
-				
-			});	
+			});
 			
 			return AdminView;
 		})
