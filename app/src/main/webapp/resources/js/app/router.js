@@ -4,12 +4,13 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		routes : {
 			"admin/search/:name" : "search",
+			"admin/add-user" : "addUser",
 			"" : "home",
 			"cry-out" : "cryOut",
 			"admin" : "admin",
 			"issue/:id" : "issue", // #issue/1
 		},
-
+		
 		initialize : function() {
 			console.log('router initialazed');
 			Backbone.history.start();
@@ -40,7 +41,10 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			
 			});
 		},
-
+		addUser: function() {
+			adminView.addUser();
+		},
+		
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);

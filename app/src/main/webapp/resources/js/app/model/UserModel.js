@@ -1,7 +1,7 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 	var UserModel = Backbone.Model.extend({
-		urlRoot: 'admin/add-user',
+		url: 'add-new-user',
 		id:'',
 		defaults: {
 			//id: 0,
