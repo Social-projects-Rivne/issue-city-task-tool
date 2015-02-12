@@ -19,6 +19,9 @@ requirejs.config({
 		map:{
 			deps :['markers'],
 		},
+		'view/MapView':{
+			deps :['map','leaflet'],
+		}
     },
 	paths:{
 
