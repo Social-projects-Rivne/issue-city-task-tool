@@ -38,7 +38,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		search : function(name) {
-			alert('you serch ' + name);
+			//alert('you serch ' + name);
 			//adminView.search(name);
 		},
 

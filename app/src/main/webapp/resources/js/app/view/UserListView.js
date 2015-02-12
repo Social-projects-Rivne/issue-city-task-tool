@@ -11,14 +11,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				initialize : function() {
 					this.model = new UserCollection();
 					that = this;
-					this.model.fetch({success: function(){
-							that.$el.html(that.template);
-							that.model.each(function(user) {
-								var userView = new UserView( { model: user } );
-								that.$el.find("table").append(userView.render().$el);
-							});
-						}
-					});
+					this.model.fetch();
 						
 				},
 				
