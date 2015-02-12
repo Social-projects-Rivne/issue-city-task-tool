@@ -48,6 +48,10 @@ public class HomeController {
 	}
 	//add user
 	@RequestMapping(value = "add-new-user", method = RequestMethod.POST)
+	public @ResponseBody UserModel addUser(@RequestBody UserModel user) {
+		new UserServiceImpl().addUser(user);
+		return user;
+	}
 	public String addUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl userService, Model model) {
 		try {
@@ -124,7 +128,8 @@ public class HomeController {
 		System.out.println("email: " + comment.get("email") + "issue id: " + comment.get("issueId"));
 		return comment;
 	}
-
+	
+	// return all isues
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("get-issues")
 	public @ResponseBody List getIssues() {
@@ -136,6 +141,7 @@ public class HomeController {
 		return session.createQuery("From IssueModel").list();
 	}
 	
+	//for fetching comments by issue_id
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("get-comments")
 	public @ResponseBody List getCommentsByIssueId(@RequestParam("issueId") int id,
