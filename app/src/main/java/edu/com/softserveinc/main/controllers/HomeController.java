@@ -164,7 +164,7 @@ public class HomeController {
 	
 	
 	
-	@RequestMapping(value = "edit-user", method = RequestMethod.PUT)
+	@RequestMapping(value = "edit-user/{id}", method = RequestMethod.PUT)
 	public @ResponseBody String editUser(@ModelAttribute("user") UserModel user,
 			UserServiceImpl service) {
 		String message = null;
@@ -179,8 +179,8 @@ public class HomeController {
 	
 	
 	
-	@RequestMapping(value = "remove-user", method = RequestMethod.DELETE)
-	public @ResponseBody String removeUser(@RequestParam("id") int id,
+	@RequestMapping(value = "remove-user/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody String removeUser(@PathVariable("id") int id,
 			UserServiceImpl service) {
 		String message = null;
 		

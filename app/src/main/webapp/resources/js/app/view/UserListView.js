@@ -32,8 +32,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					});
 				},
 				
-				confirmation: function() {
-					removeUserConfirmationView.render();
+				confirmation: function(e) {
+					removeUserConfirmationView.render(e.currentTarget.parentNode.id);
 				}
 			});	
 			
