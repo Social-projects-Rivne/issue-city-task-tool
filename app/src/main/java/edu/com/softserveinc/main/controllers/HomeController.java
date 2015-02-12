@@ -31,6 +31,11 @@ import edu.com.softserveinc.main.utils.IssueValidator;
  */
 @Controller
 public class HomeController {
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home() {
+		return "home";
+	}
 
 	//--------------------ISSUE METHODS-------------------//
 	
