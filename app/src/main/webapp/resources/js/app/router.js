@@ -34,7 +34,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 		
 		admin : function() {
-			adminView.render();
+			userListView.model.fetch({ success: function(){
+					adminView.render();
+				}
+			
+			});
 		},
 
 		search : function(name) {
