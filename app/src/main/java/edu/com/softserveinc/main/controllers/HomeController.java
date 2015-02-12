@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.com.softserveinc.main.models.CategoryModel;
 import edu.com.softserveinc.main.models.CommentModel;
 import edu.com.softserveinc.main.models.IssueModel;
+import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.CategoryServiceImpl;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
 import edu.com.softserveinc.main.services.IssueServiceImpl;
@@ -44,7 +46,18 @@ public class HomeController {
 	public @ResponseBody List getUsers(UserServiceImpl service) {
 		return service.loadUsersList();
 	}
-
+	//add user
+	@RequestMapping(value = "add-new-user", method = RequestMethod.POST)
+	public String addUser(@ModelAttribute("user") UserModel user,
+			UserServiceImpl userService, Model model) {
+		try {
+			userService.addUser(user);
+		}
+		catch (Exception ex) {
+		}
+		return "redirect:#admin";
+	}
+	
 	// add new problem
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {

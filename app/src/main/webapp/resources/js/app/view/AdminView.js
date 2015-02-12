@@ -56,13 +56,13 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				},
 				// function which adding users 
 				addUser: function(){
+					//router.navigate('admin/add-user');
 					this.$el.html(this.addUserTemplate);
 					console.log ("function run");
 				},
 				
 				// function which confirm add user on addUserTemplate  
 				addNewUser: function(){
-					
 					userModel = new UserModel({
 						 "name": $(document.getElementsByName('name')[0]).val(),
 						 "email": $(document.getElementsByName('email')[0]).val(),
