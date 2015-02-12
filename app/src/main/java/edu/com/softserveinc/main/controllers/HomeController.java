@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,36 +32,28 @@ import edu.com.softserveinc.main.utils.IssueValidator;
 @Controller
 public class HomeController {
 
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model, CategoryServiceImpl service) {
-		List categoriesList = service.loadCategoriesList();
-		model.addAttribute("categories", categoriesList);
-		return "home";
+	//--------------------ISSUE METHODS-------------------//
+	
+	@RequestMapping("get-issue/{id}")
+	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id,
+			IssueServiceImpl service) {
+		return service.getByID(id);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	@RequestMapping("get-users")
-	public @ResponseBody List getUsers(UserServiceImpl service) {
-		return service.loadUsersList();
-	}
-	//add user
-	@RequestMapping(value = "add-new-user", method = RequestMethod.POST)
-	public @ResponseBody UserModel addUser(@RequestBody UserModel user) {
-		new UserServiceImpl().addUser(user);
-		return user;
-	}
-	public String addUser(@ModelAttribute("user") UserModel user,
-			UserServiceImpl userService, Model model) {
-		try {
-			userService.addUser(user);
-		}
-		catch (Exception ex) {
-		}
-		return "redirect:#admin";
+	
+	
+	@SuppressWarnings({ "rawtypes", "deprecation" })
+	@RequestMapping("get-issues")
+	public @ResponseBody List getIssues() {
+		SessionFactory sessionFactory = new Configuration().configure()
+				.buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		return session.createQuery("From IssueModel").list();
 	}
 	
-	// add new problem
+	
+
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
 		String mapPointer = request.getParameter("mapPointer");
@@ -103,12 +94,20 @@ public class HomeController {
 		// TODO: add here notification method!
 		return "redirect:/";
 	}
+	
+	
+	
+	//--------------------COMMENT METHODS-------------------//
 
-	@RequestMapping("get-issue/{id}")
-	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id, IssueServiceImpl service) {
-		return service.getByID(id);
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("get-comments")
+	public @ResponseBody List getCommentsByIssueId(@RequestParam("issueId") int id,
+			CommentServiceImpl service) {
+		return service.getCommentsByIssueId(id);
 	}
-
+	
+	
+	
 	// fetch all comments for issue-id
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
@@ -116,8 +115,11 @@ public class HomeController {
 	public List getAllCommentsByIssueId(@PathVariable int id) {
 		return new CommentServiceImpl().getCommentsByIssueId(id);
 	}
+	
+	
 
 	// adding comment for issue
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "add-comment", method = RequestMethod.POST)
 	public @ResponseBody java.util.LinkedHashMap createUser(
 			@RequestBody final java.util.LinkedHashMap comment) {
@@ -129,23 +131,60 @@ public class HomeController {
 		return comment;
 	}
 	
-	// return all isues
+	
+	
+	//--------------------USER METHODS-------------------//
+	
 	@SuppressWarnings("rawtypes")
-	@RequestMapping("get-issues")
-	public @ResponseBody List getIssues() {
-		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = new Configuration().configure()
-				.buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		return session.createQuery("From IssueModel").list();
+	@RequestMapping("get-users")
+	public @ResponseBody List getUsers(UserServiceImpl service) {
+		return service.loadUsersList();
 	}
 	
-	//for fetching comments by issue_id
-	@SuppressWarnings("rawtypes")
-	@RequestMapping("get-comments")
-	public @ResponseBody List getCommentsByIssueId(@RequestParam("issueId") int id,
-			CommentServiceImpl service) {
-		return service.getCommentsByIssueId(id);
+	
+	
+	@RequestMapping(value = "add-new-user", method = RequestMethod.POST)
+	public @ResponseBody String addUser(@RequestBody UserModel user,
+			UserServiceImpl service) {
+		String message = null;
+		
+		try {
+			service.addUser(user);
+		}
+		catch (Exception ex) {
+		}
+		
+		return message;
+	}
+	
+	
+	
+	@RequestMapping(value = "edit-user", method = RequestMethod.PUT)
+	public @ResponseBody String editUser(@ModelAttribute("user") UserModel user,
+			UserServiceImpl service) {
+		String message = null;
+		
+		try {
+		} 
+		catch (Exception ex) {
+		}
+		
+		return message;
+	}
+	
+	
+	
+	@RequestMapping(value = "remove-user", method = RequestMethod.DELETE)
+	public @ResponseBody String removeUser(@RequestParam("id") int id,
+			UserServiceImpl service) {
+		String message = null;
+		
+		try {
+			service.deleteUser(service.getUserByID(id));
+		} 
+		catch (Exception ex) {
+		}
+		
+		return message;
 	}
 }
