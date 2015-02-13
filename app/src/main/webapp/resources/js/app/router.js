@@ -3,9 +3,10 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 	var Router = Backbone.Router.extend({
 
 		routes : {
+			"" : "home",
 			"admin/search/:name" : "search",
 			"admin/add-user" : "addUser",
-			"" : "home",
+			"manager" : "manager",
 			"cry-out" : "cryOut",
 			"admin" : "admin",
 			"issue/:id" : "issue", // #issue/1
@@ -41,6 +42,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			
 			});
 		},
+		
+		manager : function(){
+			managerView.render();
+		},
+		
 		addUser: function() {
 			adminView.addUser();
 		},
