@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.dao.DaoImpl;
-import edu.com.softserveinc.main.interfaces.CategoryService;
 import edu.com.softserveinc.main.models.CategoryModel;
 
 public class CategoryServiceImpl implements CategoryService {

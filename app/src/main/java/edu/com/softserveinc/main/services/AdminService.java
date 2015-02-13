@@ -3,7 +3,6 @@ package edu.com.softserveinc.main.services;
 //import org.hibernate.Session;
 import java.util.List;
 
-import edu.com.softserveinc.main.interfaces.UserService;
 import edu.com.softserveinc.main.models.UserModel;
 
 /**

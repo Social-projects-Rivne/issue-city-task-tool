@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.dao.DaoImpl;
-import edu.com.softserveinc.main.interfaces.IssueService;
 import edu.com.softserveinc.main.models.IssueModel;
 /**
  * Class needs for working with problems

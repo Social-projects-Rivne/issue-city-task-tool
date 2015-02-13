@@ -1,4 +1,4 @@
-package edu.com.softserveinc.main.interfaces;
+package edu.com.softserveinc.main.dao;
 
 import java.util.List;
 

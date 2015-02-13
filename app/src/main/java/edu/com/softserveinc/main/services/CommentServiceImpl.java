@@ -8,7 +8,6 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.com.softserveinc.main.dao.DaoImpl;
-import edu.com.softserveinc.main.interfaces.CommentService;
 import edu.com.softserveinc.main.models.CommentModel;
 
 public class CommentServiceImpl implements CommentService {
