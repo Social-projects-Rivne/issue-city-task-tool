@@ -27,13 +27,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					
 					removeUserConfirmationView = new RemoveUserConfirmationView( { el: "#container" } );
 					
-					this.model.fetch( { success: function() {
+					//this.model.fetch( { success: function() {
 						that.$el.html(that.template);
 						that.model.each(function(user) {
 							var userView = new UserView( { model: user } );
 							that.$el.find("table").append(userView.render().$el);
 						});
-					} } );
+				//	} } );
 				},
 				
 				confirmation: function(e) {
