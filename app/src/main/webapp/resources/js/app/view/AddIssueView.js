@@ -1,10 +1,12 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html' ],
-		function($, _, Backbone, IssueModel, AddIssueTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html',
+         'model/CategoryModel', 'collection/CategoryCollection' ],
+		function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection) {
 			var AddIssueView = Backbone.View.extend({
 				template: _.template(AddIssueTemplate),
 				
 				initialize: function() {
 					this.model = new IssueModel();
+					categoryCollection = new CategoryCollection();
 				},
 				
 				events: {
@@ -17,7 +19,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 				},
 				
 				render: function() {
-					this.$el.html(this.template);
+					categoryCollection.fetch();
+					this.$el.html(this.template(categoryCollection.toJSON()));
 					
 					issueName = $('#issue-name');
 					issueCategory = $('#issue-category');

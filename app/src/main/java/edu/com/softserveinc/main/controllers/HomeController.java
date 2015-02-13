@@ -97,6 +97,14 @@ public class HomeController {
 	}
 	
 	
+	//--------------------CATEGORY METHODS-------------------//
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("get-categories")
+	public @ResponseBody List getCategories(CategoryServiceImpl service) {
+		return service.loadCategoriesList();
+	}
+	
 	
 	//--------------------COMMENT METHODS-------------------//
 
