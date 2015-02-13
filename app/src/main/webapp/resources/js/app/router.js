@@ -3,13 +3,14 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 	var Router = Backbone.Router.extend({
 
 		routes : {
-			"" : "home",
-			"admin/search/:name" : "search",
-			"admin/add-user" : "addUser",
-			"manager" : "manager",
-			"cry-out" : "cryOut",
-			"admin" : "admin",
-			"issue/:id" : "issue", // #issue/1
+			"" 						: 	"home"		,
+			"admin/search/:name" 	: 	"search"	,
+			"admin/add-user" 		: 	"addUser"	,
+			"manager" 				: 	"manager"	,
+			"cry-out" 				: 	"cryOut"	,
+			"admin" 				: 	"admin"		,
+			"issue/:id" 			: 	"issue"		, 	// #issue/1
+			"admin/edit-user"		:	"editUser"	,	 	
 		},
 		
 		initialize : function() {
@@ -54,6 +55,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
+		},
+		
+		editUser: function() {
+			//adminView.addUser();
+			// must be function from ??file??
 		},
 
 	});
