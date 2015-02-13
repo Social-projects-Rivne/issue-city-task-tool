@@ -35,12 +35,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				
 				//function which will be search users by their name
 				search: function(){
-					var name = '';
-					if(name == ''){
-						name = $('.form-control').val();
-					}
-					router.navigate('admin/search/' + name);
-					usersFilter = userListView.model.findWhere({name: name});
+					router.navigate('admin/search/' + $('.form-control').val());
+					usersFilter = userListView.model.findWhere({name: $('.form-control').val()});
 					
 					userListView.model = new UserCollection(usersFilter);
 					userListView.render();

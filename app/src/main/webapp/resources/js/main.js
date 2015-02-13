@@ -7,6 +7,7 @@ require([
         'model/CommentModel',*/
         'view/MapView',
         'view/AddIssueView',
+        'view/ManagerView',
         /*'collection/CommentCollection',
         'model/IssueModel',
         'view/MapView',
@@ -22,13 +23,16 @@ require([
 	//CommentCollection,
 	//IssueModel, 
 	MapView,
-	AddIssueView) {
+	AddIssueView,
+	ManagerView) {
 	
 	//var comments = null;
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
+		managerView = new ManagerView({el:"#container"});
+		//managerView.render();
 		//mapDraw();
 		// for debug
 		//issueModel = new IssueModel;
