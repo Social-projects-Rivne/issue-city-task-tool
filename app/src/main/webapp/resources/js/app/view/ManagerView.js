@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', ],
-		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', ],
+		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
@@ -8,7 +8,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
-				
+				searchTemplate: _.template(ManagerSearchTemplate),
 				issues: new IssueCollection(),
 				
 				initialize: function() {
@@ -25,11 +25,17 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 						);
 					});
 				},
+
+				// render template for manager search
+				searchRender: function(){
+ 					console.log('search rendered');
+					this.$('#issue-filter').append(this.searchTemplate); 
+				},
 				
 				render: function() {
 					this.$el.html(this.managerTemplate);
 					this.issueTableRender();
-					
+					this.searchRender();
 				},
 
 				
