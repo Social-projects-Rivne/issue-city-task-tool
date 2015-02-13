@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', ],
-		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', ],
+		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
@@ -8,28 +8,34 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
-				
+				searchTemplate: _.template(ManagerSearchTemplate),
 				issues: new IssueCollection(),
 				
 				initialize: function() {
-					this.issues.fetch();
-					console.log(this.issues)
+					this.issues = mapView.model;
 				},
 				
+				// issue table on manager page
 				issueTableRender: function() {
 					
 					that = this;
 					this.issues.each( function(issue){
-						that.$("#issue-table-body").append(that.$("#issue-table-body").append(that.issueTableTemplate(issue.toJSON()))
+						that.$("#issue-table-body").append(that.$("#issue-table-body").
+								append(that.issueTableTemplate(issue.toJSON()))
 						);
-						console.log(issue.toJSON());
 					});
+				},
+
+				// render template for manager search
+				searchRender: function(){
+ 					console.log('search rendered');
+					this.$('#issue-filter').append(this.searchTemplate); 
 				},
 				
 				render: function() {
 					this.$el.html(this.managerTemplate);
 					this.issueTableRender();
-					
+					this.searchRender();
 				},
 
 				

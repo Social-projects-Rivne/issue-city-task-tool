@@ -1,56 +1,59 @@
 <!-- edit issue dialog box template-->
-<div class="row">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"></head><body><div class="row">
     <center>
         <h2>Edit issue</h2>
     </center>
          <div class="form-horizontal">
-                <!--user name-->
+                <!--id-->
                 <div class="form-group">
-                    <label for="userName" class="control-label col-xs-4">User name</label>
+                    <label for="id" class="control-label col-xs-4">Id</label>
                     <div class="col-xs-6">
-                        <input type="text" class="form-control input-sm" id="userName" 
-                        placeholder="User name" name="name">
+                        <input class="form-control input-sm" id="id" placeholder="Id" name="id" type="id">
                     </div>
                 </div>
-                <!--email-->
+                <!--name-->
                 <div class="form-group">
-                    <label for="email" class="control-label col-xs-4">Email</label>
+                    <label for="name" class="control-label col-xs-4">Name</label>
                     <div class="col-xs-6">
-                        <input type="email" class="form-control input-sm" id="userEmail" 
-                        placeholder="Email" name="email">
+                        <input class="form-control input-sm" id="name" placeholder="Name" name="name" type="name">
                     </div>
                 </div>
-                <!--login-->
+                <!--category-->
                 <div class="form-group">
-                    <label for="login" class="control-label col-xs-4">Login</label>
+                    <label for="category" class="control-label col-xs-4">Category</label>
                     <div class="col-xs-6">
-                        <input type="login" class="form-control input-sm" id="userLogin" 
-                        placeholder="Login" name="login">
+                        <input class="form-control input-sm" id="category" placeholder="Category" name="category" type="category">
                     </div>
                 </div>
-                <!--user_password-->
+                <!--description-->
                 <div class="form-group">
-                    <label for="user_password" class="control-label col-xs-4">User password</label>
+                    <label for="description" class="control-label col-xs-4">Description</label>
                     <div class="col-xs-6">
-                        <input type="user_password" class="form-control input-sm" id="user_password" 
-                        placeholder="user_password" name="password">
+                        <input class="form-control input-sm" id="user_password" placeholder="Description" name="description" type="description">
                     </div>
                 </div>
-                <!--avatar-->
+                <!--date-->
                 <div class="form-group">
-                    <label for="avatar" class="control-label col-xs-4">Avatar</label>
+                    <label for="date" class="control-label col-xs-4">Date</label>
                     <div class="col-xs-6">
-                        <input type="avatar" class="form-control input-sm" id="userAvatar" 
-                        placeholder="avatar" name="avatar">
+                        <input class="form-control input-sm" id="date" placeholder="Date" name="date" type="date">
+                    </div>
+                </div>
+                 <!--statusId-->
+                <div class="form-group">
+                    <label for="statusId" class="control-label col-xs-4">Status Id</label>
+                    <div class="col-xs-6">
+                        <input class="form-control input-sm" id="statusId" placeholder="Status Id" name="statusId" type="statusId">
                     </div>
                 </div>
                 <!--btn #add_button-->
                 <div class="form-group">
                      <label for="add_button" class="control-label col-xs-4"></label>
                      <div class="col-xs-6" align="center">
-                     <input type="submit" class="btn btn-mini" id="add-new-user">                             
-                     <input type="reset" class="btn btn-mini" id="cancel">
+                     <input class="btn btn-mini" id="add-new-user" type="submit">                             
+                     <input class="btn btn-mini" id="cancel" type="reset">
                 </div>
                 </div>
     </div>
-</div>
+</div></body></html>
