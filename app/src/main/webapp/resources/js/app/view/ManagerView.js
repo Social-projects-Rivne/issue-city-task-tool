@@ -3,7 +3,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
-					
+					'click #issue-filter  #filter-issue': 'issueFilter',
+					'click #issue-filter  #reset-filter-issue': 'resetFilter',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -17,7 +18,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				
 				// issue table on manager page
 				issueTableRender: function() {
-					
+					this.$("#issue-table-body").empty();
 					that = this;
 					this.issues.each( function(issue){
 						that.$("#issue-table-body").append(that.$("#issue-table-body").
@@ -38,7 +39,18 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					this.searchRender();
 				},
 
-				
+				issueFilter: function(){
+					console.log("Name is " + $('#issue-filter #name').prop("checked"));
+					console.log("Keyword is " + $('#issue-filter #keyword').prop("checked"));
+					console.log("Status is " + $('#issue-filter #status').prop("checked") + ' id = ' + $('#issue-filter #status-filter').val());
+					console.log("Category is " + $('#issue-filter #category').prop("checked"));
+				},
+
+				resetFilter: function(){
+					$('#issue-filter #keyword').prop("checked", "checked");
+					this.issues = mapView.model;
+					this.issueTableRender();
+				}
 					
 			});
 			
