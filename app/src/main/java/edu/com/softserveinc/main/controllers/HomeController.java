@@ -31,22 +31,20 @@ import edu.com.softserveinc.main.utils.IssueValidator;
  */
 @Controller
 public class HomeController {
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "home";
 	}
 
-	//--------------------ISSUE METHODS-------------------//
-	
+	// --------------------ISSUE METHODS-------------------//
+
 	@RequestMapping("get-issue/{id}")
 	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id,
 			IssueServiceImpl service) {
 		return service.getByID(id);
 	}
-	
-	
-	
+
 	@SuppressWarnings({ "rawtypes", "deprecation" })
 	@RequestMapping("get-issues")
 	public @ResponseBody List getIssues() {
@@ -56,8 +54,6 @@ public class HomeController {
 		session.beginTransaction();
 		return session.createQuery("From IssueModel").list();
 	}
-	
-	
 
 	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
 	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
@@ -80,9 +76,7 @@ public class HomeController {
 					.getCategoryByName(issueCategoryName);
 			System.out.println("category loaded");
 		}
-
-		IssueModel issue = new IssueModel(category.getId(), issueName,
-				issueDescription, mapPointer, issueAttachments, 1);
+		IssueModel issue = new IssueModel(issueName,issueDescription, mapPointer, issueAttachments,  category.getId(),1,1);
 
 		if (new IssueValidator(issue).isValid()) {
 			try {
@@ -99,20 +93,16 @@ public class HomeController {
 		// TODO: add here notification method!
 		return "redirect:/";
 	}
-	
-	
-	
-	//--------------------COMMENT METHODS-------------------//
+
+	// --------------------COMMENT METHODS-------------------//
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("get-comments")
-	public @ResponseBody List getCommentsByIssueId(@RequestParam("issueId") int id,
-			CommentServiceImpl service) {
+	public @ResponseBody List getCommentsByIssueId(
+			@RequestParam("issueId") int id, CommentServiceImpl service) {
 		return service.getCommentsByIssueId(id);
 	}
-	
-	
-	
+
 	// fetch all comments for issue-id
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
@@ -120,8 +110,6 @@ public class HomeController {
 	public List getAllCommentsByIssueId(@PathVariable int id) {
 		return new CommentServiceImpl().getCommentsByIssueId(id);
 	}
-	
-	
 
 	// adding comment for issue
 	@SuppressWarnings("rawtypes")
@@ -132,64 +120,54 @@ public class HomeController {
 		new CommentServiceImpl().addComment(new CommentModel(comment.get(
 				"comment").toString(), comment.get("userName").toString(),
 				comment.get("email").toString(), id));
-		System.out.println("email: " + comment.get("email") + "issue id: " + comment.get("issueId"));
+		System.out.println("email: " + comment.get("email") + "issue id: "
+				+ comment.get("issueId"));
 		return comment;
 	}
-	
-	
-	
-	//--------------------USER METHODS-------------------//
-	
+
+	// --------------------USER METHODS-------------------//
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("get-users")
 	public @ResponseBody List getUsers(UserServiceImpl service) {
 		return service.loadUsersList();
 	}
-	
-	
-	
+
 	@RequestMapping(value = "add-new-user", method = RequestMethod.POST)
 	public @ResponseBody String addUser(@RequestBody UserModel user,
 			UserServiceImpl service) {
 		String message = null;
-		
+
 		try {
 			service.addUser(user);
+		} catch (Exception ex) {
 		}
-		catch (Exception ex) {
-		}
-		
+
 		return message;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "edit-user/{id}", method = RequestMethod.PUT)
-	public @ResponseBody String editUser(@ModelAttribute("user") UserModel user,
-			UserServiceImpl service) {
+	public @ResponseBody String editUser(
+			@ModelAttribute("user") UserModel user, UserServiceImpl service) {
 		String message = null;
-		
+
 		try {
-		} 
-		catch (Exception ex) {
+		} catch (Exception ex) {
 		}
-		
+
 		return message;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "remove-user/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody String removeUser(@PathVariable("id") int id,
 			UserServiceImpl service) {
 		String message = null;
-		
+
 		try {
 			service.deleteUser(service.getUserByID(id));
-		} 
-		catch (Exception ex) {
+		} catch (Exception ex) {
 		}
-		
+
 		return message;
 	}
 }
