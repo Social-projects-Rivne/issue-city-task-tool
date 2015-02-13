@@ -13,12 +13,23 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 					'click #tab1-title > a': 'tabChanger',
 					'click #tab2-title > a': 'tabChanger',
 					'click #tab3-title > a': 'tabChanger',
+					'click #add-issue-button': 'addIssue'
 				},
 				
 				render: function() {
 					this.$el.html(this.template);
 					
 					return this;
+				},
+				
+				addIssue: function() {
+					this.model.set( { mapPointer: $('#map-pointer').val(),
+						name: $('#issue-name').val(),
+						description: $('#issue-description').val(),
+						category: $('#issue-category').val(),
+						attachments: $('#issue-attachments').val()
+					} );
+					this.model.save();
 				},
 				
 				nextToDescription: function(e) {
