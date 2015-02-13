@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/Manager.html', 'text!templates/issue_table.html', ],
-		function($, _, Backbone, ManagerTemplate, IssueTableTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', ],
+		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
@@ -9,17 +9,25 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/Manager.html', 'tex
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
 				
+				issues: new IssueCollection(),
+				
 				initialize: function() {
-					
+					this.issues.fetch();
+					console.log(this.issues)
 				},
 				
 				issueTableRender: function() {
-					this.$("#issue-table-body").append();
+					
+					that = this;
+					this.issues.each( function(issue){
+						that.$("#issue-table-body").append(that.$("#issue-table-body").append(that.issueTableTemplate(issue.toJSON()))
+						);
+						console.log(issue.toJSON());
+					});
 				},
 				
 				render: function() {
 					this.$el.html(this.managerTemplate);
-					console.log("Manager page");
 					this.issueTableRender();
 					
 				},
