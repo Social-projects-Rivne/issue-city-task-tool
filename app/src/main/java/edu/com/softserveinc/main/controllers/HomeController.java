@@ -70,7 +70,7 @@ public class HomeController {
 		
 		for(int i = 0; i < categories.size(); i++) {
 			categoryModel = (CategoryModel) categories.get(i);
-			if(category.equals(categoryModel.getName())) { System.out.println("Find");
+			if(category.equals(categoryModel.getName())) {
 				categoryId = categoryModel.getId();
 				break;
 			}

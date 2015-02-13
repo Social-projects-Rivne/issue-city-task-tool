@@ -28,7 +28,7 @@
 								<div class="form-group">
                                     <br/>
                                     <label for="map-pointer">Mark the place of issue on the map</label>
-                                    <input type="text" class="form-control input-sm" name="mapPointer" 
+                                    <input readonly type="text" class="form-control input-sm" name="mapPointer" 
                                     id="map-pointer" placeholder="place of issue">
                                 </div>
 								<button type="submit" class="btn btn-mini" id="next-to-description">Next</button>
@@ -74,9 +74,7 @@
 										id="issue-attachments" type="file" class="input-file input-sm"
 										name="issueAttachments">
 								</div>
-								<button type="submit" class="btn btn-mini"
-									id="add-issue-button">Add</button><div></div>
-
+								<button type="submit" class="btn btn-mini" id="add-issue-button">Add</button><div id="error"></div>
 							</div>
 						</div>
 					</div>

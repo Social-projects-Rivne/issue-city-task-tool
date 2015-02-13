@@ -19,17 +19,80 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 				render: function() {
 					this.$el.html(this.template);
 					
+					issueName = $('#issue-name');
+					issueCategory = $('#issue-category');
+					issueDescription = $('#issue-description');
+					error = $('#error');
+					
+					issueName.on('blur', function() {
+						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong name!';
+							this.style.color = 'red';
+						}
+					});
+
+					issueName.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
+					
+					issueCategory.on('blur', function() {
+						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong category!';
+							this.style.color = 'red';
+						}
+					});
+
+					issueCategory.on('focus', function() {
+						if (this.value == 'Wrong category!') this.value ='';
+						this.style.color = 'black';
+					});
+					
+					issueDescription.on('blur', function() {
+						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong description!';
+							this.style.color = 'red';
+						}
+					});
+
+					issueDescription.on('focus', function() {
+						if (this.value == 'Wrong description!') this.value ='';
+						this.style.color = 'black';
+					});
+					
 					return this;
 				},
 				
 				addIssue: function() {
-					this.model.set( { mapPointer: $('#map-pointer').val(),
-						name: $('#issue-name').val(),
-						description: $('#issue-description').val(),
-						category: $('#issue-category').val(),
-						attachments: $('#issue-attachments').val()
-					} );
-					this.model.save();
+					var isValid = true;
+					
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueName.val())) {
+						issueName.val('Wrong name!').css('color', 'red');
+						error.css({'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}).html('Please fill the form correctly!');
+						isValid = false;
+					}
+					
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
+						issueCategory.val('Wrong category!').css('color', 'red');
+						error.css({'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}).html('Please fill the form correctly!');
+						isValid = false;
+					}
+					
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+						issueDescription.val('Wrong description!').css('color', 'red');
+						error.css({'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}).html('Please fill the form correctly!');
+						isValid = false;
+					}
+					
+					if(isValid) {
+						this.model.set( { mapPointer: $('#map-pointer').val(),
+							name: $('#issue-name').val(),
+							description: $('#issue-description').val(),
+							category: $('#issue-category').val(),
+							attachments: $('#issue-attachments').val()
+						} );
+						this.model.save();
+					}
 				},
 				
 				nextToDescription: function(e) {
