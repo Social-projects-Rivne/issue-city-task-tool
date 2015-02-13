@@ -1,6 +1,7 @@
 package edu.com.softserveinc.main.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,45 +60,43 @@ public class HomeController {
 	
 	
 
-	@RequestMapping(value = "add-issue", method = RequestMethod.POST)
-	public String addIssue(HttpServletRequest request, IssueServiceImpl service) {
-		String mapPointer = request.getParameter("mapPointer");
-		String issueName = request.getParameter("issueName");
-		String issueCategoryName = request.getParameter("issueCategory");
-		String issueDescription = request.getParameter("issueDescription");
-		String issueAttachments = request.getParameter("issueAttachments");
-
-		issueCategoryName.toLowerCase();
-		CategoryModel category = new CategoryModel(issueCategoryName);
-
-		try {
-			new CategoryServiceImpl().addCategory(category);
-			System.out.println("category created with id" + category.getId());
-		}
-		// org.hibernate.exception
-		catch (Exception ex) {
-			category = new CategoryServiceImpl()
-					.getCategoryByName(issueCategoryName);
-			System.out.println("category loaded");
-		}
-
-		IssueModel issue = new IssueModel(category.getId(), issueName,
-				issueDescription, mapPointer, issueAttachments, 1);
-
-		if (new IssueValidator(issue).isValid()) {
-			try {
-				service.addProblemm(issue);
-				System.out.println("MAP POINTER +++++++++++  = " + mapPointer);
-			} catch (Exception ex) {
-				System.out.println("ERROR! Issue is not valid!!!!! "
-						+ ex.toString());
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "issue", method = RequestMethod.POST)
+	public @ResponseBody String addIssue(@RequestBody Map request,
+			IssueServiceImpl issueService, CategoryServiceImpl categoryService) {
+		
+		String message = null;
+		String category = request.get("category").toString().toLowerCase();
+		List categories = categoryService.loadCategoriesList();
+		CategoryModel categoryModel = null;
+		int categoryId = 0;
+		
+		for(int i = 0; i < categories.size(); i++) {
+			categoryModel = (CategoryModel) categories.get(i);
+			if(category == categoryModel.getName()) {
+				categoryId = categoryModel.getId();
+				break;
 			}
-		} else {
-
-			System.out.println("Error! Issue is not valid!!!");
 		}
-		// TODO: add here notification method!
-		return "redirect:/";
+		
+		if(categoryId == 0) {
+			categoryService.addCategory(new CategoryModel(category));
+			categoryId = categoryService.getCategoryByName(category).getId();
+		}
+		
+		IssueModel issue = new IssueModel(
+				request.get("name").toString(),
+				request.get("description").toString(),
+				request.get("mapPointer").toString(),
+				request.get("attachments").toString(),
+				categoryId,
+				Integer.parseInt(request.get("priorityId").toString()),
+				Integer.parseInt(request.get("statusId").toString())
+		);
+
+		issueService.addProblemm(issue);		
+		
+		return message;
 	}
 	
 	
