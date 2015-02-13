@@ -12,17 +12,17 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				issues: new IssueCollection(),
 				
 				initialize: function() {
-					this.issues.fetch();
-					console.log(this.issues)
+					this.issues = mapView.model;
 				},
 				
+				// issue table on manager page
 				issueTableRender: function() {
 					
 					that = this;
 					this.issues.each( function(issue){
-						that.$("#issue-table-body").append(that.$("#issue-table-body").append(that.issueTableTemplate(issue.toJSON()))
+						that.$("#issue-table-body").append(that.$("#issue-table-body").
+								append(that.issueTableTemplate(issue.toJSON()))
 						);
-						console.log(issue.toJSON());
 					});
 				},
 				

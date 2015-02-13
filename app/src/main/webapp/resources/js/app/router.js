@@ -4,11 +4,14 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		routes : {
 			"" : "home",
+			//routs for admin
+			"admin" : "admin",
 			"admin/search/:name" : "search",
 			"admin/add-user" : "addUser",
+			//manager's routs
 			"manager" : "manager",
+			//routs for map 
 			"cry-out" : "cryOut",
-			"admin" : "admin",
 			"issue/:id" : "issue", // #issue/1
 		},
 		
@@ -18,7 +21,6 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		home : function() {
-			alert('welcome home');
 			mapView.render();
 		},
 
@@ -32,6 +34,8 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		cryOut : function() {
+			router.navigate("/", {trigger: true}); 
+			router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},
 		
