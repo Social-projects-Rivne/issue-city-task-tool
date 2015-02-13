@@ -3,8 +3,6 @@ package edu.com.softserveinc.main.controllers;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,7 +23,6 @@ import edu.com.softserveinc.main.services.CategoryServiceImpl;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
 import edu.com.softserveinc.main.services.IssueServiceImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
-import edu.com.softserveinc.main.utils.IssueValidator;
 
 /**
  * Handles requests for the application home page.
@@ -40,7 +37,7 @@ public class HomeController {
 
 	//--------------------ISSUE METHODS-------------------//
 	
-	@RequestMapping("get-issue/{id}")
+	@RequestMapping("issue/{id}")
 	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id,
 			IssueServiceImpl service) {
 		return service.getByID(id);
@@ -73,7 +70,7 @@ public class HomeController {
 		
 		for(int i = 0; i < categories.size(); i++) {
 			categoryModel = (CategoryModel) categories.get(i);
-			if(category == categoryModel.getName()) {
+			if(category.equals(categoryModel.getName())) { System.out.println("Find");
 				categoryId = categoryModel.getId();
 				break;
 			}
