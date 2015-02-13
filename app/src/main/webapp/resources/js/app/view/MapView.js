@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView',
-         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView' ],
+         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView', 'text!templates/map.html',],
 		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView,
-				AddIssueView, AdminView, UserView) {
+				AddIssueView, AdminView, UserView, MapTemplate) {
 
 	var that = null;
 
@@ -9,8 +9,9 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				initialize : function() {
 					this.model = new IssueCollection();
 				},
-				
+				mapTemplate: _.template(MapTemplate),
 				render : function() {
+					$("#container").append(this.mapTemplate);
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
 					addIssueView = new AddIssueView( { el: "#form-container" } );
