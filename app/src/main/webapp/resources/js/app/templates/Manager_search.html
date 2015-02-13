@@ -4,6 +4,7 @@
       	<input type="text" class="form-control">
         <span class="input-group-btn">
           	<button class="btn btn-default" id='filter-issue' type="button"> Search </button>
+          	<button class="btn btn-default" id="reset-filter-issue" type="button">X</button>
         </span>
     </div>
 </div>
@@ -17,7 +18,17 @@
 		      <input type="radio" name="optradio"  id="keyword" checked > Keyword
 		    </label>
 		    <label class="radio-inline">
-		      <input type="radio" name="optradio"  id="status"> Status
+		      <input type="radio" name="optradio"  id="status"> 
+			    <div>
+			      status
+			      <select id="status-filter">
+			        <option>0</option>
+			        <option>1</option>
+			        <option>2</option>
+			        <option>3</option>
+			        <option>4</option>
+			      </select>
+			    </div>
 		    </label>
 		    <label class="radio-inline">
 		      <input type="radio" name="optradio"  id="category"> Category
