@@ -9,8 +9,11 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				initialize : function() {
 					this.model = new IssueCollection();
 				},
+				
 				mapTemplate: _.template(MapTemplate),
+				
 				render : function() {
+					$("#container").empty(),
 					$("#container").append(this.mapTemplate);
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
