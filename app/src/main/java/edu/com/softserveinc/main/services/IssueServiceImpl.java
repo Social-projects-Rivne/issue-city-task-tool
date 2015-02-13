@@ -37,7 +37,7 @@ public class IssueServiceImpl implements IssueService {
 	 * @param problem
 	 */
 	@Override
-	public void deletteProblemm(IssueModel problem) {
+	public void deleteProblemm(IssueModel problem) {
 		new DaoImpl().deleteFromDB(problem);
 		
 	}

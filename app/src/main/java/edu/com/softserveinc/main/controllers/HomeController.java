@@ -84,10 +84,14 @@ public class HomeController {
 		IssueModel issue = new IssueModel(category.getId(), issueName,
 				issueDescription, mapPointer, issueAttachments, 1);
 
+		System.out.println("MAP POINTER  = " + mapPointer + " | "
+				+ issueName + " | " + issueDescription + " | " + mapPointer
+				+ " | " + issueAttachments);
+
+		// issueAttachments = "I've add this becouse...";
 		if (new IssueValidator(issue).isValid()) {
 			try {
 				service.addProblemm(issue);
-				System.out.println("MAP POINTER +++++++++++  = " + mapPointer);
 			} catch (Exception ex) {
 				System.out.println("ERROR! Issue is not valid!!!!! "
 						+ ex.toString());
