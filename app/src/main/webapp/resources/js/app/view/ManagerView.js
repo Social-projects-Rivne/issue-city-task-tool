@@ -101,7 +101,20 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 						this.issueTableRender();			
 					};
 
-					"sad poony".match('sad ')
+					//filter by priority (it work when raido btn Priority checked)
+					if ($('#issue-filter #priority').prop("checked")) {
+						var issuesFilterList = new IssueCollection();
+						this.issues.each(function(issue){
+							if(issue.get('priorityId') == $('#issue-filter #priority-filter').val()){ 
+								console.log(issue);
+								issuesFilterList.add(issue);
+							}
+						});
+						console.log(issuesFilterList);
+						this.issues = issuesFilterList;
+						console.log(this.issues);
+						this.issueTableRender();
+					};
 				},
 				
 				//reset filter
