@@ -1,7 +1,7 @@
 <!-- manager issue search template --> 
 <div class="col-xs-12">
     <div class="input-group input-group-sm" id="input_search">
-      	<input type="text" class="form-control">
+      	<input type="text" class="form-control" id='text-value-issue-filter' value="Search..." onfocus="if (this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" >
         <span class="input-group-btn">
           	<button class="btn btn-default" id='filter-issue' type="button"> Search </button>
           	<button class="btn btn-default" id="reset-filter-issue" type="button">X</button>
