@@ -3,6 +3,11 @@ body
 padding-top: 50px;
 }
 
+#c_edit_user {
+	display: block !important;
+}
+
+
 #remove_user {
 	display: block !important;
 }
