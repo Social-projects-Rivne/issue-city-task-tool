@@ -1,6 +1,6 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 
-        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'view/RemoveUserConfirmationView' ],
-		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, RemoveUserConfirmationView) {
+        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'view/RemoveUserConfirmationView', 'view/EditUserConfirmationView' ],
+		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, RemoveUserConfirmationView, EditUserConfirmationView) {
 			
 			var that = null;
 	
@@ -16,7 +16,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				events: {
-					'click .glyphicon-remove': 'confirmation',
+					'click .glyphicon-remove': 'removeConfirmation',
+					'click .glyphicon-pencil': 'editConfirmation',
 					'click #confirm-remove': 'confirmRemove',
 					'click #reject-remove': 'rejectRemove'
 				},
@@ -26,6 +27,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				render : function() {
 					
 					removeUserConfirmationView = new RemoveUserConfirmationView( { el: "#container" } );
+					editUserConfirmationView = new EditUserConfirmationView( { el: "#container" } );
 					
 					//this.model.fetch( { success: function() {
 						that.$el.html(that.template);
@@ -36,8 +38,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				//	} } );
 				},
 				
-				confirmation: function(e) {
+				removeConfirmation: function(e) {
 					removeUserConfirmationView.render(e.currentTarget.parentNode.id);
+				},
+				
+				editConfirmation: function(e) {
+					editUserConfirmationView.render(e.currentTarget.parentNode.id);
 				},
 				
 				confirmRemove: function(e) {
