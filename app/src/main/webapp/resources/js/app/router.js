@@ -8,11 +8,13 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			"admin" : "admin",
 			"admin/search/:name" : "search",
 			"admin/add-user" : "addUser",
+			"admin/edit-user"		:	"editUser"	,
 			//manager's routs
 			"manager" : "manager",
 			//routs for map 
 			"cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
+			
 		},
 		
 		initialize : function() {
@@ -58,6 +60,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
+		},
+		
+		editUser: function() {
+			//adminView.addUser();
+			// must be function from ??file??
 		},
 
 	});
