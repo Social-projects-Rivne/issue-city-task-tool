@@ -10,10 +10,13 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
 				searchTemplate: _.template(ManagerSearchTemplate),
-				issues: new IssueCollection(),
+				
+				issues: null,
+				issuesFilterList: null,
 				
 				initialize: function() {
 					this.issues = mapView.model;
+					this.issuesFilterList = new IssueCollection(this.issues);
 				},
 				
 				// issue table on manager page
@@ -33,20 +36,42 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					this.$('#issue-filter').append(this.searchTemplate); 
 				},
 				
+				// render all components of manager page 
 				render: function() {
 					this.$el.html(this.managerTemplate);
 					this.issueTableRender();
 					this.searchRender();
 				},
-
+				
+				// filter (search)
 				issueFilter: function(){
+					//checking filters
 					console.log("Name is " + $('#issue-filter #name').prop("checked"));
 					console.log("Keyword is " + $('#issue-filter #keyword').prop("checked"));
 					console.log("Status is " + $('#issue-filter #status').prop("checked") + ' id = ' + $('#issue-filter #status-filter').val());
 					console.log("Category is " + $('#issue-filter #category').prop("checked"));
 					console.log("Priority is " + $('#issue-filter #priority').prop("checked") + ' id = ' + $('#issue-filter #priority-filter').val());
+					
+					//filter by status (it work when raido btn Status checked)
+					if ($('#issue-filter #status').prop("checked")) {
+						var issuesFilterList = new IssueCollection();
+						this.issues.each(function(issue){
+							if(issue.get('statusId') == $('#issue-filter #status-filter').val()){ 
+								console.log(issue);
+								issuesFilterList.add(issue);
+							}
+						});
+						//issuesFilterList = this.issues.findWhere({statusId: '0'});
+						console.log(issuesFilterList);
+						this.issues = issuesFilterList;
+						console.log(this.issues);
+						this.issueTableRender();
+					};
+					
+					
 				},
-
+				
+				//reset filter
 				resetFilter: function(){
 					$('#issue-filter #keyword').prop("checked", "checked");
 					this.issues = mapView.model;
