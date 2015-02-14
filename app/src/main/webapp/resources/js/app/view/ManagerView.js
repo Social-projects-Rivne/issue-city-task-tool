@@ -44,6 +44,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					console.log("Keyword is " + $('#issue-filter #keyword').prop("checked"));
 					console.log("Status is " + $('#issue-filter #status').prop("checked") + ' id = ' + $('#issue-filter #status-filter').val());
 					console.log("Category is " + $('#issue-filter #category').prop("checked"));
+					console.log("Priority is " + $('#issue-filter #priority').prop("checked") + ' id = ' + $('#issue-filter #priority-filter').val());
 				},
 
 				resetFilter: function(){
