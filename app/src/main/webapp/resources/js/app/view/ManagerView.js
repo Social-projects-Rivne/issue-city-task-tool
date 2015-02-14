@@ -68,7 +68,40 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 						this.issueTableRender();
 					};
 					
-					
+					//search by name (it work when raido btn Name checked)
+					if( $('#issue-filter #name').prop("checked")) {
+						console.log("where Name is = " + $('#issue-filter #text-value-issue-filter').val());
+						var issuesFilterList = new IssueCollection();
+						this.issues.each(function(issue){
+							if(issue.get('name') == $('#issue-filter #text-value-issue-filter').val()){ 
+								console.log(issue);
+								issuesFilterList.add(issue);
+							}
+						});		
+						console.log(issuesFilterList);
+						this.issues = issuesFilterList;
+						console.log(this.issues);
+						this.issueTableRender();			
+					};
+
+					//search by keyword (it work when raido btn Keyword checked)
+					if( $('#issue-filter #keyword').prop("checked")) {
+						console.log("where Keyword is = " + $('#issue-filter #text-value-issue-filter').val());
+						var issuesFilterList = new IssueCollection();
+						this.issues.each(function(issue){
+							if((issue.get('name').match($('#issue-filter #text-value-issue-filter').val()) != null) ||
+							 (issue.get('description').match($('#issue-filter #text-value-issue-filter').val()) != null)){ 
+								console.log(issue);
+								issuesFilterList.add(issue);
+							}
+						});		
+						console.log(issuesFilterList);
+						this.issues = issuesFilterList;
+						console.log(this.issues);
+						this.issueTableRender();			
+					};
+
+					"sad poony".match('sad ')
 				},
 				
 				//reset filter
