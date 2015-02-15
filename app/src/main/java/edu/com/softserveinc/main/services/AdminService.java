@@ -14,7 +14,9 @@ import edu.com.softserveinc.main.models.UserModel;
  *
  */
 public class AdminService implements UserService {
-
+	
+	private UserServiceImpl userService = new UserServiceImpl();
+	
 	/**
 	 * Add new user in table
 	 * 
@@ -23,7 +25,7 @@ public class AdminService implements UserService {
 	@Override
 	public void addUser(UserModel user) {
 
-		new UserServiceImpl().addUser(user);
+		userService.addUser(user);
 	}
 
 	/**
@@ -35,7 +37,7 @@ public class AdminService implements UserService {
 	@Override
 	public void editUser(UserModel user) {
 		if (user.getId() != 0) {
-			new UserServiceImpl().editUser(user);
+			userService.editUser(user);
 		}
 	}
 
@@ -47,7 +49,7 @@ public class AdminService implements UserService {
 	@Override
 	public void deleteUser(UserModel user) {
 		
-		new UserServiceImpl().deleteUser(user);
+		userService.deleteUser(user);
 
 	}
 
@@ -59,7 +61,7 @@ public class AdminService implements UserService {
 	@Override
 	public UserModel getUserByID(int userId) {
 
-		return new UserServiceImpl().getUserByID(userId);
+		return userService.getUserByID(userId);
 
 	}
 
@@ -67,7 +69,7 @@ public class AdminService implements UserService {
 	@Override
 	public List loadUsersList() {
 		
-		return new UserServiceImpl().loadUsersList();
+		return userService.loadUsersList();
 	}
 
 }
