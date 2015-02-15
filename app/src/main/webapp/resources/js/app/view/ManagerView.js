@@ -5,6 +5,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				events: {
 					'click #issue-filter  #filter-issue': 'issueFilter',
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
+					'click .table .btn.delete-issue': 'delete',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -43,6 +44,14 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					this.searchRender();
 				},
 				
+				delete: function(e){
+					$.ajax({
+						url: 'delete-issue/' + e.currentTarget.id,
+						type: 'POST',
+						
+					});	
+				},
+
 				// filter (search)
 				issueFilter: function(){
 					//checking filters
