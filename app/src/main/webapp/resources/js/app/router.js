@@ -3,12 +3,18 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 	var Router = Backbone.Router.extend({
 
 		routes : {
+			"" : "home",
+			//routs for admin
+			"admin" : "admin",
 			"admin/search/:name" : "search",
 			"admin/add-user" : "addUser",
-			"" : "home",
+			"admin/edit-user"		:	"editUser"	,
+			//manager's routs
+			"manager" : "manager",
+			//routs for map 
 			"cry-out" : "cryOut",
-			"admin" : "admin",
 			"issue/:id" : "issue", // #issue/1
+			
 		},
 		
 		initialize : function() {
@@ -17,7 +23,6 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		home : function() {
-			alert('welcome home');
 			mapView.render();
 		},
 
@@ -31,6 +36,8 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		cryOut : function() {
+			router.navigate("/", {trigger: true}); 
+			router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},
 		
@@ -41,6 +48,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			
 			});
 		},
+		
+		manager : function(){
+			managerView.render();
+		},
+		
 		addUser: function() {
 			adminView.addUser();
 		},
@@ -48,6 +60,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
+		},
+		
+		editUser: function() {
+			//adminView.addUser();
+			// must be function from ??file??
 		},
 
 	});

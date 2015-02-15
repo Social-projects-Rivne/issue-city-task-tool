@@ -6,8 +6,9 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					'click #search-user': 'search',
 					'click #reset-filter': 'resetFilter',
 					'click #add-user': 'addUser',
-					'click #add-new-user': 'addNewUser',
-					'click #edit-user': 'editUser',
+					//below code must be in outer files!
+					//'click #add-new-user': 'addNewUser',
+					//'click #edit-user': 'editUser',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -35,12 +36,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				
 				//function which will be search users by their name
 				search: function(){
-					var name = '';
-					if(name == ''){
-						name = $('.form-control').val();
-					}
-					router.navigate('admin/search/' + name);
-					usersFilter = userListView.model.findWhere({name: name});
+					router.navigate('admin/search/' + $('.form-control').val());
+					usersFilter = userListView.model.findWhere({name: $('.form-control').val()});
 					
 					userListView.model = new UserCollection(usersFilter);
 					userListView.render();
@@ -61,7 +58,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					console.log ("function run");
 				},
 				
-				// function which confirm add user on addUserTemplate  
+				// function which confirm add user on addUserTemplate
+				// must be in outer file
 				addNewUser: function(){
 					userModel = new UserModel({
 						 "name": $(document.getElementsByName('name')[0]).val(),
@@ -75,6 +73,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				},	
 				
 				// function which editing users
+				// must be in outer file
 				editUser: function(){
 					var editUser = new UserModel({id:id})	
 										

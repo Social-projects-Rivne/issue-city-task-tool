@@ -3,6 +3,11 @@ body
 padding-top: 50px;
 }
 
+#c_edit_user {
+	display: block !important;
+}
+
+
 #remove_user {
 	display: block !important;
 }
@@ -205,5 +210,16 @@ a {
 .btn-group {
 /*    height:20px;*/
 }
+
+/*styles for login template*/
+.radio input[type=radio], .radio-inline input[type=radio], .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox] {
+position: static;
+margin-left: 0px;
+}
+#bawl-login {
+    padding-left: 40%;
+    position: inherit;
+}
+
 
 
