@@ -33,13 +33,14 @@ public class IssueServiceImpl implements IssueService {
 		new DaoImpl().editInDB(problem);	
 	}
 	/**
-	 * Delete existing problem 
+	 * change status of issue on "deleted"
 	 * @param problem
 	 */
 	@Override
 	public void deletteProblemm(IssueModel problem) {
-		new DaoImpl().deleteFromDB(problem);
-		
+		problem.setStatusId(4);
+		this.editProblemm(problem);
+		//new DaoImpl().deleteFromDB(problem);
 	}
 	@Override
 	public IssueModel getByID(int id) {

@@ -43,6 +43,15 @@ public class HomeController {
 		return service.getByID(id);
 	}
 	
+	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
+	public @ResponseBody void deleteIssue(@PathVariable("id") int id,
+			IssueServiceImpl service) {
+		IssueModel issue = service.getByID(id);
+		//issue.setId(id);
+		service.deletteProblemm(issue);
+		System.out.print(id);
+	}
+	
 	
 	
 	@SuppressWarnings({ "rawtypes", "deprecation" })
