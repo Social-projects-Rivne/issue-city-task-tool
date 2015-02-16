@@ -33,9 +33,8 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.findOne(id);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public List loadCategoriesList() {
+	public List<CategoryModel> loadCategoriesList() {
 		return categoryDao.findAll();
 	}
 

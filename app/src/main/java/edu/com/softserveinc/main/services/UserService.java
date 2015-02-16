@@ -40,6 +40,5 @@ public interface UserService {
 	 * @param user
 	 * @return list of all users
 	 */
-	@SuppressWarnings("rawtypes")
-	public List loadUsersList();
+	public List<UserModel> loadUsersList();
 }

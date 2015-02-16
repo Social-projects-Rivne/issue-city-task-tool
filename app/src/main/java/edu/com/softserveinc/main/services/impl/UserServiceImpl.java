@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.findOne(id);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public List loadUsersList() {
+	public List<UserModel> loadUsersList() {
 		return userDao.findAll();
 	}
 }

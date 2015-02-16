@@ -38,8 +38,7 @@ public interface CategoryService {
 	 * Get all categories from Data Base 
 	 *
 	 */
-	@SuppressWarnings("rawtypes")
-	public List loadCategoriesList();
+	public List<CategoryModel> loadCategoriesList();
 		
 	
 }
