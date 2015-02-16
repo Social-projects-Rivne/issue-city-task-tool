@@ -45,7 +45,6 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 			function onMarkerClick(e) {
 				issueDetailsView.render(this.title);
 				//TODO:replace comment list in issue details view
-				commentListView.render(this.title);
 				Backbone.history.navigate("issue/"+this.title,true)
 			}
 			

@@ -6,7 +6,7 @@ define(
 						template: _.template(CommentTemplate),
 						
 						initilize: function() {
-							//this.model = new CommentModel();
+							this.model = new CommentModel();
 						},
 						
 						render: function() {
