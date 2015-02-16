@@ -1,9 +1,12 @@
-package edu.com.softserveinc.main.services;
+package edu.com.softserveinc.main.services.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import edu.com.softserveinc.main.dao.CategoryDao;
 import edu.com.softserveinc.main.models.CategoryModel;
+import edu.com.softserveinc.main.services.CategoryService;
 
 public class CategoryServiceImpl implements CategoryService {
 	

@@ -1,10 +1,12 @@
-package edu.com.softserveinc.main.services;
+package edu.com.softserveinc.main.services.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import edu.com.softserveinc.main.dao.UserDao;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.services.UserService;
 import edu.com.softserveinc.main.utils.PasswordEncoder;
 
 public class UserServiceImpl implements UserService {

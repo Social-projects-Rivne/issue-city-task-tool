@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.com.softserveinc.main.models.IssueModel;
-import edu.com.softserveinc.main.services.IssueServiceImpl;
+import edu.com.softserveinc.main.services.impl.IssueServiceImpl;
 
 public class ProblemServiceTest {
 

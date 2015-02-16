@@ -1,9 +1,12 @@
-package edu.com.softserveinc.main.services;
+package edu.com.softserveinc.main.services.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import edu.com.softserveinc.main.dao.IssueDao;
 import edu.com.softserveinc.main.models.IssueModel;
+import edu.com.softserveinc.main.services.IssueService;
 
 public class IssueServiceImpl implements IssueService {
 

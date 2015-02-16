@@ -19,10 +19,10 @@ import edu.com.softserveinc.main.models.CategoryModel;
 import edu.com.softserveinc.main.models.CommentModel;
 import edu.com.softserveinc.main.models.IssueModel;
 import edu.com.softserveinc.main.models.UserModel;
-import edu.com.softserveinc.main.services.CategoryServiceImpl;
-import edu.com.softserveinc.main.services.CommentServiceImpl;
-import edu.com.softserveinc.main.services.IssueServiceImpl;
-import edu.com.softserveinc.main.services.UserServiceImpl;
+import edu.com.softserveinc.main.services.impl.CategoryServiceImpl;
+import edu.com.softserveinc.main.services.impl.CommentServiceImpl;
+import edu.com.softserveinc.main.services.impl.IssueServiceImpl;
+import edu.com.softserveinc.main.services.impl.UserServiceImpl;
 
 /**
  * Handles requests for the application home page.
