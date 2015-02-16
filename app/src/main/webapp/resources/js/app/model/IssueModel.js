@@ -5,7 +5,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		defaults: {
 			id: null,
 			priorityId: 1,
-			status: "",
+			status: "new",
 			name: "",
 			description: "",
 			mapPointer: "",

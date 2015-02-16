@@ -70,14 +70,26 @@ public class HomeController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue", method = RequestMethod.POST)
-	public @ResponseBody String addIssue(@RequestBody Map request,
-			IssueServiceImpl issueService, CategoryServiceImpl categoryService) {
+	public @ResponseBody String addIssue(@RequestBody Map request, IssueServiceImpl issueService,
+			CategoryServiceImpl categoryService, StatusServiceImpl statusService) {
 		
 		String message = null;
 		String category = request.get("category").toString().toLowerCase();
+		String status = request.get("status").toString().toLowerCase();
 		List categories = categoryService.loadCategoriesList();
+		List statuses = statusService.loadStatusList();
 		CategoryModel categoryModel = null;
+		StatusModel statusModel = null;
 		int categoryId = 0;
+		int statusId = 0;
+		
+		for(int i = 0; i < statuses.size(); i++) {
+			statusModel = (StatusModel) statuses.get(i);
+			if(status.equals(statusModel.getName())) {
+				statusId = statusModel.getId();
+				break;
+			}
+		}
 		
 		for(int i = 0; i < categories.size(); i++) {
 			categoryModel = (CategoryModel) categories.get(i);
@@ -99,7 +111,7 @@ public class HomeController {
 				request.get("attachments").toString(),
 				categoryId,
 				Integer.parseInt(request.get("priorityId").toString()),
-				Integer.parseInt(request.get("statusId").toString())
+				statusId
 		);
 
 		issueService.addProblemm(issue);		
