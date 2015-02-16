@@ -10,8 +10,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
 							"<td>" +
 								"<div class='btn-toolbar'>" +
                     				"<div class='btn-group'>" +
-                    					"<button class='btn' id='"+ this.model.get("id") +"'><span class='glyphicon glyphicon-pencil'></span></button>" +
-                    					"<button class='btn' id='"+ this.model.get("id") +"'><span class='glyphicon glyphicon-remove'></span></button>" +
+                    					"<button class='btn glyphicon-pencil' id='"+ this.model.get("id") +"'><span class='glyphicon glyphicon-pencil'></span></button>" +
+                    					"<button class='btn glyphicon-pencil' id='"+ this.model.get("id") +"'><span class='glyphicon glyphicon-remove'></span></button>" +
                     				"</div>" +
                     			"</div>" +
                     		"</td>");

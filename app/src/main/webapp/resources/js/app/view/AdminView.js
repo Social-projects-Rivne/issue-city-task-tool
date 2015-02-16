@@ -6,8 +6,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					'click #search-user': 'search',
 					'click #reset-filter': 'resetFilter',
 					'click #add-user': 'addUser',
-					//below code must be in outer files!
-					//'click #add-new-user': 'addNewUser',
+					'click #add-new-user': 'addNewUser',
 					//'click #edit-user': 'editUser',
 				},
 				
