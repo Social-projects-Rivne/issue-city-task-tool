@@ -51,14 +51,18 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				render: function() {
 					this.$el.html(this.managerTemplate);
 					this.issueTableRender();
+					this.resetFilter();
 					this.searchRender();
 				},
 				
 				delete: function(e){
+					var that = this;
 					$.ajax({
 						url: 'delete-issue/' + e.currentTarget.id,
 						type: 'POST',
-						
+						success: function(){
+								that.resetFilter();
+							},
 					});	
 				},
 
@@ -138,9 +142,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				
 				//reset filter
 				resetFilter: function(){
+					var that = this;
 					$('#issue-filter #keyword').prop("checked", "checked");
-					this.issues = mapView.model;
-					this.issueTableRender();
+					this.issues.fetch({ success: function(){
+							that.issueTableRender();
+						}
+					});
 				},
 				
 				quickChangeCategory: function(e) {
