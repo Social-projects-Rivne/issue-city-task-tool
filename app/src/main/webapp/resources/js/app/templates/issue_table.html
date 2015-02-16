@@ -14,12 +14,23 @@
 							</datalist>
 						</td>
                         <td><%= data[0].issue.description %></td>
-                        <td> 04.02.2015 </td>
-                        <td><%= data[0].issue.statusId %></td>
+                        <td> <%= new Date() %> </td>
+                        <td>
+                        	<% _.map(data[2].statuses, function(status) { %>
+	                        	<% if(status.id == data[0].issue.statusId) { %>
+	                        	<% stat = status.name } %>
+                        	<% }); %>
+	                        <input id="<%= data[0].issue.id %>" class="status" type="text" list="statuses" value="<%= stat %>" />
+                        	<datalist id="statuses">
+								<% _.map(data[2].statuses, function(status) { %>
+									<option><%= status.name %></option>
+								<% }); %>
+							</datalist>
+                        </td>
                         <td>
                             <div class="btn-toolbar">
                                 <div class="btn-group">
-                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-file"></span></button>
+                                    <button class="btn delete-issue" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-file"></span></button>
                                     <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-pencil"></span></button>
                                     <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-up"></span></button>
                                     <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-down"></span></button>

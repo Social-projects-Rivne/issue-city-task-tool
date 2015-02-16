@@ -32,7 +32,6 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			issueDetailsView.render(id);
 			// remove it when comments will be rendering from issue details view
 			// fom
-			commentListView.render(id);
 		},
 
 		cryOut : function() {

@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.com.softserveinc.main.models.CategoryModel;
 import edu.com.softserveinc.main.models.CommentModel;
 import edu.com.softserveinc.main.models.IssueModel;
+import edu.com.softserveinc.main.models.StatusModel;
 import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.CategoryServiceImpl;
 import edu.com.softserveinc.main.services.CommentServiceImpl;
 import edu.com.softserveinc.main.services.IssueServiceImpl;
+import edu.com.softserveinc.main.services.StatusServiceImpl;
 import edu.com.softserveinc.main.services.UserServiceImpl;
 
 /**
@@ -68,14 +70,26 @@ public class HomeController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue", method = RequestMethod.POST)
-	public @ResponseBody String addIssue(@RequestBody Map request,
-			IssueServiceImpl issueService, CategoryServiceImpl categoryService) {
+	public @ResponseBody String addIssue(@RequestBody Map request, IssueServiceImpl issueService,
+			CategoryServiceImpl categoryService, StatusServiceImpl statusService) {
 		
 		String message = null;
 		String category = request.get("category").toString().toLowerCase();
+		String status = request.get("status").toString().toLowerCase();
 		List categories = categoryService.loadCategoriesList();
+		List statuses = statusService.loadStatusList();
 		CategoryModel categoryModel = null;
+		StatusModel statusModel = null;
 		int categoryId = 0;
+		int statusId = 0;
+		
+		for(int i = 0; i < statuses.size(); i++) {
+			statusModel = (StatusModel) statuses.get(i);
+			if(status.equals(statusModel.getName())) {
+				statusId = statusModel.getId();
+				break;
+			}
+		}
 		
 		for(int i = 0; i < categories.size(); i++) {
 			categoryModel = (CategoryModel) categories.get(i);
@@ -97,7 +111,7 @@ public class HomeController {
 				request.get("attachments").toString(),
 				categoryId,
 				Integer.parseInt(request.get("priorityId").toString()),
-				Integer.parseInt(request.get("statusId").toString())
+				statusId
 		);
 
 		issueService.addProblemm(issue);		
@@ -107,31 +121,54 @@ public class HomeController {
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
-	public @ResponseBody String editIssue(@RequestBody Map request,
-			IssueServiceImpl issueService, CategoryServiceImpl categoryService) {
+	public @ResponseBody String editIssue(@RequestBody Map request, IssueServiceImpl issueService,
+			CategoryServiceImpl categoryService, StatusServiceImpl statusService) {
 		
 		String message = null;
 		String category = request.get("category").toString().toLowerCase();
+		String status = request.get("status").toString().toLowerCase();
 		List categories = categoryService.loadCategoriesList();
+		List statuses = statusService.loadStatusList();
 		CategoryModel categoryModel = null;
+		StatusModel statusModel = null;
 		int categoryId = 0;
-		
-		for(int i = 0; i < categories.size(); i++) {
-			categoryModel = (CategoryModel) categories.get(i);
-			if(category.equals(categoryModel.getName())) {
-				categoryId = categoryModel.getId();
-				break;
-			}
-		}
-		
-		if(categoryId == 0) {
-			categoryService.addCategory(new CategoryModel(category));
-			categoryId = categoryService.getCategoryByName(category).getId();
-		}
+		int statusId = 0;
 		
 		IssueModel issue = issueService.getByID(Integer.parseInt(request.get("id").toString()));
-		issue.setCategoryId(categoryId);
-
+		
+		if(!category.equals("")) {
+			for(int i = 0; i < categories.size(); i++) {
+				categoryModel = (CategoryModel) categories.get(i);
+				if(category.equals(categoryModel.getName())) {
+					categoryId = categoryModel.getId();
+					break;
+				}
+			}
+			
+			if(categoryId == 0) {
+				categoryService.addCategory(new CategoryModel(category));
+				categoryId = categoryService.getCategoryByName(category).getId();
+			}
+			
+			issue.setCategoryId(categoryId);
+		}
+		else {
+			for(int i = 0; i < statuses.size(); i++) {
+				statusModel = (StatusModel) statuses.get(i);
+				if(status.equals(statusModel.getName())) {
+					statusId = statusModel.getId();
+					break;
+				}
+			}
+			
+			if(statusId == 0) {
+				statusService.addStatus(new StatusModel(status));
+				statusId = statusService.getStatusByName(status).getId();
+			}
+			
+			issue.setStatusId(statusId);
+		}
+		
 		issueService.editProblemm(issue);		
 		
 		return message;
@@ -147,6 +184,15 @@ public class HomeController {
 	}
 	
 	
+	//--------------------STATUS METHODS-------------------//
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("get-statuses")
+	public @ResponseBody List getStatuses(StatusServiceImpl service) {
+		return service.loadStatusList();
+	}
+		
+		
 	//--------------------COMMENT METHODS-------------------//
 
 	@SuppressWarnings("rawtypes")

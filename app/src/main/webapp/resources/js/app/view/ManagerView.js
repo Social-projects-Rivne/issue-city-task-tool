@@ -1,11 +1,12 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel' ],
-		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection' ],
+		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
 					'click #issue-filter  #filter-issue': 'issueFilter',
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
 					'change .category': 'quickChangeCategory',
+					'change .status': 'quickChangeStatus',
 					'click .table .btn.delete-issue': 'delete',
 				},
 				
@@ -16,6 +17,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				issues: null,
 				issuesFilterList: null,
 				categories: null,
+				statuses: null,
 				issue: null,
 				
 				initialize: function() {
@@ -23,6 +25,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					this.issuesFilterList = new IssueCollection(this.issues);
 					this.categories = new CategoryCollection();
 					this.categories.fetch();
+					this.statuses = new StatusCollection();
+					this.statuses.fetch();
 					this.issue = new IssueModel();
 				},
 				
@@ -32,7 +36,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					that = this;
 					this.issues.each( function(issue){
 						that.$("#issue-table-body").append(that.$("#issue-table-body").
-								append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()} ] }))
+								append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }))
 						);
 					});
 				},
@@ -47,14 +51,18 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				render: function() {
 					this.$el.html(this.managerTemplate);
 					this.issueTableRender();
+					this.resetFilter();
 					this.searchRender();
 				},
 				
 				delete: function(e){
+					var that = this;
 					$.ajax({
 						url: 'delete-issue/' + e.currentTarget.id,
 						type: 'POST',
-						
+						success: function(){
+								that.resetFilter();
+							},
 					});	
 				},
 
@@ -134,15 +142,26 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				
 				//reset filter
 				resetFilter: function(){
+					var that = this;
 					$('#issue-filter #keyword').prop("checked", "checked");
-					this.issues = mapView.model;
-					this.issueTableRender();
+					this.issues.fetch({ success: function(){
+							that.issueTableRender();
+						}
+					});
 				},
 				
 				quickChangeCategory: function(e) {
 					this.issue.set( {
 						id: e.currentTarget.id,
 						category: e.currentTarget.value,
+					} );
+					this.issue.save();
+				},
+				
+				quickChangeStatus: function(e) {
+					this.issue.set( {
+						id: e.currentTarget.id,
+						status: e.currentTarget.value,
 					} );
 					this.issue.save();
 				}
