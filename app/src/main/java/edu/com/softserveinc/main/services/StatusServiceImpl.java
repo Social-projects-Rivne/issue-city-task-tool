@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import edu.com.softserveinc.main.dao.DaoImpl;
-import edu.com.softserveinc.main.interfaces.StatusService;
 import edu.com.softserveinc.main.models.StatusModel;
 
 public class StatusServiceImpl implements StatusService {
