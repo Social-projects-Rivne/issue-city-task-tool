@@ -14,8 +14,19 @@
 							</datalist>
 						</td>
                         <td><%= data[0].issue.description %></td>
-                        <td> 04.02.2015 </td>
-                        <td><%= data[0].issue.statusId %></td>
+                        <td> <%= new Date() %> </td>
+                        <td>
+                        	<!-- <% _.map(data[2].statuses, function(status) { %>
+	                        	<% if(status.id == data[0].issue.statusId) { %>
+	                        	<% stat = status.name } %>
+                        	<% }); %>  -->
+	                        <input id="<%= data[0].issue.id %>" class="status" type="text" list="statuses" value="" />
+                        	<!-- <datalist id="statuses">
+								<% _.map(data[2].statuses, function(status) { %>
+									<option><%= status.name %></option>
+								<% }); %>
+							</datalist> -->
+                        </td>
                         <td>
                             <div class="btn-toolbar">
                                 <div class="btn-group">
