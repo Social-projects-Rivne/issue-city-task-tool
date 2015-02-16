@@ -16,7 +16,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				events: {
-					'click .glyphicon-remove': 'removeConfirmation',
+					'click .btn.glyphicon-remove': 'removeConfirmation',
 					'click .btn.glyphicon-pencil': 'editConfirmation',
 					'click #confirm-remove': 'confirmRemove',
 					'click #reject-remove': 'rejectRemove'
