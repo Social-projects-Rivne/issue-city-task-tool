@@ -13,8 +13,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					this.model.set("id", id);
 					this.model.fetch( { success: function() {
 						that.$el.html(that.template(that.model.toJSON()));
+						commentListView.render(that.model.get('id'));
 					} } );
 
+					
+					
 					return this;
 				},
 				

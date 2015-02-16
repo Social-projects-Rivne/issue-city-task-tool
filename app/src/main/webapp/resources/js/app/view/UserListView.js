@@ -16,8 +16,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				events: {
-					'click .glyphicon-remove': 'removeConfirmation',
-					'click .glyphicon-pencil': 'editConfirmation',
+					'click .btn.glyphicon-remove': 'removeConfirmation',
+					'click .btn.glyphicon-pencil': 'editConfirmation',
 					'click #confirm-remove': 'confirmRemove',
 					'click #reject-remove': 'rejectRemove'
 				},
@@ -43,7 +43,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				editConfirmation: function(e) {
-					editUserConfirmationView.render(e.currentTarget.parentNode.id);
+					editUserConfirmationView.render(e.currentTarget.id);
+					//console.log('editConfirmation running');
 				},
 				
 				confirmRemove: function(e) {
