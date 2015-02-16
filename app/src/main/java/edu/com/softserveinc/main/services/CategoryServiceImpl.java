@@ -12,44 +12,50 @@ import edu.com.softserveinc.main.interfaces.CategoryService;
 import edu.com.softserveinc.main.models.CategoryModel;
 
 public class CategoryServiceImpl implements CategoryService {
-
+	
+	DaoImpl dao = new DaoImpl();
+	
+	/**
+	 * Write new category to DB
+	 */
 	@Override
 	public void addCategory(CategoryModel category) {
-		new DaoImpl().addInDB(category);
+		dao.addInDB(category);
 	}
 
+	/**
+	 * Delete category from DB
+	 * @param category
+	 * 
+	 */
 	@Override
 	public void deleteCategory(CategoryModel category) {
-		new DaoImpl().deleteFromDB(category);
+		dao.deleteFromDB(category);
 	}
 
+	/**
+	 * Change {@link CategoryModel} in DB
+	 * @param category
+	 */
 	@Override
 	public void editCategory(CategoryModel category) {
-		new DaoImpl().editInDB(category);
+		dao.editInDB(category);
 	}
 
+	/**
+	 * Load category by id
+	 * @param id 
+	 * @return CategoryModel
+	 */
 	@Override
 	public CategoryModel getCategoryByID(int id) {
-		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = new Configuration().configure()
-				.buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		CategoryModel category = (CategoryModel) session.get(
-				CategoryModel.class, id);
-		session.close();
-		return category;
+		return (CategoryModel) dao.getById(id, new CategoryModel());
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List loadCategoriesList() {
-		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = new Configuration().configure()
-				.buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		return session.createQuery("FROM CategoryModel").list();
+		return dao.getAll(new CategoryModel());
 	}
 	
 	/**

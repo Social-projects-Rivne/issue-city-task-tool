@@ -5,26 +5,27 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.interfaces.CommentService;
 import edu.com.softserveinc.main.models.CommentModel;
 
 public class CommentServiceImpl implements CommentService {
+	
+	DaoImpl dao = new DaoImpl();
+	
 	@Override
 	public void addComment(CommentModel comment) {
-		new DaoImpl().addInDB(comment);
+		dao.addInDB(comment);
 	}
 
 	@Override
 	public void deleteComment(CommentModel comment) {
-		new DaoImpl().deleteFromDB(comment);
+		dao.deleteFromDB(comment);
 	}
 
 	@Override
 	public void editComment(CommentModel comment) {
-		new DaoImpl().editInDB(comment);
+		dao.editInDB(comment);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -34,7 +35,6 @@ public class CommentServiceImpl implements CommentService {
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		return session.createQuery("FROM CommentModel WHERE issueId="
-			+ issueId).list();
+		return session.createQuery("FROM CommentModel WHERE issueId=" + issueId).list();
 	}
 }
