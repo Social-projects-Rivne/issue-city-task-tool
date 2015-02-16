@@ -5,11 +5,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				events: {
 					'click #issue-filter  #filter-issue': 'issueFilter',
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
-<<<<<<< HEAD
 					'change .category': 'quickChangeCategory',
-=======
 					'click .table .btn.delete-issue': 'delete',
->>>>>>> e7ba69f9e5a71c829a020712f7506a044332e831
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
