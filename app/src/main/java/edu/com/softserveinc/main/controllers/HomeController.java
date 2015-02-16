@@ -152,6 +152,22 @@ public class HomeController {
 			
 			issue.setCategoryId(categoryId);
 		}
+		else {
+			for(int i = 0; i < statuses.size(); i++) {
+				statusModel = (StatusModel) statuses.get(i);
+				if(status.equals(statusModel.getName())) {
+					statusId = statusModel.getId();
+					break;
+				}
+			}
+			
+			if(statusId == 0) {
+				statusService.addStatus(new StatusModel(status));
+				statusId = statusService.getStatusByName(status).getId();
+			}
+			
+			issue.setStatusId(statusId);
+		}
 		
 		issueService.editProblemm(issue);		
 		

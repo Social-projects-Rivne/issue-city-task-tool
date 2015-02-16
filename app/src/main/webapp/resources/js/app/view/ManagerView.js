@@ -24,9 +24,9 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					this.issues = mapView.model;
 					this.issuesFilterList = new IssueCollection(this.issues);
 					this.categories = new CategoryCollection();
-					this.categories.fetch(); console.log(this.categories);
+					this.categories.fetch();
 					this.statuses = new StatusCollection();
-					this.statuses.fetch(); console.log(this.statuses);
+					this.statuses.fetch();
 					this.issue = new IssueModel();
 				},
 				
