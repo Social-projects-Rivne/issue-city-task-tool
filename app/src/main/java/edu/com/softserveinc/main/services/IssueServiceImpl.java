@@ -1,8 +1,7 @@
 package edu.com.softserveinc.main.services;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import java.util.List;
+
 
 import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.models.IssueModel;
@@ -14,13 +13,15 @@ import edu.com.softserveinc.main.models.IssueModel;
  */
 public class IssueServiceImpl implements IssueService {
 
+	DaoImpl dao = new DaoImpl();
+	
 	/**
 	 * Add new problem
 	 * @param problem
 	 */
 	@Override
 	public void addProblemm(IssueModel problem) {
-		new DaoImpl().addInDB(problem);
+		dao.addInDB(problem);
 		
 	}
 	/**
@@ -29,7 +30,7 @@ public class IssueServiceImpl implements IssueService {
 	 */
 	@Override
 	public void editProblemm(IssueModel problem) {
-		new DaoImpl().editInDB(problem);	
+		dao.editInDB(problem);	
 	}
 	/**
 	 * change status of issue on "deleted"
@@ -39,19 +40,27 @@ public class IssueServiceImpl implements IssueService {
 	public void deletteProblemm(IssueModel problem) {
 		problem.setStatusId(4);
 		this.editProblemm(problem);
-		//new DaoImpl().deleteFromDB(problem);
-	}
-	@Override
-	public IssueModel getByID(int id) {
-		@SuppressWarnings("deprecation")
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		IssueModel issue = (IssueModel)session.get(IssueModel.class, id);
-		session.close();
-		return issue;
+		//dao.deleteFromDB(problem);
 	}
 	
+	/**
+	 * Load issue by id
+	 * @param id 
+	 * @return IssueModel
+	 */
+	@Override
+	public IssueModel getByID(int id) {
+		return (IssueModel) dao.getById(id, new IssueModel());
+	}
+	/**
+	 * Load all issues from DB
+	 * @return List of issues
+	 */
+	//add it to interface
+	@SuppressWarnings("rawtypes")
+	public List loadIsssueList() {
+		return dao.getAll(new IssueModel());
+	}
 	//TODO: add method for get all categories !!! 
 
 }

@@ -105,6 +105,38 @@ public class HomeController {
 		return message;
 	}
 	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
+	public @ResponseBody String editIssue(@RequestBody Map request,
+			IssueServiceImpl issueService, CategoryServiceImpl categoryService) {
+		
+		String message = null;
+		String category = request.get("category").toString().toLowerCase();
+		List categories = categoryService.loadCategoriesList();
+		CategoryModel categoryModel = null;
+		int categoryId = 0;
+		
+		for(int i = 0; i < categories.size(); i++) {
+			categoryModel = (CategoryModel) categories.get(i);
+			if(category.equals(categoryModel.getName())) {
+				categoryId = categoryModel.getId();
+				break;
+			}
+		}
+		
+		if(categoryId == 0) {
+			categoryService.addCategory(new CategoryModel(category));
+			categoryId = categoryService.getCategoryByName(category).getId();
+		}
+		
+		IssueModel issue = issueService.getByID(Integer.parseInt(request.get("id").toString()));
+		issue.setCategoryId(categoryId);
+
+		issueService.editProblemm(issue);		
+		
+		return message;
+	}
+	
 	
 	//--------------------CATEGORY METHODS-------------------//
 	
