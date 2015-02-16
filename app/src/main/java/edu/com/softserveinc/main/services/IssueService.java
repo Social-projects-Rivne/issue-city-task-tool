@@ -1,43 +1,21 @@
 package edu.com.softserveinc.main.services;
 
+import java.util.List;
+
 import edu.com.softserveinc.main.models.IssueModel;
 
-/**
- * Interface needs for working with problems
- * 
- * @author nazar
- *
- */
+
 public interface IssueService {
 	
-	/**
-	 * Add existing problem
-	 * 
-	 * @param problem
-	 */
-	public void addProblemm(IssueModel problem);
+	public void addProblem(IssueModel problem);
 
-	/**
-	 * Edit existing problem
-	 * 
-	 * @param problem
-	 */
-	public void editProblemm(IssueModel problem);
+	public void editProblem(IssueModel problem);
 
-	/**
-	 * Delete existing problem
-	 * 
-	 * @param problem
-	 */
-	public void deletteProblemm(IssueModel problem);
+	public void deleteProblem(IssueModel problem);
 
-	/**
-	 * It gets issues by id
-	 * 
-	 * @param id
-	 * @return IssueModel
-	 */
 	public IssueModel getByID(int id);
+	
+	public List<IssueModel> loadIsssueList();
 
 	
 	

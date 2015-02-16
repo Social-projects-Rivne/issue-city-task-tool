@@ -23,15 +23,15 @@ public class ProblemServiceTest {
 	public void testAddProblemm() {
 		try {
 			System.out.println("start");
-			issuService.addProblemm(issue);
+			issuService.addProblem(issue);
 
 			issue = issuService.getByID(issue.getId());
 
 			issue.setDescription("add new attachments");
 
-			issuService.editProblemm(issue);
+			issuService.editProblem(issue);
 
-			issuService.deletteProblemm(issue);
+			issuService.deleteProblem(issue);
 			
 			assertTrue("sucsess", true);
 			

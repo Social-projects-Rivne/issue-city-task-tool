@@ -48,7 +48,7 @@ public class HomeController {
 			IssueServiceImpl service) {
 		IssueModel issue = service.getByID(id);
 		//issue.setId(id);
-		service.deletteProblemm(issue);
+		service.deleteProblem(issue);
 		System.out.print(id);
 	}
 	
@@ -100,7 +100,7 @@ public class HomeController {
 				Integer.parseInt(request.get("statusId").toString())
 		);
 
-		issueService.addProblemm(issue);		
+		issueService.addProblem(issue);		
 		
 		return message;
 	}
@@ -132,7 +132,7 @@ public class HomeController {
 		IssueModel issue = issueService.getByID(Integer.parseInt(request.get("id").toString()));
 		issue.setCategoryId(categoryId);
 
-		issueService.editProblemm(issue);		
+		issueService.editProblem(issue);		
 		
 		return message;
 	}
