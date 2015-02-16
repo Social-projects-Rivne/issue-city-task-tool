@@ -2,6 +2,7 @@ package edu.com.softserveinc.main.services;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,8 +26,16 @@ public class StatusServiceImpl implements StatusService {
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
+		Query query = session.createQuery("FROM StatusModel WHERE name = :name ");
+		query.setParameter("name", name);
+		StatusModel statusModel = null;
+		for(int i = 0; i < query.list().size(); i++) {
+			statusModel = (StatusModel)query.list().get(i);
+			if(statusModel.getName() == name)
+				break;
+		}
 		
-		return (StatusModel) session.createQuery("FROM StatusModel WHERE name =" + name);
+		return statusModel;
 	}
 	
 	@SuppressWarnings("rawtypes")
