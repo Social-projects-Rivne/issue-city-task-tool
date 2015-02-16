@@ -1,0 +1,54 @@
+.img-polaroid {
+	margin-top:10%;
+	margin-left:20%;
+	margin-bottom:10%;
+}
+.body {
+	margin:0;
+}
+#header {
+	background:#8B8B7A;
+	height: 50px;
+	margin-top: 20px;
+	color:#FFFFFF;
+	text-align: left;
+}
+.sidebar {
+	background:#F5F5F5;
+	height: 500px;
+	margin:0px;
+}
+.text {
+	background:#FFFFFF;
+	height: 500px;
+}
+#footer {
+	background:#8B8B7A;
+	height:30px;
+	margin-right: 0;
+	text-align: center;
+	color: white;
+}
+.btn {
+	margin-left:20%;
+	margin-bottom:3%;
+	width:130px;
+	text-align: center;
+}
+.left {
+	width:200px;
+	float:left;
+}
+.right {
+	width:300px;
+	float:left;
+}
+.right-radio {
+	width:300px;
+	float:left;
+}
+.selectWrap .link{
+font-size:16px;
+color:#0066cc;
+border-bottom:1px dotted;
+}
