@@ -1,10 +1,11 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection' ],
-		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel' ],
+		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
 					'click #issue-filter  #filter-issue': 'issueFilter',
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
+					'change .category': 'quickChangeCategory',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -14,12 +15,14 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				issues: null,
 				issuesFilterList: null,
 				categories: null,
+				issue: null,
 				
 				initialize: function() {
 					this.issues = mapView.model;
 					this.issuesFilterList = new IssueCollection(this.issues);
 					this.categories = new CategoryCollection();
 					this.categories.fetch();
+					this.issue = new IssueModel();
 				},
 				
 				// issue table on manager page
@@ -125,6 +128,14 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					$('#issue-filter #keyword').prop("checked", "checked");
 					this.issues = mapView.model;
 					this.issueTableRender();
+				},
+				
+				quickChangeCategory: function(e) {
+					this.issue.set( {
+						id: e.currentTarget.id,
+						category: e.currentTarget.value,
+					} );
+					this.issue.save();
 				}
 					
 			});

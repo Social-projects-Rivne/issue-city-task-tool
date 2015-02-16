@@ -6,7 +6,7 @@
 	                        	<% if(category.id == data[0].issue.categoryId) { %>
 	                        	<% cat = category.name } %>
                         	<% }); %> 
-	                        <input type="text" list="categories" value="<%= cat %>" />
+	                        <input id="<%= data[0].issue.id %>" class="category" type="text" list="categories" value="<%= cat %>" />
                         	<datalist id="categories">
 								<% _.map(data[1].categories, function(category) { %>
 									<option><%= category.name %></option>
