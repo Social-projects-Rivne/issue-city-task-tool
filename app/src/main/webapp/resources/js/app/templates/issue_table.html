@@ -1,18 +1,28 @@
-                                   <tr>
-                        <td> <%= id %> </td>
-                        <td><%= name %> </td>
-                        <td><%= category %></td>
-                        <td><%= description %></td>
+                                  <tr>
+                        <td> <%= data[0].issue.id %> </td>
+                        <td><%= data[0].issue.name %> </td>
+                        <td>
+                        	<% _.map(data[1].categories, function(category) { %>
+	                        	<% if(category.id == data[0].issue.categoryId) { %>
+	                        	<% cat = category.name } %>
+                        	<% }); %> 
+	                        <input type="text" list="categories" value="<%= cat %>" />
+                        	<datalist id="categories">
+								<% _.map(data[1].categories, function(category) { %>
+									<option><%= category.name %></option>
+								<% }); %>
+							</datalist>
+						</td>
+                        <td><%= data[0].issue.description %></td>
                         <td> 04.02.2015 </td>
-                        <td><%= statusId %></td>
+                        <td><%= data[0].issue.statusId %></td>
                         <td>
                             <div class="btn-toolbar">
                                 <div class="btn-group">
-                                    <button class="btn delete-issue" id="<%= id %>">delete it</button>
-                                    <button class="btn" id="<%= id %>"><span class="glyphicon glyphicon-file"></span></button>
-                                    <button class="btn" id="<%= id %>"><span class="glyphicon glyphicon-pencil"></span></button>
-                                    <button class="btn" id="<%= id %>"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-                                    <button class="btn" id="<%= id %>"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-file"></span></button>
+                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-down"></span></button>
                                 </div>
                             </div>
                         </td>

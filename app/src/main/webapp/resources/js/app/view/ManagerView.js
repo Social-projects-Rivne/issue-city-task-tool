@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', ],
-		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection' ],
+		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
@@ -14,10 +14,13 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				
 				issues: null,
 				issuesFilterList: null,
+				categories: null,
 				
 				initialize: function() {
 					this.issues = mapView.model;
 					this.issuesFilterList = new IssueCollection(this.issues);
+					this.categories = new CategoryCollection();
+					this.categories.fetch();
 				},
 				
 				// issue table on manager page
@@ -26,7 +29,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					that = this;
 					this.issues.each( function(issue){
 						that.$("#issue-table-body").append(that.$("#issue-table-body").
-								append(that.issueTableTemplate(issue.toJSON()))
+								append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()} ] }))
 						);
 					});
 				},
