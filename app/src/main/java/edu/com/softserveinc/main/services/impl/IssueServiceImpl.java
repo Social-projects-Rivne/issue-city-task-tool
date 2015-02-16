@@ -34,6 +34,14 @@ public class IssueServiceImpl implements IssueService {
 	
 	
 	@Override
+	public void deleteProblem(int id) {
+		IssueModel issue = issueDao.findOne(id);
+		issue.setStatusId(4);
+		issueDao.saveAndFlush(issue);
+	}
+	
+	
+	@Override
 	public IssueModel getByID(int id) {
 		return issueDao.findOne(id);
 	}

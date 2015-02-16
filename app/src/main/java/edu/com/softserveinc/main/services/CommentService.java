@@ -12,6 +12,5 @@ public interface CommentService {
 
 	public void editComment(CommentModel comment);
 
-	@SuppressWarnings("rawtypes")
-	public List getCommentsByIssueId(int issueId);
+	public List<CommentModel> getCommentsByIssueId(int issueId);
 }

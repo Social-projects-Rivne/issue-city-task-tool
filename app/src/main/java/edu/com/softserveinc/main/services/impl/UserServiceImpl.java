@@ -30,6 +30,14 @@ public class UserServiceImpl implements UserService {
 			userDao.delete(user);
 		}
 	}
+	
+	@Override
+	public void deleteUser(int id) {
+
+		if (id != 0) {
+			userDao.delete(id);
+		}
+	}
 
 	@Override
 	public void editUser(UserModel user) {
