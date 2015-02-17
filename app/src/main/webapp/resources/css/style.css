@@ -1,12 +1,14 @@
-body
-{
+body {
 padding-top: 50px;
+}
+
+h4 {
+text-align:center
 }
 
 #c_edit_user {
 	display: block !important;
 }
-
 
 #remove_user {
 	display: block !important;
@@ -66,29 +68,29 @@ padding-top: 50px;
     font-family: 'Averia Sans Libre', cursive;
     font-size:1.2em;
     font-weight: bold;
-    
 }
+
 /* navbar-nav hover, focus color */
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #d9d7d7;
 }
 
-
 .btn-default {
 	display: block !important;
 	margin: 0 auto !important;
+    background-color: #ea556f;
+    color: #fff;
 }
 
 .btn {
 /*	display: block !important;*/
 	margin: 0 auto !important;
     //width: 70px;
-    padding-top: 0px;
-    -moz-border-left-colors: #ea556f ;
-    -moz-border-right-colors: #ea556f;
-    -moz-border-top-colors: #ea556f;
-    border-bottom-color: #ea556f;
+    //padding-top: 0px;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: default;
 }
 
 #resolve_button {
@@ -102,49 +104,11 @@ background-color: #ffffff;
 
 #add-issue {
 	display: none;
-    
 }
 
 #issue-details {
 	display: none;
 }
-
-
-/*
-.col-sm-3 {
-    max-height: inherit;
-    
-}
-*/
-
-
-
-
-
-/*
-.col-xs-12 {
-     height:100%;
-}
-*/
-
-/*del padding on map-lg-8*/
-/*
-.col-lg-9 {
-padding-left: 0px;
-padding-right: 0px;    
-}
-*/
-
-/*del paddings on right add-issue panel */
-/*
-.col-lg-3 {
-    padding-left: 0px;
-    padding-right: 0px;
-    width: 21%;
-}
-*/
-
-
 
 .help-block {
      font-size: 0.8em;   
@@ -184,31 +148,15 @@ a {
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
-.btn-default {
-    background-color: #ea556f;
-    color: #fff;
-}
-
-
-    
-
-#input_search {
-   
-}
 
 .input-group {
      padding: 20px;
 }
-
 .input-group {
     padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 20px;
     padding-top: 40px;
-}
-
-.btn-group {
-/*    height:20px;*/
 }
 
 /*styles for login template*/
@@ -221,5 +169,14 @@ margin-left: 0px;
     position: inherit;
 }
 
+/*styles for modal templates*/
+.modal-footer {
+    border-top: 0px;
+}
 
-
+.modal-body {
+  position: relative;
+  /*max-height: 400px;*/
+  padding: 15px;
+  overflow-y: auto;
+}
