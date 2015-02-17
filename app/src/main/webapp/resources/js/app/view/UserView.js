@@ -10,8 +10,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
 							"<td>" +
 								"<div class='btn-toolbar'>" +
                     				"<div class='btn-group'>" +
-                    					"<button class='btn glyphicon-pencil' id='"+ this.model.get("id") +"'><span class='glyphicon glyphicon-pencil'></span></button>" +
-                    					"<button class='btn glyphicon-remove' id='"+ this.model.get("id") +"'><span class='glyphicon glyphicon-remove'></span></button>" +
+                    					"<button class='btn glyphicon glyphicon-pencil' id='"+ this.model.get("id") +"'></button>" +
+                    					"<button class='btn glyphicon glyphicon-remove' id='"+ this.model.get("id") +"'></button>" +
                     				"</div>" +
                     			"</div>" +
                     		"</td>");
@@ -22,3 +22,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
 			
 			return UserView;
 		})
+
+		
+		
+		/*<span class='glyphicon glyphicon-pencil'></span>
+		<span class='glyphicon glyphicon-remove'></span>*/

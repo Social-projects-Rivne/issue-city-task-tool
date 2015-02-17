@@ -8,3 +8,4 @@ target/
 hibernate.cfg.xml
 Servers
 *~
+app/src/main/resources/persistence.properties

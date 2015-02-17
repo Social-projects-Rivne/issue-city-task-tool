@@ -86,13 +86,27 @@ text-align:center
 .btn {
 /*	display: block !important;*/
 	margin: 0 auto !important;
-    //width: 70px;
-    //padding-top: 0px;
+    /* width: 70px; */
+    /* padding-top: 0px; */
 }
 button, html input[type="button"], input[type="reset"], input[type="submit"] {
     cursor: default;
 }
 
+/* Admin page. Add user button position */
+#add-user {
+    margin-bottom: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+/* Manger page. Sidebar menu */
+#manager_menu {
+	margin-bottom: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
 #resolve_button {
     font-size:0.7em;
     width: 60px;
