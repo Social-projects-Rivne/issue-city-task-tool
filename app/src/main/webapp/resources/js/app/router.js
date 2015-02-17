@@ -4,6 +4,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		routes : {
 			"" : "home",
+			"login" : "login",
 			//routs for admin
 			"admin" : "admin",
 			"admin/search/:name" : "search",
@@ -24,6 +25,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		home : function() {
 			mapView.render();
+		},
+
+		login: function(){
+			loginView.render();
+			console.log('login page');
 		},
 
 		issue : function(id) {

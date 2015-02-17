@@ -44,7 +44,7 @@
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Login</a></li>
+						<li><a id="login" href="#">Login</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#manager">About</a></li>
@@ -53,9 +53,11 @@
 			</div>
 		</nav>
 	</div>
+	<div class="login modal" >
 	
-	<div id=container>
-		
+	</div>
+	<div id="container">
+	
 	</div>
 	
 <!-- Placed at the end of the document so the pages load faster -->
