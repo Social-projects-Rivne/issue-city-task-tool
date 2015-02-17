@@ -29,7 +29,6 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 		login: function(){
 			loginView.render();
-			console.log('login page');
 		},
 
 		issue : function(id) {

@@ -34,8 +34,8 @@ require([
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		managerView = new ManagerView({el:"#container"});
-		loginView = new LoginView();
-		loginView.render();
+		loginView = new LoginView({el:"body"});
+		//loginView.render();
 		//managerView.render();
 		//mapDraw();
 		// for debug
