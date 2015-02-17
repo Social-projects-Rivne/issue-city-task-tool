@@ -5,7 +5,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				loginTemplate: _.template(LoginTemplate),
 				
 				events: {
-					
+					//'click li #login': 'loginForm',
 				},
 				
 				initialize: function() {
@@ -13,7 +13,10 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				},
 				
 				render: function(){
-					$('body').append(this.loginTemplate);
+
+				
+					$('.login.modal').append(this.loginTemplate);
+					$(".login.modal").show()
 				},
 			});
 			
