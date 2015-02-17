@@ -44,7 +44,7 @@
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a id="login" href="#">Login</a></li>
+						<li><a id="login" >Login</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#manager">About</a></li>
