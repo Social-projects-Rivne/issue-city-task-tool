@@ -77,10 +77,10 @@ text-align:center
 }
 
 .btn-default {
-	display: block !important;
+	/* display: block !important; */
 	margin: 0 auto !important;
     background-color: #ea556f;
-    color: #fff;
+    /* color: #fff; */
 }
 
 .btn {
