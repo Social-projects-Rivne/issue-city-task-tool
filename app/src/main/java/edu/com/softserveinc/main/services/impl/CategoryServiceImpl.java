@@ -3,11 +3,13 @@ package edu.com.softserveinc.main.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.com.softserveinc.main.dao.CategoryDao;
 import edu.com.softserveinc.main.models.CategoryModel;
 import edu.com.softserveinc.main.services.CategoryService;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired

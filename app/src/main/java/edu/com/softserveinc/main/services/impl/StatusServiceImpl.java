@@ -3,11 +3,13 @@ package edu.com.softserveinc.main.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.com.softserveinc.main.models.StatusModel;
 import edu.com.softserveinc.main.services.StatusService;
 import edu.com.softserveinc.main.dao.StatusDao;
 
+@Service
 public class StatusServiceImpl implements StatusService {
 	
 	@Autowired
