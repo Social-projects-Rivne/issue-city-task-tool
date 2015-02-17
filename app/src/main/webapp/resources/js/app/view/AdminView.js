@@ -3,11 +3,11 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 			var AdminView = Backbone.View.extend({
 				
 				events: {
-					'click #search-user': 'search',
-					'click #reset-filter': 'resetFilter',
-					'click #add-user': 'addUser',
-					'click #add-new-user': 'addNewUser',
-					//'click #edit-user': 'editUser',
+					'click #search-user'	: 'search',
+					'click #reset-filter'	: 'resetFilter',
+					'click #add-user'		: 'addUser',
+					'click #add-new-user'	: 'addNewUser',
+					//'click #edit-user'	: 'editUser',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -54,7 +54,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				addUser: function(){
 					//router.navigate('admin/add-user');
 					this.$el.html(this.addUserTemplate);
-					console.log ("function run");
+					console.log ("AdminView - addUser: function run");
 				},
 				
 				// function which confirm add user on addUserTemplate
@@ -73,11 +73,11 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				
 				// function which editing users
 				// must be in outer file
-				editUser: function(){
-					var editUser = new UserModel({id:id})	
-										
-					//console.log ("function run");
-				}
+				//				editUser: function(){
+				//					var editUser = new UserModel({id:id})	
+				//										
+				//					//console.log ("function run");
+				//				}
 					
 			});
 			
