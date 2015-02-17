@@ -14,12 +14,11 @@
 
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
 
-
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/styles2.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link
 	href='http://fonts.googleapis.com/css?family=Jura:400,600|Averia+Sans+Libre:400,700'
 	rel='stylesheet' type='text/css'>

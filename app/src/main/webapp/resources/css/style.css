@@ -77,10 +77,10 @@ text-align:center
 }
 
 .btn-default {
-	/* display: block !important; */
+	display: block !important;
 	margin: 0 auto !important;
     background-color: #ea556f;
-    /* color: #fff; */
+    color: #fff;
 }
 
 .btn {
@@ -92,10 +92,7 @@ text-align:center
 button, html input[type="button"], input[type="reset"], input[type="submit"] {
     cursor: default;
 }
-/* Buttons on confirmation windows "Yes" */
-.btn-primary{
-	background-color: #ea556f;
-}
+
 /* Admin page. Add user button position */
 #add-user {
     margin-bottom: 30px;

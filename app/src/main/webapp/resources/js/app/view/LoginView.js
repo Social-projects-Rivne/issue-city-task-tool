@@ -16,7 +16,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 
 				
 					$('.login.modal').append(this.loginTemplate);
-					/*$(".login.modal").show()*/
+					$(".login.modal").show()
 				},
 			});
 			
