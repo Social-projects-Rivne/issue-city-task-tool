@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection' ],
-		function($, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection) {
+define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel' ],
+		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel) {
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
@@ -8,11 +8,14 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					'change .category': 'quickChangeCategory',
 					'change .status': 'quickChangeStatus',
 					'click .table .btn.delete-issue': 'delete',
+					'click #add-category-link': 'showAddCategoryForm',
+					'click #add-category': 'addCategory'
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
 				searchTemplate: _.template(ManagerSearchTemplate),
+				notificationTemplate: _.template(NotificationTemplate),
 				
 				issues: null,
 				issuesFilterList: null,
@@ -21,6 +24,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 				issue: null,
 				
 				initialize: function() {
+					that = this;
 					this.issues = mapView.model;
 					this.issuesFilterList = new IssueCollection(this.issues);
 					this.categories = new CategoryCollection();
@@ -53,6 +57,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 					this.issueTableRender();
 					this.resetFilter();
 					this.searchRender();
+					$('#add-category-link').popover();
 				},
 				
 				delete: function(e){
@@ -164,6 +169,24 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'text
 						status: e.currentTarget.value,
 					} );
 					this.issue.save();
+				},
+				
+				addCategory: function() {
+					var newCategory = new CategoryModel( { 'name': $('#category-name').val() } );
+					newCategory.save( {}, { 
+						success: function(data) {
+							$('#add-category-link').popover('hide');
+							that.$el.append(that.notificationTemplate( { 'data': data } ));
+							$('#myModal').modal();
+						},
+						error: function(error) {
+							alert(error);
+						} 
+					} );
+				},
+								
+				showAddCategoryForm: function(e) {
+					e.preventDefault();
 				}
 					
 			});
