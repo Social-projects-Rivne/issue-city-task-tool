@@ -6,12 +6,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 	
 			var UserListView = Backbone.View.extend({
 				
-				
-				
 				initialize : function() {
 					this.model = new UserCollection();
-					that = this;
 					this.model.fetch();
+					this.model.on('remove', this.render, this);
+					that = this;
 						
 				},
 				
@@ -25,18 +24,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				
-				render : function() {
-					
-					removeUserConfirmationView = new RemoveUserConfirmationView( { el: "#container" } );
-					editUserConfirmationView = new EditUserConfirmationView( { el: "#container" } );
-					
-					//this.model.fetch( { success: function() {
-						that.$el.html(that.template);
-						that.model.each(function(user) {
-							var userView = new UserView( { model: user } );
-							that.$el.find("table").append(userView.render().$el);
-						});
-				//	} } );
+				render: function() {
+					this.$el.html(this.template);
+					this.model.each(function(user) {
+						var userView = new UserView( { model: user } );
+						that.$el.find("table").append(userView.render().$el);
+					});
 				},
 				
 				removeConfirmation: function(e) {
@@ -46,10 +39,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				
 				confirm: function(e) {
 					$('#confirmationModal').modal('hide');
-					var user = new UserModel();
-					user.set('id', e.currentTarget.id);
 					if(e.currentTarget.name == 'delete') {
-						user.destroy( { url: 'remove-user/' + user.get('id'),
+						this.model.get(e.currentTarget.id).destroy( { url: 'remove-user/' + e.currentTarget.id,
 							success: function(model, response) {
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
