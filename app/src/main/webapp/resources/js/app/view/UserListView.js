@@ -1,6 +1,6 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 
-        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'view/RemoveUserConfirmationView', 'view/EditUserConfirmationView' ],
-		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, RemoveUserConfirmationView, EditUserConfirmationView) {
+        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'view/RemoveUserConfirmationView', 'view/EditUserConfirmationView', 'text!templates/ConfirmationTemplate.html' ],
+		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, RemoveUserConfirmationView, EditUserConfirmationView, ConfirmationTemplate) {
 			
 			var that = null;
 	
@@ -23,6 +23,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				template: _.template(AdminTemplate),
+				confirmationTemplate: _.template(ConfirmationTemplate),
 				
 				render : function() {
 					
@@ -39,7 +40,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				removeConfirmation: function(e) {
-					removeUserConfirmationView.render(e.currentTarget.parentNode.id);
+					this.$el.append(this.confirmationTemplate);
+					$('#confirmationModal').modal();
 				},
 				
 				editConfirmation: function(e) {
