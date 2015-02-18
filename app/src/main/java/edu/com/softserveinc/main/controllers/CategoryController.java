@@ -30,7 +30,7 @@ public class CategoryController {
 		
 		try {
 			service.addCategory(category);
-			message.put("message", "New category successfully added");
+			message.put("message", "New category was successfully added");
 		}
 		catch(Exception e) {
 			message.put("message", "Some problem occured! New category was not added");
