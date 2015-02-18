@@ -40,7 +40,8 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		cryOut : function() {
-			router.navigate("/", {trigger: true}); 
+			//router.navigate("/", {trigger: true}); 
+			mapView.render();
 			router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},

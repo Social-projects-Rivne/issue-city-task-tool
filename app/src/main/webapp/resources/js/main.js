@@ -1,3 +1,4 @@
+
 require([
         'jquery',
         'underscore',
@@ -29,6 +30,7 @@ require([
 	LoginView) {
 	
 	//var comments = null;
+	router = null;
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView( { el: "body" } );
@@ -168,4 +170,3 @@ var commentView = null;
 var issueView = null;
 var issueModel;
 var global;*/
-var router = null;
