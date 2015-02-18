@@ -6,11 +6,11 @@
         <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
       </div>
       <div class="modal-body">
-        
+        <%= data[0].message %>
       </div>
       <div class="modal-footer">
-        <button id='confirm' class='btn btn-primary'>OK</button>
-        <button id='reject' class='btn'>Cancel</button>
+        <button id="<%= data[1].userId %>" name="<%= data[2].action %>" class='btn btn-primary confirm'>OK</button>
+        <button class='btn reject'>Cancel</button>
       </div>
     </div>
   </div>

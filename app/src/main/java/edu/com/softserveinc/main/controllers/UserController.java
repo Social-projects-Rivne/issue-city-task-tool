@@ -1,6 +1,7 @@
 package edu.com.softserveinc.main.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,13 +59,15 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "remove-user/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String removeUserAction(@PathVariable("id") int id) {
-		String message = null;
+	public @ResponseBody Map<String, String> removeUserAction(@PathVariable("id") int id,
+			Map<String, String> message) {
 		
 		try {
 			service.deleteUser(id);
+			message.put("message", "User was successfully deleted");
 		} 
 		catch (Exception ex) {
+			message.put("message", "Some problem occured! User was not deleted");
 		}
 		
 		return message;

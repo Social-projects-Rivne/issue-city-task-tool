@@ -177,7 +177,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						success: function(data) {
 							$('#add-category-link').popover('hide');
 							that.$el.append(that.notificationTemplate( { 'data': data } ));
-							$('#myModal').modal();
+							$('#notificationModal').modal();
 						},
 						error: function(error) {
 							alert(error);
