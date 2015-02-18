@@ -13,7 +13,7 @@ requirejs.config({
 		}, 
 		
 		main:{
-			deps :['leaflet','js/issue-script','markers','router']
+			deps :['bootstrap','leaflet','js/issue-script','markers','router']
 		},
 		
 		map:{
@@ -37,15 +37,14 @@ requirejs.config({
 		collection: 'js/app/collection',
 		templates: 'js/app/templates',
 		
+		bootstrap:'js/bootstrap.min',
+		
 		//bad scripts
 		homeScript: 'js/home-script',
         validation: 'js/validation-script',
         markers: 'js/leaflet.awesome-markers',
         leaflet:'js/leaflet',
-        bootstrap:[
-			'js/bootstrap.min'
-			//add here css
-        ],
+        
         map:[ 
             
         	'js/map-script',
@@ -56,4 +55,4 @@ requirejs.config({
 
 
 //Load our app module and pass it to our definition function
-require(['main']);
+require(['main', 'bootstrap']);
