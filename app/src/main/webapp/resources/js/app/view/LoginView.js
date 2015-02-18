@@ -5,12 +5,13 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				loginTemplate: _.template(LoginTemplate),
 				
 				events: {
-					'click #login': 'showLoginForm',
+					'click .navbar #login': 'showLoginForm',
 					'click .form-group #btn-close' : 'hideLoginForm',
 				},
 				
 				initialize: function() {
-
+					$('.login.modal').empty();
+					$('.login.modal').append(this.loginTemplate);
 				},
 
 				showLoginForm: function() {
@@ -19,15 +20,13 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				},
 				
 				hideLoginForm: function() {
-					$(".login.modal").fadeOut();
+					$(".login.modal").modal('hide');
 
 					router.navigate("", {trigger: false});
 				},
 				
 				render: function(){
-					$('.login.modal').empty();
-					$('.login.modal').append(this.loginTemplate);
-					$(".login.modal").fadeIn();
+					$(".login.modal").modal();
 				},
 			});
 			

@@ -53,7 +53,7 @@
 			</div>
 		</nav>
 	</div>
-	<div class="login modal" >
+	<div class="login modal fade" >
 	
 	</div>
 	<div id="container">
