@@ -174,13 +174,15 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				addCategory: function() {
 					var newCategory = new CategoryModel( { 'name': $('#category-name').val() } );
 					newCategory.save( {}, { 
-						success: function(data) {
+						success: function(model, response) {
 							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate( { 'data': data } ));
+							that.$el.append(that.notificationTemplate( { 'data': response } ));
 							$('#notificationModal').modal();
 						},
-						error: function(error) {
-							alert(error);
+						error: function() {
+							$('#add-category-link').popover('hide');
+							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
 						} 
 					} );
 				},

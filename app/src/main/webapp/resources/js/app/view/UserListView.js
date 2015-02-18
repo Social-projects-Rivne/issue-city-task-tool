@@ -50,10 +50,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					user.set('id', e.currentTarget.id);
 					if(e.currentTarget.name == 'delete') {
 						user.destroy( { url: 'remove-user/' + user.get('id'),
-							success: function(data) {
-								that.$el.append(that.notificationTemplate( { 'data': data } ));
-								$('#notificationModal').modal(); console.log(data);
-							} 
+							success: function(model, response) {
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
+								$('#notificationModal').modal();
+							},
+							error: function() {
+								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('#notificationModal').modal();
+							}
 						} );
 					}
 				},
