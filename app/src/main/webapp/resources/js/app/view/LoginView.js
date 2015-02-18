@@ -5,6 +5,8 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				loginTemplate: _.template(LoginTemplate),
 				
 				events: {
+
+					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
 					'click .form-group #btn-close' : 'hideLoginForm',
 				},
@@ -12,6 +14,17 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				initialize: function() {
 					$('.login.modal').empty();
 					$('.login.modal').append(this.loginTemplate);
+				},
+
+				login: function(){					
+					var login = $("#login-username").val();
+					var password = $(" #login-password").val();
+					if(login != "" && password != ""){
+						console.log('Login: ' + login);
+						console.log('Password: ' + password);
+					} else{
+						console.log('Fields is empty');
+					};
 				},
 
 				showLoginForm: function() {
