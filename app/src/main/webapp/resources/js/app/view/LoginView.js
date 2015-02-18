@@ -25,8 +25,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				},
 				
 				render: function(){
-
-				
+					$('.login.modal').empty();
 					$('.login.modal').append(this.loginTemplate);
 					$(".login.modal").fadeIn();
 				},
