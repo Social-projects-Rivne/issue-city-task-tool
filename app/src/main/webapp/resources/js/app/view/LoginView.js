@@ -19,7 +19,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				},
 				
 				hideLoginForm: function() {
-					$(".login.modal").hide();
+					$(".login.modal").fadeOut();
 
 					router.navigate("", {trigger: false});
 				},
@@ -28,7 +28,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 
 				
 					$('.login.modal').append(this.loginTemplate);
-					$(".login.modal").show();
+					$(".login.modal").fadeIn();
 				},
 			});
 			
