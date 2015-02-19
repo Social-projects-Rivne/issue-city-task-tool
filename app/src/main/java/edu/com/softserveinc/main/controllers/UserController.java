@@ -28,13 +28,15 @@ public class UserController {
 		
 	
 	@RequestMapping(value = "user", method = RequestMethod.POST)
-	public @ResponseBody String addUserAction(@RequestBody UserModel user) {
-		String message = null;
+	public @ResponseBody Map<String, String> addUserAction(@RequestBody UserModel user,
+			Map<String, String> message) {
 		
 		try {
 			service.addUser(user);
+			message.put("message", "User was successfully added");
 		}
 		catch (Exception ex) {
+			message.put("message", "Some problem occured! User was not added");
 		}
 		
 		return message;

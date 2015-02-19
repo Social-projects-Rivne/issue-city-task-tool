@@ -8,8 +8,6 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			//routs for admin
 			"admin" : "admin",
 			"admin/search/:name" : "search",
-			"admin/add-user" : "addUser",
-			"admin/edit-user"		:	"editUser"	,
 			//manager's routs
 			"manager" : "manager",
 			//routs for map 
@@ -58,20 +56,10 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			managerView.render();
 		},
 		
-		addUser: function() {
-			adminView.addUser();
-		},
-		
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
-		},
-		
-		editUser: function() {
-			//adminView.addUser();
-			// must be function from ??file??
-		},
-
+		}
 	});
 	return Router
 });

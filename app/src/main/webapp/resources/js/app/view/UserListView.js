@@ -74,8 +74,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
-							password: $('#userPassword').val(),
-							avatar: $('#userAvatar').val()
 						} ).save( {}, {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();

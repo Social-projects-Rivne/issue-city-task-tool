@@ -1,13 +1,15 @@
-define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/UserListView', 'text!templates/search.html', 'text!templates/Add_user.html', 'model/UserModel'],
+define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/UserListView', 'text!templates/search.html', 'text!templates/AddUserTemplate.html', 'model/UserModel'],
 		function($, _, Backbone, UserCollection, UserListView, SearchTemplate, AddUserTemplate, UserModel) {
+			
+			var that = null;
+	
 			var AdminView = Backbone.View.extend({
 				
 				events: {
 					'click #search-user'	: 'search',
 					'click #reset-filter'	: 'resetFilter',
-					'click #add-user'		: 'addUser',
-					'click #add-new-user'	: 'addNewUser',
-					//'click #edit-user'	: 'editUser',
+					'click #add-user'		: 'showAddUserForm',
+					'click #addFormConfirm'	: 'addUser',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -23,13 +25,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 
 				initialize: function() {
 					userListView = new UserListView({el: "#container"});
-
 					usersFilter = userListView.model;
 					usersList = new  UserCollection(usersFilter);
+					that = this;
 				},
 				
 				render: function() {
-					
 					userListView.render();
 				},
 				
@@ -37,7 +38,6 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				search: function(){
 					router.navigate('admin/search/' + $('.form-control').val());
 					usersFilter = userListView.model.findWhere({name: $('.form-control').val()});
-					
 					userListView.model = new UserCollection(usersFilter);
 					userListView.render();
 				},
@@ -50,35 +50,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 						}
 					});
 				},
-				// function which adding users 
-				addUser: function(){
-					//router.navigate('admin/add-user');
-					this.$el.html(this.addUserTemplate);
-					console.log ("AdminView - addUser: function run");
-				},
 				
-				// function which confirm add user on addUserTemplate
-				// must be in outer file
-				addNewUser: function(){
-					userModel = new UserModel({
-						 "name": $(document.getElementsByName('name')[0]).val(),
-						 "email": $(document.getElementsByName('email')[0]).val(),
-						 "login":  $(document.getElementsByName('login')[0]).val(),
-						 "password":  $(document.getElementsByName('password')[0]).val(),
-						 "avatar":  $(document.getElementsByName('avatar')[0]).val()
-					});
-					userModel.save();
-					console.log (userModel);
-				},	
-				
-				// function which editing users
-				// must be in outer file
-				//				editUser: function(){
-				//					var editUser = new UserModel({id:id})	
-				//										
-				//					//console.log ("function run");
-				//				}
-					
+				showAddUserForm: function(e) {
+					if($('#addModal')) $('#addModal').remove();
+					this.$el.append(this.addUserTemplate);
+					$('#addModal').modal();
+				}
 			});
 			
 			return AdminView;
