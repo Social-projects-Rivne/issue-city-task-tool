@@ -28,9 +28,10 @@ public class LoginController {
 		catch(Exception ex){
 			System.out.println(ex.getLocalizedMessage());
 		}
+		
 		if(password.equals(user.getPassword()))
 	    	return "Success";
 	    else 
-	    	return "erroe";
+	    	return "error";
 	  } 
 }
