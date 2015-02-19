@@ -20,7 +20,7 @@ public class LoginController {
 	public @ResponseBody String login(@RequestParam("username") String username, @RequestParam("password") String password) { 	  
 		
 		try{
-			System.out.println((service.getUserByName("11gsdfg")));
+			System.out.println((service.getUserByLogin("11gsdfg")));
 		}
 		catch(Exception ex){
 			System.out.println(ex.getLocalizedMessage());

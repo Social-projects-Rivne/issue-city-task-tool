@@ -10,4 +10,7 @@ public interface UserDao extends JpaRepository<UserModel, Integer>{
 	@Query("select users from UserModel users where users.name = :name")
 	UserModel findByName(@Param("name") String name);
 	
+	@Query("select users from UserModel users where users.login = :login")
+	UserModel findByLogin(@Param("name") String login);
+	
 }
