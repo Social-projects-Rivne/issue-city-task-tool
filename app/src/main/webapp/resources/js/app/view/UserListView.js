@@ -10,6 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					this.model = new UserCollection();
 					this.model.fetch();
 					this.model.on('remove', this.render, this);
+					this.model.on('change', this.render, this);
 					that = this;
 						
 				},
@@ -71,7 +72,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							login: $('#userLogin').val(),
 							password: $('#userPassword').val(),
 							avatar: $('#userAvatar').val()
-						} ).save( {
+						} ).save( {}, {
 							success: function(model, response) {
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
