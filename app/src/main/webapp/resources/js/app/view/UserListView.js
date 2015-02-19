@@ -1,6 +1,6 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 
-        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'view/RemoveUserConfirmationView', 'view/EditUserConfirmationView', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html' ],
-		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, RemoveUserConfirmationView, EditUserConfirmationView, ConfirmationTemplate, NotificationTemplate) {
+        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html' ],
+		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate) {
 			
 			var that = null;
 	
@@ -15,6 +15,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				events: {
+					'click .btn.glyphicon-pencil': 'showEditForm',
 					'click .btn.glyphicon-remove': 'removeConfirmation',
 					'click .confirm': 'confirm',
 					'click .reject': 'reject'
@@ -23,6 +24,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				template: _.template(AdminTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
+				editUserTemplate: _.template(EditUserTemplate),
 				
 				render: function() {
 					this.$el.html(this.template);
@@ -30,6 +32,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 						var userView = new UserView( { model: user } );
 						that.$el.find("table").append(userView.render().$el);
 					});
+				},
+				
+				showEditForm: function(e) {
+					this.$el.append(this.editUserTemplate( { 'userId': e.currentTarget.id } ));
+					$('#editModal').modal();
 				},
 				
 				removeConfirmation: function(e) {
