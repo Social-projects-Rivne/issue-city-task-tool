@@ -59,7 +59,7 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(value = "remove-user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody Map<String, String> removeUserAction(@PathVariable("id") int id,
 			Map<String, String> message) {
 		

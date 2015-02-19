@@ -12,7 +12,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					this.model.on('remove', this.render, this);
 					this.model.on('change', this.render, this);
 					that = this;
-						
 				},
 				
 				events: {
@@ -36,16 +35,19 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				showEditForm: function(e) {
+					if($('#editModal')) $('#editModal').remove();
 					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
 				},
 				
 				editConfirm: function(e) {
+					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'edit' } ] } ));
 					$('#confirmationModal').modal();
 				},
 				
 				showRemoveConfirmation: function(e) {
+					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'delete' } ] } ));
 					$('#confirmationModal').modal();
 				},
@@ -54,12 +56,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					$('#confirmationModal').modal('hide');
 					$('#editModal').modal('hide');
 					if(e.currentTarget.name == 'delete') {
-						this.model.get(e.currentTarget.id).destroy( { url: 'remove-user/' + e.currentTarget.id,
+						this.model.get(e.currentTarget.id).destroy( {
 							success: function(model, response) {
+								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							},
 							error: function() {
+								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
 								$('#notificationModal').modal();
 							}
@@ -74,10 +78,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							avatar: $('#userAvatar').val()
 						} ).save( {}, {
 							success: function(model, response) {
+								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							},
 							error: function() {
+								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
 								$('#notificationModal').modal();
 							}
