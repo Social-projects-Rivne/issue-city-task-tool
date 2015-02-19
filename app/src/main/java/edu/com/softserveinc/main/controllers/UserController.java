@@ -43,14 +43,16 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(value = "edit-user/{id}", method = RequestMethod.PUT)
-	public @ResponseBody String editUserAction(@ModelAttribute("user") UserModel user) {
-		String message = null;
+	@RequestMapping(value = "edit-user", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, String> editUserAction(@RequestBody UserModel user,
+			Map<String, String> message) {
 		
 		try {
 			service.editUser(user);
+			message.put("message", "User was successfully edited");
 		} 
 		catch (Exception ex) {
+			message.put("message", "Some problem occured! User was not edited");
 		}
 		
 		return message;

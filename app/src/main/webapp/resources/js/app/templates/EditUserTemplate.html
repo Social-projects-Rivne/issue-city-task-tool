@@ -10,8 +10,8 @@
        		<div class="form-group">
            		<label for="userName" class="control-label col-xs-4">User name</label>
            	<div class="col-xs-6">
-               <input type="text" class="form-control input-sm" id="inputEmail" 
-               placeholder="User name" name="userName">
+               <input type="text" class="form-control input-sm" id="userName" 
+               placeholder="User name" name="name" value="<%= data.attributes.name %>">
            	</div>
        		</div>
                   <!--email-->
@@ -19,7 +19,7 @@
             <label for="userEmail" class="control-label col-xs-4">Email</label>
             <div class="col-xs-6">
                 <input type="email" class="form-control input-sm" id="userEmail" 
-                placeholder="Email" name="email">
+                placeholder="Email" name="email" value="<%= data.attributes.email %>">
             </div>
         </div>
         <!--login-->
@@ -27,15 +27,15 @@
             <label for="userLogin" class="control-label col-xs-4">Login</label>
             <div class="col-xs-6">
                 <input type="login" class="form-control input-sm" id="userLogin" 
-                placeholder="Login" name="login">
+                placeholder="Login" name="login" value="<%= data.attributes.login %>">
             </div>
         </div>
         <!--user_password-->
         <div class="form-group">
             <label for="user_password" class="control-label col-xs-4">User password</label>
             <div class="col-xs-6">
-                <input type="password" class="form-control input-sm" id="user_password" 
-                placeholder="user_password" name="password">
+                <input type="password" class="form-control input-sm" id="userPassword" 
+                placeholder="user_password" name="password" value="<%= data.attributes.password %>">
             </div>
         </div>
         <!--avatar-->
@@ -43,12 +43,12 @@
             <label for="userAvatar" class="control-label col-xs-4">Avatar</label>
             <div class="col-xs-6">
                 <input type="avatar" class="form-control input-sm" id="userAvatar" 
-                placeholder="avatar" name="avatar">
+                placeholder="avatar" name="avatar" value="<%= data.attributes.avatar %>">
             </div>
         </div>
                </div> 
             <div class="modal-footer">
-            	<button id="<%= userId %>" class='btn btn-primary editFormConfirm'>OK</button>
+            	<button id="<%= data.attributes.id %>" class='btn btn-primary editFormConfirm'>OK</button>
         		<button class="btn" data-dismiss="modal">Cancel</button>
             </div>
         </div>

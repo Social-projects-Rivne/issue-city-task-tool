@@ -35,8 +35,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				},
 				
 				showEditForm: function(e) {
-					this.$el.append(this.editUserTemplate( { 'userId': e.currentTarget.id } ));
+					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
+				},
+				
+				editConfirm: function(e) {
+					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'edit' } ] } ));
+					$('#confirmationModal').modal();
 				},
 				
 				showRemoveConfirmation: function(e) {
@@ -48,6 +53,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					$('#confirmationModal').modal('hide');
 					if(e.currentTarget.name == 'delete') {
 						this.model.get(e.currentTarget.id).destroy( { url: 'remove-user/' + e.currentTarget.id,
+							success: function(model, response) {
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
+								$('#notificationModal').modal();
+							},
+							error: function() {
+								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('#notificationModal').modal();
+							}
+						} );
+					}
+					if(e.currentTarget.name == 'edit') {
+						this.model.get(e.currentTarget.id).set( {
+							name: $('#userName').val(),
+							email: $('#userEmail').val(),
+							login: $('#userLogin').val(),
+							password: $('#userPassword').val(),
+							avatar: $('#userAvatar').val()
+						} ).save( { url: 'edit-user',
 							success: function(model, response) {
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
