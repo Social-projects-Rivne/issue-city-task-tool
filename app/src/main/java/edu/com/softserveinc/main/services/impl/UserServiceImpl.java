@@ -57,7 +57,18 @@ public class UserServiceImpl implements UserService {
 		return userDao.findOne(id);
 	}
 	
+	@Override
 	public List<UserModel> loadUsersList() {
 		return userDao.findAll();
+	}
+	
+	@Override
+	public UserModel getUserByName(String name) {
+		return userDao.findByName(name);
+	}
+	
+	@Override
+	public UserModel getUserByLogin(String login) {
+		return userDao.findByLogin(login);
 	}
 }
