@@ -17,4 +17,6 @@ public interface UserService {
 	public UserModel getUserByID(int userId);
 	
 	public List<UserModel> loadUsersList();
+	
+	public UserModel getUserByName(String name);
 }
