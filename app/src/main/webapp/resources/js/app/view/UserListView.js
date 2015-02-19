@@ -16,9 +16,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				
 				events: {
 					'click .btn.glyphicon-pencil': 'showEditForm',
-					'click .btn.glyphicon-remove': 'removeConfirmation',
+					'click .editFormConfirm': 'editConfirm',
+					'click .btn.glyphicon-remove': 'showRemoveConfirmation',
 					'click .confirm': 'confirm',
-					'click .reject': 'reject'
 				},
 				
 				template: _.template(AdminTemplate),
@@ -39,7 +39,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					$('#editModal').modal();
 				},
 				
-				removeConfirmation: function(e) {
+				showRemoveConfirmation: function(e) {
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'delete' } ] } ));
 					$('#confirmationModal').modal();
 				},
@@ -58,10 +58,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							}
 						} );
 					}
-				},
-				
-				reject: function() {
-					$('#confirmationModal').modal('hide');
 				}
 			});	
 			
