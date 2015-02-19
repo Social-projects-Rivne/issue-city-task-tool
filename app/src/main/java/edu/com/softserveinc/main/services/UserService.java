@@ -18,5 +18,5 @@ public interface UserService {
 	
 	public List<UserModel> loadUsersList();
 	
-	public UserModel getUserByName(String name);
+	public UserModel getUserByName(String name) throws Exception;
 }

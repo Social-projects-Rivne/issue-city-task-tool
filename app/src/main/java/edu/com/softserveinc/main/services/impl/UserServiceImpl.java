@@ -63,7 +63,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserModel getUserByName(String name) {
-		return userDao.findByName(name);
+	public UserModel getUserByName(String name) throws Exception {
+		UserModel user = userDao.findByName(name);
+		if(user == null) throw new Exception("User not found");
+		return user;
 	}
 }
