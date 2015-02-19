@@ -69,9 +69,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 						avatar: $('#add-user-form-avatar').val()
 					} ).save( {}, {
 						success: function(model, response) {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							that.$el.append(that.notificationTemplate( { 'data': response } ));
-							$('#notificationModal').modal();
+							userListView.model.fetch( { success: function() {
+								that.render();
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
+								$('#notificationModal').modal();
+							} } );
 						},
 						error: function() {
 							if($('#notificationModal')) $('#notificationModal').remove();
