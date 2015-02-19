@@ -28,7 +28,7 @@ public class UserController {
 	}
 		
 	
-	@RequestMapping(value = "add-new-user", method = RequestMethod.POST)
+	@RequestMapping(value = "user", method = RequestMethod.POST)
 	public @ResponseBody String addUserAction(@RequestBody UserModel user) {
 		String message = null;
 		
@@ -43,7 +43,7 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(value = "edit-user", method = RequestMethod.PUT)
+	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Map<String, String> editUserAction(@RequestBody UserModel user,
 			Map<String, String> message) {
 		

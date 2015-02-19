@@ -51,6 +51,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				
 				confirm: function(e) {
 					$('#confirmationModal').modal('hide');
+					$('#editModal').modal('hide');
 					if(e.currentTarget.name == 'delete') {
 						this.model.get(e.currentTarget.id).destroy( { url: 'remove-user/' + e.currentTarget.id,
 							success: function(model, response) {
@@ -70,7 +71,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							login: $('#userLogin').val(),
 							password: $('#userPassword').val(),
 							avatar: $('#userAvatar').val()
-						} ).save( { url: 'edit-user',
+						} ).save( {
 							success: function(model, response) {
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
