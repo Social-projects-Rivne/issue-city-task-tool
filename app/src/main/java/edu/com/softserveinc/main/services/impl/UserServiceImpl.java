@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
 		if(user == null) throw new Exception("User not found");
 		return user;
 	}
+	
+	@Override
+	public UserModel getUserByLogin(String login) {
+		return userDao.findByLogin(login);
+	}
 }
