@@ -100,6 +100,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 						} );
 						this.model.save( {}, { 
 							success: function(model, response) {
+								mapView.render();
 								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
