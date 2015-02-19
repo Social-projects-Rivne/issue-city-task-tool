@@ -19,17 +19,18 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String login(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception { 	  
-		UserModel user = service.getUserByName(username);
+		
+		UserModel user = service.getUserByLogin(username);
 		try{
-			
 			System.out.println(user.getPassword());
-			System.out.println(username);
-			
+			System.out.println(username + " : " + password);
 		}
 		catch(Exception ex){
 			System.out.println(ex.getLocalizedMessage());
 		}
-	    return "Success";
-	    
+		if(password.equals(user.getPassword()))
+	    	return "Success";
+	    else 
+	    	return "erroe";
 	  } 
 }
