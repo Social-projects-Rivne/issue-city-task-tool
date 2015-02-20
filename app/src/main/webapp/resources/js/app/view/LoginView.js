@@ -17,14 +17,25 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 				},
 
 				login: function(){					
-					var login = $("#login-username").val();
-					var password = $(" #login-password").val();
+					var login = $("#username").val();
+					var password = $(" #password").val();
 					if(login != "" && password != ""){
 						console.log('Login: ' + login);
 						console.log('Password: ' + password);
+
+						$.ajax({
+							url: 'login',
+							type: 'POST',
+							data: $("#loginForm").serialize(),
+							success: function(data){
+									console.log(data);
+								},
+						});	
+
 					} else{
 						console.log('Fields is empty');
 					};
+					
 				},
 
 				showLoginForm: function() {
