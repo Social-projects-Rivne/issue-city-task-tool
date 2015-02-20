@@ -1,8 +1,9 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html',
-         'model/CategoryModel', 'collection/CategoryCollection' ],
-		function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection) {
+         'model/CategoryModel', 'collection/CategoryCollection', 'text!templates/NotificationTemplate.html' ],
+		function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection, NotificationTemplate) {
 			var AddIssueView = Backbone.View.extend({
 				template: _.template(AddIssueTemplate),
+				notificationTemplate: _.template(NotificationTemplate),
 				
 				initialize: function() {
 					this.model = new IssueModel();
@@ -97,7 +98,19 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 							category: $('#issue-category').val(),
 							attachments: $('#issue-attachments').val()
 						} );
-						this.model.save();
+						this.model.save( {}, { 
+							success: function(model, response) {
+								mapView.render();
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
+								$('#notificationModal').modal();
+							},
+							error: function() {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('#notificationModal').modal();
+							}
+						} );
 					}
 				},
 				

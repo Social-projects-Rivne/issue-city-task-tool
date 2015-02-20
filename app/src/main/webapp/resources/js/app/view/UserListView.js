@@ -38,12 +38,71 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					if($('#editModal')) $('#editModal').remove();
 					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
+					
+					userName = $('#userName');
+					userEmail = $('#userEmail');
+					userLogin = $('#userLogin');
+					
+					userName.on('blur', function() {
+						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong name!';
+							this.style.color = 'red';
+						}
+					});
+					
+					userName.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
+					
+					userEmail.on('blur', function() {
+						if (!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong email!';
+							this.style.color = 'red';
+						}
+					});
+					
+					userEmail.on('focus', function() {
+						if (this.value == 'Wrong email!') this.value ='';
+						this.style.color = 'black';
+					});
+					
+					userLogin.on('blur', function() {
+						if (!/^[A-Za-z0-9_.-]+$/.test(this.value)) {
+							this.value = 'Wrong login!';
+							this.style.color = 'red';
+						}
+					});
+					
+					userLogin.on('focus', function() {
+						if (this.value == 'Wrong login!') this.value ='';
+						this.style.color = 'black';
+					});
 				},
 				
 				editConfirm: function(e) {
-					if($('#confirmationModal')) $('#confirmationModal').remove();
-					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'edit' } ] } ));
-					$('#confirmationModal').modal();
+					var isValid = true;
+					
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(userName.val())) {
+						userName.val('Wrong name!').css('color', 'red');
+						isValid = false;
+					}
+					
+					if (!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(userEmail.val())) {
+						userEmail.val('Wrong email!').css('color', 'red');
+						isValid = false;
+					}
+					
+					if (!/^[A-Za-z0-9_.-]+$/.test(userLogin.val())) {
+						userLogin.val('Wrong login!').css('color', 'red');
+						isValid = false;
+					}
+					
+					if(isValid) {
+						if($('#confirmationModal')) $('#confirmationModal').remove();
+						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'edit' } ] } ));
+						$('#confirmationModal').modal();
+					}
 				},
 				
 				showRemoveConfirmation: function(e) {

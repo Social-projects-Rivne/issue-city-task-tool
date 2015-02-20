@@ -8,7 +8,8 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			email: "",
 			login: "",
 			password: "",
-			avatar:""
+			avatar:"",
+			role_id: 1
 		}
 	});
 	

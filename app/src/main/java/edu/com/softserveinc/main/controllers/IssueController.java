@@ -52,9 +52,8 @@ public class IssueController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue", method = RequestMethod.POST)
-	public @ResponseBody String addIssue(@RequestBody Map request) {
+	public @ResponseBody Map<String, String> addIssue(@RequestBody Map request, Map<String, String> message) {
 		
-		String message = null;
 		String category = request.get("category").toString().toLowerCase();
 		String status = request.get("status").toString().toLowerCase();
 		List<CategoryModel> categories = categoryService.loadCategoriesList();
@@ -100,7 +99,13 @@ public class IssueController {
 				statusId
 		);
 
-		service.addProblem(issue);		
+		try {
+			service.addProblem(issue);
+			message.put("message", "Issue was successfully added");
+		}
+		catch (Exception ex) {
+			message.put("message", "Some problem occured! Issue was not added");
+		}		
 		
 		return message;
 	}
