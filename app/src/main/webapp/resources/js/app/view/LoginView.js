@@ -9,6 +9,8 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
 					'click .form-group #btn-close' : 'hideLoginForm',
+					'click .input-group-addon' : 'passwordToggle',
+
 				},
 				
 				initialize: function() {
@@ -36,6 +38,19 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 						console.log('Fields is empty');
 					};
 					
+				},
+
+				passwordToggle: function(){
+					if ($("#loginbox #password").attr('type') == "password"){
+						$("#loginbox #password").attr('type','text');
+						//change icom
+						$(" .glyphicon-eye-open").attr('class','glyphicon icon-eye-close glyphicon-eye-close');
+					} else {
+						$("#loginbox #password").attr('type','password');
+						$("#loginbox #password");
+						//change icom
+						$(" .glyphicon-eye-close").attr('class','glyphicon icon-eye-open glyphicon-eye-open');
+					}
 				},
 
 				showLoginForm: function() {
