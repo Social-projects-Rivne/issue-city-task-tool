@@ -43,6 +43,35 @@ td > input {
 }*/
 
 /*navbar bordercolor and background*/
+
+/*  Buttons */
+.btn:hover, .btn:focus, .btn.focus {
+  background: rgb(234, 85, 111) !important;
+  color: #FFF !important;
+  text-decoration: none;
+  border-color: rgb(213, 68, 92) !important;
+}
+.btn{
+ border-width: 1px;
+  border-color: rgb(234, 85, 111) !important; 
+  border-radius: 0 !important;
+  background-color: rgb(245, 237, 237); 
+}
+
+/* manager page buttons on issue table */
+.btn-group>.btn, .btn-group-vertical>.btn {
+  position: relative;
+  float: left;
+  background-color: white !important;
+  border-color: white !important;
+  color: rgb(233, 84, 110);
+}
+
+.btn-group>.btn:hover, .btn-group-vertical>.btn:hover, .btn-group>.btn:focus, .btn-group-vertical>.btn:focus, .btn-group>.btn:active, .btn-group-vertical>.btn:active, .btn-group>.btn.active, .btn-group-vertical>.btn.active{
+  color: black !important; 
+  
+}
+
 .navbar-default {
     border-color: #fff;
     background: -moz-linear-gradient(to right, #d5445c, #ea556f);
