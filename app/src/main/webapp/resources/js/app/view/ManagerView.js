@@ -13,7 +13,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .table .btn.delete-issue': 'showRemoveConfirmation',
 					'click .confirm': 'confirm',
 					'click #add-category-link': 'showAddCategoryForm',
-					'click #add-category': 'addCategory'
+					'click #add-category': 'addCategory',
+					'click .btn.view-on-map': 'viewOnMap',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -69,6 +70,11 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'delete issue' } ] } ));
 					$('#confirmationModal').modal();
+				},
+
+				viewOnMap: function(e){
+					router.navigate('', {trigger: true});
+					router.navigate('issues/' +  e.currentTarget.id, {trigger: true});
 				},
 
 				// filter (search)
