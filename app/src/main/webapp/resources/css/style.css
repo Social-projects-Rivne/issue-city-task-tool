@@ -10,6 +10,10 @@ li > div > div > .input-group {
 	padding: 0px;
 }
 
+td > input {
+	width: 125px !important;
+}
+
 #c_edit_user {
 	display: block !important;
 }
