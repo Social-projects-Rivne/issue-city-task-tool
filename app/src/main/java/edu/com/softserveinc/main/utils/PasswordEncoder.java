@@ -26,7 +26,7 @@ public class PasswordEncoder {
 		this.password = password;
 	}
 	
-	public boolean compear(String pass1, String pass2){
+	public boolean compare(String pass1, String pass2){
 		return encoder.matches(pass1, pass2);
 	}
 	/**

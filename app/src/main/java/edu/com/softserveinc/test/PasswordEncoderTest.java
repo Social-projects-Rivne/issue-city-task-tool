@@ -23,7 +23,7 @@ public class PasswordEncoderTest {
 	}
 	@Test
 	public void compearTest() {
-		assertTrue(encoder.compear("Pass", "$2a$11$0Ctak47c7yrhI46hnyFADefgDTw2NPVO4OgeRFGJtBE1GmXAB6.7q"));
+		assertTrue(encoder.compare("Pass", "$2a$11$0Ctak47c7yrhI46hnyFADefgDTw2NPVO4OgeRFGJtBE1GmXAB6.7q"));
 	}
 
 }

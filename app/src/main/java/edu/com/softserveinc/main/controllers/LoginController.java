@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.UserService;
+import edu.com.softserveinc.main.utils.PasswordEncoder;
 
 @Controller
 public class LoginController {
@@ -22,14 +23,14 @@ public class LoginController {
 		
 		UserModel user = service.getUserByLogin(username);
 		try{
-			System.out.println(user.getPassword());
+			System.out.println(user.getName() + " : " + user.getPassword());
 			System.out.println(username + " : " + password);
 		}
 		catch(Exception ex){
 			System.out.println(ex.getLocalizedMessage());
 		}
 		
-		if(password.equals(user.getPassword()))
+		if(new PasswordEncoder(11).compare(password, user.getPassword()))
 	    	return "Success";
 	    else 
 	    	return "error";
