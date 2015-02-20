@@ -113,6 +113,16 @@ td > input {
     color: #d9d7d7;
 }
 
+#manager_menu {
+  margin-top: 30px;
+  padding: 0;
+}
+
+#manager_menu li {
+  list-style-type: none;
+  padding-top: 25px;
+}
+
 .btn-default {
 	/* display: block !important; */
 	margin: 0 auto !important;
