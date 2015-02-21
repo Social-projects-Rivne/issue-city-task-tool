@@ -1,27 +1,29 @@
-define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel', 'text!templates/ConfirmationTemplate.html' ],
-		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel, ConfirmationTemplate) {
+define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel', 'text!templates/ConfirmationTemplate.html', 'text!templates/EditIssueTemplate.html' ],
+		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel, ConfirmationTemplate, EditIssueTemplate) {
 			
 			var that = null;
 	
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
-					'click #issue-filter  #filter-issue': 'issueFilter',
-					'click #issue-filter  #reset-filter-issue': 'resetFilter',
-					'change .category': 'quickChangeCategory',
-					'change .status': 'quickChangeStatus',
-					'click .table .btn.delete-issue': 'showRemoveConfirmation',
-					'click .confirm': 'confirm',
-					'click #add-category-link': 'showAddCategoryForm',
-					'click #add-category': 'addCategory',
-					'click .btn.view-on-map': 'viewOnMap',
+					'click #issue-filter  #filter-issue'		: 'issueFilter',
+					'click #issue-filter  #reset-filter-issue'	: 'resetFilter',
+					'change .category'							: 'quickChangeCategory',
+					'change .status'							: 'quickChangeStatus',
+					'click .table .btn.delete-issue'			: 'showRemoveConfirmation',
+					'click .confirm'							: 'confirm',
+					'click #add-category-link'					: 'showAddCategoryForm',
+					'click #add-category'						: 'addCategory',
+					'click .btn.view-on-map'					: 'viewOnMap',
+					'click .glyphicon.glyphicon-pencil'			: 'editIssue',
 				},
 				
-				managerTemplate: _.template(ManagerTemplate),
-				issueTableTemplate: _.template(IssueTableTemplate),
-				searchTemplate: _.template(ManagerSearchTemplate),
-				notificationTemplate: _.template(NotificationTemplate),
-				confirmationTemplate: _.template(ConfirmationTemplate),
+				managerTemplate			: _.template(ManagerTemplate),
+				issueTableTemplate		: _.template(IssueTableTemplate),
+				searchTemplate			: _.template(ManagerSearchTemplate),
+				notificationTemplate	: _.template(NotificationTemplate),
+				confirmationTemplate	: _.template(ConfirmationTemplate),
+				editIssueTemplate		: _.template(EditIssueTemplate),
 				
 				issues: null,
 				issuesFilterList: null,
