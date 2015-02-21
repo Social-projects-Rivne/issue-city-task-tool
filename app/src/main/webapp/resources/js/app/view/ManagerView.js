@@ -15,7 +15,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click #add-category-link'					: 'showAddCategoryForm',
 					'click #add-category'						: 'addCategory',
 					'click .btn.view-on-map'					: 'viewOnMap',
-					'click .glyphicon.glyphicon-pencil'			: 'editIssue',
+					'click .glyphicon.glyphicon-pencil'			: 'showEditIssueForm',
+					'click .editFormConfirm'					: 'editIssue',
 				},
 				
 				managerTemplate			: _.template(ManagerTemplate),
@@ -66,6 +67,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.resetFilter();
 					this.searchRender();
 					$('#add-category-link').popover();
+					this.
 				},
 				
 				showRemoveConfirmation: function(e){
@@ -197,8 +199,16 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 								
 				showAddCategoryForm: function(e) {
 					e.preventDefault();
-				}
+				},
+				
+				showEditIssueForm: function(){
 					
+				},
+				
+				editIssue: function(){
+					
+				}
+									
 			});
 			
 			return ManagerView;
