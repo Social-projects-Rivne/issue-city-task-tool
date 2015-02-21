@@ -1,5 +1,8 @@
-define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel' ],
-		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel) {
+define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel', 'text!templates/ConfirmationTemplate.html' ],
+		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel, ConfirmationTemplate) {
+			
+			var that = null;
+	
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
@@ -7,15 +10,18 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
 					'change .category': 'quickChangeCategory',
 					'change .status': 'quickChangeStatus',
-					'click .table .btn.delete-issue': 'delete',
+					'click .table .btn.delete-issue': 'showRemoveConfirmation',
+					'click .confirm': 'confirm',
 					'click #add-category-link': 'showAddCategoryForm',
-					'click #add-category': 'addCategory'
+					'click #add-category': 'addCategory',
+					'click .btn.view-on-map': 'viewOnMap',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
 				searchTemplate: _.template(ManagerSearchTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
+				confirmationTemplate: _.template(ConfirmationTemplate),
 				
 				issues: null,
 				issuesFilterList: null,
@@ -60,15 +66,15 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					$('#add-category-link').popover();
 				},
 				
-				delete: function(e){
-					var that = this;
-					$.ajax({
-						url: 'delete-issue/' + e.currentTarget.id,
-						type: 'POST',
-						success: function(){
-								that.resetFilter();
-							},
-					});	
+				showRemoveConfirmation: function(e){
+					if($('#confirmationModal')) $('#confirmationModal').remove();
+					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'delete issue' } ] } ));
+					$('#confirmationModal').modal();
+				},
+
+				viewOnMap: function(e){
+					router.navigate('', {trigger: true});
+					router.navigate('issues/' +  e.currentTarget.id, {trigger: true});
 				},
 
 				// filter (search)

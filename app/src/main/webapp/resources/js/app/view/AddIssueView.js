@@ -1,11 +1,15 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html',
          'model/CategoryModel', 'collection/CategoryCollection', 'text!templates/NotificationTemplate.html' ],
 		function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection, NotificationTemplate) {
+			
+			var that = null;
+	
 			var AddIssueView = Backbone.View.extend({
 				template: _.template(AddIssueTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				
 				initialize: function() {
+					that = this;
 					this.model = new IssueModel();
 					categoryCollection = new CategoryCollection();
 				},
@@ -20,7 +24,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 				},
 				
 				render: function() {
-					var that = this;
 					
 					categoryCollection.fetch( { success: function() {
 						that.$el.html(that.template( { "categories": categoryCollection.toJSON() } ));

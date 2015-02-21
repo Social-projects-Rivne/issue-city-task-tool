@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.UserService;
+import edu.com.softserveinc.main.utils.PasswordEncoder;
 
 @Controller
 public class LoginController {
@@ -17,15 +19,20 @@ public class LoginController {
 	private UserService service;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String login(@RequestParam("username") String username, @RequestParam("password") String password) { 	  
+	public @ResponseBody String login(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception { 	  
 		
+		UserModel user = service.getUserByLogin(username);
 		try{
-			System.out.println((service.getUserByLogin("11gsdfg")));
+			System.out.println(user.getName() + " : " + user.getPassword());
+			System.out.println(username + " : " + password);
 		}
 		catch(Exception ex){
 			System.out.println(ex.getLocalizedMessage());
 		}
-	    return "Success";
-	    
+		
+		if(new PasswordEncoder(11).compare(password, user.getPassword()))
+	    	return "Success";
+	    else 
+	    	return "error";
 	  } 
 }

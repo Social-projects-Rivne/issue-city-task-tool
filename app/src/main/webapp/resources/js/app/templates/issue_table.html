@@ -6,12 +6,14 @@
 	                        	<% if(category.id == data[0].issue.categoryId) { %>
 	                        	<% cat = category.name } %>
                         	<% }); %> 
-	                        <input id="<%= data[0].issue.id %>" class="category form-control" type="text" list="categories" value="<%= cat %>" />
-                        	<datalist id="categories">
+	                        <select id="<%= data[0].issue.id %>" class="category form-control">
 								<% _.map(data[1].categories, function(category) { %>
-									<option><%= category.name %></option>
+									<option <% if(category.name == cat) { %>
+										selected
+									<% } %>
+									><%= category.name %></option>
 								<% }); %>
-							</datalist>
+							</select>
 						</td>
                         <td><%= data[0].issue.description %></td>
                         <td> <%= new Date().toLocaleString() %> </td>
@@ -20,17 +22,20 @@
 	                        	<% if(status.id == data[0].issue.statusId) { %>
 	                        	<% stat = status.name } %>
                         	<% }); %>
-	                        <input id="<%= data[0].issue.id %>" class="status form-control" type="text" list="statuses" value="<%= stat %>" />
-                        	<datalist id="statuses">
+	                        <select id="<%= data[0].issue.id %>" class="status form-control">
 								<% _.map(data[2].statuses, function(status) { %>
-									<option><%= status.name %></option>
+									<option <% if(status.name == stat) { %>
+										selected
+									<% } %>
+									><%= status.name %></option>
 								<% }); %>
-							</datalist>
+							</select>
                         </td>
                         <td>
                             <div class="btn-toolbar">
                                 <div class="btn-group">
                                     <button class="btn delete-issue" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-remove"></span></button>
+                                    <button class="btn view-on-map" id="<%= data[0].issue.id %>" title="Click here to view issue on the map"><span class="glyphicon glyphicon-flag"></span></button>
                                     <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-pencil"></span></button>
                                     <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-up"></span></button>
                                     <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-down"></span></button>

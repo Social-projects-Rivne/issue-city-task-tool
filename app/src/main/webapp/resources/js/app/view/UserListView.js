@@ -100,21 +100,21 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 					
 					if(isValid) {
 						if($('#confirmationModal')) $('#confirmationModal').remove();
-						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'edit' } ] } ));
+						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'id': e.currentTarget.id }, { 'action': 'edit user' } ] } ));
 						$('#confirmationModal').modal();
 					}
 				},
 				
 				showRemoveConfirmation: function(e) {
 					if($('#confirmationModal')) $('#confirmationModal').remove();
-					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this user?' }, { 'userId': e.currentTarget.id }, { 'action': 'delete' } ] } ));
+					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this user?' }, { 'id': e.currentTarget.id }, { 'action': 'delete user' } ] } ));
 					$('#confirmationModal').modal();
 				},
 				
 				confirm: function(e) {
 					$('#confirmationModal').modal('hide');
 					$('#editModal').modal('hide');
-					if(e.currentTarget.name == 'delete') {
+					if(e.currentTarget.name == 'delete user') {
 						this.model.get(e.currentTarget.id).destroy( {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();
@@ -128,7 +128,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							}
 						} );
 					}
-					if(e.currentTarget.name == 'edit') {
+					if(e.currentTarget.name == 'edit user') {
 						this.model.get(e.currentTarget.id).set( {
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
@@ -145,6 +145,15 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 								$('#notificationModal').modal();
 							}
 						} );
+					}
+					if(e.currentTarget.name == 'delete issue') {
+						$.ajax({
+							url: 'delete-issue/' + e.currentTarget.id,
+							type: 'POST',
+							success: function(){
+									managerView.resetFilter();
+							}
+						});
 					}
 				}
 			});	
