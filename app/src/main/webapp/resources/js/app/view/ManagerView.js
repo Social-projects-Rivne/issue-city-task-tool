@@ -1,5 +1,5 @@
-define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel', 'text!templates/ConfirmationTemplate.html' ],
-		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel, ConfirmationTemplate) {
+define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueCollection', 'text!templates/Manager.html', 'text!templates/issue_table.html', 'text!templates/Manager_search.html', 'collection/CategoryCollection', 'model/IssueModel', 'collection/StatusCollection', 'text!templates/NotificationTemplate.html', 'model/CategoryModel', 'text!templates/ConfirmationTemplate.html', 'text!templates/EditIssueTemplate.html' ],
+		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel, ConfirmationTemplate, EditIssueTemplate) {
 			
 			var that = null;
 	
@@ -17,13 +17,16 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
-				},
+					'click .edit-issue'	: 'showEditIssueForm',
+					'click .editFormConfirm' : 'editIssue',
+},
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
 				searchTemplate: _.template(ManagerSearchTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
+				editIssueTemplate		: _.template(EditIssueTemplate),
 				
 				issues: null,
 				issuesFilterList: null,
@@ -212,8 +215,67 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 								
 				showAddCategoryForm: function(e) {
 					e.preventDefault();
-				}
+				},
+				
+				showEditIssueForm: function(){
+					// remove existing modal, call Template, call modal
+					if($('#addModal')) $('#addModal').remove();
+					this.$el.append(this.editIssueTemplate);
+					$('#addModal').modal();
+					// assign jQuery selectors for variables
+					issueDescription	= 	$('#edit-issue-form-description');
+					issueAttachment	 	= 	$('#edit-issue-form-attachment');
+					issueCategory		=	$('#edit-issue-form-category');
+					issueStatus			=	$('#edit-issue-form-status');
+					issuePriority		=	$('#edit-issue-form-priority');
+					// RegExp validate for fields
+					issueDescription.on('blur', function() {
+						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong name!';
+							this.style.color = 'red';
+					});
+					issueDescription.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
+					issueAttachment.on('blur', function() {
+						//
+					});
+					issueAttachment.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
+					issueCategory.on('blur', function() {
+						//
+					});
+					issueCategory.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
+					issueStatus.on('blur', function() {
+						//
+					});
+					issueStatus.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
+					issuePriority.on('blur', function() {
+						//
+						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
+							this.value = 'Wrong name!';
+							this.style.color = 'red';
+					});
+					issuePriority.on('focus', function() {
+						if (this.value == 'Wrong name!') this.value ='';
+						this.style.color = 'black';
+					});
 					
+				},
+				
+				editIssue: function(){
+					
+				}
+									
 			});
 			
 			return ManagerView;

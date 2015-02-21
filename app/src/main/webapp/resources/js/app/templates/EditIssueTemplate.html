@@ -1,0 +1,53 @@
+<!-- EditIssueTemplate-->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">         
+    <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">User issue editing</h4>			
+			</div>
+			<div class="modal-body">         
+                
+                <!--description-->
+                <div class="form-group">
+                    <label for="description" class="control-label col-xs-4">Description</label>
+                    <div class="col-xs-6">
+                        <input type="description" class="form-control input-sm" id="edit-issue-form-description" placeholder="Description" name="description" value="<%= %">
+                    </div>
+                </div>
+                <!--attachment-->
+                <div class="form-group">
+                    <label for="attachment" class="control-label col-xs-4">Date</label>
+                    <div class="col-xs-6">
+                        <input type="attachmnet" class="form-control input-sm" id="edit-issue-form-attachment" placeholder="Attachment" name="attachment" value="<%= %">
+                    </div>
+                </div>
+               <!--category-->
+               		<div class="form-group">
+                    <label for="category" class="control-label col-xs-4">Date</label>
+                    <div class="col-xs-6">
+                        <input type="category" class="form-control input-sm" id="edit-issue-form-category" placeholder="Category" name="category" value="<%= %">
+                    </div>
+                </div>
+               <!--status-->
+               		<div class="form-group">
+                    <label for="status" class="control-label col-xs-4">Date</label>
+                    <div class="col-xs-6">
+                        <input type="status" class="form-control input-sm" id="edit-issue-form-status" placeholder="Status" name="status" value="<%= %">
+                    </div>
+                </div>
+               <!--priority-->
+               		<div class="form-group">
+                    <label for="priority" class="control-label col-xs-4">Date</label>
+                    <div class="col-xs-6">
+                        <input type="priority" class="form-control input-sm" id="edit-issue-form-priority" placeholder="Priority" name="priority" value="<%= %">
+                    </div>
+                	</div>
+             </div>
+    			<div class="modal-footer">
+    				<button class='btn btn-primary editFormConfirm'>OK</button>
+        			<button class="btn" data-dismiss="modal">Cancel</button>
+    			</div>
+			</div>
+		</div>
+</div>
