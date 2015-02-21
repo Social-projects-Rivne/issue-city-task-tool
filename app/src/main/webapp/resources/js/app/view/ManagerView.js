@@ -15,6 +15,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click #add-category-link': 'showAddCategoryForm',
 					'click #add-category': 'addCategory',
 					'click .btn.view-on-map': 'viewOnMap',
+					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
+					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -66,6 +68,21 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					$('#add-category-link').popover();
 				},
 				
+				//
+				issueFocus: function(e){
+					console.log('work');
+					$(e.currentTarget.getElementsByClassName('btn-toolbar')[0]).fadeIn(100);
+					e.currentTarget.style.setProperty('background',"white");
+				},	
+
+				//
+				issueUnFocus: function(e){
+					console.log('work Un');
+					$(e.currentTarget.getElementsByClassName('btn-toolbar')[0]).fadeOut(50);
+
+					e.currentTarget.style.setProperty('background',"");
+				},
+
 				showRemoveConfirmation: function(e){
 					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'delete issue' } ] } ));
