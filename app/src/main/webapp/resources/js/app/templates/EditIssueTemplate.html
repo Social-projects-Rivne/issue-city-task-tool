@@ -1,0 +1,59 @@
+<!-- EditIssueTemplate-->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">         
+    <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">User issue editing</h4>			
+			</div>
+			<div class="modal-body">         
+                <!--id-->
+                <div class="form-group">
+                    <label for="id" class="control-label col-xs-4">Id</label>
+                    <div class="col-xs-6">
+                        <input type="id" class="form-control input-sm" id="id" placeholder="Id" name="id" value="<%= %>">
+                    </div>
+                </div>
+                <!--name-->
+                <div class="form-group">
+                    <label for="name" class="control-label col-xs-4">Name</label>
+                    <div class="col-xs-6">
+                        <input type="name" class="form-control input-sm" id="name" placeholder="Name" name="name" value="">
+                    </div>
+                </div>
+                <!--category-->
+                <div class="form-group">
+                    <label for="category" class="control-label col-xs-4">Category</label>
+                    <div class="col-xs-6">
+                        <input type="category" class="form-control input-sm" id="category" placeholder="Category" name="category" value="">
+                    </div>
+                </div>
+                <!--description-->
+                <div class="form-group">
+                    <label for="description" class="control-label col-xs-4">Description</label>
+                    <div class="col-xs-6">
+                        <input type="description" class="form-control input-sm" id="user_password" placeholder="Description" name="description" value="">
+                    </div>
+                </div>
+                <!--date-->
+                <div class="form-group">
+                    <label for="date" class="control-label col-xs-4">Date</label>
+                    <div class="col-xs-6">
+                        <input type="date" class="form-control input-sm" id="date" placeholder="Date" name="date" value="">
+                    </div>
+                </div>
+                 <!--statusId-->
+                <div class="form-group">
+                    <label for="statusId" class="control-label col-xs-4">Status Id</label>
+                    <div class="col-xs-6">
+                        <input type="statusId" class="form-control input-sm" id="statusId" placeholder="Status Id" name="statusId" value="">
+                    </div>
+                </div>
+             </div>
+    			<div class="modal-footer">
+    				<button class='btn btn-primary addFormConfirm'>OK</button>
+        			<button class="btn" data-dismiss="modal">Cancel</button>
+    			</div>
+			</div>
+		</div>
+</div>
