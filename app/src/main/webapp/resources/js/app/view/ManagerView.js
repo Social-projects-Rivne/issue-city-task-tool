@@ -233,7 +233,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
 							this.value = 'Wrong name!';
 							this.style.color = 'red';
-					});
+							}
+						});
 					issueDescription.on('focus', function() {
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
@@ -264,7 +265,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
 							this.value = 'Wrong name!';
 							this.style.color = 'red';
-					});
+							}
+						});
 					issuePriority.on('focus', function() {
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
