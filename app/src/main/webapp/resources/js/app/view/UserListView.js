@@ -82,7 +82,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				
 				editConfirm: function(e) {
 					var isValid = true;
-					
+					console.log('UserListView: editConfirm');
 					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(userName.val())) {
 						userName.val('Wrong name!').css('color', 'red');
 						isValid = false;

@@ -19,7 +19,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editFormConfirm' : 'editIssue',
-},
+				},
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
@@ -275,6 +275,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				editIssue: function(e) {
+					console.log('editIssue - ManagerView');
 					var isValid = true;
 					
 					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
