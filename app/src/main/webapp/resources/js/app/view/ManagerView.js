@@ -71,19 +71,50 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					$('#add-category-link').popover();
 				},
 				
-				//
+				//for issue table style
 				issueFocus: function(e){
-					console.log('work');
-					$(e.currentTarget.getElementsByClassName('btn-toolbar')[0]).fadeIn(100);
+					var categoryCell = $(e.currentTarget).find('#category-cell');
+					var statusCell = $(e.currentTarget).find('#status-cell');
+					
+					//hide div with category name
+					$($(categoryCell).find('#name')).hide();
+					//hide div with category status 
+					$($(statusCell).find('#name')).hide();
+
+					//show buttons
+					$(e.currentTarget.getElementsByClassName('btn-toolbar')[0]).fadeIn(50);
+					
+					//show all dropdun lists in row
+					$(e.currentTarget).find('select').show();
 					e.currentTarget.style.setProperty('background',"white");
+					//e.currentTarget.style.setProperty("font-weight","bold");
 				},	
 
-				//
+				//for issue table style
 				issueUnFocus: function(e){
-					console.log('work Un');
-					$(e.currentTarget.getElementsByClassName('btn-toolbar')[0]).fadeOut(50);
+					
+					var categoryCell = $(e.currentTarget).find('#category-cell');
+					var statusCell = $(e.currentTarget).find('#status-cell');
+					
+					//hide buttons
+					$(e.currentTarget.getElementsByClassName('btn-toolbar')[0]).fadeOut(0);
+					
+					//change category cell
+					$($(categoryCell).find('#name')).empty();
+					$($(categoryCell).find('#name')).append($(categoryCell).find('select').val());
+					$($(categoryCell).find('#name')).show();
+					
+					//chnge status cell
+					$($(statusCell).find('#name')).empty();
+					$($(statusCell).find('#name')).append($(statusCell).find('select').val());
+					$($(statusCell).find('#name')).show();
 
+					//hide all dropdun lists in row
+					$(e.currentTarget).find('select').hide();
+					
+					//change style of row
 					e.currentTarget.style.setProperty('background',"");
+					//e.currentTarget.style.setProperty("font-weight","");
 				},
 
 				showRemoveConfirmation: function(e){
