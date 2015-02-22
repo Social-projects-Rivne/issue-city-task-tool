@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.softserveinc.main.dao.CommentDao;
 import edu.com.softserveinc.main.models.CommentModel;
 import edu.com.softserveinc.main.services.CommentService;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 	
 	@Autowired
