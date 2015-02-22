@@ -124,8 +124,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 						userName.val('Wrong name!').css('color', 'red');
 						isValid = false;
 					}
-					
-					if (!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(userEmail.val())) {
+					// old regexp for email: ^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$  (don't matched xx@xx.xx.xx)
+					if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(userEmail.val())) {
 						userEmail.val('Wrong email!').css('color', 'red');
 						isValid = false;
 					}

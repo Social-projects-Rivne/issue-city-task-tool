@@ -19,14 +19,14 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editFormConfirm' : 'editIssue',
-},
+				},
 				
 				managerTemplate: _.template(ManagerTemplate),
 				issueTableTemplate: _.template(IssueTableTemplate),
 				searchTemplate: _.template(ManagerSearchTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
-				editIssueTemplate		: _.template(EditIssueTemplate),
+				editIssueTemplate: _.template(EditIssueTemplate),
 				
 				issues: null,
 				issuesFilterList: null,
@@ -248,14 +248,14 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					e.preventDefault();
 				},
 				
-				showEditIssueForm: function(){
+				showEditIssueForm: function(e){
 					// remove existing modal, call Template, call modal
-					if($('#addModal')) $('#addModal').remove();
-					this.$el.append(this.editIssueTemplate);
+					if($('#addModal')) $('#addModal').remove(); 
+					this.$el.append(this.editIssueTemplate(this.issues.get(e.currentTarget.id).toJSON()));
 					$('#addModal').modal();
 					// assign jQuery selectors for variables
 					issueDescription	= 	$('#edit-issue-form-description');
-					issueAttachment	 	= 	$('#edit-issue-form-attachment');
+					issueAttachment	 	= 	$('#edit-issue-form-attachments');
 					issueCategory		=	$('#edit-issue-form-category');
 					issueStatus			=	$('#edit-issue-form-status');
 					issuePriority		=	$('#edit-issue-form-priority');
@@ -305,7 +305,38 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					
 				},
 				
-				editIssue: function(){
+				editIssue: function(e) {
+					console.log('editIssue - ManagerView');
+					var isValid = true;
+					
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+						issueDescription.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
+						issueAttachment.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
+						issueCategory.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
+						issueStatus.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
+						issuePriority.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}
+		/*---*/		
+					if(isValid) {
+						$('#addModal').modal('hide');
+						this.model.set( {
+							description: $('#edit-issue-form-description').val(),
+							attachments: $('#edit-issue-form-attachments').val(),
+							category: $('#edit-issue-form-category').val(),
+							status: $('#edit-issue-form-status').val(),
+							priorityId: $('#edit-issue-form-priority').val() /*priorityId?*/
+						} ).save();
+					}
 					
 				}
 									
