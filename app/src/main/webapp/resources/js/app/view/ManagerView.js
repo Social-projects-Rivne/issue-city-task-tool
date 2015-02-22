@@ -220,7 +220,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				showEditIssueForm: function(e){
 					// remove existing modal, call Template, call modal
 					if($('#addModal')) $('#addModal').remove(); 
-					//console.log(e.currentTarget.id);
 					this.$el.append(this.editIssueTemplate(this.issues.get(e.currentTarget.id).toJSON()));
 					$('#addModal').modal();
 					// assign jQuery selectors for variables
@@ -275,7 +274,37 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					
 				},
 				
-				editIssue: function(){
+				editIssue: function(e) {
+					var isValid = true;
+					
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+						issueDescription.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
+						issueAttachment.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
+						issueCategory.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
+						issueStatus.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
+						issuePriority.val('Wrong value!').css('color', 'red');
+						isValid = false;
+					}
+		/*---*/		
+					if(isValid) {
+						$('#addModal').modal('hide');
+						this.model.set( {
+							description: $('#edit-issue-form-description').val(),
+							attachments: $('#edit-issue-form-attachments').val(),
+							category: $('#edit-issue-form-category').val(),
+							status: $('#edit-issue-form-status').val(),
+							priorityId: $('#edit-issue-form-priority').val() /*priorityId?*/
+						} ).save();
+					}
 					
 				}
 									
