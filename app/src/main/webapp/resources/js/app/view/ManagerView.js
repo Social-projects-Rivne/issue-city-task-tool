@@ -18,7 +18,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
-					'click .editFormConfirm' : 'editIssue',
+					'click .editIssueConfirm' : 'editIssue',
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -250,9 +250,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				
 				showEditIssueForm: function(e){
 					// remove existing modal, call Template, call modal
-					if($('#addModal')) $('#addModal').remove(); 
+					if($('#editIssueModal')) $('#editIssueModal').remove(); 
 					this.$el.append(this.editIssueTemplate(this.issues.get(e.currentTarget.id).toJSON()));
-					$('#addModal').modal();
+					$('#editIssueModal').modal();
 					// assign jQuery selectors for variables
 					issueDescription	= 	$('#edit-issue-form-description');
 					issueAttachment	 	= 	$('#edit-issue-form-attachments');
@@ -306,8 +306,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				editIssue: function(e) {
-					console.log('editIssue - ManagerView');
-					var isValid = true;
+					console.log('ManagerView: Start of method (editIssue)');
+					/*var isValid = true;
 					
 					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
@@ -325,18 +325,19 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
 						issuePriority.val('Wrong value!').css('color', 'red');
 						isValid = false;
-					}
+					}*/
 		/*---*/		
-					if(isValid) {
-						$('#addModal').modal('hide');
-						this.model.set( {
+					/*if(isValid) {*/
+						$('#editIssueModal').modal('hide');
+						this.issue.set( {
 							description: $('#edit-issue-form-description').val(),
 							attachments: $('#edit-issue-form-attachments').val(),
 							category: $('#edit-issue-form-category').val(),
 							status: $('#edit-issue-form-status').val(),
 							priorityId: $('#edit-issue-form-priority').val() /*priorityId?*/
 						} ).save();
-					}
+						console.log ("ManagerView: End of method (editIssue)")
+					/*}*/
 					
 				}
 									
