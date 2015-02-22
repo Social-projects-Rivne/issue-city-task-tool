@@ -19,7 +19,7 @@ public class LoginController {
 	private UserService service;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String login(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception { 	  
+	public @ResponseBody UserModel login(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception { 	  
 		
 		UserModel user = service.getUserByLogin(username);
 		try{
@@ -31,8 +31,8 @@ public class LoginController {
 		}
 		
 		if(new PasswordEncoder(11).compare(password, user.getPassword()))
-	    	return "Success";
+	    	return user;
 	    else 
-	    	return "error";
+	    	return null;
 	  } 
 }

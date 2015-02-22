@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
-		function($, _, Backbone, LoginTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/login.html', ],
+		function($, _, Backbone, UserModel, LoginTemplate) {
 			var LoginView = Backbone.View.extend({
 				
 				loginTemplate: _.template(LoginTemplate),
@@ -18,7 +18,8 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 					$('.login.modal').append(this.loginTemplate);
 				},
 
-				login: function(){					
+				login: function(){
+					var user = null;
 					var login = $("#username").val();
 					var password = $(" #password").val();
 					if(login != "" && password != ""){
@@ -31,9 +32,11 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/login.html', ],
 							data: $("#loginForm").serialize(),
 							success: function(data){
 									console.log(data);
+									user = new UserModel(data);
+									console.log(user.toJSON());
 								},
 						});	
-
+						
 					} else{
 						console.log('Fields is empty');
 					};
