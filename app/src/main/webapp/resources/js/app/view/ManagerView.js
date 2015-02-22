@@ -17,7 +17,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
-					'click .edit-issue'	: 'showEditIssueForm', //no glyphicon-pencil !!!
+					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editFormConfirm' : 'editIssue',
 },
 				
@@ -220,12 +220,12 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				showEditIssueForm: function(e){
 					// remove existing modal, call Template, call modal
 					if($('#addModal')) $('#addModal').remove(); 
-					console.log(e.currentTarget.id);
+					//console.log(e.currentTarget.id);
 					this.$el.append(this.editIssueTemplate(this.issues.get(e.currentTarget.id).toJSON()));
 					$('#addModal').modal();
 					// assign jQuery selectors for variables
 					issueDescription	= 	$('#edit-issue-form-description');
-					issueAttachment	 	= 	$('#edit-issue-form-attachment');
+					issueAttachment	 	= 	$('#edit-issue-form-attachments');
 					issueCategory		=	$('#edit-issue-form-category');
 					issueStatus			=	$('#edit-issue-form-status');
 					issuePriority		=	$('#edit-issue-form-priority');
