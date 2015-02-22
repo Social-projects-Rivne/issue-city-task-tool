@@ -12,28 +12,31 @@
 			                <div class="form-group">
 			                    <label for="description" class="control-label col-xs-4">Description</label>
 			                    <div class="col-xs-6">
-			                        <input type="description" class="form-control input-sm" id="edit-issue-form-description" placeholder="Description" name="description" value="<%= %>">
+			                        <input type="text" class="form-control input-sm" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
 			                    </div>
 			                </div>
                 <!--attachment-->
 		                <div class="form-group">
 		                    <label for="attachment" class="control-label col-xs-4">Attachment</label>
 		                    <div class="col-xs-6">
-		                        <input type="attachmnet" class="form-control input-sm" id="edit-issue-form-attachment" placeholder="Attachment" name="attachment" value="<%= %>">
+		                        <input type="text" class="form-control input-sm" id="edit-issue-form-attachment" value="<%= attachments %>" placeholder="attachment" name="attachment">
 		                    </div>
 		                </div>
                <!--category-->
                		    <div class="btn-group">
 						    <button class="btn dropdown-toggle btn-small" data-toggle="dropdown" id="edit-issue-form-category">Category <span class="caret"></span></button>
 							    <ul class="dropdown-menu">
-								    <li><a href="#">Category 1</a></li>
-								    <li><a href="#">Category 2</a></li>
-								    <li><a href="#">Category 3</a></li>
+								    <li><a href="#">1</a></li>
+								    <li><a href="#">2</a></li>
+								    <li><a href="#">3</a></li>
 								</ul>
 					    </div>
                <!--status-->
+               
+               <!-- value=" -->
+               
                	        <div class="btn-group">
-						    <button class="btn dropdown-toggle btn-small" data-toggle="dropdown" id="edit-issue-form-status">Status<span class="caret" value="<%= %>"></span></button>
+						    <button class="btn dropdown-toggle btn-small" data-toggle="dropdown" id="edit-issue-form-status" >Status<span class="caret"></span></button>
 							    <ul class="dropdown-menu">
 								    <li><a href="#">New</a></li>
 								    <li><a href="#">To Resolve</a></li>
@@ -43,7 +46,7 @@
 					    </div>
                <!--priority-->
                			<div class="btn-group">
-						    <button class="btn dropdown-toggle btn-small" data-toggle="dropdown" id="edit-issue-form-priority">Priority<span class="caret" value="<%= %>"></span></button>
+						    <button class="btn dropdown-toggle btn-small" data-toggle="dropdown" id="edit-issue-form-priority">Priority<span class="caret"></span></button>
 							    <ul class="dropdown-menu">
 								    <li><a href="#">Low</a></li>
 								    <li><a href="#">Medium</a></li>
