@@ -26,6 +26,12 @@ td > input {
 	float: right;
 }
 
+#form-container img.img-thumbnail {
+  width: 200px;
+  margin-left: 45px;
+  height: 110px;
+}
+
 .container {
     width: 100%;
     padding-left: 0px;
