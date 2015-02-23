@@ -10,7 +10,9 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			description: "",
 			mapPointer: "",
 			attachments: "",
-			category: ""
+			category: "",
+			statusId: "1",
+			categoryId: "1"
 		}
 	});
 	

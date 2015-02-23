@@ -253,14 +253,18 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				showEditIssueForm: function(e){
 					// remove existing modal, call Template, call modal
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
-					this.$el.append(this.editIssueTemplate(this.issues.get(e.currentTarget.id).toJSON()));
+					//get issue from collection by ID for load fields in template
+					this.issue=this.issues.get(e.currentTarget.id);
+					console.log (this.issue);
+					this.$el.append(this.editIssueTemplate(this.issue.toJSON()));
+					
 					$('#editIssueModal').modal();
 					// assign jQuery selectors for variables
-					issueDescription	= 	$('#edit-issue-form-description');
-					issueAttachment	 	= 	$('#edit-issue-form-attachments');
-					issueCategory		=	$('#edit-issue-form-category');
-					issueStatus			=	$('#edit-issue-form-status');
-					issuePriority		=	$('#edit-issue-form-priority');
+					issueDescription = $('#edit-issue-form-description');
+					issueAttachment = $('#edit-issue-form-attachments');
+					issueCategory =	$('#edit-issue-form-category');
+					issueStatus = $('#edit-issue-form-status');
+					issuePriority =	$('#edit-issue-form-priority');
 					// RegExp validate for fields
 					issueDescription.on('blur', function() {
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
@@ -307,11 +311,11 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					
 				},
 				
-				editIssue: function(e) {
+			editIssue: function(e) {
 					console.log('ManagerView: Start of method (editIssue)');
-					/*var isValid = true;
+					var isValid = true;
 					
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+				/*	if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
@@ -328,17 +332,18 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						issuePriority.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}*/
-		/*---*/		
+	
 					/*if(isValid) {*/
 						$('#editIssueModal').modal('hide');
 						this.issue.set( {
-							description: $('#edit-issue-form-description').val(),
-							attachments: $('#edit-issue-form-attachments').val(),
-							category: $('#edit-issue-form-category').val(),
-							status: $('#edit-issue-form-status').val(),
-							priorityId: $('#edit-issue-form-priority').val() /*priorityId?*/
+							description: $('#edit-issue-form-description').val()
+							/*attachments: $('#edit-issue-form-attachments').val()*/
+							/*priorityId: $('#edit-issue-form-priority').val()*/ 
 						} ).save();
-						console.log ("ManagerView: End of method (editIssue)")
+						console.log ("ManagerView: End of method (editIssue)");
+						console.log ($('#edit-issue-form-description').val());
+						console.log ($('#edit-issue-form-attachments').val());
+						/*console.log ($('#edit-issue-form-priority').val());*/
 					/*}*/
 					
 				}

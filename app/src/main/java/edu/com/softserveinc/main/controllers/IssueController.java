@@ -113,7 +113,7 @@ public class IssueController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody String editIssue(@RequestBody Map request) {
-		
+		System.out.println("IssueController java method");
 		String message = null;
 		String category = request.get("category").toString().toLowerCase();
 		String status = request.get("status").toString().toLowerCase();
@@ -125,6 +125,8 @@ public class IssueController {
 		int statusId = 0;
 		
 		IssueModel issue = service.getByID(Integer.parseInt(request.get("id").toString()));
+		System.out.println(request.get("description"));
+		System.out.println(service.getByID(Integer.parseInt(request.get("id").toString())));
 		
 		if(!category.equals("")) {
 			for(int i = 0; i < categories.size(); i++) {
