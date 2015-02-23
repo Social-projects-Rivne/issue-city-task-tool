@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ public class IssueController {
 	}
 	
 	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody void deleteIssue(@PathVariable("id") int id) {
 		service.deleteProblem(id);
 		System.out.print(id);
@@ -112,6 +114,7 @@ public class IssueController {
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody String editIssue(@RequestBody Map request) {
 		
 		String message = null;

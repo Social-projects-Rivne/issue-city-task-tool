@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +23,14 @@ public class UserController {
 		
 	
 	@RequestMapping("get-users")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody List<UserModel> getUsersAction() {
 		return service.loadUsersList();
 	}
 		
 	
 	@RequestMapping(value = "user", method = RequestMethod.POST)
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Map<String, String> addUserAction(@RequestBody UserModel user,
 			Map<String, String> message) {
 		
@@ -45,6 +48,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Map<String, String> editUserAction(@RequestBody UserModel user,
 			Map<String, String> message) {
 		
@@ -62,6 +66,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Map<String, String> removeUserAction(@PathVariable("id") int id,
 			Map<String, String> message) {
 		

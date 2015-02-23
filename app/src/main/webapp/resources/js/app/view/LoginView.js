@@ -20,14 +20,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
 				login: function(){
 					var user = null;
-					var login = $("#username").val();
-					var password = $(" #password").val();
+					var login = $("#j_username").val();
+					var password = $(" #j_password").val();
 					if(login != "" && password != ""){
 						console.log('Login: ' + login);
 						console.log('Password: ' + password);
 
 						$.ajax({
-							url: 'login',
+							url: 'j_spring_security_check',
 							type: 'POST',
 							data: $("#loginForm").serialize(),
 							success: function(data){
