@@ -49,11 +49,13 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				issueTableRender: function() {
 					this.$("#issue-table-body").empty();
 					that = this;
+
 					this.issues.each( function(issue){
 						that.$("#issue-table-body").append(that.$("#issue-table-body").
 								append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }))
 						);
 					});
+					this.$("#issue-table-body").find('select').hide();
 				},
 
 				// render template for manager search
