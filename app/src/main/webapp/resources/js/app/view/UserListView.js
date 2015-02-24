@@ -1,6 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueModel', 
         'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html' ],
-		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate) {
+		function($, _, Backbone, UserModel, IssueModel, UserCollection, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate) {
 			
 			var that = null;
 	
@@ -155,6 +155,45 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							}
 						});
 					}
+					//editIssue
+					if(e.currentTarget.name == 'edit issue') {
+						
+						console.log ("UserListView - edit issue before confirmation confirm !!");
+						
+						$('#editIssueModal').modal('hide');
+						this.model.set( {
+						description: $('#edit-issue-form-description').val(),
+						attachments: $('#edit-issue-form-attachments').val(),
+						category: $('#edit-issue-form-category').val(),
+						statusId: $('#edit-issue-form-status').val(),
+						priorityId: $('#edit-issue-form-priority').val(),
+						
+						} ).save( 
+								
+							/*	{
+							success: function(model, response) {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
+								$('#notificationModal').modal();
+							},
+							error: function() {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('#notificationModal').modal();
+							}
+						} */
+								
+						);
+						
+						console.log ($('#edit-issue-form-description').val());
+						console.log ($('#edit-issue-form-attachments').val());
+						console.log ($('#edit-issue-form-category').val());
+						console.log ($('#edit-issue-form-status').val());
+						console.log ($('#edit-issue-form-priority').val());
+						
+					}
+					
+					
 				}
 			});	
 			

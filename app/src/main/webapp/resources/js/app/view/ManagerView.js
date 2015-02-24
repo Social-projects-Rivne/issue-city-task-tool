@@ -106,7 +106,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					$($(categoryCell).find('#name')).append($(categoryCell).find('select').val());
 					$($(categoryCell).find('#name')).show();
 					
-					//chnge status cell
+					//change status cell
 					$($(statusCell).find('#name')).empty();
 					$($(statusCell).find('#name')).append($(statusCell).find('select').val());
 					$($(statusCell).find('#name')).show();
@@ -257,7 +257,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issue=this.issues.get(e.currentTarget.id);
 					console.log (this.issue);
 					this.$el.append(this.editIssueTemplate(this.issue.toJSON()));
-					
 					$('#editIssueModal').modal();
 					// assign jQuery selectors for variables
 					issueDescription = $('#edit-issue-form-description');
@@ -308,7 +307,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
 					});
-					
+					console.log ('showEditIssueForm');
 				},
 				
 			editIssue: function(e) {
@@ -334,17 +333,15 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					}*/
 	
 					/*if(isValid) {*/
-						$('#editIssueModal').modal('hide');
-						this.issue.set( {
-							description: $('#edit-issue-form-description').val()
-							/*attachments: $('#edit-issue-form-attachments').val()*/
-							/*priorityId: $('#edit-issue-form-priority').val()*/ 
-						} ).save();
-						console.log ("ManagerView: End of method (editIssue)");
-						console.log ($('#edit-issue-form-description').val());
-						console.log ($('#edit-issue-form-attachments').val());
-						/*console.log ($('#edit-issue-form-priority').val());*/
+						
+						//call confirmation for edit issue				
+						if($('#confirmationModal')) $('#confirmationModal').remove();
+						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
+						$('#confirmationModal').modal();
+					
 					/*}*/
+						
+						
 					
 				}
 									
