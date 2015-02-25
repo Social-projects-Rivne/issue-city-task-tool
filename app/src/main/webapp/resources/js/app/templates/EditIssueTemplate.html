@@ -26,10 +26,11 @@
                		    <div class="form-group">
 				            <label for="category" class="control-label col-xs-4" name="category">Category</label>
 						    	<div class="col-xs-6">
-						    	<select type="text" class="form-control input-sm" value="<%= categoryId %>"> 
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
+						    	<select type="text" class="form-control input-sm"> 
+									<option selected value=<%= categoryId %>><%= categoryId %></option>
+									<option>Option1</option>
+									<option>Option2</option>
+									<option>Option3</option>
 								</select>
 								</div>
 							</div>
@@ -37,7 +38,8 @@
 					    <div class="form-group">
 				            <label for="status" class="control-label col-xs-4" id="edit-issue-form-status" name="status">Status</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm" value="<%= statusId %>"> 
+						    		<select type="text" class="form-control input-sm"> 
+									<option selected value=<%= statusId %>><%= statusId %></option>
 									<option>New</option>
 									<option>To Resolve</option>
 									<option>Approved</option>
@@ -50,7 +52,8 @@
                 		<div class="form-group">
 				            <label for="priority" class="control-label col-xs-4" id="edit-issue-form-priority" name="priority">Priority</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm" value="<%= priorityId %>"> 
+						    		<select type="text" class="form-control input-sm">
+									<option selected value=<%= priorityId %>><%= priorityId %></option>
 									<option>Low</option>
 									<option>Medium</option>
 									<option>High</option>
@@ -60,7 +63,7 @@
                 	
             </div>
     		<div class="modal-footer">
-    				<button class='btn btn-primary editIssueConfirm'>OK</button>
+    				<button class='btn btn-primary editIssueConfirm' value="<%= id %>">OK</button>
         			<button class="btn" data-dismiss="modal">Cancel</button>
     		</div>
 		</div>

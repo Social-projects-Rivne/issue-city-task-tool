@@ -251,19 +251,29 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				showEditIssueForm: function(e){
-					// remove existing modal, call Template, call modal
+					// CONSOLE.LOG
+					console.log ('Task 9.2, 9.3:');
+					console.log ('--- ManagerView.js showEditIssueForm');
+					
+					// remove existing modal
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
+					
 					//get issue from collection by ID for load fields in template
-					this.issue=this.issues.get(e.currentTarget.id);
-					console.log (this.issue);
-					this.$el.append(this.editIssueTemplate(this.issue.toJSON()));
+					issue=this.issues.get(e.currentTarget.id);//+
+					console.log (issue.toJSON()); //+
+					
+					this.$el.append(this.editIssueTemplate(issue.toJSON()));   // ?
+					
 					$('#editIssueModal').modal();
+					console.log ('--- --- data inserted from DB to fields ok'); //+
+					
 					// assign jQuery selectors for variables
 					issueDescription = $('#edit-issue-form-description');
 					issueAttachment = $('#edit-issue-form-attachments');
 					issueCategory =	$('#edit-issue-form-category');
 					issueStatus = $('#edit-issue-form-status');
 					issuePriority =	$('#edit-issue-form-priority');
+					 
 					// RegExp validate for fields
 					issueDescription.on('blur', function() {
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
@@ -307,14 +317,16 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
 					});
-					console.log ('showEditIssueForm');
+					
 				},
 				
 			editIssue: function(e) {
-					console.log('ManagerView: Start of method (editIssue)');
+					// CONSOLE.LOG
+					console.log('--- ManagerView.js editIssue');
+					
 					var isValid = true;
 					
-				/*	if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
@@ -324,7 +336,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
 						issueCategory.val('Wrong value!').css('color', 'red');
 						isValid = false;
-					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
+					}/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
 						issueStatus.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
@@ -332,14 +344,14 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						isValid = false;
 					}*/
 	
-					/*if(isValid) {*/
-						
+					if(isValid) {
+						console.log ('--- --- validation form before confirmation ok'); //+
 						//call confirmation for edit issue				
 						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
 						$('#confirmationModal').modal();
 					
-					/*}*/
+					}
 						
 						
 					

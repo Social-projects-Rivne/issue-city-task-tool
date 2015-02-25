@@ -36,7 +36,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				
 				showEditForm: function(e) {
 					if($('#editModal')) $('#editModal').remove();
-					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
+					this.$el.append(this.editUserTemplate( { 'data': MapView.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
 					
 					userName = $('#userName');
@@ -155,18 +155,20 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						});
 					}
+					
 					//editIssue
+					
 					if(e.currentTarget.name == 'edit issue') {
+						// CONSOLE.LOG
+						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
+						/*var issues = new IssueCollection();
+						issues.fetch();*/
 						
-						var issues = new IssueCollection();
-						issues.fetch();
-						
-						console.log ("UserListView - edit issue before confirmation confirm !!");
-						
-						var newIssue = issues.get(e.currentTarget.id);
+						//this.IssueModel.fetch();
+						//var newIssue = issues.get(e.currentTarget.id);
 						
 						$('#editIssueModal').modal('hide');
-						newIssue.set( {
+						issue.set( {
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
 						category: $('#edit-issue-form-category').val(),
@@ -174,20 +176,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						priorityId: $('#edit-issue-form-priority').val(),
 						
 						} ).save( "issue/" + e.currentTarget.id
-								
-							/*	{
-							success: function(model, response) {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': response } ));
-								$('#notificationModal').modal();
-							},
-							error: function() {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-								$('#notificationModal').modal();
-							}
-						} */
-								
 						);
 						
 						console.log ($('#edit-issue-form-description').val());
