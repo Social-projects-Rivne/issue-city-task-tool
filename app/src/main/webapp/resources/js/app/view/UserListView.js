@@ -158,17 +158,22 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					//editIssue
 					if(e.currentTarget.name == 'edit issue') {
 						
+						var issues = new IssueCollection();
+						issues.fetch();
+						
 						console.log ("UserListView - edit issue before confirmation confirm !!");
 						
+						var newIssue = issues.get(e.currentTarget.id);
+						
 						$('#editIssueModal').modal('hide');
-						this.model.set( {
+						newIssue.set( {
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
 						category: $('#edit-issue-form-category').val(),
 						statusId: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val(),
 						
-						} ).save( 
+						} ).save( "issue/" + e.currentTarget.id
 								
 							/*	{
 							success: function(model, response) {
