@@ -47,7 +47,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						if($('#notificationModal')) $('#notificationModal').remove();
 						$('body').append(this.notificationTemplate( { 'data': { 'message': comment.get('userName') + ", thanks you for yours comment!" } } ));
 						$('#notificationModal').modal();
-						//clan fields
+						//clean fields
 						document.getElementsByName('email')[0].value = "";
 						document.getElementsByName('userName')[0].value = "";
 						document.getElementsByName('comment-text')[0].value = "";
