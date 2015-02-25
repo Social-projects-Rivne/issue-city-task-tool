@@ -93,7 +93,7 @@ CREATE TABLE `problems` (
 
 LOCK TABLES `problems` WRITE;
 /*!40000 ALTER TABLE `problems` DISABLE KEYS */;
-INSERT INTO `problems` VALUES (1,'',1,'smth with trafic light','LatLng(50.61759, 26.26458)','Traffic light doesnt work',1,1);
+INSERT INTO `problems` VALUES (1,'http://www.oda.cv.ua/sites/default/files/photos/svitlofor.jpg',1,'smth with trafic light','LatLng(50.61759, 26.26458)','Traffic light doesnt work',1,1);
 /*!40000 ALTER TABLE `problems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-25 17:32:55
+-- Dump completed on 2015-02-25 18:21:42
