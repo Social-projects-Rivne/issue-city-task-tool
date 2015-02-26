@@ -28,9 +28,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					'click [name="resolve"]': 'chngeStatus'
 
 				},
+
 				chngeStatus: function(e){
 					id = e.currentTarget.id;
 					$.ajax({url: 'to-resolve/'+id, type: 'POST'});
+					if($('#notificationModal'))
+						$('#notificationModal').remove();
+					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thanks! We will review your request." } } ));
+					$('#notificationModal').modal();
 				},
 
 				addComment : function() {
