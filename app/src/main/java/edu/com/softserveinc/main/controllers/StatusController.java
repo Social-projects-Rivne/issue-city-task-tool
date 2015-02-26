@@ -3,6 +3,7 @@ package edu.com.softserveinc.main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ public class StatusController {
 	private StatusService service;
 	
 	@RequestMapping("get-statuses")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody List<StatusModel> getStatuses() {
 		return service.loadStatusList();
 	}
