@@ -3,12 +3,12 @@ package edu.com.softserveinc.main.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.softserveinc.main.dao.UserDao;
 import edu.com.softserveinc.main.models.UserModel;
-import edu.com.softserveinc.main.security.PasswordEncoder;
 import edu.com.softserveinc.main.services.UserService;
 
 @Service
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 	public void addUser(UserModel user) {
 		// Encode password in SHA-512
 		if (user.getPassword().length() < 61)
-			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
+			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		
 		userDao.saveAndFlush(user);
 	}
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 	public void editUser(UserModel user) {
 		// Encode password in SHA-512
 		if (user.getPassword().length() < 61)
-			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
+			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		
 		if (user.getId() != 0) {
 			userDao.saveAndFlush(user);
