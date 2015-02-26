@@ -156,28 +156,20 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						});
 					}
 					
-					//editIssue
-					
 					if(e.currentTarget.name == 'edit issue') {
-						// CONSOLE.LOG
 						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
-						/*var issues = new IssueCollection();
-						issues.fetch();*/
-						
-						//this.IssueModel.fetch();
-						//var newIssue = issues.get(e.currentTarget.id);
-						
 						$('#editIssueModal').modal('hide');
-						issue.set( {
+						mapView.model.get(e.currentTarget.id).set( {
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
 						category: $('#edit-issue-form-category').val(),
 						statusId: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val(),
 						
-						} ).save( "issue/" + e.currentTarget.id
+						} ).save({url: "editissue"}
 						);
 						
+						// CONSOLE.LOG 
 						console.log ($('#edit-issue-form-description').val());
 						console.log ($('#edit-issue-form-attachments').val());
 						console.log ($('#edit-issue-form-category').val());

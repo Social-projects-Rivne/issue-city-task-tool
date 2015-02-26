@@ -161,6 +161,31 @@ public class IssueController {
 			issue.setStatusId(statusId);
 		}
 		
+		
+		
+		service.editProblem(issue);		
+		
+		return message;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "editissue/{id}", method = RequestMethod.PUT)
+	public @ResponseBody String newEditIssue(@RequestBody Map request) {
+		System.out.println("IssueController java method");
+		String message = null;
+				
+		IssueModel issue = service.getByID(Integer.parseInt(request.get("id").toString()));
+		System.out.println(request.get("description"));
+		System.out.println(service.getByID(Integer.parseInt(request.get("id").toString())));
+		
+		
+		// get from front-end and set to model java
+		issue.setDescription(request.get("description").toString());
+		issue.setAttachments(request.get("attachments").toString());
+		issue.setCategoryId (Integer.parseInt((request.get("categoryId").toString())));
+		issue.setStatusId (Integer.parseInt((request.get("statusId").toString())));
+		issue.setPriorityId (Integer.parseInt((request.get("priorityId").toString())));
+		// update DB into back-end
 		service.editProblem(issue);		
 		
 		return message;
