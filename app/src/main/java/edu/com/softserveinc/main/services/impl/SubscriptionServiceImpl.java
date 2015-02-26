@@ -3,12 +3,14 @@ package edu.com.softserveinc.main.services.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.softserveinc.main.dao.SubscriptionDao;
 import edu.com.softserveinc.main.models.SubscriptionModel;
 import edu.com.softserveinc.main.services.SubscriptionService;
 
+@Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Autowired
