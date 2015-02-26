@@ -4,7 +4,7 @@
 
 
                 <div align=right>
-                    <button type="submit" class="btn btn-mini" id="resolve_button">Resolve</button>
+                    <button type="submit" class="btn btn-mini" name="resolve" id="<%= id %>">Resolve</button>
                 </div>
 
                 <label id="issue_name"> <%= name %> </label>
@@ -28,21 +28,21 @@
                         <div class="form-group">
                             <label for="userName" class="control-label col-xs-4">User name</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control input-sm" id="inputEmail" placeholder="User name" name="userName">
+                                <input type="text" class="form-control input-sm" id="inputEmail" placeholder="User name" name="userName" required>
                             </div>
                         </div>
                         <!--email-->
                         <div class="form-group">
                             <label for="email" class="control-label col-xs-4">Email</label>
                             <div class="col-xs-6">
-                                <input type="email" class="form-control input-sm" id="inputEmail" placeholder="Email" name="email">
+                                <input type="email" class="form-control input-sm" id="inputEmail" placeholder="Email" name="email" required>
                             </div>
                         </div>
                         <!--comment-->
                         <div class="form-group">
                             <label for="email" class="control-label col-xs-4">Comment</label>
                             <div class="col-xs-6">
-                                <textarea class="form-control" rows="3" name="comment-text"></textarea>
+                                <textarea class="form-control" rows="3" name="comment-text" required></textarea>
                             </div>
                         </div>
                         <!--comment button-->

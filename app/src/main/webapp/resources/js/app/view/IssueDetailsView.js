@@ -24,9 +24,15 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				},
 				
 				events: {
-					'click #add_comment_button': 'addComment'
+					'click #add_comment_button': 'addComment',
+					'click [name="resolve"]': 'chngeStatus'
+
 				},
-				
+				chngeStatus: function(e){
+					id = e.currentTarget.id;
+					$.ajax({url: 'to-resolve/'+id, type: 'POST'});
+				},
+
 				addComment : function() {
 				if(($('#add-comment  [name*="userName"]').val() !='') && ($('#add-comment  [name*="email"]').val() !='')){	
 					 comment = new CommentModel({
