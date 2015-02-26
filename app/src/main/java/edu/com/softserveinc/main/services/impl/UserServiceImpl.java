@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.softserveinc.main.dao.UserDao;
 import edu.com.softserveinc.main.models.UserModel;
+import edu.com.softserveinc.main.security.PasswordEncoder;
 import edu.com.softserveinc.main.services.UserService;
-import edu.com.softserveinc.main.utils.PasswordEncoder;
 
 @Service
 @Transactional

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.com.softserveinc.main.utils.PasswordEncoder;
+import edu.com.softserveinc.main.security.PasswordEncoder;
 
 public class PasswordEncoderTest {
 	
