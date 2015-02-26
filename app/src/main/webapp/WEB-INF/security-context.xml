@@ -41,7 +41,11 @@
 	<beans:bean id="bawlUserDetailsService" class="edu.com.softserveinc.main.security.BawlUserDetailsService"></beans:bean>
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="bawlUserDetailsService" />
+		<authentication-provider user-service-ref="bawlUserDetailsService">
+			<password-encoder ref="encoder" />
+		</authentication-provider>
 	</authentication-manager>
+	
+	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
 
 </beans:beans>

@@ -13,13 +13,9 @@ public class PasswordEncoder {
 	private String password;
 	private BCryptPasswordEncoder encoder;	
 	
-	public PasswordEncoder(int strenhtg) {
-		encoder = new BCryptPasswordEncoder(strenhtg);
-	}
-	
 	public PasswordEncoder(String password) {
 			this.password = password;
-			encoder = new BCryptPasswordEncoder(11);
+			encoder = new BCryptPasswordEncoder();
 	}
 	
 	public void setPassvord(String password){
