@@ -8,6 +8,8 @@ public interface SubscriptionService {
 	
 	public SubscriptionModel create(int issueId, String email);
 	
+	public SubscriptionModel create(SubscriptionModel subscription);
+	
 	public void delete(int issueId, String email);
 	
 	public void delete(String email);

@@ -23,6 +23,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		}
 		return dao.saveAndFlush(new SubscriptionModel(issueId, email));
 	}
+	
+	@Override
+	@Transactional
+	public SubscriptionModel create(SubscriptionModel sub) {
+		return dao.saveAndFlush(sub);
+	}
 
 	@Override
 	@Transactional
