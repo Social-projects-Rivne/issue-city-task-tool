@@ -252,7 +252,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				
 				showEditIssueForm: function(e){
 					// CONSOLE.LOG
-					console.log ('Task 9.2, 9.3:');
 					console.log ('--- ManagerView.js showEditIssueForm');
 					
 					// remove existing modal
@@ -267,7 +266,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					$('#editIssueModal').modal();
 					console.log ('--- --- data inserted from DB to fields ok'); //+
 					
-					// assign jQuery selectors for variables
+					// assign jQuery selectors for variables for will use for validation below
 					issueDescription = $('#edit-issue-form-description');
 					issueAttachment = $('#edit-issue-form-attachments');
 					issueCategory =	$('#edit-issue-form-category');
@@ -346,6 +345,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 	
 					if(isValid) {
 						console.log ('--- --- validation form before confirmation ok'); //+
+						
 						//call confirmation for edit issue				
 						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
