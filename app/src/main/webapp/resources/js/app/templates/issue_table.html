@@ -2,7 +2,7 @@
                        <!--  <td> <%= data[0].issue.id %> </td> -->
                         <td><%= data[0].issue.name %> </td>
                         <td id='category-cell'>
-                            <div id="name"></div>
+                            
                         	<% _.map(data[1].categories, function(category) { %>
 	                        	<% if(category.id == data[0].issue.categoryId) { %>
 	                        	<% cat = category.name } %>
@@ -13,14 +13,16 @@
 										selected
 									<% } %>
 									><%= category.name %></option>
+
 								<% }); %>
+
 							</select>
+                              <div id="name"> <%= cat %> </div>
 						</td>
                         <td><%= data[0].issue.description %></td>
                         <td> <%= new Date().toLocaleString() %> </td>
                         <td id='status-cell'>
                             
-                            <div id="name"></div>
                         	<% _.map(data[2].statuses, function(status) { %>
 	                        	<% if(status.id == data[0].issue.statusId) { %>
 	                        	<% stat = status.name } %>
@@ -33,6 +35,7 @@
 									><%= status.name %></option>
 								<% }); %>
 							</select>
+                            <div id="name"><%= stat %></div>
                         </td>
                         <td>
                             <div class="btn-toolbar" style="display: none;">

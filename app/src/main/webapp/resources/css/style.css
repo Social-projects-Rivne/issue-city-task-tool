@@ -26,6 +26,12 @@ td > input {
 	float: right;
 }
 
+#form-container img.img-thumbnail {
+  width: 200px;
+  margin-left: 45px;
+  height: 110px;
+}
+
 .container {
     width: 100%;
     padding-left: 0px;
@@ -77,6 +83,14 @@ td > input {
   background-color: white !important;
   border-color: white !important;
   color: rgb(233, 84, 110);
+}
+/* fix size rows in issue table */
+td#status-cell {
+  width: 101px;
+}
+
+td#category-cell {
+  width: 170px;
 }
 
 .btn-group>.btn:hover, .btn-group-vertical>.btn:hover, .btn-group>.btn:focus, .btn-group-vertical>.btn:focus, .btn-group>.btn:active, .btn-group-vertical>.btn:active, .btn-group>.btn.active, .btn-group-vertical>.btn.active{

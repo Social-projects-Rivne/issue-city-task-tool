@@ -1,6 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueModel', 
         'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html' ],
-		function($, _, Backbone, UserModel, UserCollection, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate) {
+		function($, _, Backbone, UserModel, IssueModel, UserCollection, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate) {
 			
 			var that = null;
 	
@@ -36,7 +36,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 				
 				showEditForm: function(e) {
 					if($('#editModal')) $('#editModal').remove();
-					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
+					this.$el.append(this.editUserTemplate( { 'data': MapView.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
 					
 					userName = $('#userName');
@@ -155,6 +155,38 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel',
 							}
 						});
 					}
+					
+					//editIssue
+					
+					if(e.currentTarget.name == 'edit issue') {
+						// CONSOLE.LOG
+						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
+						/*var issues = new IssueCollection();
+						issues.fetch();*/
+						
+						//this.IssueModel.fetch();
+						//var newIssue = issues.get(e.currentTarget.id);
+						
+						$('#editIssueModal').modal('hide');
+						issue.set( {
+						description: $('#edit-issue-form-description').val(),
+						attachments: $('#edit-issue-form-attachments').val(),
+						category: $('#edit-issue-form-category').val(),
+						statusId: $('#edit-issue-form-status').val(),
+						priorityId: $('#edit-issue-form-priority').val(),
+						
+						} ).save( "issue/" + e.currentTarget.id
+						);
+						
+						console.log ($('#edit-issue-form-description').val());
+						console.log ($('#edit-issue-form-attachments').val());
+						console.log ($('#edit-issue-form-category').val());
+						console.log ($('#edit-issue-form-status').val());
+						console.log ($('#edit-issue-form-priority').val());
+						
+					}
+					
+					
 				}
 			});	
 			

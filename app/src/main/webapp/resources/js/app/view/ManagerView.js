@@ -49,11 +49,13 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				issueTableRender: function() {
 					this.$("#issue-table-body").empty();
 					that = this;
+
 					this.issues.each( function(issue){
 						that.$("#issue-table-body").append(that.$("#issue-table-body").
 								append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }))
 						);
 					});
+					this.$("#issue-table-body").find('select').hide();
 				},
 
 				// render template for manager search
@@ -104,7 +106,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					$($(categoryCell).find('#name')).append($(categoryCell).find('select').val());
 					$($(categoryCell).find('#name')).show();
 					
-					//chnge status cell
+					//change status cell
 					$($(statusCell).find('#name')).empty();
 					$($(statusCell).find('#name')).append($(statusCell).find('select').val());
 					$($(statusCell).find('#name')).show();
@@ -249,16 +251,29 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				showEditIssueForm: function(e){
-					// remove existing modal, call Template, call modal
+					// CONSOLE.LOG
+					console.log ('Task 9.2, 9.3:');
+					console.log ('--- ManagerView.js showEditIssueForm');
+					
+					// remove existing modal
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
-					this.$el.append(this.editIssueTemplate(this.issues.get(e.currentTarget.id).toJSON()));
+					
+					//get issue from collection by ID for load fields in template
+					issue=this.issues.get(e.currentTarget.id);//+
+					console.log (issue.toJSON()); //+
+					
+					this.$el.append(this.editIssueTemplate(issue.toJSON()));   // ?
+					
 					$('#editIssueModal').modal();
+					console.log ('--- --- data inserted from DB to fields ok'); //+
+					
 					// assign jQuery selectors for variables
-					issueDescription	= 	$('#edit-issue-form-description');
-					issueAttachment	 	= 	$('#edit-issue-form-attachments');
-					issueCategory		=	$('#edit-issue-form-category');
-					issueStatus			=	$('#edit-issue-form-status');
-					issuePriority		=	$('#edit-issue-form-priority');
+					issueDescription = $('#edit-issue-form-description');
+					issueAttachment = $('#edit-issue-form-attachments');
+					issueCategory =	$('#edit-issue-form-category');
+					issueStatus = $('#edit-issue-form-status');
+					issuePriority =	$('#edit-issue-form-priority');
+					 
 					// RegExp validate for fields
 					issueDescription.on('blur', function() {
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
@@ -305,11 +320,13 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					
 				},
 				
-				editIssue: function(e) {
-					console.log('ManagerView: Start of method (editIssue)');
-					/*var isValid = true;
+			editIssue: function(e) {
+					// CONSOLE.LOG
+					console.log('--- ManagerView.js editIssue');
 					
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+					var isValid = true;
+					
+				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
@@ -319,25 +336,24 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
 						issueCategory.val('Wrong value!').css('color', 'red');
 						isValid = false;
-					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
+					}/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
 						issueStatus.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
 						issuePriority.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}*/
-		/*---*/		
-					/*if(isValid) {*/
-						$('#editIssueModal').modal('hide');
-						this.issue.set( {
-							description: $('#edit-issue-form-description').val(),
-							attachments: $('#edit-issue-form-attachments').val(),
-							category: $('#edit-issue-form-category').val(),
-							status: $('#edit-issue-form-status').val(),
-							priorityId: $('#edit-issue-form-priority').val() /*priorityId?*/
-						} ).save();
-						console.log ("ManagerView: End of method (editIssue)")
-					/*}*/
+	
+					if(isValid) {
+						console.log ('--- --- validation form before confirmation ok'); //+
+						//call confirmation for edit issue				
+						if($('#confirmationModal')) $('#confirmationModal').remove();
+						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
+						$('#confirmationModal').modal();
+					
+					}
+						
+						
 					
 				}
 									

@@ -12,6 +12,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				
 				mapTemplate: _.template(MapTemplate),
 				
+				markers: [ L.AwesomeMarkers.icon( { icon: 'flame', markerColor: 'red', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'waterdrop', markerColor: 'blue', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'model-s', markerColor: 'orange', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'leaf', markerColor: 'green', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'flash', markerColor: 'cadetblue', prefix: 'ion' } ) ],
+				
 				render : function() {
 					$("#container").empty(),
 					$("#container").append(this.mapTemplate);
@@ -34,7 +40,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					this.model.fetch( { success: function() {
 						that.model.each(function(issue) {
 							L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
-									.split(', ')).addTo(map).on('click', onMarkerClick).title = issue.get("id");
+									.split(', '), { icon: that.markers[Math.floor(Math.random() * 5)] }).addTo(map).on('click', onMarkerClick).title = issue.get("id");
 						});
 					} } );
 					
