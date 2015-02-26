@@ -3,7 +3,6 @@ package edu.com.softserveinc.main.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +30,6 @@ public class CommentController {
 
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<CommentModel> getAllCommentsByIssueId(@PathVariable int id) {
 		return service.getCommentsByIssueId(id);
 	}

@@ -23,14 +23,14 @@ public class UserController {
 		
 	
 	@RequestMapping("get-users")
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody List<UserModel> getUsersAction() {
 		return service.loadUsersList();
 	}
 		
 	
 	@RequestMapping(value = "user", method = RequestMethod.POST)
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Map<String, String> addUserAction(@RequestBody UserModel user,
 			Map<String, String> message) {
 		
