@@ -129,7 +129,7 @@ public class IssueController {
 		issue.setPriorityId(Integer.parseInt((request.get("priorityId")
 				.toString())));
 		// update DB into back-end
-
+		service.editProblem(issue);
 		// issue.setStatusId(statusId);
 		return message;
 	}
