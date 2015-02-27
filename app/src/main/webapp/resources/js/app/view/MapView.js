@@ -45,7 +45,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					
 					this.model.fetch( { success: function() {
 						that.model.each(function(issue) {
-							L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
+							if((issue.get('statusId')==2) || (issue.get('statusId')==5))
+								L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
 									.split(', '), { icon: that.markers[Math.floor(Math.random() * 5)] }).addTo(map).on('click', onMarkerClick).title = issue.get("id");
 						});
 					} } );
