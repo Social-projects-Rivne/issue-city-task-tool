@@ -166,8 +166,19 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						statusId: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val(),
 						
-						} ).save({url: "editissue"}
-						);
+						} ).save ( {
+							success: function() {
+								managerView.resetFilter();
+							}
+						} );
+						
+						
+						
+						//({url: "editissue"}
+						//);
+						
+						
+						
 						
 						// CONSOLE.LOG 
 						console.log ($('#edit-issue-form-description').val());
