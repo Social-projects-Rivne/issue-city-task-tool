@@ -34,8 +34,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	@Transactional
-	public void delete(int issueId, String email) {
-		dao.delete(dao.findByIssueIdAndEmail(issueId, email));
+	public SubscriptionModel read(int id) {
+		return dao.findOne(id);
+	}
+	
+	@Override
+	@Transactional
+	public void delete(int id) {
+		dao.delete(id);
 
 	}
 

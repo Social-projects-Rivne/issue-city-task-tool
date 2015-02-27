@@ -13,7 +13,7 @@ public class CommentModel {
 
 	@Id
 	@GeneratedValue
-	@Column(name="id")
+	@Column(unique=true, name="id")
 	private int id;
 	
 	//@NotNull

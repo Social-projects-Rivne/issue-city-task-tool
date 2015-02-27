@@ -21,26 +21,32 @@ public class SubscriptionController {
 	@Autowired
 	private SubscriptionService service;
 
-	//TODO: Return some nice UI, and correct statuses.
-	//TODO: Maybe confirmation
-	@RequestMapping(value = "/{issueId}/{email}/{digest}", method = RequestMethod.GET)
-	public String cancelSubscriptionFromMailAction(@PathVariable Integer issueId,
-			@PathVariable String email, @PathVariable String digest) {
-	
-		if (DigestUtils.md5DigestAsHex((issueId.toString()+email).getBytes()) != digest) {
-			//bad request
-			return "home";
+	// TODO: Return some nice UI, and correct statuses.
+	// TODO: Maybe confirmation
+	@RequestMapping(value = "/{id}/delete/{digest}", method = RequestMethod.GET)
+	public String cancelSubscriptionFromMailAction(
+			@PathVariable Integer id, @PathVariable String digest) {
+
+		SubscriptionModel sub = service.read(id);
+		
+		if (sub == null)
+			// no such subscription
+			return "redirect:/";
+		
+		if (DigestUtils.md5DigestAsHex(sub.toString().getBytes()) != digest) {
+			// bad request
+			return "redirect:/";
 		}
 
-		if (issueId != 0) {
-			service.delete(issueId, email);
+		if (sub.getIssueId() != 0) {
+			service.delete(sub.getId());
 			// Unsubscribed from issueId issue
-			return "home";
+			return "redirect:/";
 		}
-		service.delete(email);
+		service.delete(sub.getEmail());
 		// Unsubscribed from all issues
-		return "home";
-	 }
+		return "redirect:/";
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> addSubscriptionAction(
