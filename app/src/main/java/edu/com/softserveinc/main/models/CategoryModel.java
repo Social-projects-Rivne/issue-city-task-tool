@@ -22,7 +22,7 @@ public class CategoryModel {
 	//TODO: add annotation for connect this class to IssueModel
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(unique=true, name = "id")
 	int id;
 
 	@NotEmpty

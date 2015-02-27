@@ -15,7 +15,7 @@ public class IssueModel {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(unique=true, name = "id")
 	private int id;
 
 	@NotEmpty
