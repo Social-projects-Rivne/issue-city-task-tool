@@ -33,17 +33,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 				
 				renderMarkers: function(){
 					mapView.model = this.issueFiltredColection;
-					mapView.render();
+					mapView.model.each(function(issue) {
+						L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
+								.split(', '), { icon: mapView.markers[Math.floor(Math.random() * 5)] }).addTo(map).title = issue.get("id"); // delete from this line on('click', onMareker...). 
+					});
+					//mapView.render();
 					console.log("issueFiltredColection" + this.issueFiltredColection.toJSON());
+					
 				},
 
 				setFilter: function(){
 					radioCategory = $("#issue-filter #category");
 
 					if(radioCategory.prop("checked")){
+						
 						var categoryName = $("#issue-filter #categories").val();
 						var category = new CategoryModel(this.categoryCollection.findWhere({name: categoryName}));
 						console.log(category.get('id'));
+
 						this.issueFiltredColection = new IssueCollection(this.issueColection.where({categoryId : category.get('id')}));
 					}
 
