@@ -1,10 +1,12 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/CategoryModel', 'collection/CategoryCollection',  'text!templates/issue_filter.html', ],
-		function($, _, Backbone, IssueModel, CategoryModel, CategoryCollection, IssueFilterTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/CategoryModel', 'collection/CategoryCollection', 'collection/IssueCollection',  'text!templates/issue_filter.html', ],
+		function($, _, Backbone, IssueModel, CategoryModel, CategoryCollection, IssueCollection, IssueFilterTemplate ) {
 			var IssueFilterView = Backbone.View.extend({
 				
-				categoryCollection: new CategoryCollection(),
 				template: _.template(IssueFilterTemplate),
+				categoryCollection: new CategoryCollection(),
 				issueColection: null,
+				issueFiltredColection: null,
+
 				events: {
 					'click #filter': 'render',
 					'click #set-issue-filter': 'setFilter'
@@ -12,7 +14,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 					
 
 				initialize: function() {
-
+					this.issueColection = mapView.model;
 				},
 				
 				render: function() {
@@ -30,7 +32,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 				},
 				
 				renderMarkers: function(){
-					//mapViev.model = 
+					mapView.model = this.issueFiltredColection;
+					mapView.render();
+					console.log("issueFiltredColection" + this.issueFiltredColection.toJSON());
 				},
 
 				setFilter: function(){
@@ -38,11 +42,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 
 					if(radioCategory.prop("checked")){
 						var categoryName = $("#issue-filter #categories").val();
-						var id = new CategoryModel(this.categoryCollection.findWhere({name: categoryName}));
-						console.log(id.get('id'));
-					
-
+						var category = new CategoryModel(this.categoryCollection.findWhere({name: categoryName}));
+						console.log(category.get('id'));
+						this.issueFiltredColection = new IssueCollection(this.issueColection.where({categoryId : category.get('id')}));
 					}
+
+					this.renderMarkers();
 				}
 
 			});

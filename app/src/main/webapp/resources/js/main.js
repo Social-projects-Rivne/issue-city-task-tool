@@ -43,6 +43,7 @@ require([
 		loginView = new LoginView({el:"body"});
 		
 		issueFilterView = new IssueFilterView({el:"#form-container"});
+		
 		//loginView.render();
 		//managerView.render();
 		//mapDraw();
