@@ -10,6 +10,7 @@ require([
         'view/AddIssueView',
         'view/ManagerView',
         'view/LoginView',
+        'view/IssueFilterView',
         /*'collection/CommentCollection',
         'model/IssueModel',
         'view/MapView',
@@ -27,7 +28,8 @@ require([
 	MapView,
 	AddIssueView,
 	ManagerView,
-	LoginView) {
+	LoginView,
+	IssueFilterView) {
 	
 	//var comments = null;
 	router = null;
@@ -37,6 +39,7 @@ require([
 		mapView.render();
 		managerView = new ManagerView({el:"#container"});
 		loginView = new LoginView({el:"body"});
+		issueFilterView = new IssueFilterView({el:"#form-container"});
 		//loginView.render();
 		//managerView.render();
 		//mapDraw();

@@ -13,7 +13,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			//routs for map 
 			"cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
-			
+			"filter": "filter"
 		},
 		
 		initialize : function() {
@@ -55,7 +55,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		manager : function(){
 			managerView.render();
 		},
-		
+
+		filter:function(){
+			issueFilterView.render();
+		},
+
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
