@@ -18,6 +18,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				           L.AwesomeMarkers.icon( { icon: 'leaf', markerColor: 'green', prefix: 'ion' } ),
 				           L.AwesomeMarkers.icon( { icon: 'flash', markerColor: 'cadetblue', prefix: 'ion' } ) ],
 				
+				//function for delete all marcers from the map
+				cleanMap: function(){
+					$(".leaflet-marker-pane").empty();
+					$(".leaflet-shadow-pane").empty();
+				},
+
 				render : function() {
 					$("#container").empty(),
 					$("#container").append(this.mapTemplate);
