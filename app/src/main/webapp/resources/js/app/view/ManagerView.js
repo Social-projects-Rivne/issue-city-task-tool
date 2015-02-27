@@ -329,13 +329,13 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
+					/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
 						issueAttachment.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
 						issueCategory.val('Wrong value!').css('color', 'red');
-						isValid = false;
-					}/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
+						isValid = false;*/
+					/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
 						issueStatus.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {

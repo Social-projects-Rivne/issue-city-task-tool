@@ -162,7 +162,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						mapView.model.get(e.currentTarget.id).set( {
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
-						category: $('#edit-issue-form-category').val(),
+						categoryId: $('#edit-issue-form-category').val(),
 						statusId: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val(),
 						

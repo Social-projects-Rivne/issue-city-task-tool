@@ -19,15 +19,15 @@
 		                <div class="form-group">
 		                    <label for="attachment" class="control-label col-xs-4">Attachments</label>
 		                    <div class="col-xs-6">
-		                        <input type="text" class="form-control input-sm" id="edit-issue-form-attachment" value="<%= attachments %>" placeholder="attachment" name="attachment">
+		                        <input type="text" class="form-control input-sm" id="edit-issue-form-attachments" value="<%= attachments %>" placeholder="attachment" name="attachment">
 		                    </div>
 		                </div>
                <!--category-->
                		    <div class="form-group">
 				            <label for="category" class="control-label col-xs-4" name="category">Category</label>
 						    	<div class="col-xs-6">
-						    	<select type="text" class="form-control input-sm"> 
-									<option selected value=<%= categoryId %>><%= categoryId %></option>
+						    	<select type="text" class="form-control input-sm" id="edit-issue-form-category"> 
+									<option selected><%= categoryId %></option>
 									<option>Option1</option>
 									<option>Option2</option>
 									<option>Option3</option>
@@ -36,10 +36,10 @@
 							</div>
                <!--status-->
 					    <div class="form-group">
-				            <label for="status" class="control-label col-xs-4" id="edit-issue-form-status" name="status">Status</label>
+				            <label for="status" class="control-label col-xs-4" name="status">Status</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm"> 
-									<option selected value=<%= statusId %>><%= statusId %></option>
+						    		<select type="text" class="form-control input-sm" id="edit-issue-form-status"> 
+									<option selected><%= statusId %></option>
 									<option>New</option>
 									<option>To Resolve</option>
 									<option>Approved</option>
@@ -50,10 +50,10 @@
                <!--priority-->
                			
                 		<div class="form-group">
-				            <label for="priority" class="control-label col-xs-4" id="edit-issue-form-priority" name="priority">Priority</label>
+				            <label for="priority" class="control-label col-xs-4" name="priority">Priority</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm">
-									<option selected value=<%= priorityId %>><%= priorityId %></option>
+						    		<select type="text" class="form-control input-sm" id="edit-issue-form-priority">
+									<option selected><%= priorityId %></option>
 									<option>Low</option>
 									<option>Medium</option>
 									<option>High</option>
