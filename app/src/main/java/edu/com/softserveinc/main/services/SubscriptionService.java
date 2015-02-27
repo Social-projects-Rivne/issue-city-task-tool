@@ -10,7 +10,9 @@ public interface SubscriptionService {
 	
 	public SubscriptionModel create(SubscriptionModel subscription);
 	
-	public void delete(int issueId, String email);
+	public SubscriptionModel read(int id);
+	
+	public void delete(int id);
 	
 	public void delete(String email);
 	

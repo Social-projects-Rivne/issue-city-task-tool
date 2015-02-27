@@ -59,4 +59,10 @@ public class SubscriptionModel {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "SubscriptionModel [id=" + id + ", issueId=" + issueId
+				+ ", email=" + email + "]";
+	}
+
 }
