@@ -10,6 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 				events: {
 					'click #filter': 'render',
 					'click #set-issue-filter': 'setFilter'
+					'click #reset-issue-filter': 'resetFilter'
 				},			
 					
 
@@ -55,6 +56,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 						this.issueFiltredColection = new IssueCollection(this.issueColection.where({categoryId : category.get('id')}));
 					}
 
+					this.renderMarkers();
+				},
+
+				resetFilter: function(){
+					this.issueFiltredColection = this.issueColection;
 					this.renderMarkers();
 				}
 
