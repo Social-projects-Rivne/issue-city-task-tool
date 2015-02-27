@@ -9,7 +9,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 
 				events: {
 					'click #filter': 'render',
-					'click #set-issue-filter': 'setFilter'
+					'click #set-issue-filter': 'setFilter',
 					'click #reset-issue-filter': 'resetFilter'
 				},			
 					
