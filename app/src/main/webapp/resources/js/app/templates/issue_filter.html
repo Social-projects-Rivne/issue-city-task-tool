@@ -1,36 +1,41 @@
-            <!--right panel: issue filter-->
-            <div class="col-1-3" style="overflow: scroll; height: 100%; padding: 10px;">
-            <label class="radio-inline">
-              <input type="radio" name="optradio"  id="status"> 
-                <div>
-                  Status
-                  <select id="status-filter">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-            </label>
-            <label class="radio-inline">
-              <input type="radio" name="optradio"  id="category"> Category
-            </label>
-            
-            <label class="radio-inline">
-              <input type="radio" name="optradio"  id="priority"> 
-                <div>
-                  Priority
-                  <select id="priority-filter">
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                  </select>
-                </div>
-            </label>
 
-            <label class="radio-inline">
-              <input type="radio" name="optradio"  id="date"> Date
-            </label>
-                
-            </div> <!--right panel-->
+<!--right panel: issue filter-->
+<div class="col-1-3"
+	style="overflow: scroll; height: 100%; padding: 10px;">
+	<label class="radio-inline"> <input type="radio"
+		name="optradio" id="status">
+		<div>
+			Status <select id="status-filter">
+				<option>new</option>
+				<option>approved</option>
+				<option>resolved</option>
+				<option>deleted</option>
+				<option>to resolve</option>
+			</select>
+		</div>
+	</label> <br> <label class="radio-inline">
+   <input type="radio" name="optradio" id="category"> Category 
+     <select  id="categories">
+        <% _.map(categories, function(category) { %>
+          <option><%= category.name %></option>
+        <% }); %>
+    </select>
+
+	</label> <br> <label class="radio-inline"> <input type="radio"
+		name="optradio" id="priority">
+		<div>
+			Priority <select id="priority-filter">
+				<option>Low</option>
+				<option>Medium</option>
+				<option>High</option>
+			</select>
+		</div>
+	</label> <br> <label class="radio-inline"> <input type="radio"
+		name="optradio" id="date"> Date
+	</label> <br>
+	<button class="btn btn-default" id='set-issue-filter' type="button">Set
+		Filter</button>
+	<button class="btn btn-default" id="reset-issue-filter" type="button">X</button>
+
+</div>
+<!--right panel-->
