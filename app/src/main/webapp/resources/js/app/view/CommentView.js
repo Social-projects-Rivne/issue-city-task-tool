@@ -1,24 +1,28 @@
 define(
-		[ 'underscore', 'backbone', 'model/CommentModel' ],
-		function(_, Backbone, CommentModel) {
-
+		[ 'underscore', 'backbone', 'model/CommentModel', 'text!templates/Comment.html' ],
+		function(_, Backbone, CommentModel, CommentTemplate) {
 			var CommentView = Backbone.View
 					.extend({
-						initilize : function() {
-							
+						template: _.template(CommentTemplate),
+						
+						initilize: function() {
+							//this.model = new CommentModel();
 						},
 						
-						tagName : 'div',
-						className : 'comment',
-						template : _
-								.template('<label class="comments_user_name"> <%= userName %> </label><br>'
-										+ ' <label	class="comment_name"> <%= comment %> </label><hr width="100%" size="2">'),
-
-						render : function() {
-							// console.log('Render fnction worcking');
+						render: function() {
 							this.$el.html(this.template(this.model.toJSON()));
 							$(document.body.getElementsByClassName('comments')[0]).append(this.el);
-						}
+							return this;
+						},
+						
+						renderNewComment : function() {
+							template = _.template('<label class="comments_user_name"> <%= userName %> </label><br>'
+									+ ' <label	class="comment_name"> <%= comment %> </label><hr width="100%" size="2">'),
+
+							this.$el.html(template(this.model.toJSON()));
+							$(document.body.getElementsByClassName('comments')[0]).append(this.el);
+				}
 					});
+			
 			return CommentView;
 		});

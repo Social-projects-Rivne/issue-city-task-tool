@@ -3,76 +3,29 @@ body
 padding-top: 50px;
 }
 
+#remove_user {
+	display: block !important;
+}
+
+#form-container {
+	float: right;
+}
+
+.container {
+    width: 100%;
+    padding-left: 0px;
+}
 /*sidebar start */
-.grid {
+/*.grid {
   display: block;
   margin: 0;
   &:after {
-    /* Or @extend clearfix */
+     Or @extend clearfix 
     content: "";
     display: table;
     clear: both;
 	}
-}
-.col-1-3 {
-	float: right;
-    background: white;
-    width: 23.0%;
-    overflow: scroll;
-	height: 100%;
-}
-
-/* Responsive for 1366 laptops, 800 pads, 320 mobile screens */
-@media only screen and (max-width:1200px) {
-	.col-1-3 {
-		max-width: 400px;
-	}
-}
-@media only screen and (max-width:1024px) {
-	.col-1-3 {
-		width: 400px;
-	}
-}
-@media only screen and (max-width:768px) {
-	.col-1-3 {
-		width: 400px;
-	}
-}
-@media only screen and (max-width:600px) {
-	.col-1-3 {
-		width: 400px;
-	}
-}
-@media only screen and (max-width:480px) {
-	.col-1-3 {
-		width: 400px;
-	}
-}
-@media only screen and (max-width:320px) {
-	.col-1-3 {
-		width: 400px;
-	}
-}
-
-
-
-/* .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: #ea556f;
-    -moz-border-right-colors: #ea556f;
-    -moz-border-top-colors: #ea556f;
-    -webkit-border-bottom-colors: none;
-    -webkit-border-left-colors: #ea556f;
-    -webkit-border-right-colors: #ea556f;
-    -webkit-border-top-colors: #ea556f;
-    border-image: red;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-style: solid;
-    border-top-width: 2px;
-    color: #555;
-    cursor: default;
-} */
+}*/
 
 /*navbar bordercolor and background*/
 .navbar-default {
@@ -96,11 +49,7 @@ padding-top: 50px;
     font-size:2.5em;
     font-weight: bolder;
 }
-.tabbable{
-	font-family: 'Averia Sans Libre', cursive;
-    font-size:1em;
-    font-weight: bold;
-}
+
 /* navbar-brand color on haver and focus */
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -120,13 +69,6 @@ padding-top: 50px;
     color: #d9d7d7;
 }
 
-.tabbable {
-	padding: 10px;
-}
-
-.tabbable > h4 {
-	text-align: center;
-}
 
 .btn-default {
 	display: block !important;
@@ -134,17 +76,134 @@ padding-top: 50px;
 }
 
 .btn {
-	display: block !important;
+/*	display: block !important;*/
 	margin: 0 auto !important;
+    //width: 70px;
+    padding-top: 0px;
+    -moz-border-left-colors: #ea556f ;
+    -moz-border-right-colors: #ea556f;
+    -moz-border-top-colors: #ea556f;
+    border-bottom-color: #ea556f;
 }
+
+#resolve_button {
+    font-size:0.7em;
+    width: 60px;
+}
+    
 .navbar-default .navbar-toggle .icon-bar {
 background-color: #ffffff;
 }
 
 #add-issue {
 	display: none;
+    
 }
 
 #issue-details {
 	display: none;
 }
+
+
+/*
+.col-sm-3 {
+    max-height: inherit;
+    
+}
+*/
+
+
+
+
+
+/*
+.col-xs-12 {
+     height:100%;
+}
+*/
+
+/*del padding on map-lg-8*/
+/*
+.col-lg-9 {
+padding-left: 0px;
+padding-right: 0px;    
+}
+*/
+
+/*del paddings on right add-issue panel */
+/*
+.col-lg-3 {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 21%;
+}
+*/
+
+
+
+.help-block {
+     font-size: 0.8em;   
+}
+
+.col-lg-3 {
+    padding-top: 20px;
+    }
+
+.col-lg-9 {
+     /* margin-top: 20px; */
+}
+
+.img-thumbnail {
+    max-width: 120%;
+}
+
+ul {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+li {
+    list-style-type: none;
+   }
+a {
+    color: #000;
+    outline: none; 
+    text-decoration: none;
+   }
+
+ #left_admin_panel {
+    background-color: #f5eded;
+    height:100%;
+}
+
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.btn-default {
+    background-color: #ea556f;
+    color: #fff;
+}
+
+
+    
+
+#input_search {
+   
+}
+
+.input-group {
+     padding: 20px;
+}
+
+.input-group {
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-top: 40px;
+}
+
+.btn-group {
+/*    height:20px;*/
+}
+
+

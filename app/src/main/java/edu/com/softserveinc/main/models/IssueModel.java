@@ -17,7 +17,7 @@ public class IssueModel {
 	@GeneratedValue
 	@Column(name = "id")
 	private int id;
-
+	@NotNull
 	@Column(name = "category_id")
 	private int category_id;
 
@@ -35,7 +35,7 @@ public class IssueModel {
 
 	@Column(name = "attachments")
 	private String attachments;
-
+	@NotNull
 	@Column(name = "priority_id")
 	private int priorityId;
 
@@ -74,7 +74,6 @@ public class IssueModel {
 		this.mapPointer = mapPointer;
 		this.attachments = attachments;
 		this.priorityId = priorityId;
-
 	}
 
 	/**

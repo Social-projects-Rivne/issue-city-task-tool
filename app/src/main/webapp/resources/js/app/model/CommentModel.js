@@ -1,19 +1,17 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 	var CommentModel = Backbone.Model.extend({
-
-		url: '/Bawl/add-comment',
-		defaults : {
-			id : 0,
-
-			comment : "",
-
-			userName : "",
-
-			email : "",
-
-			issueId : ""
-		},
+		url: 'add-comment',
+		idAttribute: 'id',
+		id:'',
+		defaults: {
+			//id: 0,
+			comment: "",
+			userName: "",
+			email: "",
+			issueId: 0
+		}
 	});
+	
 	return CommentModel;
 });
