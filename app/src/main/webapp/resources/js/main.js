@@ -1,3 +1,4 @@
+
 require([
         'jquery',
         'underscore',
@@ -7,6 +8,8 @@ require([
         'model/CommentModel',*/
         'view/MapView',
         'view/AddIssueView',
+        'view/ManagerView',
+        'view/LoginView',
         /*'collection/CommentCollection',
         'model/IssueModel',
         'view/MapView',
@@ -22,13 +25,20 @@ require([
 	//CommentCollection,
 	//IssueModel, 
 	MapView,
-	AddIssueView) {
+	AddIssueView,
+	ManagerView,
+	LoginView) {
 	
 	//var comments = null;
+	router = null;
 	
 	jQuery(document).ready(function($){
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
+		managerView = new ManagerView({el:"#container"});
+		loginView = new LoginView({el:"body"});
+		//loginView.render();
+		//managerView.render();
 		//mapDraw();
 		// for debug
 		//issueModel = new IssueModel;
@@ -160,4 +170,3 @@ var commentView = null;
 var issueView = null;
 var issueModel;
 var global;*/
-var router = null;

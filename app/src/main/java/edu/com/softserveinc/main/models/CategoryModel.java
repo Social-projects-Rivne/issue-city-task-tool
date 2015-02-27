@@ -28,12 +28,6 @@ public class CategoryModel {
 	@NotEmpty
 	@Column(unique=true, name = "name")
 	private String name;
-
-	/*@Column(name = "count_Of_problems")
-	private int countOfProblems;
-
-	@Column(name = "cont_Of_Resolved_problems")
-	private int countOfResolvedProblems;*/
 	
 	public CategoryModel() {}
 	
@@ -56,21 +50,5 @@ public class CategoryModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/*public int getCountOfProblems() {
-		return countOfProblems;
-	}
-
-	public void setCountOfProblems(int countOfProblems) {
-		this.countOfProblems = countOfProblems;
-	}
-
-	public int getCountOfResolvedProblems() {
-		return countOfResolvedProblems;
-	}
-
-	public void setCountOfResolvedProblems(int countOfResolvedProblems) {
-		this.countOfResolvedProblems = countOfResolvedProblems;
-	}*/
 
 }

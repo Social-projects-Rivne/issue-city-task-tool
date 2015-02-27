@@ -1,0 +1,53 @@
+<!-- manager issue search template --> 
+<div class="col-xs-12">
+    <div class="input-group input-group-sm" id="input_search">
+      	<input type="text" class="form-control" id='text-value-issue-filter' value="Search..." onfocus="if (this.value=='Search...'){this.value=''}" onblur="if(this.value==''){this.value='Search...'}" >
+        <span class="input-group-btn">
+          	<button class="btn btn-default" id='filter-issue' type="button"> Search </button>
+          	<button class="btn btn-default" id="reset-filter-issue" type="button">X</button>
+        </span>
+    </div>
+</div>
+<div>
+	<b> Search by: </b><br>
+          <form role="form">
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio" id="name" > Name
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio"  id="keyword" checked > Keyword
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio"  id="status"> 
+			    <div>
+			      Status
+			      <select id="status-filter">
+			        <option>0</option>
+			        <option>1</option>
+			        <option>2</option>
+			        <option>3</option>
+			        <option>4</option>
+			      </select>
+			    </div>
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio"  id="category"> Category
+		    </label>
+ 			
+ 			<label class="radio-inline">
+		      <input type="radio" name="optradio"  id="priority"> 
+			    <div>
+			      Priority
+			      <select id="priority-filter">
+			        <option>0</option>
+			        <option>1</option>
+			        <option>2</option>
+			      </select>
+			    </div>
+		    </label>
+
+		    <label class="radio-inline">
+		      <input type="radio" name="optradio"  id="date"> Date
+		    </label>
+ 		 </form>
+ 		</div>

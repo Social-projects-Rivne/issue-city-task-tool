@@ -44,19 +44,20 @@
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Login</a></li>
+						<li><a id="login" >Login</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">About</a></li>
+						<li><a href="#manager">About</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</div>
+	<div class="login modal fade" >
 	
-	<div id=container>
-		<div id="form-container"></div>
-		<div id="map"></div>
+	</div>
+	<div id="container">
+	
 	</div>
 	
 <!-- Placed at the end of the document so the pages load faster -->

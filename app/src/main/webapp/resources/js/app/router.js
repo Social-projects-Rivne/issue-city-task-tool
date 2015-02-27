@@ -3,12 +3,17 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 	var Router = Backbone.Router.extend({
 
 		routes : {
-			"admin/search/:name" : "search",
-			"admin/add-user" : "addUser",
 			"" : "home",
-			"cry-out" : "cryOut",
+			"login" : "login",
+			//routs for admin
 			"admin" : "admin",
+			"admin/search/:name" : "search",
+			//manager's routs
+			"manager" : "manager",
+			//routs for map 
+			"cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
+			
 		},
 		
 		initialize : function() {
@@ -17,8 +22,11 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		home : function() {
-			alert('welcome home');
 			mapView.render();
+		},
+
+		login: function(){
+			loginView.render();
 		},
 
 		issue : function(id) {
@@ -27,10 +35,12 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			issueDetailsView.render(id);
 			// remove it when comments will be rendering from issue details view
 			// fom
-			commentListView.render(id);
 		},
 
 		cryOut : function() {
+			//router.navigate("/", {trigger: true}); 
+			mapView.render();
+			router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},
 		
@@ -41,15 +51,15 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			
 			});
 		},
-		addUser: function() {
-			adminView.addUser();
+		
+		manager : function(){
+			managerView.render();
 		},
 		
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
-		},
-
+		}
 	});
 	return Router
 });

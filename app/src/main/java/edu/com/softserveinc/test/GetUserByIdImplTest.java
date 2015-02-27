@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.com.softserveinc.main.models.UserModel;
-import edu.com.softserveinc.main.services.UserServiceImpl;
+import edu.com.softserveinc.main.services.impl.UserServiceImpl;
 
 public class GetUserByIdImplTest {
 
