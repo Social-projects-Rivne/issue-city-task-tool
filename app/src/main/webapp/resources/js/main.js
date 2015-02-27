@@ -42,7 +42,7 @@ require([
 		managerView = new ManagerView({el:"#container"});
 		loginView = new LoginView({el:"body"});
 		
-		issueFilterView = new IssueFilterView({el:"#form-container"});
+		issueFilterView = new IssueFilterView({el:"#container"});
 		
 		//loginView.render();
 		//managerView.render();
