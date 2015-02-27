@@ -31,21 +31,21 @@ public class SubscriptionController {
 		
 		if (sub == null)
 			// no such subscription
-			return "home";
+			return "redirect:/";
 		
 		if (DigestUtils.md5DigestAsHex(sub.toString().getBytes()) != digest) {
 			// bad request
-			return "home";
+			return "redirect:/";
 		}
 
 		if (sub.getIssueId() != 0) {
 			service.delete(sub.getId());
 			// Unsubscribed from issueId issue
-			return "home";
+			return "redirect:/";
 		}
 		service.delete(sub.getEmail());
 		// Unsubscribed from all issues
-		return "home";
+		return "redirect:/";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
