@@ -35,10 +35,13 @@ require([
 	router = null;
 	
 	jQuery(document).ready(function($){
+
+		
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		managerView = new ManagerView({el:"#container"});
 		loginView = new LoginView({el:"body"});
+		
 		issueFilterView = new IssueFilterView({el:"#form-container"});
 		//loginView.render();
 		//managerView.render();
@@ -53,8 +56,8 @@ require([
 		//mapPointer.value = e.latlng;
 		//setTimeout(mapView.render(),500);
 		//Backbone.history.start();
-		router = new Router();
 		//router.navigate("", {trigger: true});
+		router = new Router();
 	});
 	
 	/*function mapDraw() {

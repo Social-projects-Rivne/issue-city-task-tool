@@ -12,16 +12,21 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'collection/Cat
 					
 
 				initialize: function() {
-					
+
 				},
 				
 				render: function(id) {
 					that = this;
-					categoryCollection.fetch({success: function(){
+					this.categoryCollection.fetch({success: function(){
+
 							$('#form-container').html(that.template({"categories":that.categoryCollection.toJSON()}));
 							console.log(that.categoryCollection.toJSON());
+						},
+						error: function(){
+							console.log("smth wrong");
 						}
 					});
+
 				},
 				
 				renderMarkers: function(){
