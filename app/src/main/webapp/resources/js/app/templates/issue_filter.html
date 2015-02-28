@@ -6,18 +6,18 @@
 		name="optradio" id="status">
 		<div>
 			Status <select id="status-filter">
-				<option>new</option>
-				<option>approved</option>
-				<option>resolved</option>
-				<option>deleted</option>
-				<option>to resolve</option>
+				<option value="1">new</option>
+				<option value="2">approved</option>
+				<option value="3">resolved</option>
+				<option value="4">deleted</option>
+				<option value="5">to resolve</option>
 			</select>
 		</div>
 	</label> <br> <label class="radio-inline">
    <input type="radio" name="optradio" id="category"> Category 
      <select  id="categories">
         <% _.map(categories, function(category) { %>
-          <option><%= category.name %></option>
+          <option ><%= category.name %></option><!--value="<%= category.id %>" -->
         <% }); %>
     </select>
 
@@ -25,9 +25,9 @@
 		name="optradio" id="priority">
 		<div>
 			Priority <select id="priority-filter">
-				<option>Low</option>
-				<option>Medium</option>
-				<option>High</option>
+				<option value="1">Low</option>
+				<option value="2">Medium</option>
+				<option value="3">High</option>
 			</select>
 		</div>
 	</label> <br> <label class="radio-inline"> <input type="radio"
