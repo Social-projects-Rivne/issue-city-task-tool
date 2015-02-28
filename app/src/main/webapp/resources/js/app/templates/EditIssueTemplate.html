@@ -39,11 +39,11 @@
 				            <label for="status" class="control-label col-xs-4" name="status">Status</label>
 						   		<div class="col-xs-6">
 						    		<select type="text" class="form-control input-sm" id="edit-issue-form-status"> 
-									<option selected><%= statusId %></option>
-									<option>New</option>
-									<option>To Resolve</option>
-									<option>Approved</option>
-									<option>Resolved</option>
+									<option value="1">new</option>
+        							<option value="2">approved</option>
+				  		            <option value="3">resolved</option>
+				  		            <option value="4">deleted</option>
+				  		            <option value="5">to resolve</option>
 								</select>
 								</div>
 						</div>
@@ -53,10 +53,9 @@
 				            <label for="priority" class="control-label col-xs-4" name="priority">Priority</label>
 						   		<div class="col-xs-6">
 						    		<select type="text" class="form-control input-sm" id="edit-issue-form-priority">
-									<option selected><%= priorityId %></option>
-									<option>Low</option>
-									<option>Medium</option>
-									<option>High</option>
+										<option value="1">Low</option>
+										<option value="2">Medium</option>
+										<option value="3">High</option>
 									</select>
 								</div>
 						</div>
