@@ -108,8 +108,70 @@ public class IssueController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
-	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody String editIssue(@RequestBody Map request) {
+		
+		String message = null;
+		String category = request.get("category").toString().toLowerCase();
+		String status = request.get("status").toString().toLowerCase();
+		List<CategoryModel> categories = categoryService.loadCategoriesList();
+		List<StatusModel> statuses = statusService.loadStatusList();
+		CategoryModel categoryModel = null;
+		StatusModel statusModel = null;
+		int categoryId = 0;
+		int statusId = 0;
+		
+		IssueModel issue = service.getByID(Integer.parseInt(request.get("id").toString()));
+		
+		issue.setDescription(request.get("description").toString());
+	    issue.setAttachments(request.get("attachments").toString());
+	    
+	    issue.setPriorityId(Integer.parseInt((request.get("priorityId")
+				.toString())));
+		
+		if(!category.equals("")) {
+			for(int i = 0; i < categories.size(); i++) {
+				categoryModel = categories.get(i);
+				if(category.equals(categoryModel.getName())) {
+					categoryId = categoryModel.getId();
+					break;
+				}
+			}
+			
+			if(categoryId == 0) {
+				categoryService.addCategory(new CategoryModel(category));
+				categoryId = categoryService.getCategoryByName(category).getId();
+			}
+			
+			issue.setCategoryId(categoryId);
+		}
+		else {
+			for(int i = 0; i < statuses.size(); i++) {
+				statusModel = statuses.get(i);
+				if(status.equals(statusModel.getName())) {
+					statusId = statusModel.getId();
+					break;
+				}
+			}
+			
+			if(statusId == 0) {
+				statusService.addStatus(new StatusModel(status));
+				statusId = statusService.getStatusByName(status).getId();
+			}
+			
+			issue.setStatusId(statusId);
+		}
+		
+		service.editProblem(issue);		
+		
+		return message;
+	}
+	
+	
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "issueEdit/{id}", method = RequestMethod.PUT)
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	public @ResponseBody String editIssue2(@RequestBody Map request) {
 
 		System.out.println("IssueController java method");
 		String message = null;
@@ -122,7 +184,7 @@ public class IssueController {
 
 		// get from front-end and set to model java
 		issue.setDescription(request.get("description").toString());
-		// issue.setAttachments(request.get("attachments").toString());
+	    issue.setAttachments(request.get("attachments").toString());
 		issue.setCategoryId(Integer.parseInt((request.get("categoryId")
 				.toString())));
 		issue.setStatusId(Integer.parseInt((request.get("statusId").toString())));
