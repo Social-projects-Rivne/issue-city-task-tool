@@ -2,8 +2,8 @@ package edu.com.softserveinc.main.services;
 
 public interface MailService {
 	
-	public int notifyForIssue(int issueId, String msg);
+	public void notifyForIssue(int issueId, String msg);
 	
-	public int notifyForUser(int userId, String msg);
+	public void notifyUser(int userId, String msg);
 
 }
