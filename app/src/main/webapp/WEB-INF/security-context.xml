@@ -27,6 +27,8 @@
 		
 		<custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER"/>
 		
+		<session-management><concurrency-control max-sessions="1" /></session-management>
+		
 	</http>
 
 	<beans:bean id="ajaxAuthenticationEntryPoint" class="edu.com.softserveinc.main.security.AjaxAuthenticationEntryPoint"></beans:bean>
