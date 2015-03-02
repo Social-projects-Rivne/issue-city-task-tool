@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class IssueController {
 		System.out.print(id);
 	}
 
+	@PostFilter("hasRole('ROLE_MANAGER') or filterObject.getStatusId() == 2 or filterObject.getStatusId() == 5") //2=approved, 5=toresolve
 	@RequestMapping("get-issues")
 	public @ResponseBody List<IssueModel> getIssues() {
 
