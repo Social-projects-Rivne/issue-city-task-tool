@@ -75,5 +75,19 @@ public class StatisticController {
 		return statistic;
 	}
 	
+	@RequestMapping(value = "statistic-by-comments", method = RequestMethod.POST)
+	public @ResponseBody Map<String, String> statisticByComments() {
+		Map<String, String> statistic = new HashMap<String, String>();
+		List<IssueModel> issues = issueService.loadIsssueList();
+		
+		for (int i = 0; i < issues.size(); i++) {
+			
+			statistic.put(issues.get(i).getName(), "" + commentService.getCommentsByIssueId(i).size());
+			
+		}
+		
+		return statistic;
+	}
+	
 }
 
