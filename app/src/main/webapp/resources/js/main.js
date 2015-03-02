@@ -39,11 +39,9 @@ require([
 		
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
+		issueFilterView = new IssueFilterView({el:"#container"});
 		managerView = new ManagerView({el:"#container"});
 		loginView = new LoginView({el:"body"});
-		
-		issueFilterView = new IssueFilterView({el:"#container"});
-		
 		//loginView.render();
 		//managerView.render();
 		//mapDraw();

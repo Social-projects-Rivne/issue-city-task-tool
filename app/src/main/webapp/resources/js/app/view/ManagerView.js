@@ -27,7 +27,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				notificationTemplate: _.template(NotificationTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				editIssueTemplate: _.template(EditIssueTemplate),
-				
+
+				categoriesCollection: null,
 				issues: null,
 				issuesFilterList: null,
 				categories: null,
@@ -43,6 +44,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.statuses = new StatusCollection();
 					this.statuses.fetch();
 					this.issue = new IssueModel();
+					this.categoriesCollection = issueFilterView.categoryCollection;
 				},
 				
 				// issue table on manager page
@@ -61,7 +63,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				// render template for manager search
 				searchRender: function(){
  					console.log('search rendered');
-					this.$('#issue-filter').append(this.searchTemplate); 
+ 					this.categoriesCollection.fetch({success: function(){
+						that.$('#issue-filter').append(that.searchTemplate({"categories":that.categoriesCollection.toJSON()})); 
+						}
+					});
 				},
 				
 				// render all components of manager page 
@@ -186,6 +191,22 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						this.issues = issuesFilterList;
 						console.log(this.issues);
 						this.issueTableRender();			
+					};
+
+					//filter by category (it work when raido btn Cetegory checked)
+					if ($('#issue-filter #category').prop("checked")) {
+						var issuesFilterList = new IssueCollection();
+						// it must be filtred with findWhere
+						this.issues.each(function(issue){
+							if(issue.get('categoryId') == $('#issue-filter #categories').val()){ 
+								console.log(issue);
+								issuesFilterList.add(issue);
+							}
+						});
+						console.log(issuesFilterList);
+						this.issues = issuesFilterList;
+						console.log(this.issues);
+						this.issueTableRender();
 					};
 
 					//filter by priority (it work when raido btn Priority checked)

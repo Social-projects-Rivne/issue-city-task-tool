@@ -31,7 +31,12 @@
        </div>
       </label>
       <label class="radio-inline">
-        <input type="radio" name="optradio"  id="category"> Category
+      <input type="radio" name="optradio" id="category"> Category 
+         <select  id="categories">
+            <% _.map(categories, function(category) { %>
+              <option value="<%= category.id %>"><%= category.name %></option><!--value="<%= category.id %>" -->
+            <% }); %>
+        </select>
       </label>
     
     <label class="radio-inline">
