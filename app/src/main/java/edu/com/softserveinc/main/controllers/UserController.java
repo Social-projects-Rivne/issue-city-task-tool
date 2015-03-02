@@ -28,7 +28,12 @@ public class UserController {
 	@RequestMapping("get-users")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Collection<UserModel> getUsersAction() {
-		return service.loadUsersList();
+		
+		Collection<UserModel> users = service.loadUsersList();
+		for (UserModel user: users){
+			user.setPassword("_");
+		}
+		return users;
 	}
 	
 	
