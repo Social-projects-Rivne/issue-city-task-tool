@@ -14,8 +14,6 @@ public interface SubscriptionService {
 	
 	public void delete(int id);
 	
-	public void delete(String email);
-	
 	public Collection<SubscriptionModel> listByIssueId(int issueId);
 	
 
