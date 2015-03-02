@@ -7,12 +7,12 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.com.softserveinc.main.models.UserModel;
-import edu.com.softserveinc.main.services.impl.UserServiceImpl;
+import edu.com.softserveinc.main.services.UserService;
 
 public class UserServiceImplTest {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 
 	private UserModel user;
 
@@ -39,10 +39,6 @@ public class UserServiceImplTest {
 			System.out.println("editing user");
 			// editing user
 			userService.editUser(user);
-
-			System.out.println("removing");
-			// removing
-			userService.deleteUser(user);
 
 			assertTrue("sucsess", true);
 

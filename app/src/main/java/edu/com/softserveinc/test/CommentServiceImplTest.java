@@ -4,19 +4,21 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.com.softserveinc.main.models.CommentModel;
-import edu.com.softserveinc.main.services.impl.CommentServiceImpl;
+import edu.com.softserveinc.main.services.CommentService;
 
 public class CommentServiceImplTest {
 
 	CommentModel comment;
-	CommentServiceImpl commentService;
+	
+	@Autowired
+	private CommentService commentService;
 
 	@Before
 	public void setUp() throws Exception {
 		comment = new CommentModel("asdads", "asa", "ss@ss.s", 1);
-		commentService = new CommentServiceImpl();
 	}
 
 	@Test

@@ -49,5 +49,7 @@
 	<tx:annotation-driven />
 
 	<beans:import resource="security-context.xml" />
+	
+	<beans:import resource="mail-context.xml" />
 
 </beans:beans>

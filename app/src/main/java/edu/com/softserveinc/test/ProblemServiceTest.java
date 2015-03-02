@@ -4,13 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.com.softserveinc.main.models.IssueModel;
-import edu.com.softserveinc.main.services.impl.IssueServiceImpl;
+import edu.com.softserveinc.main.services.IssueService;
 
 public class ProblemServiceTest {
 
-	private IssueServiceImpl issuService = new IssueServiceImpl();
+	@Autowired
+	private IssueService issueService;
 	IssueModel issue = null;
 
 	@Before
@@ -23,15 +25,15 @@ public class ProblemServiceTest {
 	public void testAddProblemm() {
 		try {
 			System.out.println("start");
-			issuService.addProblem(issue);
+			issueService.addProblem(issue);
 
-			issue = issuService.getByID(issue.getId());
+			issue = issueService.getByID(issue.getId());
 
 			issue.setDescription("add new attachments");
 
-			issuService.editProblem(issue);
+			issueService.editProblem(issue);
 
-			issuService.deleteProblem(issue);
+			issueService.deleteProblem(issue);
 			
 			assertTrue("sucsess", true);
 			
