@@ -43,12 +43,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public void delete(String email) {
-		dao.delete(dao.findByEmail(email));
-
-	}
-
-	@Override
 	public Collection<SubscriptionModel> listByIssueId(int issueId) {
 		return dao.findByIssueId(issueId);
 	}
