@@ -1,6 +1,6 @@
 package edu.com.softserveinc.main.controllers;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserController {
 	
 	@RequestMapping("get-users")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody List<UserModel> getUsersAction() {
+	public @ResponseBody Collection<UserModel> getUsersAction() {
 		return service.loadUsersList();
 	}
 		
@@ -44,8 +44,7 @@ public class UserController {
 		
 		return message;
 	}
-	
-	
+		
 	
 	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -64,10 +63,9 @@ public class UserController {
 	}
 	
 	
-	
 	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody Map<String, String> removeUserAction(@PathVariable("id") int id,
+	public @ResponseBody Map<String, String> removeUserAction(@PathVariable int id,
 			Map<String, String> message) {
 		
 		try {
