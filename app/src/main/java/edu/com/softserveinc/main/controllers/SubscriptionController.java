@@ -24,28 +24,24 @@ public class SubscriptionController {
 	// TODO: Return some nice UI, and correct statuses.
 	// TODO: Maybe confirmation
 	@RequestMapping(value = "/{id}/delete/{digest}", method = RequestMethod.GET)
-	public String cancelSubscriptionFromMailAction(
-			@PathVariable Integer id, @PathVariable String digest) {
+	public String cancelSubscriptionFromMailAction(@PathVariable Integer id,
+			@PathVariable String digest) {
 
 		SubscriptionModel sub = service.read(id);
-		
+
 		if (sub == null)
 			// no such subscription
 			return "redirect:/";
-		
+
 		if (DigestUtils.md5DigestAsHex(sub.toString().getBytes()) != digest) {
 			// bad request
 			return "redirect:/";
 		}
 
-		if (sub.getIssueId() != 0) {
-			service.delete(sub.getId());
-			// Unsubscribed from issueId issue
-			return "redirect:/";
-		}
-		service.delete(sub.getEmail());
-		// Unsubscribed from all issues
+		service.delete(sub.getId());
+		// Unsubscribed from issueId issue
 		return "redirect:/";
+
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
