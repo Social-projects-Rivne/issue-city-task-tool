@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserModel getById(int id) {
+		return userDao.findOne(id);
+	}
+	
+	@Override
 	public Collection<UserModel> loadUsersList() {
 		Collection<UserModel> users = userDao.findAll();
 		for (UserModel user: users){

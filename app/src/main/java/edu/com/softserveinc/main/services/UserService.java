@@ -11,6 +11,8 @@ public interface UserService {
 	public void editUser(UserModel user);
 	
 	public void deleteUser(int userId);
+	
+	public UserModel getById(int id);
 
 	public Collection<UserModel> loadUsersList();
 
