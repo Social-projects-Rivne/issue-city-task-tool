@@ -18,6 +18,7 @@ import edu.com.softserveinc.main.models.IssueModel;
 import edu.com.softserveinc.main.models.StatusModel;
 import edu.com.softserveinc.main.services.CategoryService;
 import edu.com.softserveinc.main.services.IssueService;
+import edu.com.softserveinc.main.services.MailService;
 import edu.com.softserveinc.main.services.StatusService;
 
 @Controller
@@ -31,6 +32,9 @@ public class IssueController {
 
 	@Autowired
 	private StatusService statusService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@RequestMapping("issue/{id}")
 	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id) {
@@ -41,6 +45,7 @@ public class IssueController {
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody void deleteIssue(@PathVariable("id") int id) {
 		service.deleteProblem(id);
+		mailService.notifyForIssue(id, "Issue has been deleted.");
 		System.out.print(id);
 	}
 
@@ -122,7 +127,8 @@ public class IssueController {
 		int categoryId = 0;
 		int statusId = 0;
 		
-		IssueModel issue = service.getByID(Integer.parseInt(request.get("id").toString()));
+		int issueId = Integer.parseInt(request.get("id").toString());
+		IssueModel issue = service.getByID(issueId);
 		
 		issue.setDescription(request.get("description").toString());
 	    issue.setAttachments(request.get("attachments").toString());
@@ -163,7 +169,8 @@ public class IssueController {
 			issue.setStatusId(statusId);
 		}
 		
-		service.editProblem(issue);		
+		service.editProblem(issue);
+		mailService.notifyForIssue(issueId, "Issue has been updated.");
 		
 		return message;
 	}
@@ -178,11 +185,10 @@ public class IssueController {
 		System.out.println("IssueController java method");
 		String message = null;
 
-		IssueModel issue = service.getByID(Integer.parseInt(request.get("id")
-				.toString()));
+		int issueId = Integer.parseInt(request.get("id").toString());
+		IssueModel issue = service.getByID(issueId);
 		System.out.println(request.get("description"));
-		System.out.println(service.getByID(Integer.parseInt(request.get("id")
-				.toString())));
+		System.out.println(service.getByID(issueId));
 
 		// get from front-end and set to model java
 		issue.setDescription(request.get("description").toString());
@@ -194,6 +200,7 @@ public class IssueController {
 				.toString())));
 		// update DB into back-end
 		service.editProblem(issue);
+		mailService.notifyForIssue(issueId, "Issue has been updated.");
 		// issue.setStatusId(statusId);
 		return message;
 	}
@@ -204,6 +211,7 @@ public class IssueController {
 		IssueModel issue = service.getByID(id);
 		issue.setStatusId(5);
 		service.editProblem(issue);
+		mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
 	}
 
 }
