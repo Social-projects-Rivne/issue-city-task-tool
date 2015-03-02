@@ -12,20 +12,19 @@ import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.UserService;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
     private UserDao userDao;
 	
 	@Override
-	@Transactional
 	public void addUser(UserModel user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		userDao.saveAndFlush(user);
 	}
 
 	@Override
-	@Transactional
 	public void deleteUser(int id) {
 		if (id != 0) {
 			userDao.delete(id);
@@ -33,7 +32,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public void editUser(UserModel user) {
 		if (user.getPassword() == "_")
 			user.setPassword(userDao.findOne(user.getId()).getPassword());
@@ -43,20 +41,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
 	public UserModel getById(int id) {
 		return userDao.findOne(id);
 	}
 	
 	@Override
-//	BUG: Sets password in DB
-//	@Transactional
 	public Collection<UserModel> loadUsersList() {
-		Collection<UserModel> users = userDao.findAll();
-		for (UserModel user: users){
-			user.setPassword("_");
-		}
-		return users;
+		return userDao.findAll();
 	}
 
 }
