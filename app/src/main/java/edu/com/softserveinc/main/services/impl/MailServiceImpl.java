@@ -25,7 +25,8 @@ public class MailServiceImpl implements MailService {
 	@Autowired private UserService userService;
 	
 	final String BAWL_EMAIL = "bawlrivne@gmail.com";
-	final String HEADER = "<html><body><h3>Bawl notification</h3><br /><p>";
+	final String HEADER = "<html><body><h3>Bawl notification for issue #";
+	final String AFTER_ISSUE_ID = "</h3><br /><p>";
 	final String BEFORE_LINK = "</p><br /><p>You may <a href=";
 	final String AFTER_LINK = ">unsubscribe</a> at any time.</p></body></html>";
 	
@@ -55,7 +56,7 @@ public class MailServiceImpl implements MailService {
 		helper.setFrom(BAWL_EMAIL);
 		helper.setSubject("Bawl notification");
 		helper.setTo(sub.getEmail());
-		helper.setText(HEADER+msg+BEFORE_LINK+link+AFTER_LINK, true);
+		helper.setText(HEADER+sub.getIssueId()+AFTER_ISSUE_ID+msg+BEFORE_LINK+link+AFTER_LINK, true);
 		
 		return message;
 	}
