@@ -31,17 +31,6 @@ public class UserController {
 		return service.loadUsersList();
 	}
 	
-	//testMethod
-	@RequestMapping("mailuser/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody UserModel mailUserTestAction(@PathVariable int id) {
-		UserModel user = service.getById(id);
-		String role = user.getRole_id() == 1 ? "Admin" : "Manager";
-		mailService.notifyUser(user.getId(),
-				"Your account has been updated.\n\nCurrent login: "
-						+ user.getLogin() + "\nCurrent role: " + role);
-		return user;
-	}
 	
 	@RequestMapping(value = "user", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
