@@ -8,15 +8,22 @@ import org.junit.Test;
 import edu.com.softserveinc.main.utils.PasswordEncoder;
 
 public class PasswordEncoderTest {
-
+	
+	PasswordEncoder encoder = new PasswordEncoder(11);
+	
 	@Before
 	public void setUp() throws Exception {
 	}
 
 	@Test
 	public void test() {
-		System.out.println(new PasswordEncoder("Pass").encode());
+		encoder.setPassvord("Pass");
+		System.out.println(encoder.encode());
 		assertTrue(true);
+	}
+	@Test
+	public void compearTest() {
+		assertTrue(encoder.compare("Pass", "$2a$11$0Ctak47c7yrhI46hnyFADefgDTw2NPVO4OgeRFGJtBE1GmXAB6.7q"));
 	}
 
 }

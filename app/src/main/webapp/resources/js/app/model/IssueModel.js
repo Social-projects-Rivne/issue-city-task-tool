@@ -1,15 +1,18 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 	var IssueModel = Backbone.Model.extend({
-		urlRoot: 'get-issue',
+		urlRoot: 'issue',
 		defaults: {
-			id: 0,
-			categoryId: 0,
-			priorityId: 0,
+			id: null,
+			priorityId: 1,
+			status: "new",
 			name: "",
 			description: "",
 			mapPointer: "",
 			attachments: "",
+			category: "",
+			statusId: "1",
+			categoryId: "1"
 		}
 	});
 	

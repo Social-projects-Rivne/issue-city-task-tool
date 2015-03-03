@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView',
-         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView' ],
+         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView', 'text!templates/map.html',],
 		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView,
-				AddIssueView, AdminView, UserView) {
+				AddIssueView, AdminView, UserView, MapTemplate) {
 
 	var that = null;
 
@@ -10,7 +10,17 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					this.model = new IssueCollection();
 				},
 				
+				mapTemplate: _.template(MapTemplate),
+				
+				markers: [ L.AwesomeMarkers.icon( { icon: 'flame', markerColor: 'red', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'waterdrop', markerColor: 'blue', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'model-s', markerColor: 'orange', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'leaf', markerColor: 'green', prefix: 'ion' } ),
+				           L.AwesomeMarkers.icon( { icon: 'flash', markerColor: 'cadetblue', prefix: 'ion' } ) ],
+				
 				render : function() {
+					$("#container").empty(),
+					$("#container").append(this.mapTemplate);
 					map = L.map('map').setView([50.62, 26.25], 13);
 					marker = null;
 					addIssueView = new AddIssueView( { el: "#form-container" } );
@@ -30,7 +40,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					this.model.fetch( { success: function() {
 						that.model.each(function(issue) {
 							L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
-									.split(', ')).addTo(map).on('click', onMarkerClick).title = issue.get("id");
+									.split(', '), { icon: that.markers[Math.floor(Math.random() * 5)] }).addTo(map).on('click', onMarkerClick).title = issue.get("id");
 						});
 					} } );
 					
@@ -39,9 +49,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 			});
 			
 			function onMarkerClick(e) {
-				issueDetailsView.render(this.title);
+				//issueDetailsView.render(this.title);
 				//TODO:replace comment list in issue details view
-				commentListView.render(this.title);
 				Backbone.history.navigate("issue/"+this.title,true)
 			}
 			
