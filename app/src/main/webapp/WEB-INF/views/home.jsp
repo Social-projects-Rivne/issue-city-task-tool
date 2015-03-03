@@ -4,6 +4,8 @@
 <head>
 <title>Home</title>
 
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <!-- delete it later or add to project -->
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 

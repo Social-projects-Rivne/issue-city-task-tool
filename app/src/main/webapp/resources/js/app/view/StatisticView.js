@@ -13,7 +13,7 @@ define([ 'jquery', 'underscore', 'backbone' ],
 				statisticByCategories: function() {
 					$.ajax( {
 						type: 'POST',
-						url: 'statistic-by-category',
+						url: 'statistic-by-categories',
 						dataType: 'json',
 						success: function(data) {
 							console.log(data);
@@ -27,7 +27,7 @@ define([ 'jquery', 'underscore', 'backbone' ],
 				statisticByStatuses: function() {
 					$.ajax( {
 						type: 'POST',
-						url: 'statistic-by-status',
+						url: 'statistic-by-statuses',
 						dataType: 'json',
 						success: function(data) {
 							console.log(data);

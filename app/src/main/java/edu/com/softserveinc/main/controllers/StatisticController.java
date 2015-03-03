@@ -1,5 +1,6 @@
 package edu.com.softserveinc.main.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +34,9 @@ public class StatisticController {
 	@Autowired
 	private CommentService commentService;
 	
-	@RequestMapping(value = "statistic-by-category", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> statisticByCategory() {
-		Map<String, String> statistic = new HashMap<String, String>();
+	@RequestMapping(value = "statistic-by-categories", method = RequestMethod.POST)
+	public @ResponseBody List<Map<String, String>> statisticByCategory() {
+		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = issueService.loadIsssueList();
 		List<CategoryModel> categories = categoryService.loadCategoriesList();
 		
@@ -48,15 +49,17 @@ public class StatisticController {
 				}	
 			}
 			
-			statistic.put(categories.get(i).getName(), "" + tmp);
+			statistic.add(new HashMap<String, String>());
+			statistic.get(i).put("label", categories.get(i).getName());
+			statistic.get(i).put("value", "" + tmp);
 		}
 		
 		return statistic;
 	}
 	
-	@RequestMapping(value = "statistic-by-status", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> statisticByStatus() {
-		Map<String, String> statistic = new HashMap<String, String>();
+	@RequestMapping(value = "statistic-by-statuses", method = RequestMethod.POST)
+	public @ResponseBody List<Map<String, String>> statisticByStatus() {
+		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = issueService.loadIsssueList();
 		List<StatusModel> statuses = statusService.loadStatusList();
 		
@@ -69,20 +72,24 @@ public class StatisticController {
 				}	
 			}
 			
-			statistic.put(statuses.get(i).getName(), "" + tmp);
+			statistic.add(new HashMap<String, String>());
+			statistic.get(i).put("label", statuses.get(i).getName());
+			statistic.get(i).put("value", "" + tmp);
 		}
 		
 		return statistic;
 	}
 	
 	@RequestMapping(value = "statistic-by-comments", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> statisticByComments() {
-		Map<String, String> statistic = new HashMap<String, String>();
+	public @ResponseBody List<Map<String, String>> statisticByComments() {
+		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = issueService.loadIsssueList();
 		
 		for (int i = 0; i < issues.size(); i++) {
 			
-			statistic.put(issues.get(i).getName(), "" + commentService.getCommentsByIssueId(i).size());
+			statistic.add(new HashMap<String, String>());
+			statistic.get(i).put("label", issues.get(i).getName());
+			statistic.get(i).put("value", "" + commentService.getCommentsByIssueId(i).size());
 			
 		}
 		
