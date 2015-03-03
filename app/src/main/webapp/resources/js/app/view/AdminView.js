@@ -38,14 +38,13 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				
 				//function which will be search users by their name
 				search: function(){
-					router.navigate('admin/search/' + $('.form-control').val());
-					usersFilter = userListView.model.findWhere({name: $('.form-control').val()});
+					router.navigate('admin/search/' + $('.search .form-control').val());
+					usersFilter = userListView.model.findWhere({name: $('.search .form-control').val()});
 					userListView.model = new UserCollection(usersFilter);
 					userListView.render();
 				},
 				//it reset filters and render all users without filters
 				resetFilter: function(){
-					alert('we try to reset filter');
 					userListView.model.fetch({success: function(){
 							router.navigate('admin');
 							userListView.render();
