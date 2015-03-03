@@ -5,9 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.com.softserveinc.main.dao.DaoImpl;
 import edu.com.softserveinc.main.models.CommentModel;
-import edu.com.softserveinc.main.services.CommentServiceImpl;
+import edu.com.softserveinc.main.services.impl.CommentServiceImpl;
 
 public class CommentServiceImplTest {
 

@@ -1,0 +1,68 @@
+<!-- EditIssueTemplate-->
+<div id="editIssueModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">         
+    <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">User issue editing</h4>			
+			</div>
+			<div class="modal-body">         
+                
+                <!--description-->
+			                <div class="form-group">
+			                    <label for="description" class="control-label col-xs-4">Description</label>
+			                    <div class="col-xs-6">
+			                        <input type="text" class="form-control input-sm" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
+			                    </div>
+			                </div>
+                <!--attachment-->
+		                <div class="form-group">
+		                    <label for="attachment" class="control-label col-xs-4">Attachments</label>
+		                    <div class="col-xs-6">
+		                        <input type="text" class="form-control input-sm" id="edit-issue-form-attachment" value="<%= attachments %>" placeholder="attachment" name="attachment">
+		                    </div>
+		                </div>
+               <!--category-->
+               		    <div class="form-group">
+				            <label for="category" class="control-label col-xs-4" name="category">Category</label>
+						    	<div class="col-xs-6">
+						    	<select type="text" class="form-control input-sm" value="<%= categoryId %>"> 
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+								</select>
+								</div>
+							</div>
+               <!--status-->
+					    <div class="form-group">
+				            <label for="status" class="control-label col-xs-4" id="edit-issue-form-status" name="status">Status</label>
+						   		<div class="col-xs-6">
+						    		<select type="text" class="form-control input-sm" value="<%= statusId %>"> 
+									<option>New</option>
+									<option>To Resolve</option>
+									<option>Approved</option>
+									<option>Resolved</option>
+								</select>
+								</div>
+						</div>
+               <!--priority-->
+               			
+                		<div class="form-group">
+				            <label for="priority" class="control-label col-xs-4" id="edit-issue-form-priority" name="priority">Priority</label>
+						   		<div class="col-xs-6">
+						    		<select type="text" class="form-control input-sm" value="<%= priorityId %>"> 
+									<option>Low</option>
+									<option>Medium</option>
+									<option>High</option>
+									</select>
+								</div>
+						</div>
+                	
+            </div>
+    		<div class="modal-footer">
+    				<button class='btn btn-primary editIssueConfirm'>OK</button>
+        			<button class="btn" data-dismiss="modal">Cancel</button>
+    		</div>
+		</div>
+	</div>
+</div>
