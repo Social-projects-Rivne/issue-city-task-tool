@@ -36,7 +36,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				
 				showEditForm: function(e) {
 					if($('#editModal')) $('#editModal').remove();
-					this.$el.append(this.editUserTemplate( { 'data': MapView.get(e.currentTarget.id) } ));
+					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
 					
 					userName = $('#userName');
