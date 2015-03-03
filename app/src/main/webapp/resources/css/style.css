@@ -111,6 +111,16 @@ td#category-cell {
   	color: #dbdbdb;
   	font-size: 11px;
 }
+
+
+/* radio btns group */
+#form-container label{
+  padding-bottom: 20px;
+}
+/* radio btns group */
+#form-container label select{
+  margin-top: 10px;
+}
 /* text color navbar-brand */
 .navbar-default .navbar-brand {
     color: #fff !important;

@@ -5,7 +5,7 @@
 	<label class="radio-inline"> <input type="radio"
 		name="optradio" id="status">
 		<div>
-			Status <select id="status-filter">
+			Status <select class="form-control" id="status-filter">
 				<option value="1">new</option>
 				<option value="2">approved</option>
 				<option value="3">resolved</option>
@@ -15,7 +15,7 @@
 		</div>
 	</label> <br> <label class="radio-inline">
    <input type="radio" name="optradio" id="category"> Category 
-     <select  id="categories">
+     <select class="form-control" id="categories">
         <% _.map(categories, function(category) { %>
           <option ><%= category.name %></option><!--value="<%= category.id %>" -->
         <% }); %>
@@ -24,7 +24,7 @@
 	</label> <br> <label class="radio-inline"> <input type="radio"
 		name="optradio" id="priority">
 		<div>
-			Priority <select id="priority-filter">
+			Priority <select class="form-control" id="priority-filter">
 				<option value="1">Low</option>
 				<option value="2">Medium</option>
 				<option value="3">High</option>
