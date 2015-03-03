@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserModel getUserByLogin(String login) throws Exception  {
-		UserModel user = userDao.findByName(login);
+		UserModel user = userDao.findByLogin(login);
 		if(user == null) throw new Exception("User not found");
 		return user;
 	}
