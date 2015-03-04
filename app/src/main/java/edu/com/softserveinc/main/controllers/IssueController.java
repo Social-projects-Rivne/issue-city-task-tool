@@ -118,6 +118,57 @@ public class IssueController {
 	public @ResponseBody String editIssue(@RequestBody Map request) {
 		
 		String message = null;
+		
+		if(request.size() == 10) {
+			
+			if(request.get("category") != ""){
+				String category = request.get("category").toString().toLowerCase();
+				List<CategoryModel> categories = categoryService.loadCategoriesList();
+				CategoryModel categoryModel = null;
+				int categoryId = 0;
+				int issueId = Integer.parseInt(request.get("id").toString());
+				IssueModel issue = service.getByID(issueId);
+				
+				for(int i = 0; i < categories.size(); i++) {
+					categoryModel = categories.get(i);
+					if(category.equals(categoryModel.getName())) {
+						categoryId = categoryModel.getId();
+						break;
+					}
+				}
+				
+				issue.setCategoryId(categoryId);
+				service.editProblem(issue);
+				mailService.notifyForIssue(issueId, "Issue has been updated.");
+			}
+			
+			if(request.get("status") != ""){
+				String status = request.get("status").toString().toLowerCase();
+				List<StatusModel> statuses = statusService.loadStatusList();
+				StatusModel statusModel = null;
+				int statusId = 0;
+				int issueId = Integer.parseInt(request.get("id").toString());
+				IssueModel issue = service.getByID(issueId);
+				
+				for(int i = 0; i < statuses.size(); i++) {
+					statusModel = statuses.get(i);
+					if(status.equals(statusModel.getName())) {
+						statusId = statusModel.getId();
+						break;
+					}
+				}
+				
+				issue.setStatusId(statusId);
+				service.editProblem(issue);
+				mailService.notifyForIssue(issueId, "Issue has been updated.");
+			}
+			
+		}
+		/*else {
+			String category = request.get("category").toString().toLowerCase();
+			String status = request.get("status").toString().toLowerCase();
+		}
+		
 		String category = request.get("category").toString().toLowerCase();
 		String status = request.get("status").toString().toLowerCase();
 		List<CategoryModel> categories = categoryService.loadCategoriesList();
@@ -167,17 +218,14 @@ public class IssueController {
 			}
 			
 			issue.setStatusId(statusId);
-		}
-		
-		service.editProblem(issue);
-		mailService.notifyForIssue(issueId, "Issue has been updated.");
+		}*/
 		
 		return message;
 	}
 	
 	
 	
-	@SuppressWarnings("rawtypes")
+	/*@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issueEdit/{id}", method = RequestMethod.PUT)
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody String editIssue2(@RequestBody Map request) {
@@ -203,7 +251,7 @@ public class IssueController {
 		mailService.notifyForIssue(issueId, "Issue has been updated.");
 		// issue.setStatusId(statusId);
 		return message;
-	}
+	}*/
 
 	// method for change status issue on to resolve
 	@RequestMapping(value = "to-resolve/{id}", method = RequestMethod.POST)
