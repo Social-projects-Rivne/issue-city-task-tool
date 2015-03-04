@@ -16,6 +16,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					this.model.fetch( { success: function() {
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
+						$('[name*="subscribe"]').popover();
 					} } );
 
 					
