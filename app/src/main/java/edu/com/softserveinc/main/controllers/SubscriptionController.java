@@ -28,20 +28,11 @@ public class SubscriptionController {
 			@PathVariable String digest) {
 
 		SubscriptionModel sub = service.read(id);
-
-		if (sub == null)
-			// no such subscription
-			return "redirect:/";
-
-		if (DigestUtils.md5DigestAsHex(sub.toString().getBytes()) != digest) {
-			// bad request
+		if (DigestUtils.md5DigestAsHex(sub.toString().getBytes()).equals(digest)) {
+			service.delete(sub.getId());
 			return "redirect:/";
 		}
-
-		service.delete(sub.getId());
-		// Unsubscribed from issueId issue
-		return "redirect:/";
-
+		return "redirect:/";		
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
