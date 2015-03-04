@@ -26,7 +26,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				
 				events: {
 					'click #add_comment_button': 'addComment',
-					'click [name="resolve"]': 'chngeStatus'
+					'click [name="resolve"]': 'chngeStatus',
+					'click [name*="send-folower-email"]': 'subscribe'
 
 				},
 
@@ -38,6 +39,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thanks! We will review your request." } } ));
 					$('#notificationModal').modal();
 				},
+
+				subscribe: function(e){
+					var folowerEmail = $('[id="folower-email"]').val();
+					console.log(folowerEmail);
+					$.ajax({url:'subscriptions', method:'POST', contentType:'application/json',data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'})
+				},
+
 
 				addComment : function() {
 				if(($('#add-comment  [name*="userName"]').val() !='') && ($('#add-comment  [name*="email"]').val() !='')){	
