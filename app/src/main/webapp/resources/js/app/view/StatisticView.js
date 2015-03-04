@@ -1,24 +1,31 @@
-define([ 'jquery', 'underscore', 'backbone' ],
-		function($, _, Backbone) {
+define([ 'jquery', 'underscore', 'backbone', 'text!templates/StatisticsTemplate.html' ],
+		function($, _, Backbone, StatisticsTemplate) {
 			var StatisticView = Backbone.View.extend({
+				template: _.template(StatisticsTemplate),
 				
 				initialize: function() {
-					console.log('Stat init');
+					var that = this;
+					$('#stat').on('click', function(e) { e.preventDefault(); that.render(); });
 				},
 				
 				render: function() {
-					console.log('Stat render');
+					if($("#statisticsModal")) $("#statisticsModal").remove();
+					this.$el.append(this.template);
+					this.statisticByCategories();
+					this.statisticByStatuses();
+					this.statisticByComments();
+					$("#statisticsModal").modal();
 				},
 				
 				statDiagram: function(data) {
 					var color = d3.scale.category10();
 					
-					var svg = d3.select("body").append("svg")
-						.attr("width", 1000)
-						.attr("height", 1000);
+					var svg = d3.select(".modal-body").append("svg")
+						.attr("width", 410)
+						.attr("height", 410);
 					
 					var g = svg.append("g")
-						.attr("transform", "translate(300, 300)");
+						.attr("transform", "translate(205, 205)");
 					
 					var arc = d3.svg.arc()
 						.innerRadius(0)
@@ -50,7 +57,6 @@ define([ 'jquery', 'underscore', 'backbone' ],
 						url: 'statistic-by-categories',
 						dataType: 'json',
 						success: function(data) {
-							console.log(data);
 							that.statDiagram(data);
 						},
 						error: function() {
@@ -66,7 +72,6 @@ define([ 'jquery', 'underscore', 'backbone' ],
 						url: 'statistic-by-statuses',
 						dataType: 'json',
 						success: function(data) {
-							console.log(data);
 							that.statDiagram(data);
 						},
 						error: function() {
@@ -82,7 +87,6 @@ define([ 'jquery', 'underscore', 'backbone' ],
 						url: 'statistic-by-comments',
 						dataType: 'json',
 						success: function(data) {
-							console.log(data);
 							that.statDiagram(data);
 						},
 						error: function() {

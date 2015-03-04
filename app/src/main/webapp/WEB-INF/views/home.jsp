@@ -44,6 +44,7 @@
 						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
 						<li><a href="#admin" id="admin">Admin</a></li>
 						<li><a href="#filter" id="filter">Filter</a></li>
+						<li><a href="#statistics" id="stat">Statistics</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
