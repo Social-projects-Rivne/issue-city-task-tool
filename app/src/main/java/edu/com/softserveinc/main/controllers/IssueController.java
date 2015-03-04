@@ -157,7 +157,9 @@ public class IssueController {
 						break;
 					}
 				}
-				
+				if(!request.get("attachments").toString().equals("")) issue.setAttachments(request.get("attachments").toString());
+				if(!request.get("description").toString().equals("")) issue.setDescription(request.get("description").toString());
+
 				issue.setStatusId(statusId);
 				service.editProblem(issue);
 				mailService.notifyForIssue(issueId, "Issue has been updated.");
