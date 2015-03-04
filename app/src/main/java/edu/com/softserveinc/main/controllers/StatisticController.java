@@ -89,7 +89,7 @@ public class StatisticController {
 			
 			statistic.add(new HashMap<String, String>());
 			statistic.get(i).put("label", issues.get(i).getName());
-			statistic.get(i).put("value", "" + commentService.getCommentsByIssueId(i).size());
+			statistic.get(i).put("value", "" + commentService.getCommentsByIssueId(issues.get(i).getId()).size());
 			
 		}
 		
