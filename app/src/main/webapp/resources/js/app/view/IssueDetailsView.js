@@ -30,20 +30,27 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					'click [name*="send-folower-email"]': 'subscribe'
 
 				},
-
+				//event for btn Resolve
 				chngeStatus: function(e){
 					id = e.currentTarget.id;
 					$.ajax({url: 'to-resolve/'+id, type: 'POST'});
+					//notitfication
 					if($('#notificationModal'))
 						$('#notificationModal').remove();
 					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thanks! We will review your request." } } ));
 					$('#notificationModal').modal();
 				},
 
+				//Subscribition method
 				subscribe: function(e){
 					var folowerEmail = $('[id="folower-email"]').val();
 					console.log(folowerEmail);
 					$.ajax({url:'subscriptions', method:'POST', contentType:'application/json',data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'})
+					//notitfication
+					if($('#notificationModal'))
+						$('#notificationModal').remove();
+					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thank you for your email subscription. You have now been added to the mailing list!" } } ));
+					$('#notificationModal').modal();
 				},
 
 
