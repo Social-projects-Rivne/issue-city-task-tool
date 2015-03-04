@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class IssueController {
 	@Autowired
 	private MailService mailService;
 
+	@PostAuthorize("hasRole('ROLE_MANAGER') or {2,5}.contains(returnObject.getStatusId())")
 	@RequestMapping("issue/{id}")
 	public @ResponseBody IssueModel getIssue(@PathVariable("id") int id) {
 		return service.getByID(id);
@@ -48,8 +50,8 @@ public class IssueController {
 		mailService.notifyForIssue(id, "Issue has been deleted.");
 		System.out.print(id);
 	}
-
-	@PostFilter("hasRole('ROLE_MANAGER') or filterObject.getStatusId() == 2 or filterObject.getStatusId() == 5") //2=approved, 5=toresolve
+ 
+	@PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")//2=approved, 5=toresolve
 	@RequestMapping("get-issues")
 	public @ResponseBody List<IssueModel> getIssues() {
 
