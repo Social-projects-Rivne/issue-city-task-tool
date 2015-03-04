@@ -48,7 +48,7 @@ public class MailServiceImpl implements MailService {
 			throws MessagingException {
 
 		String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
-		String link = "http://localhost:8080/Bawl/" + sub.getId() + "/delete/" + digest;
+		String link = "http://localhost:8080/Bawl/subscriptions/" + sub.getId() + "/delete/" + digest;
 				
 		MimeMessage message = mailSender.createMimeMessage();
 
