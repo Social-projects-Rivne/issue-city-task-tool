@@ -18,10 +18,10 @@
         <input type="radio" name="optradio"  id="keyword" checked > Keyword
       </label>
       <label class="radio-inline">
-        <input type="radio" name="optradio"  id="status"> 
+        <input type="radio" name="optradio"  id="status" style="margin-top: 10px;"> 
        <div>
          Status
-         <select id="status-filter">
+         <select id="status-filter" class="form-control" style="display: table-cell; width: 83px;" >
            <option value="1">new</option>
            <option value="2">approved</option>
            <option value="3">resolved</option>
@@ -31,8 +31,8 @@
        </div>
       </label>
       <label class="radio-inline">
-      <input type="radio" name="optradio" id="category"> Category 
-         <select  id="categories">
+      <input type="radio" name="optradio" id="category" style="margin-top: 10px;"> Category 
+         <select  id="categories"  class="form-control" style="display: table-cell; width: 83px;">
             <% _.map(categories, function(category) { %>
               <option value="<%= category.id %>"><%= category.name %></option><!--value="<%= category.id %>" -->
             <% }); %>
@@ -40,10 +40,10 @@
       </label>
     
     <label class="radio-inline">
-        <input type="radio" name="optradio"  id="priority"> 
+        <input type="radio" name="optradio"  id="priority" style="margin-top: 10px;"> 
        <div>
          Priority
-         <select id="priority-filter">
+         <select id="priority-filter" class="form-control" style="display: table-cell; width: 83px;">
            <option value="1">Low</option>
            <option value="2">Medium</option>
            <option value="3">High</option>
