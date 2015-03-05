@@ -13,6 +13,8 @@ public interface UserService {
 	public void deleteUser(int userId);
 	
 	public UserModel getById(int id);
+	
+	public UserModel getByLogin(String login);
 
 	public Collection<UserModel> loadUsersList();
 

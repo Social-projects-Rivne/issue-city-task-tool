@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.findAll();
 	}
 
+	@Override
+	public UserModel getByLogin(String login) {
+		return userDao.findByLogin(login);
+	}
+
 }
