@@ -32,7 +32,6 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		issue : function(id) {
 			console.log('route to issue with id ' + id);
 			$('.col-1-3').hide();
-			issueDetailsView.render(id);
 			// remove it when comments will be rendering from issue details view
 			// fom
 		},
@@ -40,7 +39,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		cryOut : function() {
 			//router.navigate("/", {trigger: true}); 
 			mapView.render();
-			router.navigate('cry-out', {trigger: false});
+			//router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},
 		

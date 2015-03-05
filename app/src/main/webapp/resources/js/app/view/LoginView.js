@@ -34,6 +34,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 									console.log(data);
 									user = new UserModel(data);
 									console.log(user.toJSON());
+									$(".login.modal").modal('hide');
 								},
 						});	
 						
