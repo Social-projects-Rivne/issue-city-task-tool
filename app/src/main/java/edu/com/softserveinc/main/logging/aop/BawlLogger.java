@@ -1,23 +1,21 @@
 package edu.com.softserveinc.main.logging.aop;
 
+import java.util.Arrays;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class BawlLogger {
 
-	@Pointcut("execution(public * *(..))")
-	public void anyPublicMethod() {
-	}
-
-	@Before("anyPublicMethod()")
+	@Before("execution(* edu.com.softserveinc.main..*.*(..))")
 	public void myAspect(JoinPoint point) throws Throwable {
-
-		System.out.println("in aspect!");
+		final Logger log = LoggerFactory.getLogger(point.getTarget().getClass());
+		log.debug("{}() {}", point.getSignature().getName(), Arrays.asList(point.getArgs()));
 	}
 }
-// log.debug("{}(): {}", methodName, args);
