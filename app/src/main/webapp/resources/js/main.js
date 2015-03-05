@@ -38,8 +38,9 @@ require([
 	managerView = null;
 	
 	jQuery(document).ready(function($){
-
-
+		// show login form on unauthorized response
+		$.ajaxSetup({statusCode: {401: function(){router.navigate('login', {trigger: true}); } } });
+		
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		issueFilterView = new IssueFilterView({el:"#container"});
