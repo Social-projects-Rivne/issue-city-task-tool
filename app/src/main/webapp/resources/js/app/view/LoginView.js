@@ -3,7 +3,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 			var LoginView = Backbone.View.extend({
 				
 				loginTemplate: _.template(LoginTemplate),
-				
+				currentUser: null,
 				events: {
 
 					'click #loginbox #btn-login': 'login',
@@ -19,24 +19,35 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 				},
 
 				login: function(){
-					var user = null;
+					that = this;
 					var login = $("#j_username").val();
 					var password = $(" #j_password").val();
 					if(login != "" && password != ""){
-						console.log('Login: ' + login);
-						console.log('Password: ' + password);
-
 						$.ajax({
 							url: 'j_spring_security_check',
 							type: 'POST',
 							data: $("#loginForm").serialize(),
-							success: function(data){
-									console.log(data);
-									user = new UserModel(data);
-									console.log(user.toJSON());
-								},
+							success: function(){
+								console.log();
+								$.ajax({ 
+									contentType:'applicetaion/json',
+									url: 'currentuser',
+									success: function(data){
+										that.currentUser = new UserModel(data);
+
+										if(that.currentUser.get('role_id') == 1){
+											router.navigate('admin',{trigger:true});
+										} else if(that.currentUser.get('role_id') == 2){
+											router.navigate('manager',{trigger:true});
+										} else {
+											// some notification for user
+										}
+										that.hideLoginForm()
+									}
+								});
+							},
 						});	
-						
+
 					} else{
 						console.log('Fields is empty');
 					};
