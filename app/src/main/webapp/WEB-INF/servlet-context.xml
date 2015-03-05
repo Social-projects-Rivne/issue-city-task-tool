@@ -37,41 +37,6 @@
 
 	<context:component-scan base-package="edu.com.softserveinc" />
 
-	<!-- Persistence config -->
-
-	<context:property-placeholder location="classpath:persistence.properties" />
-
-	<beans:bean id="myEmf"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="packagesToScan" value="edu.com.softserveinc.main.models" />
-		<beans:property name="jpaVendorAdapter">
-			<beans:bean
-				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-		</beans:property>
-		<beans:property name="jpaProperties">
-			<beans:props>
-				<beans:prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</beans:prop>
-				<beans:prop key="hibernate.dialect">${hibernate.dialect}</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
-
-	<beans:bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />
-		<beans:property name="url" value="${jdbc.url}" />
-		<beans:property name="username" value="${jdbc.user}" />
-		<beans:property name="password" value="${jdbc.pass}" />
-	</beans:bean>
-
-	<beans:bean id="transactionManager"
-		class="org.springframework.orm.jpa.JpaTransactionManager">
-		<beans:property name="entityManagerFactory" ref="myEmf" />
-	</beans:bean>
-
-	<jpa:repositories base-package="edu.com.softserveinc.main.dao" />
-
 	<tx:annotation-driven />
 
 	<beans:bean id="persistenceExceptionTranslationPostProcessor"
