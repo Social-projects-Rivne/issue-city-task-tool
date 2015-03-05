@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView',
-         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView', 'text!templates/map.html',],
+         'view/CommentListView', 'view/AddIssueView', 'view/UserView', 'text!templates/map.html',],
 		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView,
-				AddIssueView, AdminView, UserView, MapTemplate) {
+				AddIssueView, UserView, MapTemplate) {
 
 	var that = null;
 
@@ -33,8 +33,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
 					commentListView = new CommentListView( { el: ".comments" } );
 					
-					adminView = new AdminView( { el: "#container" } );
-
+					
 					that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
