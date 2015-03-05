@@ -21,6 +21,11 @@
 		<param-value>/WEB-INF/root-context.xml</param-value>
 	</context-param>
 
+	<!-- Logging -->
+	<listener>
+        <listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+    </listener>
+
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

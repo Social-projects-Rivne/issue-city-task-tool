@@ -41,4 +41,10 @@ public class StatusModel {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "StatusModel [id=" + id + ", name=" + name + "]";
+	}
+	
 }

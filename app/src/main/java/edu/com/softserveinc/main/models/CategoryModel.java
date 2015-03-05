@@ -51,4 +51,9 @@ public class CategoryModel {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "CategoryModel [id=" + id + ", name=" + name + "]";
+	}
+
 }

@@ -218,4 +218,10 @@ public class UserModel {
 		return this.avatar;
 	}
     
+	@Override
+	public String toString() {
+		return "UserModel [id=" + id + ", name=" + name + ", email=" + email
+				+ ", login=" + login + ", role_id=" + role_id + "]";
+	}
+    
 }

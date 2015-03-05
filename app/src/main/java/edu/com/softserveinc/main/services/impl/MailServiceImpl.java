@@ -3,7 +3,7 @@ package edu.com.softserveinc.main.services.impl;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -19,7 +19,7 @@ import edu.com.softserveinc.main.services.UserService;
 @Service
 public class MailServiceImpl implements MailService {
 
-	@Autowired private JavaMailSenderImpl mailSender;
+	@Autowired private JavaMailSender mailSender;
 	
 	@Autowired private SubscriptionService subService;
 	@Autowired private UserService userService;
