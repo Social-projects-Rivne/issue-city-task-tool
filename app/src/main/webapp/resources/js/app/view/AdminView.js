@@ -33,7 +33,11 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				},
 				
 				render: function() {
-					userListView.render();
+					userListView.model.fetch({ success: function(){
+							userListView.render();
+						}
+			
+					});
 				},
 				
 				//function which will be search users by their name

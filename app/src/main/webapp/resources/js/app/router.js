@@ -30,10 +30,9 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		issue : function(id) {
-			console.log('route to issue with id ' + id);
 			$('.col-1-3').hide();
-			// remove it when comments will be rendering from issue details view
-			// fom
+			issueDetailsView.render(id);
+			// comments must rendering from issue details view
 		},
 
 		cryOut : function() {
@@ -44,11 +43,12 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 		
 		admin : function() {
-			userListView.model.fetch({ success: function(){
-					adminView.render();
-				}
-			
-			});
+			if(loginView.currentUser != null){
+				adminView.render();
+			} else{
+				router.navigate('login', {trigger:true});
+
+			}
 		},
 		
 		manager : function(){
