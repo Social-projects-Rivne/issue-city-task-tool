@@ -44,8 +44,8 @@
 	<beans:bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<aop:aspectj-autoproxy/>
-	
 	<sec:global-method-security pre-post-annotations="enabled" />
+	
+	<aop:aspectj-autoproxy />
 		
 </beans:beans>

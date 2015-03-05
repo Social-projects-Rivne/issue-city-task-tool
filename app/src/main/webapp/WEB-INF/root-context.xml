@@ -54,6 +54,4 @@
 	
 	<beans:import resource="mail-context.xml" />
 
-	<aop:aspectj-autoproxy/>
-
 </beans:beans>
