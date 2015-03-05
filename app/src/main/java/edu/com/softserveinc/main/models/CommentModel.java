@@ -92,4 +92,11 @@ public class CommentModel {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "CommentModel [id=" + id + ", comment=" + comment
+				+ ", userName=" + userName + ", email=" + email + ", issueId="
+				+ issueId + "]";
+	}
+
 }

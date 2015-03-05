@@ -204,4 +204,12 @@ public class IssueModel {
 		this.statusId = statusId;
 	}
 
+	@Override
+	public String toString() {
+		return "IssueModel [id=" + id + ", name=" + name + ", description="
+				+ description + ", mapPointer=" + mapPointer + ", categoryId="
+				+ categoryId + ", priorityId=" + priorityId + ", statusId="
+				+ statusId + "]";
+	}
+
 }
