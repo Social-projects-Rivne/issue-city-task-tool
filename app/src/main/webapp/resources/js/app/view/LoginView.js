@@ -1,5 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView', 'text!templates/login.html', ],
-		function($, _, Backbone, UserModel, AdminView, LoginTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView', 
+        'view/ManagerView','text!templates/login.html', ],
+		function($, _, Backbone, UserModel, AdminView, ManagerView, LoginTemplate) {
 			var LoginView = Backbone.View.extend({
 				
 				loginTemplate: _.template(LoginTemplate),
@@ -16,7 +17,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				initialize: function() {
 					$('.login.modal').empty();
 					$('.login.modal').append(this.loginTemplate);
-					//this.getCurrentUser();
+					this.getCurrentUser();
 				},
 
 				getCurrentUser: function(){
@@ -52,10 +53,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 										//routing by user's role
 										if(that.currentUser.get('role_id') == 1){
 											adminView = new AdminView( { el: "#container" } );
+											managerView = new ManagerView({el:"#container"})
 											router.navigate('admin',{trigger:true});
 										} else if(that.currentUser.get('role_id') == 2){
-											
-
+											managerView = new ManagerView({el:"#container"})
 											router.navigate('manager',{trigger:true});
 										} else {
 											// some notification for user
@@ -103,4 +104,3 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 			
 			return LoginView;
 		});
-var adminView;

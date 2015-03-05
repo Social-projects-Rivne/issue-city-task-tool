@@ -1,4 +1,5 @@
-define([ 'underscore', 'backbone' ], function(_, Backbone) {
+define([ 'underscore', 'backbone','view/AdminView', 
+        'view/ManagerView',], function(_, Backbone, AdminView, ManagerView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -43,16 +44,30 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 		
 		admin : function() {
-			if(loginView.currentUser != null){
+			if((loginView.currentUser != null)&&(adminView != null)){
 				adminView.render();
 			} else{
-				router.navigate('login', {trigger:true});
-
+				if (adminView == null) {
+					adminView = new AdminView( { el: "#container" } );
+					managerView = new ManagerView({el:"#container"})
+					adminView.render();
+				} else {
+					router.navigate('login', {trigger:true});
+				}
 			}
 		},
 		
 		manager : function(){
-			managerView.render();
+			if((loginView.currentUser != null)&&(managerView != null)){
+				managerView.render();
+			} else{
+				if (managerView == null) {
+					managerView = new ManagerView( { el: "#container" } );
+					managerView.render();
+				} else {
+					router.navigate('login', {trigger:true});
+				}
+			}
 		},
 
 		filter:function(){

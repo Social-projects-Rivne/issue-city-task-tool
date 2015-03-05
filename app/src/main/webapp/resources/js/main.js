@@ -34,14 +34,16 @@ require([
 	
 	//var comments = null;
 	router = null;
+	adminView = null;
+	managerView = null;
 	
 	jQuery(document).ready(function($){
 
-		
+
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		issueFilterView = new IssueFilterView({el:"#container"});
-		managerView = new ManagerView({el:"#container"});
+		
 		loginView = new LoginView({el:"body"});
 		
 		issueFilterView = new IssueFilterView({el:"#container"});
