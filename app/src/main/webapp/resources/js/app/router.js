@@ -51,6 +51,7 @@ define([ 'underscore', 'backbone','view/AdminView',
 					adminView = new AdminView( { el: "#container" } );
 					managerView = new ManagerView({el:"#container"})
 					adminView.render();
+					this.navigate('admin', {trigger:false});
 				} else {
 					router.navigate('login', {trigger:true});
 				}
@@ -64,6 +65,7 @@ define([ 'underscore', 'backbone','view/AdminView',
 				if (managerView == null) {
 					managerView = new ManagerView( { el: "#container" } );
 					managerView.render();
+					this.navigate('manager', {trigger:false});
 				} else {
 					router.navigate('login', {trigger:true});
 				}
