@@ -21,6 +21,7 @@
 		<intercept-url pattern="/fonts/**" access="permitAll" />
 		<intercept-url pattern="/img/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
+		<intercept-url pattern="/j_spring_security_check" access="permitAll" />
 		
 		<logout invalidate-session="true" success-handler-ref="ajaxLogoutSuccessHandler"
 			delete-cookies="JSESSIONID" />
