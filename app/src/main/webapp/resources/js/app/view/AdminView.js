@@ -10,6 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					'click #reset-filter'	: 'resetFilter',
 					'click #add-user'		: 'showAddUserForm',
 					'click .addFormConfirm'	: 'addUser',
+					'click #left_admin_panel #admin_log_out'	: 'logOut',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -120,6 +121,16 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					});
 				},
 				
+				logOut: function(){
+					$.ajax('j_spring_security_logout');
+					router.navigate('', {trigger:true});
+					if($('#notificationModal'))
+						$('#notificationModal').remove();
+					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
+					$('#notificationModal').modal();
+					
+				},
+
 				addUser: function(e) {
 					var isValid = true;
 					
@@ -169,6 +180,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					}
 					
 				}
+
 			});
 			
 			return AdminView;
