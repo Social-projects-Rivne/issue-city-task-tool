@@ -93,8 +93,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				
 				hideLoginForm: function() {
 					$(".login.modal").modal('hide');
-
-					router.navigate("", {trigger: false});
+					//router.navigate("", {trigger: false});
 				},
 				
 				render: function(){
