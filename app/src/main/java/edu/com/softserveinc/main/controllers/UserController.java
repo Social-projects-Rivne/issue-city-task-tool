@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,10 +94,12 @@ public class UserController {
 		
 	@RequestMapping(value = "currentuser", method = RequestMethod.GET)
 	public @ResponseBody UserModel getCurrentUserAction(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth.isAuthenticated())
-			return service.getByLogin(auth.getName());
-		else
+		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (currentUserLoginName.equals("anonymousUser")) {
 			return null;
+		}
+		else {
+			return service.getByLogin(currentUserLoginName);
+		}
 	}
 }
