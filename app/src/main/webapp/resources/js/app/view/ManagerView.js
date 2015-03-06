@@ -339,6 +339,17 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					});
 					
 				},
+
+				logOut: function(){
+					$.ajax('j_spring_security_logout');
+					loginView.currentUser = null;
+					router.navigate('', {trigger:true});
+					if($('#notificationModal'))
+						$('#notificationModal').remove();
+					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
+					$('#notificationModal').modal();
+					
+				},
 				
 			editIssue: function(e) {
 					// CONSOLE.LOG
