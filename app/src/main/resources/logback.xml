@@ -31,6 +31,9 @@
     <logger name="org.springframework">
         <level value="WARN"/>
     </logger>
+    <logger name="org.hibernate.tool.hbm2ddl">
+        <level value="INFO"/>
+    </logger>
     <logger name="org.hibernate">
         <level value="WARN"/>
     </logger>
