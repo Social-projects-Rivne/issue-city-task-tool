@@ -6,6 +6,10 @@ h4 {
 text-align:center
 }
 
+#statistics {
+	width: 1262px;
+}
+
 li > div > div > .input-group {
 	padding: 0px;
 }
@@ -110,6 +114,16 @@ td#category-cell {
   	background: #7e7e7e;
   	color: #dbdbdb;
   	font-size: 11px;
+}
+
+
+/* radio btns group */
+#form-container label{
+  padding-bottom: 20px;
+}
+/* radio btns group */
+#form-container label select{
+  margin-top: 10px;
 }
 /* text color navbar-brand */
 .navbar-default .navbar-brand {

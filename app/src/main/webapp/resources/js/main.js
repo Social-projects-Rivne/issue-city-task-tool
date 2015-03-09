@@ -10,12 +10,13 @@ require([
         'view/AddIssueView',
         'view/ManagerView',
         'view/LoginView',
+        'view/IssueFilterView',
         /*'collection/CommentCollection',
         'model/IssueModel',
         'view/MapView',
         'map',
         'homeScript',*/
-        
+        'view/StatisticView'
         ]
 , function($, _, Backbone, 
 	Router,
@@ -27,16 +28,29 @@ require([
 	MapView,
 	AddIssueView,
 	ManagerView,
-	LoginView) {
+	LoginView,
+	IssueFilterView,
+	StatisticView) {
 	
 	//var comments = null;
 	router = null;
+	adminView = null;
+	managerView = null;
 	
 	jQuery(document).ready(function($){
+		// show login form on unauthorized response
+		$.ajaxSetup({statusCode: {401: function(){router.navigate('login', {trigger: true}); } } });
+		
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
-		managerView = new ManagerView({el:"#container"});
+		issueFilterView = new IssueFilterView({el:"#container"});
+		
 		loginView = new LoginView({el:"body"});
+		
+		issueFilterView = new IssueFilterView({el:"#container"});
+		
+		statisticView = new StatisticView( { el: 'body' } );
+		
 		//loginView.render();
 		//managerView.render();
 		//mapDraw();
@@ -50,8 +64,8 @@ require([
 		//mapPointer.value = e.latlng;
 		//setTimeout(mapView.render(),500);
 		//Backbone.history.start();
-		router = new Router();
 		//router.navigate("", {trigger: true});
+		router = new Router();
 	});
 	
 	/*function mapDraw() {

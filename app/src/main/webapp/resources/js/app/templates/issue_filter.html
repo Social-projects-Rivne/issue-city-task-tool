@@ -1,0 +1,39 @@
+
+<!--right panel: issue filter-->
+<div class="col-1-3" id="issue-filter"
+	style="overflow: scroll; height: 100%; padding: 10px;">
+	<label class="radio-inline"> <input type="radio"
+		name="optradio" id="status">
+		<div>
+			Status <select class="form-control" id="status-filter">
+				<option value="1">new</option>
+				<option value="2">approved</option>
+				<option value="3">resolved</option>
+				<option value="4">deleted</option>
+				<option value="5">to resolve</option>
+			</select>
+		</div>
+	</label> <br> <label class="radio-inline">
+   <input type="radio" name="optradio" id="category"> Category 
+     <select class="form-control" id="categories">
+        <% _.map(categories, function(category) { %>
+          <option ><%= category.name %></option><!--value="<%= category.id %>" -->
+        <% }); %>
+    </select>
+
+	</label> <br> <label class="radio-inline"> <input type="radio"
+		name="optradio" id="priority">
+		<div>
+			Priority <select class="form-control" id="priority-filter">
+				<option value="1">Low</option>
+				<option value="2">Medium</option>
+				<option value="3">High</option>
+			</select>
+		</div>
+	</label> <br>
+	<button class="btn btn-default" id='set-issue-filter' type="button">Set
+		Filter</button>
+	<button class="btn btn-default" id="reset-issue-filter" type="button">X</button>
+
+</div>
+<!--right panel-->

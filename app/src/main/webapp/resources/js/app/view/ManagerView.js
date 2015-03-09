@@ -27,7 +27,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				notificationTemplate: _.template(NotificationTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				editIssueTemplate: _.template(EditIssueTemplate),
-				
+
+				categoriesCollection: null,
 				issues: null,
 				issuesFilterList: null,
 				categories: null,
@@ -43,6 +44,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.statuses = new StatusCollection();
 					this.statuses.fetch();
 					this.issue = new IssueModel();
+					this.categoriesCollection = issueFilterView.categoryCollection;
 				},
 				
 				// issue table on manager page
@@ -61,7 +63,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				// render template for manager search
 				searchRender: function(){
  					console.log('search rendered');
-					this.$('#issue-filter').append(this.searchTemplate); 
+ 					this.categoriesCollection.fetch({success: function(){
+						that.$('#issue-filter').append(that.searchTemplate({"categories":that.categoriesCollection.toJSON()})); 
+						}
+					});
 				},
 				
 				// render all components of manager page 
@@ -188,6 +193,22 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						this.issueTableRender();			
 					};
 
+					//filter by category (it work when raido btn Cetegory checked)
+					if ($('#issue-filter #category').prop("checked")) {
+						var issuesFilterList = new IssueCollection();
+						// it must be filtred with findWhere
+						this.issues.each(function(issue){
+							if(issue.get('categoryId') == $('#issue-filter #categories').val()){ 
+								console.log(issue);
+								issuesFilterList.add(issue);
+							}
+						});
+						console.log(issuesFilterList);
+						this.issues = issuesFilterList;
+						console.log(this.issues);
+						this.issueTableRender();
+					};
+
 					//filter by priority (it work when raido btn Priority checked)
 					if ($('#issue-filter #priority').prop("checked")) {
 						var issuesFilterList = new IssueCollection();
@@ -251,19 +272,28 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				showEditIssueForm: function(e){
-					// remove existing modal, call Template, call modal
+					// CONSOLE.LOG
+					console.log ('--- ManagerView.js showEditIssueForm');
+					
+					// remove existing modal
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
+					
 					//get issue from collection by ID for load fields in template
-					this.issue=this.issues.get(e.currentTarget.id);
-					console.log (this.issue);
-					this.$el.append(this.editIssueTemplate(this.issue.toJSON()));
+					issue=this.issues.get(e.currentTarget.id);//+
+					console.log (issue.toJSON()); //+
+					
+					this.$el.append(this.editIssueTemplate(issue.toJSON()));   // ?
+					
 					$('#editIssueModal').modal();
-					// assign jQuery selectors for variables
+					console.log ('--- --- data inserted from DB to fields ok'); //+
+					
+					// assign jQuery selectors for variables for will use for validation below
 					issueDescription = $('#edit-issue-form-description');
 					issueAttachment = $('#edit-issue-form-attachments');
 					issueCategory =	$('#edit-issue-form-category');
 					issueStatus = $('#edit-issue-form-status');
 					issuePriority =	$('#edit-issue-form-priority');
+					 
 					// RegExp validate for fields
 					issueDescription.on('blur', function() {
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
@@ -296,35 +326,48 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
 					});
-					issuePriority.on('blur', function() {
+					/*issuePriority.on('blur', function() {
 						//
 						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
 							this.value = 'Wrong name!';
 							this.style.color = 'red';
 							}
-						});
+						});*/
 					issuePriority.on('focus', function() {
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
 					});
-					console.log ('showEditIssueForm');
+					
+				},
+
+				logOut: function(){
+					$.ajax('j_spring_security_logout');
+					loginView.currentUser = null;
+					router.navigate('', {trigger:true});
+					if($('#notificationModal'))
+						$('#notificationModal').remove();
+					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
+					$('#notificationModal').modal();
+					
 				},
 				
 			editIssue: function(e) {
-					console.log('ManagerView: Start of method (editIssue)');
+					// CONSOLE.LOG
+					console.log('--- ManagerView.js editIssue');
+					
 					var isValid = true;
 					
-				/*	if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
+					/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
 						issueAttachment.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
 						issueCategory.val('Wrong value!').css('color', 'red');
-						isValid = false;
-					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
+						isValid = false;*/
+					/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
 						issueStatus.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
@@ -332,14 +375,15 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						isValid = false;
 					}*/
 	
-					/*if(isValid) {*/
+					if(isValid) {
+						console.log ('--- --- validation form before confirmation ok'); //+
 						
 						//call confirmation for edit issue				
 						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
 						$('#confirmationModal').modal();
 					
-					/*}*/
+					}
 						
 						
 					

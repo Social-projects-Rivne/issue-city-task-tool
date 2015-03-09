@@ -22,7 +22,7 @@ public class CategoryModel {
 	//TODO: add annotation for connect this class to IssueModel
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(unique=true, name = "id")
 	int id;
 
 	@NotEmpty
@@ -49,6 +49,11 @@ public class CategoryModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "CategoryModel [id=" + id + ", name=" + name + "]";
 	}
 
 }

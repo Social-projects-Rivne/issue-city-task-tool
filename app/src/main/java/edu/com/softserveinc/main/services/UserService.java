@@ -1,6 +1,6 @@
 package edu.com.softserveinc.main.services;
 
-import java.util.List;
+import java.util.Collection;
 
 import edu.com.softserveinc.main.models.UserModel;
 
@@ -10,15 +10,12 @@ public interface UserService {
 
 	public void editUser(UserModel user);
 	
-	public void deleteUser(UserModel user);
-	
 	public void deleteUser(int userId);
+	
+	public UserModel getById(int id);
+	
+	public UserModel getByLogin(String login);
 
-	public UserModel getUserByID(int userId);
-	
-	public List<UserModel> loadUsersList();
-	
-	public UserModel getUserByName(String name) throws Exception;
-	
-	public UserModel getUserByLogin(String login) throws Exception;
+	public Collection<UserModel> loadUsersList();
+
 }

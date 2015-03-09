@@ -1,15 +1,16 @@
 package edu.com.softserveinc.main.services.impl;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.softserveinc.main.dao.UserDao;
 import edu.com.softserveinc.main.models.UserModel;
 import edu.com.softserveinc.main.services.UserService;
-import edu.com.softserveinc.main.utils.PasswordEncoder;
 
 @Service
 @Transactional
@@ -20,24 +21,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void addUser(UserModel user) {
-		// Encode password in SHA-512
-		if (user.getPassword().length() < 61)
-			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
-		
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		userDao.saveAndFlush(user);
 	}
 
 	@Override
-	public void deleteUser(UserModel user) {
-
-		if (user.getId() != 0) {
-			userDao.delete(user);
-		}
-	}
-	
-	@Override
 	public void deleteUser(int id) {
-
 		if (id != 0) {
 			userDao.delete(id);
 		}
@@ -45,36 +34,28 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void editUser(UserModel user) {
-		// Encode password in SHA-512
-		if (user.getPassword().length() < 61)
-			user.setPassword(new PasswordEncoder(user.getPassword()).encode());
-		
-		if (user.getId() != 0) {
-			userDao.saveAndFlush(user);
+		if (Arrays.asList("_", "", null).contains(user.getPassword())) {
+			user.setPassword(userDao.findOne(user.getId()).getPassword());
 		}
+		else 
+			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		userDao.saveAndFlush(user);
 	}
 
 	@Override
-	public UserModel getUserByID(int id) {
+	public UserModel getById(int id) {
 		return userDao.findOne(id);
 	}
 	
 	@Override
-	public List<UserModel> loadUsersList() {
+	public Collection<UserModel> loadUsersList() {
 		return userDao.findAll();
 	}
-	
+
 	@Override
-	public UserModel getUserByName(String name) throws Exception {
-		UserModel user = userDao.findByName(name);
-		if(user == null) throw new Exception("User not found");
-		return user;
+
+	public UserModel getByLogin(String login) {
+		return userDao.findByLogin(login);
 	}
-	
-	@Override
-	public UserModel getUserByLogin(String login) throws Exception  {
-		UserModel user = userDao.findByLogin(login);
-		if(user == null) throw new Exception("User not found");
-		return user;
-	}
+
 }

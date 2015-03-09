@@ -13,11 +13,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class StatusModel {
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(unique=true, name = "id")
 	int id;
 
 	@NotEmpty
-	@Column(name = "name")
+	@Column(unique=true, name = "name")
 	private String name;
 	
 	public StatusModel() {}
@@ -41,4 +41,10 @@ public class StatusModel {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "StatusModel [id=" + id + ", name=" + name + "]";
+	}
+	
 }

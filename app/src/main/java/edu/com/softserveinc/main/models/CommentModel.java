@@ -13,7 +13,7 @@ public class CommentModel {
 
 	@Id
 	@GeneratedValue
-	@Column(name="id")
+	@Column(unique=true, name="id")
 	private int id;
 	
 	//@NotNull
@@ -90,6 +90,13 @@ public class CommentModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "CommentModel [id=" + id + ", comment=" + comment
+				+ ", userName=" + userName + ", email=" + email + ", issueId="
+				+ issueId + "]";
 	}
 
 }

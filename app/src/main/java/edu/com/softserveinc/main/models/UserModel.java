@@ -7,10 +7,6 @@ import javax.validation.constraints.Size;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-
-
-//import org.hibernate.annotations.Entity; //
-//import org.hibernate.annotations.Table;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -40,27 +36,24 @@ public class UserModel {
 	/**
 	 * E-mail
 	 */
-    @Email 
-    @NotNull(message="It can't be empty") // 
-    @NotEmpty
+    @Email
+    @NotEmpty(message="It can't be empty")
     @Column(unique=true, name="email") //name of column in table
     protected String email;
         
     /**
 	 * Login max length = 30
 	 */
-    @Size(max = 30) 
-    @NotNull(message="It can't be empty")
-    @NotEmpty
+    @Size(max = 30)
+    @NotEmpty(message="It can't be empty")
     @Column(unique=true, name="login") //name of column in table
     protected String login;
     
     /**
      * Reole id min = 0 max = 3
 	 */ 
-   /* @Size(min = 0, max = 3) 
+//	@Size(min = 0, max = 3) 
     @NotNull(message="It can't be empty")
-    @NotEmpty*/
     @Column(name="role_id") //name of column in table
     //TODO: Add hibernate annotation for relation between tables
     protected int role_id;
@@ -69,8 +62,7 @@ public class UserModel {
 	 * Passvord min length = 6, max length = 32
 	 */
     //@Size(min = 6, max = 32) 
-    @NotNull(message="It can't be empty")
-    @NotEmpty
+    @NotEmpty(message="It can't be empty")
     @Column(name="password") //name of column in table
     protected String password;
     
@@ -224,6 +216,12 @@ public class UserModel {
      */
     public String getAvatar(){
 		return this.avatar;
+	}
+    
+	@Override
+	public String toString() {
+		return "UserModel [id=" + id + ", name=" + name + ", email=" + email
+				+ ", login=" + login + ", role_id=" + role_id + "]";
 	}
     
 }

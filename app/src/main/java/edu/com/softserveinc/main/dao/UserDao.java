@@ -6,8 +6,6 @@ import edu.com.softserveinc.main.models.UserModel;
  
 public interface UserDao extends JpaRepository<UserModel, Integer>{
 
-	UserModel findByName(String name);
-	
 	UserModel findByLogin(String login);
 	
 }

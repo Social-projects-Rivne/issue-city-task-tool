@@ -4,6 +4,8 @@
 <head>
 <title>Home</title>
 
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <!-- delete it later or add to project -->
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 
@@ -41,6 +43,8 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
 						<li><a href="#admin" id="admin">Admin</a></li>
+						<li><a href="#filter" id="filter">Filter</a></li>
+						<li><a href="#statistics" id="stat">Statistics</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">

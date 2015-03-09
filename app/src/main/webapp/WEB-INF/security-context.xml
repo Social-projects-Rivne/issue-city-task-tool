@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<beans:bean id="ajaxAuthenticationSuccessHandler"
+		class="edu.com.softserveinc.main.security.AjaxAuthenticationSuccessHandler"></beans:bean>
+
+	<beans:bean id="ajaxAuthenticationFailureHandler"
+		class="edu.com.softserveinc.main.security.AjaxAuthenticationFailureHandler"></beans:bean>
+
+	<beans:bean id="ajaxLogoutSuccessHandler"
+		class="edu.com.softserveinc.main.security.AjaxLogoutSuccessHandler"></beans:bean>
+
+	<http auto-config="false" use-expressions="true" entry-point-ref="ajaxAuthenticationEntryPoint" >
+		
+		<intercept-url pattern="/css/**" access="permitAll" />
+		<intercept-url pattern="/fonts/**" access="permitAll" />
+		<intercept-url pattern="/img/**" access="permitAll" />
+		<intercept-url pattern="/js/**" access="permitAll" />
+		<intercept-url pattern="/j_spring_security_check" access="permitAll" />
+		
+		<logout invalidate-session="true" success-handler-ref="ajaxLogoutSuccessHandler"
+			delete-cookies="JSESSIONID" />
+		
+		<custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER"/>
+		
+		<session-management><concurrency-control max-sessions="1" /></session-management>
+		
+	</http>
+
+	<beans:bean id="ajaxAuthenticationEntryPoint" class="edu.com.softserveinc.main.security.AjaxAuthenticationEntryPoint"></beans:bean>
+
+	<beans:bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<beans:property name="authenticationFailureHandler" ref="ajaxAuthenticationFailureHandler" />
+		<beans:property name="authenticationSuccessHandler" ref="ajaxAuthenticationSuccessHandler" />
+	</beans:bean>
+
+	<beans:bean id="bawlUserDetailsService" class="edu.com.softserveinc.main.security.BawlUserDetailsService"></beans:bean>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="bawlUserDetailsService">
+			<password-encoder ref="encoder" />
+		</authentication-provider>
+	</authentication-manager>
+	
+	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+
+</beans:beans>

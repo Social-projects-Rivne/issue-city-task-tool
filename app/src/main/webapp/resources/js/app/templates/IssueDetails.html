@@ -3,8 +3,9 @@
             <div class="col-1-3" style="overflow: scroll; height: 100%; padding: 10px;">
 
 
-                <div align=right>
-                    <button type="submit" class="btn btn-mini" id="resolve_button">Resolve</button>
+                <div align="left">
+                    <button type="submit" class="btn  btn-default" name="resolve" id="<%= id %>">Resolve</button>
+                    <button  class="btn  btn-default" name="subscribe" id="<%= id %>" title="Subscribe on this issue" data-placement="bottom" data-html="true" data-toggle="popover"  data-content=" Enter your e-mail <div class='input-group'><input id='folower-email' type='text' class='form-control'><span  id='<%= id %>' name='send-folower-email' class='btn btn-default input-group-addon'>Subcribe</span></div>" >Subscribe</button>
                 </div>
 
                 <label id="issue_name"> <%= name %> </label>
@@ -28,27 +29,27 @@
                         <div class="form-group">
                             <label for="userName" class="control-label col-xs-4">User name</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control input-sm" id="inputEmail" placeholder="User name" name="userName">
+                                <input type="text" class="form-control input-sm" id="inputEmail" placeholder="User name" name="userName" required>
                             </div>
                         </div>
                         <!--email-->
                         <div class="form-group">
                             <label for="email" class="control-label col-xs-4">Email</label>
                             <div class="col-xs-6">
-                                <input type="email" class="form-control input-sm" id="inputEmail" placeholder="Email" name="email">
+                                <input type="email" class="form-control input-sm" id="inputEmail" placeholder="Email" name="email" required>
                             </div>
                         </div>
                         <!--comment-->
                         <div class="form-group">
                             <label for="email" class="control-label col-xs-4">Comment</label>
                             <div class="col-xs-6">
-                                <textarea class="form-control" rows="3" name="comment-text"></textarea>
+                                <textarea class="form-control" rows="3" name="comment-text" required></textarea>
                             </div>
                         </div>
                         <!--comment button-->
                         <div class="form-group">
                             <div class="col-xs-offset-2 col-xs-10">
-                                <button class="btn btn-mini" id="add_comment_button">Comment</button>
+                                <button class="btn  btn-default" id="add_comment_button">Comment</button>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
-define([ 'underscore', 'backbone' ], function(_, Backbone) {
+define([ 'underscore', 'backbone','view/AdminView', 
+        'view/ManagerView',], function(_, Backbone, AdminView, ManagerView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -13,7 +14,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			//routs for map 
 			"cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
-			
+			"filter": "filter"
 		},
 		
 		initialize : function() {
@@ -30,32 +31,51 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		},
 
 		issue : function(id) {
-			console.log('route to issue with id ' + id);
 			$('.col-1-3').hide();
 			issueDetailsView.render(id);
-			// remove it when comments will be rendering from issue details view
-			// fom
+			// comments must rendering from issue details view
 		},
 
 		cryOut : function() {
 			//router.navigate("/", {trigger: true}); 
 			mapView.render();
-			router.navigate('cry-out', {trigger: false});
+			//router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},
 		
 		admin : function() {
-			userListView.model.fetch({ success: function(){
+			if((loginView.currentUser != null)&&(adminView != null)){
+				adminView.render();
+			} else{
+				if (adminView == null) {
+					adminView = new AdminView( { el: "#container" } );
+					managerView = new ManagerView({el:"#container"})
 					adminView.render();
+					this.navigate('admin', {trigger:false});
+				} else {
+					router.navigate('login', {trigger:true});
 				}
-			
-			});
+			}
 		},
 		
 		manager : function(){
-			managerView.render();
+			if((loginView.currentUser != null)&&(managerView != null)){
+				managerView.render();
+			} else{
+				if (managerView == null) {
+					managerView = new ManagerView( { el: "#container" } );
+					managerView.render();
+					this.navigate('manager', {trigger:false});
+				} else {
+					router.navigate('login', {trigger:true});
+				}
+			}
 		},
-		
+
+		filter:function(){
+			issueFilterView.render();
+		},
+
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);

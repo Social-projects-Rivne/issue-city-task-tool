@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView',
-         'view/CommentListView', 'view/AddIssueView', 'view/AdminView', 'view/UserView', 'text!templates/map.html',],
+         'view/CommentListView', 'view/AddIssueView', 'view/UserView', 'text!templates/map.html',],
 		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView,
-				AddIssueView, AdminView, UserView, MapTemplate) {
+				AddIssueView, UserView, MapTemplate) {
 
 	var that = null;
 
@@ -18,6 +18,12 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				           L.AwesomeMarkers.icon( { icon: 'leaf', markerColor: 'green', prefix: 'ion' } ),
 				           L.AwesomeMarkers.icon( { icon: 'flash', markerColor: 'cadetblue', prefix: 'ion' } ) ],
 				
+				//function for delete all marcers from the map
+				cleanMap: function(){
+					$(".leaflet-marker-pane").empty();
+					$(".leaflet-shadow-pane").empty();
+				},
+
 				render : function() {
 					$("#container").empty(),
 					$("#container").append(this.mapTemplate);
@@ -27,8 +33,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					issueDetailsView = new IssueDetailsView( { el: "#form-container" } );
 					commentListView = new CommentListView( { el: ".comments" } );
 					
-					adminView = new AdminView( { el: "#container" } );
-
+					
 					that = this;
 					
 					L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -39,7 +44,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					
 					this.model.fetch( { success: function() {
 						that.model.each(function(issue) {
-							L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
+							if((issue.get('statusId')==2) || (issue.get('statusId')==5))
+								L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
 									.split(', '), { icon: that.markers[Math.floor(Math.random() * 5)] }).addTo(map).on('click', onMarkerClick).title = issue.get("id");
 						});
 					} } );

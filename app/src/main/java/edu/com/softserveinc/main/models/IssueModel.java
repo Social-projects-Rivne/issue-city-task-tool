@@ -15,7 +15,7 @@ public class IssueModel {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(unique=true, name = "id")
 	private int id;
 
 	@NotEmpty
@@ -202,6 +202,14 @@ public class IssueModel {
 	 */
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
+	}
+
+	@Override
+	public String toString() {
+		return "IssueModel [id=" + id + ", name=" + name + ", description="
+				+ description + ", mapPointer=" + mapPointer + ", categoryId="
+				+ categoryId + ", priorityId=" + priorityId + ", statusId="
+				+ statusId + "]";
 	}
 
 }

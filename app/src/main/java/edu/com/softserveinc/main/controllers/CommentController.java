@@ -28,7 +28,6 @@ public class CommentController {
 	}
 
 
-	// fetch all comments for issue-id
 	@RequestMapping(value = "all-comments/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CommentModel> getAllCommentsByIssueId(@PathVariable int id) {

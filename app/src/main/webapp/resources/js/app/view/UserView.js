@@ -23,7 +23,3 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
 			return UserView;
 		})
 
-		
-		
-		/*<span class='glyphicon glyphicon-pencil'></span>
-		<span class='glyphicon glyphicon-remove'></span>*/
