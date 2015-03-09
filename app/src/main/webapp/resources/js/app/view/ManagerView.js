@@ -19,6 +19,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
+					'click #left_admin_panel #manager_log_out':'logOut'
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
