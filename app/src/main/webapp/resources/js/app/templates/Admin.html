@@ -4,10 +4,10 @@
     <div id="left_admin_panel" class="col-lg-3">
 
         <div class="col-lg-3">
-            <img src="http://lorempixel.com/60/60/people/" class="img-thumbnail" alt="attachment_1">
+            <img src="<%= loginView.currentUser.get('avatarUrl')%>" class="img-thumbnail" alt="attachment_1">
         </div>
         <div class="col-lg-9">
-            <b><label id="admin_name">Admin name</label></b>
+            <b><label id="admin_name"><%= loginView.currentUser.get('name')%></label></b>
             <br>
             <button type="submit" class="btn btn-mini" id="admin_log_out">Log out</button>
         </div>
