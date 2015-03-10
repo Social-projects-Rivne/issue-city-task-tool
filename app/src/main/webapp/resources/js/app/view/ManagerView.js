@@ -19,6 +19,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
+					'click #left_admin_panel #manager_log_out':'logOut'
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -71,11 +72,15 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				
 				// render all components of manager page 
 				render: function() {
-					this.$el.html(this.managerTemplate);
-					this.issueTableRender();
-					this.resetFilter();
-					this.searchRender();
-					$('#add-category-link').popover();
+					that = this;
+					setTimeout(function(){
+						that.$el.html(that.managerTemplate);
+						that.issueTableRender();
+						that.resetFilter();
+						that.searchRender();
+						$('#add-category-link').popover();
+					}, 1000)
+
 				},
 				
 				//for issue table style

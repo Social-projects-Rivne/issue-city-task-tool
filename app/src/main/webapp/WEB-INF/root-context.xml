@@ -20,7 +20,7 @@
 	<beans:bean id="myEmf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="packagesToScan" value="edu.com.softserveinc.main.models" />
+		<beans:property name="packagesToScan" value="edu.com.softserveinc.bawl.models" />
 		<beans:property name="jpaVendorAdapter">
 			<beans:bean
 				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -46,7 +46,7 @@
 		<beans:property name="entityManagerFactory" ref="myEmf" />
 	</beans:bean>
 
-	<jpa:repositories base-package="edu.com.softserveinc.main.dao" />
+	<jpa:repositories base-package="edu.com.softserveinc.bawl.dao" />
 
 	<tx:annotation-driven />
 

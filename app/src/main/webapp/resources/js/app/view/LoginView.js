@@ -15,9 +15,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				},
 				
 				initialize: function() {
+					this.getCurrentUser();
 					$('.login.modal').empty();
 					$('.login.modal').append(this.loginTemplate);
-					this.getCurrentUser();
+					
 				},
 
 				getCurrentUser: function(){
