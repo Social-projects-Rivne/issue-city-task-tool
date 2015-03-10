@@ -19,13 +19,13 @@
 	</http>
 
 	<beans:bean id="ajaxAuthenticationSuccessHandler"
-		class="edu.com.softserveinc.main.security.AjaxAuthenticationSuccessHandler"></beans:bean>
+		class="edu.com.softserveinc.bawl.security.AjaxAuthenticationSuccessHandler"></beans:bean>
 	<beans:bean id="ajaxAuthenticationFailureHandler"
-		class="edu.com.softserveinc.main.security.AjaxAuthenticationFailureHandler"></beans:bean>
+		class="edu.com.softserveinc.bawl.security.AjaxAuthenticationFailureHandler"></beans:bean>
 	<beans:bean id="ajaxLogoutSuccessHandler"
-		class="edu.com.softserveinc.main.security.AjaxLogoutSuccessHandler"></beans:bean>
+		class="edu.com.softserveinc.bawl.security.AjaxLogoutSuccessHandler"></beans:bean>
 	<beans:bean id="ajaxAuthenticationEntryPoint"
-		class="edu.com.softserveinc.main.security.AjaxAuthenticationEntryPoint"></beans:bean>
+		class="edu.com.softserveinc.bawl.security.AjaxAuthenticationEntryPoint"></beans:bean>
 
 	<beans:bean id="authenticationFilter"
 		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
@@ -46,7 +46,7 @@
 	</authentication-manager>
 
 	<beans:bean id="bawlUserDetailsService"
-		class="edu.com.softserveinc.main.security.BawlUserDetailsService"></beans:bean>
+		class="edu.com.softserveinc.bawl.security.BawlUserDetailsService"></beans:bean>
 	<beans:bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
 
