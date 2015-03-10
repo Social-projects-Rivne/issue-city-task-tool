@@ -3,27 +3,23 @@
 <html>
 <head>
 <title>Home</title>
-
-
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <!-- delete it later or add to project -->
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
-
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
-
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
 
-<link href="<c:url value="/resources/css/styles2.css" />"
-	rel="stylesheet">
-<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css" />">
-<link
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
+<!-- <link
 	href='http://fonts.googleapis.com/css?family=Jura:400,600|Averia+Sans+Libre:400,700'
-	rel='stylesheet' type='text/css'>
+	rel='stylesheet' type='text/css'> -->
+	<!-- <link href='http://fonts.googleapis.com/css?family=Condiment|Josefin+Sans:400,700' rel='stylesheet' type='text/css'> -->
+	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div class="container" id="navbar">
@@ -69,5 +65,6 @@
 	<script>
  require(['main']);
  </script>
+ <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 </body>
 </html>

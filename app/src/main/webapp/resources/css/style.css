@@ -37,22 +37,9 @@ td > input {
 }
 
 .container {
-    width: 100%;
+    width: 60%;
     padding-left: 0px;
 }
-/*sidebar start */
-/*.grid {
-  display: block;
-  margin: 0;
-  &:after {
-     Or @extend clearfix 
-    content: "";
-    display: table;
-    clear: both;
-	}
-}*/
-
-/*navbar bordercolor and background*/
 
 /*  Buttons */
 .btn:hover, .btn:focus, .btn.focus {
@@ -68,9 +55,6 @@ td > input {
   background-color: rgb(245, 237, 237); 
 }
 /* table */
-.table > thead {
-/*  background-color:  rgb(255, 242, 242);*/
-}
 
 #issue-table-body{
   background-color: rgba(242, 190, 190, 0.38);
@@ -88,6 +72,7 @@ td > input {
   border-color: white !important;
   color: rgb(233, 84, 110);
 }
+
 /* fix size rows in issue table */
 td#status-cell {
   width: 101px;
@@ -116,7 +101,6 @@ td#category-cell {
   	font-size: 11px;
 }
 
-
 /* radio btns group */
 #form-container label{
   padding-bottom: 20px;
@@ -128,10 +112,14 @@ td#category-cell {
 /* text color navbar-brand */
 .navbar-default .navbar-brand {
     color: #fff !important;
-    /* font-family: 'Jura', sans-serif; */
-    font-family: 'Averia Sans Libre', cursive;
-    font-size:2.5em;
+    font-family: 'Oleo Script', cursive;
+    font-size: 3.5em;
     font-weight: bolder;
+}
+
+/* navbar without white bottom line */
+.navbar-fixed-top {
+border-bottom: 0px;
 }
 
 /* navbar-brand color on haver and focus */
@@ -142,9 +130,9 @@ td#category-cell {
 /* navbar-nav text color */
 .navbar-default .navbar-nav > li > a {
     color: #fff !important;
-    font-family: 'Averia Sans Libre', cursive;
-    font-size:1.2em;
-    font-weight: bold;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1.5em;
 }
 
 /* navbar-nav hover, focus color */
@@ -187,6 +175,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] {
     margin-right: 30px;
     margin-top: 30px;
 }
+
 /* Manger page. Sidebar menu */
 #manager_menu {
 	margin-bottom: 30px;
@@ -194,6 +183,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] {
     margin-right: 30px;
     margin-top: 30px;
 }
+
 #resolve_button {
     font-size:0.7em;
     width: 60px;
@@ -265,6 +255,7 @@ a {
 position: static;
 margin-left: 0px;
 }
+
 #bawl-login {
     padding-left: 40%;
     position: inherit;
@@ -280,4 +271,90 @@ margin-left: 0px;
   /*max-height: 400px;*/
   padding: 15px;
   overflow-y: auto;
+}
+
+/*styles2.css*/
+.img-polaroid {
+	margin-top:10%;
+	margin-left:20%;
+	margin-bottom:10%;
+}
+#header {
+	background:#8B8B7A;
+	height: 50px;
+	margin-top: 20px;
+	color:#FFFFFF;
+	text-align: left;
+}
+.sidebar {
+	background:#F5F5F5;
+	height: 500px;
+	margin:0px;
+}
+.text {
+	background:#FFFFFF;
+	height: 500px;
+}
+#footer {
+	background:#8B8B7A;
+	height:30px;
+	margin-right: 0;
+	text-align: center;
+	color: white;
+}
+.btn {
+	margin-left:20%;
+	margin-bottom:3%;
+/*	width:50px;*/
+	text-align: center;
+}
+.left {
+	width:200px;
+	float:left;
+}
+.right {
+	width:350px;
+	float:left;
+}
+.right > span{
+	color: red;
+	font-size: 12px;
+	padding: 10px;
+}
+.right-radio {
+	width:300px;
+	float:left;
+}
+.selectWrap .link{
+font-size:16px;
+color:#0066cc;
+border-bottom:1px dotted;
+}
+
+html { 
+	height: 100%;
+}
+
+#map_canvas {
+	width: auto; height: 100%; 
+}
+
+#add-issue-form {
+	display: none;
+	position: absolute;
+	width: 50%;
+	top: 5%;
+}
+
+#menu {
+	height: 5%;
+}
+
+#map {
+	height: 100%;
+}
+a {
+    #login:hover 
+	cursor: pointer;
+
 }
