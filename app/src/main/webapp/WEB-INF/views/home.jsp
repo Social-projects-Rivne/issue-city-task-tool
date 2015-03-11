@@ -10,15 +10,9 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
-
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-
-<!-- <link
-	href='http://fonts.googleapis.com/css?family=Jura:400,600|Averia+Sans+Libre:400,700'
-	rel='stylesheet' type='text/css'> -->
-	<!-- <link href='http://fonts.googleapis.com/css?family=Condiment|Josefin+Sans:400,700' rel='stylesheet' type='text/css'> -->
 	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -26,7 +20,6 @@
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-
 					<button type="button" class="navbar-toggle collapsed"
 						data-toggle="collapse" data-target="#navbar-collapse">
 						<span class="sr-only"></span> <span class="icon-bar"></span> <span
@@ -34,7 +27,6 @@
 					</button>
 					<a class="navbar-brand" href="#">Bawl</a>
 				</div>
-
 				<div class="collapse navbar-collapse" id="navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
@@ -42,7 +34,6 @@
 						<li><a href="#filter" id="filter">Filter</a></li>
 						<li><a href="#statistics" id="stat">Statistics</a></li>
 					</ul>
-
 					<ul class="nav navbar-nav navbar-right">
 						<li><a id="login" >Login</a></li>
 					</ul>
@@ -54,12 +45,9 @@
 		</nav>
 	</div>
 	<div class="login modal fade" >
-	
 	</div>
 	<div id="container">
-	
 	</div>
-	
 <!-- Placed at the end of the document so the pages load faster -->
 	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 	<script>
