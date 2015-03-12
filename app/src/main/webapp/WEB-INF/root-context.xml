@@ -15,7 +15,7 @@
 	
 	<!-- Persistence config -->
 
-	<context:property-placeholder location="classpath:persistence.properties" />
+	<context:property-placeholder location="classpath:persistence.properties" ignore-unresolvable="true"/>
 
 	<beans:bean id="myEmf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
