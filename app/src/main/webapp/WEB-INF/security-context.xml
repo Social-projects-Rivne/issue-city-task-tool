@@ -11,7 +11,7 @@
 
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/auth/**" access="permitAll" />
-		<logout invalidate-session="true" success-handler-ref="ajaxLogoutSuccessHandler"
+		<logout logout-url="/auth/logout" invalidate-session="true" success-handler-ref="ajaxLogoutSuccessHandler"
 			delete-cookies="JSESSIONID" />
 		<custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
 		<custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER" />
@@ -30,7 +30,7 @@
 	<beans:bean id="authenticationFilter"
 		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
 		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<beans:property name="filterProcessesUrl" value="/auth/login" />
 		<beans:property name="authenticationFailureHandler"
 			ref="ajaxAuthenticationFailureHandler" />
 		<beans:property name="authenticationSuccessHandler"
