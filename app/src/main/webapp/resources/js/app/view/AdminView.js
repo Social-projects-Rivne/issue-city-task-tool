@@ -122,7 +122,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				},
 				
 				logOut: function(){
-					$.ajax('j_spring_security_logout');
+					$.ajax('auth/logout');
 					loginView.currentUser = null;
 					router.navigate('', {trigger:true});
 					if($('#notificationModal'))

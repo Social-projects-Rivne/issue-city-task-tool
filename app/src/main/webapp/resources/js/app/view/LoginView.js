@@ -39,7 +39,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					if(login != "" && password != ""){
 						//send user's login and password
 						$.ajax({
-							url: 'j_spring_security_check',
+							url: 'auth/login',
 							type: 'POST',
 							data: $("#loginForm").serialize(),
 							//if request done
