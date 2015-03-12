@@ -3,7 +3,7 @@
 
     <contextName>BAWL</contextName>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${catalina.home}/logs/${CONTEXT_NAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${catalina.home}/logs/${CONTEXT_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -12,7 +12,7 @@
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %level %logger{35} - %msg%n</pattern>
         </encoder>
-    </appender>
+    </appender> -->
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
