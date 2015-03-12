@@ -1,36 +1,50 @@
 body {
     padding-top: 50px;
 }
+
 h4 {
-    text-align: center
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: #d5445c;
 }
+
 #statistics {
     width: 1262px;
 }
+
 li > div > div > .input-group {
     padding: 0px;
 }
+
 td > input {
     width: 125px !important;
 }
+
 #c_edit_user {
     display: block !important;
 }
+
 #remove_user {
     display: block !important;
 }
+
 #form-container {
     float: right;
 }
+
 #form-container img.img-thumbnail {
     width: 200px;
     margin-left: 45px;
     height: 110px;
 }
+
 .container {
     width: 60%;
     padding-left: 0px;
 }
+
 /*  Buttons */
 
 .btn:hover,
@@ -104,7 +118,6 @@ td#category-cell {
     background: -webkit-linear-gradient(to right, #d5445c, #ea556f);
     background: linear-gradient(to right, #d5445c, #ea556f);
 }
-/* styles for login */
 
 div#login.input-group {
     padding-bottom: 0px;
@@ -113,11 +126,75 @@ div#login.input-group {
     padding-top: 0px;
     padding: 5px;
 }
-/* end styles for login */
 
 div.col-sm-12.controls.btnCenter {
     text-align: center;
+    padding: 10px;
 }
+
+/*ADD ISSUE*/
+
+button#next-to-description.btn.btn-mini {
+	text-align: center;
+}
+
+#form-container label {
+    /*padding-bottom: 0px;*/
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2em;
+}
+
+div.form-group label {
+	/*padding: 5px;*/
+	font-weight: 400;
+}
+
+.nav-tabs>li>a {
+	margin-right: 2px;
+	line-height: 1.42857143;
+	border: 1px solid transparent;
+	border-radius: 0 0 0 0;
+	color: #d5445c;
+}
+
+
+*::before, *::after {
+    box-sizing: border-box;
+}
+*::before, *::after {
+    box-sizing: border-box;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    
+    color: #d5445c;
+   
+}
+
+
+ul>li.tabs {
+	font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2em
+}
+
+input#issue-attachments.input-file.input-sm {
+	padding: 5 10 5 0px;
+}
+
+div.tab-pane {
+	padding: 5px;
+}
+
+#form-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 55px; 
+    right: 5px; 
+    margin: auto;
+    z-index: 3;
+}
+
+/* --- */
+
 .input-group {
     padding: 20px;
 }
@@ -132,12 +209,6 @@ div.col-sm-12.controls.btnCenter {
     color: #dbdbdb;
     font-size: 11px;
 }
-/* radio btns group */
-
-#form-container label {
-    padding-bottom: 20px;
-}
-/* radio btns group */
 
 #form-container label select {
     margin-top: 10px;
@@ -171,11 +242,6 @@ div.col-sm-12.controls.btnCenter {
     font-size: 1.5em;
 }
 /* navbar-nav hover, focus color */
-
-/*.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-    color: #d9d7d7;
-}*/
 
 #manager_menu {
     margin-top: 30px;
@@ -336,9 +402,9 @@ a.forgot {
     color: #0066cc;
     border-bottom: 1px dotted;
 }
-html {
+/*html {
     height: 100%;
-}
+}*/
 #map_canvas {
     width: auto;
     height: 100%;
