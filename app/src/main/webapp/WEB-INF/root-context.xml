@@ -11,7 +11,9 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<context:component-scan base-package="edu.com.softserveinc" />
+	<context:component-scan base-package="edu.com.softserveinc.bawl">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	<!-- Persistence config -->
 
