@@ -31,8 +31,10 @@ define([ 'underscore', 'backbone','view/AdminView',
 		},
 
 		issue : function(id) {
-			$('.col-1-3').hide();
-			issueDetailsView.render(id);
+			setTimeout(function(){
+				$('.col-1-3').hide();
+				issueDetailsView.render(id);
+			}, 400);
 			// comments must rendering from issue details view
 		},
 

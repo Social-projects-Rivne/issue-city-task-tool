@@ -79,7 +79,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						that.resetFilter();
 						that.searchRender();
 						$('#add-category-link').popover();
-					}, 1000)
+					}, 200)
 
 				},
 				
