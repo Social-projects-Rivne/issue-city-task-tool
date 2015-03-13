@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<http auto-config="false" use-expressions="true"
+		entry-point-ref="ajaxAuthenticationEntryPoint">
+
+		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/auth/**" access="permitAll" />
+		<logout logout-url="/auth/logout" invalidate-session="true" success-handler-ref="ajaxLogoutSuccessHandler"
+			delete-cookies="JSESSIONID" />
+		<custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER" />
+		<session-management session-authentication-strategy-ref="sas"></session-management>
+	</http>
+
+	<beans:bean id="ajaxAuthenticationSuccessHandler"
+		class="edu.com.softserveinc.bawl.security.AjaxAuthenticationSuccessHandler"></beans:bean>
+	<beans:bean id="ajaxAuthenticationFailureHandler"
+		class="edu.com.softserveinc.bawl.security.AjaxAuthenticationFailureHandler"></beans:bean>
+	<beans:bean id="ajaxLogoutSuccessHandler"
+		class="edu.com.softserveinc.bawl.security.AjaxLogoutSuccessHandler"></beans:bean>
+	<beans:bean id="ajaxAuthenticationEntryPoint"
+		class="edu.com.softserveinc.bawl.security.AjaxAuthenticationEntryPoint"></beans:bean>
+
+	<beans:bean id="authenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="filterProcessesUrl" value="/auth/login" />
+		<beans:property name="authenticationFailureHandler"
+			ref="ajaxAuthenticationFailureHandler" />
+		<beans:property name="authenticationSuccessHandler"
+			ref="ajaxAuthenticationSuccessHandler" />
+		<beans:property name="sessionAuthenticationStrategy"
+			ref="sas" />
+	</beans:bean>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="bawlUserDetailsService">
+			<password-encoder ref="encoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="bawlUserDetailsService"
+		class="edu.com.softserveinc.bawl.security.BawlUserDetailsService"></beans:bean>
+	<beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+
+	<beans:bean id="concurrencyFilter"
+		class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<beans:constructor-arg name="sessionRegistry"
+			ref="sessionRegistry" />
+		<beans:constructor-arg name="expiredUrl" value="/" />
+	</beans:bean>
+
+	<beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<beans:property name="maximumSessions" value="1" />
+	</beans:bean>
+
+	<beans:bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+</beans:beans>
