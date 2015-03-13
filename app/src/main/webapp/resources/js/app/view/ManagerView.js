@@ -137,7 +137,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				viewOnMap: function(e){
 					router.navigate('', {trigger: true});
-					router.navigate('issues/' +  e.currentTarget.id, {trigger: true});
+					router.navigate('issue/' +  e.currentTarget.id, {trigger: true});
 				},
 
 				// filter (search)
