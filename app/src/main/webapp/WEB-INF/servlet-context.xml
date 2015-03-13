@@ -38,9 +38,6 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 
-	<beans:bean id="persistenceExceptionTranslationPostProcessor"
-		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
 	<sec:global-method-security pre-post-annotations="enabled" />
 	
 	<aop:aspectj-autoproxy />
