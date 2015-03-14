@@ -124,12 +124,12 @@ td > input {
 
 
 /* shre buttons */
-img.share{
+/* img.share{
     width: 45px;
 }
 img.share:hover, img.share:focus{
     box-shadow: 0 0 7px rgba(0, 0, 0, 1);
-}
+} */
 /* fix size rows in issue table */
 
 td#status-cell {
@@ -268,12 +268,14 @@ button.btn.btn-mini.resolve-subscribe {
   -ms-transform: translateZ(0);
   transform: translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 
 .social-hover:hover {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
+  cursor: pointer;
 }
 
 .form-group {
@@ -290,10 +292,6 @@ button.btn.btn-mini.resolve-subscribe {
     height: 150px;
 	overflow: scroll;
 	align: center;
-}
-
-.share {
-	padding-top: 5px;
 }
 
 hr {
@@ -316,6 +314,9 @@ h4.media-heading {
 	margin: 5px;
 }
 
+.share {
+	margin-top: 3px;
+}
 
 /* END ISSUE DETAILS */
 
