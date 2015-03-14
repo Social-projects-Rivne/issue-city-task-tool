@@ -12,18 +12,21 @@ define([ 'jquery', 'underscore', 'backbone', ],
         },
 
         facebook: function(){
-          console.log(window.location.href);
           var title = "Bawl";
           var url = window.location.href.toString();// this.getShortURL(window.location.href.toString())
           window.open("http://www.facebook.com/share.php?u=" + url + "&title=" + title, "_blank");
         },
 
         google: function(){
-          console.log(window.location.href);
+          var title = "Bawl";
+          var url = window.location.href.toString();// this.getShortURL(window.location.href.toString()) 
+          window.open("https://plus.google.com/share?url=" + url , "_blank");
         },
 
         twitter: function(){
-          console.log(window.location.href);
+          var title = "Bawl";
+          var url = window.location.href.toString();// this.getShortURL(window.location.href.toString()) 
+          window.open("http://twitter.com/home?status=" + title + "+" + url , "_blank");
         },
 
         getShortURL: function(longUrl){
