@@ -8,7 +8,26 @@ h4 {
     font-size: 1.5em;
     font-weight: 400;
     color: #d5445c;
+    margin: 5px;
 }
+/* NAVBAR */
+ul.nav.navbar-nav {
+	display: inline-block;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: transform;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+ul.nav.navbar-nav:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+} /* END NAVBAR */
 
 #statistics {
     width: 1262px;
@@ -36,7 +55,7 @@ td > input {
 
 #form-container img.img-thumbnail {
     width: 200px;
-    margin-left: 45px;
+    /* margin-left: 45px; */
     height: 110px;
 }
 
@@ -132,20 +151,17 @@ div.col-sm-12.controls.btnCenter {
     padding: 10px;
 }
 
-/*ADD ISSUE*/
-
+/* ADD ISSUE */
 button#next-to-description.btn.btn-mini {
 	text-align: center;
 }
 
 #form-container label {
-    /*padding-bottom: 0px;*/
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1.2em;
 }
 
 div.form-group label {
-	/*padding: 5px;*/
 	font-weight: 400;
 }
 
@@ -157,7 +173,6 @@ div.form-group label {
 	color: #d5445c;
 }
 
-
 *::before, *::after {
     box-sizing: border-box;
 }
@@ -165,11 +180,8 @@ div.form-group label {
     box-sizing: border-box;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    
     color: #d5445c;
-   
 }
-
 
 ul>li.tabs {
 	font-family: 'Josefin Sans', sans-serif;
@@ -193,7 +205,111 @@ div.tab-pane {
     z-index: 3;
 }
 
-/* --- */
+#issue-description.form-control.input-sm{
+	resize: none;
+} /* END ADD ISSUE */
+
+/* ISSUE DETAILS */
+#form-container img.img-rounded.social {
+	width: 32px;
+	margin-left: 0px;
+	height: 32px;
+	text-align: center;
+}
+#form-container .share {
+	text-align: center;
+}
+.img-thumbnail {
+	padding: 0px;
+	border-radius: 0px;
+}
+input.form-control.input-sm.issue-details{
+	border-radius: 0px;
+	width: 150px;
+	height: 30px;
+}
+
+textarea.form-control.issue-details{
+	border-radius: 0px;
+    width: 150px;
+    font-size: 12px;
+    height: 50px;
+    resize: none;
+}
+
+#form-container label.control-label.col-xs-4 {
+	font-size: 1em;
+}
+
+button.btn.btn-mini.resolve-subscribe {
+	width: 60px;
+	height: 20px;
+	padding: 0px;
+	font-size: 0.8em;
+}
+
+.social-hover {
+	display: inline-block;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: -webkit-transform;
+  transition-property: transform;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+.social-hover:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.lbl-issue-name {
+	height: 20px;
+	padding-top: 5px;
+}
+
+.comments {
+	width: 250px;
+    height: 150px;
+	overflow: scroll;
+	align: center;
+}
+
+.share {
+	padding-top: 5px;
+}
+
+hr {
+	padding: 0px;
+	margin: 0px;
+}
+
+.form-horizontal {
+	margin-top: 5px;	
+}
+h4.media-heading {
+	margin: 0px;
+	padding: 0px;
+	font-size: 1.1em;
+}
+.help-block {
+	margin: 0px;
+}
+#issue_description.help-block {
+	margin: 5px;
+}
+
+
+/* END ISSUE DETAILS */
+
 
 .input-group {
     padding: 20px;
@@ -295,9 +411,11 @@ input[type="submit"] {
 .col-lg-9 {
     /* margin-top: 20px; */
 }
-.img-thumbnail {
+
+/* .img-thumbnail {
     max-width: 120%;
-}
+} */
+
 ul {
     margin-bottom: 10px;
     margin-top: 20px;

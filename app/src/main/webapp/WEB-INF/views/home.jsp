@@ -30,10 +30,17 @@
 				<div class="collapse navbar-collapse" id="navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
+						</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="#admin" id="admin">Admin</a></li>
+						</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="#filter" id="filter">Filter</a></li>
+						</ul>
+					<ul class="nav navbar-nav">
 						<li><a href="#statistics" id="stat">Statistics</a></li>
-					</ul>
+						</ul>
+					
 					<ul class="nav navbar-nav navbar-right">
 						<li><a id="login" >Login</a></li>
 					</ul>
