@@ -1,17 +1,17 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentModel', 'view/CommentView', 'text!templates/IssueDetails.html', 'text!templates/NotificationTemplate.html', ],
-		function($, _, Backbone, IssueModel, CommentModel, CommentView, IssueDetailsTemplate, NotificationTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentModel', 'view/CommentView', 'view/ShareInSocialsView','text!templates/IssueDetails.html', 'text!templates/NotificationTemplate.html', ],
+		function($, _, Backbone, IssueModel, CommentModel, CommentView, ShareInSocialsView, IssueDetailsTemplate, NotificationTemplate) {
 			var IssueDetaisView = Backbone.View.extend({
-				
+
 				notificationTemplate: _.template(NotificationTemplate),
 				template: _.template(IssueDetailsTemplate),
-				
+				shareInSocialsView : new ShareInSocialsView,
 				initialize: function() {
 					this.model = new IssueModel();
 				},
-				
+
 				render: function(id) {
 					var that = this;
-					
+
 					this.model.set("id", id);
 					this.model.fetch( { success: function() {
 						that.$el.hide();
@@ -21,11 +21,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						$('[name*="subscribe"]').popover();
 					} } );
 
-					
-					
+
+
 					return this;
 				},
-				
+
 				events: {
 					'click #add_comment_button': 'addComment',
 					'click [name="resolve"]': 'chngeStatus',
@@ -57,7 +57,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 
 
 				addComment : function() {
-				if(($('#add-comment  [name*="userName"]').val() !='') && ($('#add-comment  [name*="email"]').val() !='')){	
+				if(($('#add-comment  [name*="userName"]').val() !='') && ($('#add-comment  [name*="email"]').val() !='')){
 					 comment = new CommentModel({
 						 "email": $(document.getElementsByName('email')[0]).val(),
 						 "userName": $(document.getElementsByName('userName')[0]).val(),
@@ -66,13 +66,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					 try{
 						 comment.save();
 						 console.log('comment add function');
-						 
-						 
+
+
 						 var commentView = new CommentView({
 								model : comment
 						 });
 						 commentView.render();
-						//notification						
+						//notification
 						if($('#notificationModal')) $('#notificationModal').remove();
 						$('body').append(this.notificationTemplate( { 'data': { 'message': comment.get('userName') + ", thanks you for yours comment!" } } ));
 						$('#notificationModal').modal();
@@ -80,21 +80,21 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						document.getElementsByName('email')[0].value = "";
 						document.getElementsByName('userName')[0].value = "";
 						document.getElementsByName('comment-text')[0].value = "";
-							
+
 					 }catch(error){
 						if($('#notificationModal')) $('#notificationModal').remove();
 						$('body').append(this.notificationTemplate( { 'data': { 'message': error } } ));
 						$('#notificationModal').modal();
 					 }
-					 
-					 
+
+
 					}else{
 						if($('#notificationModal')) $('#notificationModal').remove();
 						$('body').append(this.notificationTemplate( { 'data': { 'message': "Error! Input your name!" } } ));
 						$('#notificationModal').modal();
-				}	
+				}
 			}
-			});	
-			
+			});
+
 			return IssueDetaisView;
 		})
