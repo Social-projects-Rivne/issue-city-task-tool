@@ -2,11 +2,28 @@ define([ 'jquery', 'underscore', 'backbone', ],
     function($, _, Backbone) {
       var ShareInSocialsView = Backbone.View.extend({
         events: {
-
+          'click .share#facebook-share': 'facebook',
+          'click #google-share': 'google',
+          'click #twitter-share': 'twitter',
         },
 
         initialize: function() {
+         // this.el = $('body')[0];
+        },
 
+        facebook: function(){
+          console.log(window.location.href);
+          var title = "Bawl";
+          var url = window.location.href.toString();// this.getShortURL(window.location.href.toString())
+          window.open("http://www.facebook.com/share.php?u=" + url + "&title=" + title, "_blank");
+        },
+
+        google: function(){
+          console.log(window.location.href);
+        },
+
+        twitter: function(){
+          console.log(window.location.href);
         },
 
         getShortURL: function(longUrl){
