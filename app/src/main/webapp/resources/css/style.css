@@ -102,6 +102,15 @@ td > input {
     border-color: white !important;
     color: rgb(233, 84, 110);
 }
+
+
+/* shre buttons */
+img.share{
+    width: 45px;
+}
+img.share:hover, img.share:focus{
+    box-shadow: 0 0 7px rgba(0, 0, 0, 1);
+}
 /* fix size rows in issue table */
 
 td#status-cell {
