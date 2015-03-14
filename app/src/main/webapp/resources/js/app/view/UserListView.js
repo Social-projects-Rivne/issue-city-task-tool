@@ -171,22 +171,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								managerView.resetFilter();
 							}
 						} );
-						
-						
-						
-						//({url: "editissue"}
-						//);
-						
-						
-						
-						
-						// CONSOLE.LOG 
-						console.log ($('#edit-issue-form-description').val());
-						console.log ($('#edit-issue-form-attachments').val());
-						console.log ($('#edit-issue-form-category').val());
-						console.log ($('#edit-issue-form-status').val());
-						console.log ($('#edit-issue-form-priority').val());
-						
 					}
 					
 					

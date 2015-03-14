@@ -277,9 +277,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				showEditIssueForm: function(e){
-					// CONSOLE.LOG
-					console.log ('--- ManagerView.js showEditIssueForm');
-					
 					// remove existing modal
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
 					
@@ -357,9 +354,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 			editIssue: function(e) {
-					// CONSOLE.LOG
-					console.log('--- ManagerView.js editIssue');
-					
 					var isValid = true;
 					
 				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
@@ -381,8 +375,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					}*/
 	
 					if(isValid) {
-						console.log ('--- --- validation form before confirmation ok'); //+
-						
 						//call confirmation for edit issue				
 						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));

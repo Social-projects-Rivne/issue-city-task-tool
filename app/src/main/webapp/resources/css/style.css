@@ -122,16 +122,6 @@ td > input {
     color: rgb(233, 84, 110);
 }
 
-
-/* shre buttons */
-/* img.share{
-    width: 45px;
-}
-img.share:hover, img.share:focus{
-    box-shadow: 0 0 7px rgba(0, 0, 0, 1);
-} */
-/* fix size rows in issue table */
-
 td#status-cell {
     width: 101px;
 }
@@ -216,7 +206,13 @@ div.tab-pane {
 
 #issue-description.form-control.input-sm{
 	resize: none;
-} /* END ADD ISSUE */
+}
+
+.form-control {
+  border-radius: 0px;
+}
+
+ /* END ADD ISSUE */
 
 /* ISSUE DETAILS */
 #form-container img.img-rounded.social {
