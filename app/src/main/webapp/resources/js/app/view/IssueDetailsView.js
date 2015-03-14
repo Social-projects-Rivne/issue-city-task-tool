@@ -4,9 +4,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 
 				notificationTemplate: _.template(NotificationTemplate),
 				template: _.template(IssueDetailsTemplate),
-				shareInSocialsView : new ShareInSocialsView,
+				shareInSocialsView :null,
 				initialize: function() {
 					this.model = new IssueModel();
+					this.shareInSocialsView =  new ShareInSocialsView({el: this.el})
 				},
 
 				render: function(id) {
