@@ -129,7 +129,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 						$('#notificationModal').remove();
 					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
 					$('#notificationModal').modal();
-					
+					loginView.buttonsManage();
 				},
 
 				addUser: function(e) {

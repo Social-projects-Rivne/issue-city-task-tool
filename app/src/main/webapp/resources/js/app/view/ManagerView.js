@@ -350,7 +350,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						$('#notificationModal').remove();
 					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
 					$('#notificationModal').modal();
-					
+					loginView.buttonsManage();
 				},
 				
 			editIssue: function(e) {

@@ -28,6 +28,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 							 //when request done we create admin or manager view and rout user on his page
 							 success: function(data){
 								that.currentUser = new UserModel(data);
+								if(that.currentUser.get('avatar')==""){
+									that.currentUser.set({'avatar':'resources/img/avatar.png'});
+									that.buttonsManage();
+								}
 							}
 						});
 				},
@@ -62,7 +66,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 										} else {
 											// some notification for user
 										}
-										that.hideLoginForm()
+										if(that.currentUser.get('avatar')==""){
+											that.currentUser.set({'avatar':'resources/img/avatar.png'});
+										}
+										that.hideLoginForm();
+										that.buttonsManage();
 									}
 								});
 							},
@@ -71,7 +79,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					} else{
 						console.log('Fields is empty');
 					};
-					
 				},
 
 				passwordToggle: function(){
@@ -100,6 +107,25 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				render: function(){
 					$(".login.modal").modal();
 				},
+
+				buttonsManage: function(){
+					if(this.currentUser==null){
+						$('.navbar  #login').show();
+						$('.navbar  #admin').hide();
+						$('.navbar  #manager').hide();
+					} else {
+						$('.navbar .navbar-right #login').hide();
+						if(this.currentUser.get('role_id') == 1){
+							$('.navbar  #admin').show();
+							$('.navbar  #manager').show();
+						} else{ 
+							if(this.currentUser.get('role_id') == 2 ){
+								$('.navbar  #admin').hide();
+								$('.navbar  #manager').show();
+							} 
+						}
+					}
+				}
 			});
 			
 			return LoginView;
