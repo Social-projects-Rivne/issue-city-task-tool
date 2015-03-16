@@ -1,12 +1,12 @@
 <div class="container">
-     <h1 class="">Edit Profile</h1>
+     <h1 class="">Edit Profile </h1>
 
     <hr class="">
     <div class="row">
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                <img src="<%= avatar %>" class="avatar img-circle" alt="avatar">
                  <h6 class="">Upload a different photo...</h6>
 
                 <input class="form-control" type="file">
@@ -24,7 +24,7 @@ This
                 <div class="form-group">
                     <label class="col-lg-3 control-label">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" placeholder="First name" value="" type="text">
+                        <input class="form-control" placeholder="First name" value="<%= name %>" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -34,21 +34,15 @@ This
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-3 control-label">Company:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" placeholder="Company" value="" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-lg-3 control-label">Email:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" placeholder="Email" value="" type="text">
+                        <input class="form-control" placeholder="Email" value="<%= email %>" type="text">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Username:</label>
+                    <label class="col-md-3 control-label">Login:</label>
                     <div class="col-md-8">
-                        <input class="form-control" value="" type="text">
+                        <input class="form-control" value="<%= login %>" type="text">
                     </div>
                 </div>
                 <div class="form-group">

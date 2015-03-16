@@ -10,6 +10,7 @@
 		<config>src/main/webapp/WEB-INF/servlet-context.xml</config>
 		<config>src/main/webapp/WEB-INF/root-context.xml</config>
 		<config>src/main/webapp/WEB-INF/security-context.xml</config>
+		<config>src/main/webapp/WEB-INF/persistence-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
