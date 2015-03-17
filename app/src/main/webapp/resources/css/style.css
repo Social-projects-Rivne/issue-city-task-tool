@@ -317,7 +317,8 @@ h4.media-heading {
 
 .share {
 	margin-top: 3px;
-}/* END ISSUE DETAILS */
+}
+/* END ISSUE DETAILS */
 
 /* ISSUE FILTER */
 #status-filter.form-control,
@@ -380,6 +381,35 @@ div.filter-buttons {
 .popover.bottom.in {
 	width: 270px;
 }/* END POPOVER FOR SUBSCRIBE */
+
+
+/* ADMIN */
+/* .row.admin_template{
+	background-color: rgba(255, 255, 255, 0.4);
+    position: absolute;
+    top: 55px; 
+    left: 5px; 
+    margin: auto;
+    z-index: 3;	
+} */
+
+#left_admin_panel {
+	
+}
+
+#main_admin_panel {
+	
+}
+
+/* .admin-avatar {
+	
+} */
+.col-lg-4.img-thumbnail {
+	height: 200px;
+	width: 60px;
+}
+
+/* END ADMIN */
 
 .input-group {
     padding: 20px;
