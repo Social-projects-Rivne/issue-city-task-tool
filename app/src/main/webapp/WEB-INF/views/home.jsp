@@ -32,7 +32,7 @@
 						<li><a href="#cry-out" id="cry-out">Cry out</a></li>
 						</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="#admin" id="admin">Admin</a></li>
+						<li><a href="#admin" id="admin" style="  display: none;">Admin</a></li>
 						</ul>
 					<ul class="nav navbar-nav">
 						<li><a href="#filter" id="filter">Filter</a></li>
@@ -45,7 +45,7 @@
 						<li><a id="login" >Login</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a id="manager" href="#manager">Manager</a></li>
+						<li><a id="manager" href="#manager"  style="  display: none;">Manager</a></li>
 					</ul>
 				</div>
 			</div>
