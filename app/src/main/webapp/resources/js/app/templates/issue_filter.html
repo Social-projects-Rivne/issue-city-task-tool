@@ -5,10 +5,9 @@
 	
 	
 	
-	<div class="form-group">
+	<!-- <div class="form-group">
 	<label class="radio-inline"> <input type="radio"
 		name="optradio" id="status">
-		
 			<div>
 				Status <select class="form-control" id="status-filter">
 					<option value="1">new</option>
@@ -18,26 +17,52 @@
 					<option value="5">to resolve</option>
 				</select>
 			</div>
-		
-		
 	</label> 
-	</div>
+	</div> -->
 	
+				<div class="filter-block-top">
+					<input type="radio" name="optradio" id="status">
+					<label class="radio-inline"> 
+						Status 
+					</label>
+				</div>	
+				<div class="filter-block-bottom">
+					<select class="form-control" id="status-filter">
+						<option value="1">new</option>
+						<option value="2">approved</option>
+						<option value="3">resolved</option>
+						<option value="4">deleted</option>
+						<option value="5">to resolve</option>
+					</select>
+				</div>
 	
-	<div class="form-group">
+<!-- 	<div class="form-group">
 	 <label class="radio-inline">
    <input type="radio" name="optradio" id="category"> Category 
      <select class="form-control" id="categories">
         <% _.map(categories, function(category) { %>
-          <option ><%= category.name %></option><!--value="<%= category.id %>" -->
+          <option ><%= category.name %></option>value="<%= category.id %>"
         <% }); %>
     </select>
-
 	</label>
-	</div>
+	</div> -->
+	
+				<div class="filter-block-top">
+					<input type="radio" name="optradio" id="category">
+					<label class="radio-inline"> 
+						Category 
+					</label>
+				</div>	
+				<div class="filter-block-bottom">
+					<select class="form-control" id="categories">
+        			<% _.map(categories, function(category) { %>
+          			<option ><%= category.name %></option>value="<%= category.id %>"
+        			<% }); %>
+    				</select>
+				</div>
 	
 	
-	<div class="form-group">
+	<!-- <div class="form-group">
 	 <label class="radio-inline"> <input type="radio"
 		name="optradio" id="priority">
 		<div>
@@ -48,11 +73,23 @@
 			</select>
 		</div>
 	</label> 
-	</div>
+	</div> -->
 	
-	
+				<div class="filter-block-top">
+					<input type="radio" name="optradio" id="priority">
+					<label class="radio-inline"> 
+						Priority 
+					</label>
+				</div>	
+				<div class="filter-block-bottom">
+					<select class="form-control" id="priority-filter">
+						<option value="1">Low</option>
+						<option value="2">Medium</option>
+						<option value="3">High</option>
+					</select>
+				</div>
 		
-</div>
+				
 
 <div class="filter-buttons">
 			<button class="btn btn-default" id='set-issue-filter' type="button">Set
