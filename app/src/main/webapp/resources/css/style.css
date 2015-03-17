@@ -329,13 +329,26 @@ div.filter-buttons {
 	margin: 5px;
 }
 
-/* #issue-filter.col-1-3 {
-	
-} */
-
 .radio-inline, .checkbox-inline {
-  padding-left: 20px;
-}/* END ISSUE FILTER */
+  	padding-left: 20px;
+}
+
+.radio-inline {
+  	vertical-align: none;
+  	cursor: default;
+  	padding: 0px;
+}
+
+#priority-filter.form-control,
+#categories.form-control,
+#status-filter.form-control {
+  	font-family: 'Josefin Sans', sans-serif;
+}
+.filter-block-top,
+.filter-block-bottom {
+	margin: 10px;
+}
+/* END ISSUE FILTER */
 
 .input-group {
     padding: 20px;
