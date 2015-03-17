@@ -371,6 +371,11 @@ div.filter-buttons {
 }
 /* END CONFIRMATIONS AND NOTIFICATIONS */
 
+/* POPOVER FOR SUBSCRIBE*/
+/* part of code is inline into IssueDetails.html */
+.popover.bottom.in {
+	width: 270px;
+}/* END POPOVER FOR SUBSCRIBE */
 
 .input-group {
     padding: 20px;
