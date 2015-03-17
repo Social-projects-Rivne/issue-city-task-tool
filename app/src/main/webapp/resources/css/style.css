@@ -10,6 +10,7 @@ h4 {
     color: #d5445c;
     margin: 5px;
 }
+
 /* NAVBAR */
 ul.nav.navbar-nav {
 	display: inline-block;
@@ -305,6 +306,9 @@ h4.media-heading {
 
 .help-block {
 	margin: 0px;
+	width: 231px;
+	height: 34px;
+	border-color: #fff;
 }
 
 #issue_description.help-block {
