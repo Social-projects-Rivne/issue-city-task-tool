@@ -311,8 +311,9 @@ h4.media-heading {
 	border-color: #fff;
 }
 
-#issue_description.help-block {
+#issue_description.description {
 	margin: 5px;
+	height: 10px;
 }
 
 .share {
@@ -332,6 +333,7 @@ h4.media-heading {
 div.filter-buttons {
 	text-align: center;
 	margin: 5px;
+	margin-top: 20px;
 }
 
 .radio-inline, .checkbox-inline {
@@ -354,7 +356,6 @@ div.filter-buttons {
 	margin: 10px;
 }
 /* END ISSUE FILTER */
-
 
 /* CONFIRMATIONS AND NOTIFICATIONS */
 .modal-header {
@@ -382,28 +383,15 @@ div.filter-buttons {
 	width: 270px;
 }/* END POPOVER FOR SUBSCRIBE */
 
-
 /* ADMIN */
-/* .row.admin_template{
-	background-color: rgba(255, 255, 255, 0.4);
-    position: absolute;
-    top: 55px; 
-    left: 5px; 
-    margin: auto;
-    z-index: 3;	
-} */
 
 #left_admin_panel {
 	
 }
-
 #main_admin_panel {
 	
 }
 
-/* .admin-avatar {
-	
-} */
 .col-lg-4.img-thumbnail {
 	height: 200px;
 	width: 60px;
