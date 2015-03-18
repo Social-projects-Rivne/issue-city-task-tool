@@ -29,13 +29,13 @@
                                 <!-- short issue name form group -->
 								<div class="form-group">
 									<label for="issue-name">Short issue name</label> <input
-										type="text" class="form-control input-sm" id="issue-name"
+										type="text" class="form-control input-sm add-issue" id="issue-name"
 										name="issueName" placeholder="short name" />
 								</div>
                                 <!-- issue category form group -->
 								<div class="form-group">
 									<label for="issue-category">Issue category</label> <input
-										type="text" class="form-control input-sm" id="issue-category"
+										type="text" class="form-control input-sm add-issue" id="issue-category"
 										list="categories" name="issueCategory" placeholder="category" />
 									<datalist id="categories">
 										<% _.map(categories, function(category) { %>
@@ -46,7 +46,7 @@
                                 <!-- issue description form group -->
 								<div class="form-group">
 									<label for="issue-description">Issue description</label>
-									<textarea class="form-control input-sm" rows="3" id="issue-description"
+									<textarea class="form-control input-sm add-issue" rows="3" id="issue-description"
 										name="issueDescription" placeholder="description"></textarea>
 								</div>
 								<div align="center">

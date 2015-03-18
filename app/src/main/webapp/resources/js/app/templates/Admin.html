@@ -3,23 +3,27 @@
     <!--left admin panel-->
     <div id="left_admin_panel" class="col-lg-3">
 
-	    <div class="col-lg-4">
+	    <div class="col-lg-6 admin-attachment">
 	    <!-- <div class="admin-avatar"> -->
-            <img src="<%= loginView.currentUser.get('avatar')%>" class="img-thumbnail" alt="attachment_1">
+            <img src="<%= loginView.currentUser.get('avatar')%>" class="img-thumbnail admin-attachment" alt="attachment_1">
         </div>
         
-        <div class="col-lg-8">
+        <div class="col-lg-6 admin-name">
             <b>
             <label id="admin_name"><%= loginView.currentUser.get('name')%></label>
             </b>
+            <br>
+            <br>
+            <br>
             <p>
             <button type="submit" class="btn btn-mini" id="admin_log_out">Log out</button>
             </p>
         </div>
         <!--left panel menu-->
-        <div class="col-lg-12">
-            <ul>
-                <li><button id="add-user" class="btn btn-primary">Add user</button></li> 
+
+        <div class="col-lg-12 admin">
+            <ul class="admin">
+                <li class="admin"><a class="admin" id="add-user" class="btn btn-primary">Add user</a></li> 
             </ul>
         </div>
 
@@ -29,7 +33,7 @@
 
         <div class="col-xs-12 search">
             <div class="input-group input-group-sm"  id="input_search">
-                <input type="text" placeholder="enter name" class="form-control">
+                <input type="text" placeholder="enter name" class="form-control admin-search">
                 <span class="input-group-btn">
                         <button class="btn btn-default" id='search-user' type="button">Search</button>
                         <button class="btn btn-default" id='reset-filter' type="button">X</button>

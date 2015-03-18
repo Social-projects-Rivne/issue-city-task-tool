@@ -12,21 +12,21 @@
 			                <div class="form-group">
 			                    <label for="description" class="control-label col-xs-4">Description</label>
 			                    <div class="col-xs-6">
-			                        <input type="text" class="form-control input-sm" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
+			                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
 			                    </div>
 			                </div>
                 <!--attachment-->
 		                <div class="form-group">
 		                    <label for="attachment" class="control-label col-xs-4">Attachments</label>
 		                    <div class="col-xs-6">
-		                        <input type="text" class="form-control input-sm" id="edit-issue-form-attachments" value="<%= attachments %>" placeholder="attachment" name="attachment">
+		                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-attachments" value="<%= attachments %>" placeholder="attachment" name="attachment">
 		                    </div>
 		                </div>
                <!--category-->
                		    <div class="form-group">
 				            <label for="category" class="control-label col-xs-4" name="category">Category</label>
 						    	<div class="col-xs-6">
-						    	<select type="text" class="form-control input-sm" id="edit-issue-form-category"> 
+						    	<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-category"> 
 									<option selected><%= categoryId %></option>
 									<option>Option1</option>
 									<option>Option2</option>
@@ -38,7 +38,7 @@
 					    <div class="form-group">
 				            <label for="status" class="control-label col-xs-4" name="status">Status</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm" id="edit-issue-form-status"> 
+						    		<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-status"> 
 									<option value="1">new</option>
         							<option value="2">approved</option>
 				  		            <option value="3">resolved</option>
@@ -52,7 +52,7 @@
                 		<div class="form-group">
 				            <label for="priority" class="control-label col-xs-4" name="priority">Priority</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm" id="edit-issue-form-priority">
+						    		<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-priority">
 										<option value="1">Low</option>
 										<option value="2">Medium</option>
 										<option value="3">High</option>

@@ -195,7 +195,6 @@ input#issue-attachments.input-file.input-sm {
 div.tab-pane {
 	padding: 5px;
 }
-
 #form-container {
     background-color: rgba(255, 255, 255, 0.8);
     position: absolute;
@@ -204,14 +203,19 @@ div.tab-pane {
     margin: auto;
     z-index: 3;
 }
-
 #issue-description.form-control.input-sm{
 	resize: none;
 }
-
 .form-control {
-  border-radius: 0px;
-}/* END ADD ISSUE */
+  	border-radius: 0px;
+}
+.form-control.input-sm.add-issue {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1em;	
+}
+/* END ADD ISSUE */
 
 /* ISSUE DETAILS */
 #form-container img.img-rounded.social {
@@ -319,6 +323,18 @@ h4.media-heading {
 .share {
 	margin-top: 3px;
 }
+
+.form-control.input-sm.issue-details,
+textarea.form-control.issue-details {
+	color: #989898 !important;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;	
+}
+.form-group.comment-btn {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
 /* END ISSUE DETAILS */
 
 /* ISSUE FILTER */
@@ -383,21 +399,166 @@ div.filter-buttons {
 	width: 270px;
 }/* END POPOVER FOR SUBSCRIBE */
 
-/* ADMIN */
+/* ADD USER, EDIT USER, EDIT ISSUE */
+.control-label.col-xs-4,
+.col-xs-6 {
+	margin: 2px;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1.2em;
+}
+/* #edit-issue-form-status {
+	color: #989898 !important;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1.2em; */
+}
+/* .form-control.input-sm.add-user-admin {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1em;
+} */
+.form-control.input-sm.add-user-admin {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1.2em;	
+}
+.input-sm, .form-group-sm .form-control {
+  font-size: 13px;
+}
+.form-control.input-sm.edit-user {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+.form-control.input-sm.edit-issue-form{
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+/* .form-control.input-sm.add-issue {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1em;	
+} */
 
+
+/* END ADD USER, EDIT USER, EDIT ISSUE */
+
+/* ADMIN */
 #left_admin_panel {
-	
 }
 #main_admin_panel {
-	
 }
-
 .col-lg-4.img-thumbnail {
 	height: 200px;
 	width: 60px;
 }
-
+.img-thumbnail.admin-attachment {
+	height: 100px;
+	width: 100px;
+}
+.col-lg-6.admin-attachment {
+	paddig-right: 5px;
+	height: 100px;
+	weidth: 100px;
+	padding-left: 0px;
+	padding-right: 0px;
+	text-align: center;
+}
+.col-lg-6.admin-name {
+	height: 100px;
+	weidth: 100px;
+	padding-left: 0px;
+	padding-right: 0px;
+	text-align: left;
+}
+.col-lg-12.admin{
+	padding-left: 0px;
+	margin-top: 33px;
+}
+a.admin {
+	color: #d5445c !important;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    font-size: 1.2em;
+    paddind-left: 0px;
+}
+li.admin {
+	padding-left: 0px;
+	text-align: left;
+}
+ul.admin {
+	padding-left: 0px;
+	text-align: left;
+}
+.form-control.admin-search {
+	border-radius: 0px;
+}
 /* END ADMIN */
+
+/* MANAGER */
+.img-thumbnail.manager-attachment {
+	height: 100px;
+	width: 100px;
+}
+.col-lg-6.manager-attachment {
+	paddig-right: 5px;
+	height: 100px;
+	weidth: 100px;
+	padding-left: 0px;
+	padding-right: 0px;
+	text-align: center;
+}
+.col-lg-6.manager-name {
+	height: 100px;
+	weidth: 100px;
+	padding-left: 0px;
+	padding-right: 0px;
+	text-align: left;
+}
+a.manager {
+	color: #d5445c !important;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+li.manager {
+	padding-left: 0px;
+	text-align: left;
+}
+ul.manager {
+	padding-left: 0px;
+	text-align: left;
+}
+.col-lg-12.manager {
+	padding-left: 0px;
+	text-align: left;
+}
+		/* MANAGER SEARCH BLOCK */
+			#manager-search-block.manager-search-block {
+				padding: 20px;
+			}
+			.manager-search-topic {
+				display: inline-block;
+				margin-left: 15px;
+				margin-right: 15px;
+			}
+			/* .radio-inline.manager-search {
+				width: 50px;
+			} */
+		/* END MANAGER SEARCH BLOCK */
+		/* MANAGER SEARCH TOP */
+		.form-control.manager-search-top {
+			border-radius: 0px;
+		}
+		/* END MANAGER SEARCH TOP */
+/* END MANAGER */
 
 .input-group {
     padding: 20px;
