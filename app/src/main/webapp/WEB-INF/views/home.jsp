@@ -4,8 +4,12 @@
 <head>
 <title>Home</title>
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet">
 <!-- delete it later or add to project -->
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+<link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
