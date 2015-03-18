@@ -30,8 +30,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 								that.currentUser = new UserModel(data);
 								if(that.currentUser.get('avatar')==""){
 									that.currentUser.set({'avatar':'resources/img/avatar.png'});
-									that.buttonsManage();
 								}
+								that.buttonsManage();
 							}
 						});
 				},
@@ -109,12 +109,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				},
 
 				buttonsManage: function(){
-					if(this.currentUser==null){
+					if(this.currentUser == null || this.currentUser.get('login') ==""){
 						$('.navbar  #login').show();
 						$('.navbar  #admin').hide();
 						$('.navbar  #manager').hide();
 					} else {
-						$('.navbar .navbar-right #login').hide();
+						$('.navbar  #login').hide();
 						if(this.currentUser.get('role_id') == 1){
 							$('.navbar  #admin').show();
 							$('.navbar  #manager').show();

@@ -16,7 +16,8 @@ require([
         'view/MapView',
         'map',
         'homeScript',*/
-        'view/StatisticView'
+        'view/StatisticView',
+        'view/ProfileView'
         ]
 , function($, _, Backbone, 
 	Router,
@@ -30,7 +31,8 @@ require([
 	ManagerView,
 	LoginView,
 	IssueFilterView,
-	StatisticView) {
+	StatisticView,
+	ProfileView) {
 	
 	//var comments = null;
 	router = null;
@@ -50,7 +52,7 @@ require([
 		issueFilterView = new IssueFilterView({el:"#container"});
 		
 		statisticView = new StatisticView( { el: 'body' } );
-		
+		profileView = new ProfileView({el:"#container"});
 		//loginView.render();
 		//managerView.render();
 		//mapDraw();
