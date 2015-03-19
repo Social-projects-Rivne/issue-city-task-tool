@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
@@ -14,8 +15,8 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.min.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-responsive.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
 </head>
