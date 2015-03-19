@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
 <script src="<c:url value="/resources/js/issue-script.js" />"></script>
-<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-responsive.css" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-responsive.min.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>

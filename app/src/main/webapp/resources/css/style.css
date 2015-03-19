@@ -287,7 +287,7 @@ button.btn.btn-mini.resolve-subscribe {
 }
 
 .comments {
-	width: 250px;
+	width: 290px;
     height: 150px;
 	overflow: scroll;
 	align: center;
@@ -559,6 +559,20 @@ ul.manager {
 		}
 		/* END MANAGER SEARCH TOP */
 /* END MANAGER */
+
+/* CLOSE BLOCK BUTTON */
+#close-block-button-for-add-issue {
+	color: #d5445c;
+}
+#close-block-button-for-issue-details {
+	color: #d5445c;
+	padding-left: 32px;
+}
+#close-block-button-for-filter {
+	color: #d5445c;
+}
+
+/* END CLOSE BLOCK BUTTON */
 
 .input-group {
     padding: 20px;
