@@ -38,7 +38,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					if($('#editModal')) $('#editModal').remove();
 					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
-					
+					//set user role on edit form
+					$("#userRole").val( this.model.get(e.currentTarget.id).attributes.role_id);
+
 					userName = $('#userName');
 					userEmail = $('#userEmail');
 					userLogin = $('#userLogin');
@@ -133,6 +135,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
+							role_id: $('#userRole').val(),
 						} ).save( {}, {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();

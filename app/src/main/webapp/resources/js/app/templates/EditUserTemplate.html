@@ -20,11 +20,20 @@
                 		<input type="email" class="form-control input-sm edit-user" id="userEmail" placeholder="Email" name="email" value="<%= data.attributes.email %>">
             		</div>
         		</div>
-        		<!--login-->
+            <!--login-->
+            <div class="form-group">
+                <label for="userLogin" class="control-label col-xs-4">Login</label>
+                <div class="col-xs-6">
+                    <input type="login" class="form-control input-sm edit-user" id="userLogin" placeholder="Login" name="login" value="<%= data.attributes.login %>">
+                </div>
+        		<!--role-->
         		<div class="form-group">
-            		<label for="userLogin" class="control-label col-xs-4">Login</label>
+            		<label for="userRole" class="control-label col-xs-4">Role</label>
             		<div class="col-xs-6">
-                		<input type="login" class="form-control input-sm edit-user" id="userLogin" placeholder="Login" name="login" value="<%= data.attributes.login %>">
+                		<select class="form-control" id="userRole">
+                      <option value="1">admin</option>
+                      <option value="2">manager</option>
+                    </select>
             		</div>
         		</div>
 			</div> 

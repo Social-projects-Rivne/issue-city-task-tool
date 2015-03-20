@@ -162,7 +162,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 							email: $('#add-user-form-email').val(),
 							login: $('#add-user-form-login').val(),
 							password: $('#add-user-form-password').val(),
-							avatar: $('#add-user-form-avatar').val()
+							avatar: $('#add-user-form-avatar').val(),
+							role_id: $('#userRole').val(),
 						} ).save( {}, {
 							success: function(model, response) {
 								userListView.model.fetch( { success: function() {
