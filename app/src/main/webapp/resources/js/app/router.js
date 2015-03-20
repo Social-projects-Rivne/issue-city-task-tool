@@ -14,7 +14,8 @@ define([ 'underscore', 'backbone','view/AdminView',
 			//routs for map 
 			"cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
-			"filter": "filter"
+			"filter": "filter",
+			"profile":"profile",
 		},
 		
 		initialize : function() {
@@ -24,6 +25,10 @@ define([ 'underscore', 'backbone','view/AdminView',
 
 		home : function() {
 			mapView.render();
+		},
+		
+		profile : function() {
+			profileView.render();
 		},
 
 		login: function(){
