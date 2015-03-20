@@ -310,9 +310,10 @@ h4.media-heading {
 
 .help-block {
 	margin: 0px;
-	width: 231px;
+	width: 270px;
 	height: 34px;
 	border-color: #fff;
+	resize:none;
 }
 
 #issue_description.description {
