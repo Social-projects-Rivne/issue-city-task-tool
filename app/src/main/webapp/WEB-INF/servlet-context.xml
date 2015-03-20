@@ -41,5 +41,9 @@
 	<sec:global-method-security pre-post-annotations="enabled" />
 	
 	<aop:aspectj-autoproxy />
+	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10000000" />
+	</beans:bean>
 		
 </beans:beans>
