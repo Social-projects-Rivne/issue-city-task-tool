@@ -56,13 +56,18 @@ td > input {
 
 #form-container img.img-thumbnail {
     width: 200px;
-    /* margin-left: 45px; */
     height: 110px;
 }
 
 .container {
     width: 60%;
     padding-left: 0px;
+}
+
+#container {
+	border-bottom: 0px;
+	margin-bottom: 0px;
+	
 }
 
 /*  Buttons */
@@ -408,18 +413,7 @@ div.filter-buttons {
     font-weight: normal;
     font-size: 1.2em;
 }
-/* #edit-issue-form-status {
-	color: #989898 !important;
-	font-family: 'Josefin Sans', sans-serif;
-    font-weight: normal;
-    font-size: 1.2em; */
-}
-/* .form-control.input-sm.add-user-admin {
-	color: #989898;
-	font-family: 'Josefin Sans', sans-serif;
-    font-weight: normal;
-    font-size: 1em;
-} */
+
 .form-control.input-sm.add-user-admin {
 	color: #989898;
 	font-family: 'Josefin Sans', sans-serif;
@@ -441,14 +435,6 @@ div.filter-buttons {
     font-weight: normal;
     font-size: 0.9em;
 }
-/* .form-control.input-sm.add-issue {
-	color: #989898;
-	font-family: 'Josefin Sans', sans-serif;
-    font-weight: normal;
-    font-size: 1em;	
-} */
-
-
 /* END ADD USER, EDIT USER, EDIT ISSUE */
 
 /* ADMIN */
@@ -572,8 +558,69 @@ ul.manager {
 #close-block-button-for-filter {
 	color: #d5445c;
 }
-
 /* END CLOSE BLOCK BUTTON */
+
+/* USER PROFILE */
+h4.edit-profile {
+	text-align: left;
+	color: #fff;
+	margin: 0px;
+	padding: 10px;
+	background: -moz-linear-gradient(to right, #d5445c, #ea556f);
+    background: -ms-linear-gradient(to right, #d5445c, #ea556f);
+    background: -o-linear-gradient(to right, #d5445c, #ea556f);
+    background: -webkit-linear-gradient(to right, #d5445c, #ea556f);
+    background: linear-gradient(to right, #d5445c, #ea556f);
+}
+h6.edit-profile {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #d5445c;
+    margin: 5px;
+}
+h3.edit-profile {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 400;
+    color: #d5445c;
+    margin: 5px;
+}
+.form-group.edit-profile {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1em;	
+}
+.container.edit-profile {
+	border: 1px solid #d5445c;
+	margin-top: 30px;
+	width: 50%;
+	padding-right: 0px;
+}
+hr.edit-profile {
+	background-color:#d5445c; /*for Firefox, Opera, Safari*/
+}
+.col-md-8.edit-profile {
+	text-align: center;
+	margin-top: 10px;
+}
+.avatar.img-thumbnail.edit-profile {
+	padding: 0px;
+	border-radius: 0px;
+	width: 96px;
+	height: 96px;
+}
+.col-md-3.edit-profile,
+/* .col-lg-4.control-label */
+.col-md-9.personal-info {
+	margin-top: 15px;
+}
+.form-control.edit-profile {
+	height: 30px;
+}
+
+/* END USER PROFILE */
 
 .input-group {
     padding: 20px;
@@ -671,13 +718,6 @@ input[type="submit"] {
 .col-lg-3 {
     padding-top: 20px;
 }
-.col-lg-9 {
-    /* margin-top: 20px; */
-}
-
-/* .img-thumbnail {
-    max-width: 120%;
-} */
 
 ul {
     margin-bottom: 10px;
