@@ -18,7 +18,9 @@ require([
         'homeScript',*/
         'view/StatisticView',
         'view/ProfileView',
-        'view/ImageEditorView'
+        'view/ImageEditorView',
+		'gmaps'
+
         ]
 , function($, _, Backbone, 
 	Router,
@@ -72,6 +74,7 @@ require([
 		//router.navigate("", {trigger: true});
 		router = new Router();
 	});
+
 	
 	/*function mapDraw() {
 		map = L.map('map').setView([50.62, 26.25], 13);

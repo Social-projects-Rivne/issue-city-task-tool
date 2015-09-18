@@ -1,5 +1,6 @@
 define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view/IssueDetailsView',
-         'view/CommentListView', 'view/AddIssueView', 'view/UserView', 'text!templates/map.html',],
+         'view/CommentListView', 'view/AddIssueView', 'view/UserView', 'text!templates/map.html','gmaps'],
+	//TODO add GoogleGeocode js and add to the function with alias
 		function($, _, Backbone, IssueCollection, IssueDetailsView, CommentListView,
 				AddIssueView, UserView, MapTemplate) {
 
@@ -11,7 +12,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 				},
 				
 				mapTemplate: _.template(MapTemplate),
-				
+
 				markers: [ L.AwesomeMarkers.icon( { icon: 'flame', markerColor: 'red', prefix: 'ion' } ),
 				           L.AwesomeMarkers.icon( { icon: 'waterdrop', markerColor: 'blue', prefix: 'ion' } ),
 				           L.AwesomeMarkers.icon( { icon: 'model-s', markerColor: 'orange', prefix: 'ion' } ),
@@ -51,21 +52,38 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					} } );
 					
 					return this;
-				},
+				}
 			});
 			
 			function onMarkerClick(e) {
 				//issueDetailsView.render(this.title);
 				//TODO:replace comment list in issue details view
-				Backbone.history.navigate("issue/"+this.title,true)
+				Backbone.history.navigate("issue/"+this.title,true);
 			}
 			
 			function onMapClick(e) {
-				if(!marker)
+				if (!marker)
 					marker = L.marker(e.latlng).addTo(map);
 				else
-					marker.setLatLng(e.latlng);
-				that.$el.find('#map-pointer').val(e.latlng);
+					marker.setLatLng(e.latlng)
+				$("#map-pointer").val(e.latlng);
+
+				//Fill adress field
+				var geocoder = new google.maps.Geocoder();
+				var latlng = {lat: e.latlng.lat, lng: e.latlng.lng};
+				geocoder.geocode({'location': latlng}, function(results, status) {
+					if (status === google.maps.GeocoderStatus.OK) {
+						if (results[0]) {
+							$("#map-adress").text(results[0].address_components[2].short_name + ", " + results[0].address_components[1].short_name + ", " + results[0].address_components[0].short_name  );
+						} else {
+							console.log('No results found');
+						}
+					} else {
+						console.log('Geocoder failed due to: ' + status);
+					}
+					//--------------------------------
+				});
+
 			}
 			
 			return MapView;
