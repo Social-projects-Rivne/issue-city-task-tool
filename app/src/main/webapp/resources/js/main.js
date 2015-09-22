@@ -58,6 +58,7 @@ require([
 		profileView = new ProfileView({el:"#container"});
 		imageEditorView = new ImageEditorView( { el: 'body' } );
 
+
 		router = new Router();
 
 
