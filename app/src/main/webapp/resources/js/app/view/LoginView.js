@@ -1,16 +1,19 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView', 
-        'view/ManagerView','text!templates/login.html', ],
-		function($, _, Backbone, UserModel, AdminView, ManagerView, LoginTemplate) {
+        'view/ManagerView','text!templates/login.html', 'text!templates/NotificationTemplate.html'],
+		function($, _, Backbone, UserModel, AdminView, ManagerView, LoginTemplate, NotificationTemplate) {
+			var that = null;
 			var LoginView = Backbone.View.extend({
 				
 				loginTemplate: _.template(LoginTemplate),
 				currentUser: null,
+				notificationTemplate: _.template(NotificationTemplate),
+
 
 				events: {
 					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
 					'click .form-group #btn-close' : 'hideLoginForm',
-					'click .input-group-addon' : 'passwordToggle',
+					'click .input-group-addon' : 'passwordToggle'
 
 				},
 				
@@ -56,7 +59,25 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 									success: function(data){
 										that.currentUser = new UserModel(data);
 										//routing by user's role
-										if(that.currentUser.get('role_id') == 1){
+
+										//If user didn't validate his email
+										if(that.currentUser.get('role_id') == USER_NOT_CONFIRMED){
+
+											//TODO must be beter way to do it
+											$.ajax('auth/logout');
+											loginView.currentUser = null;
+											router.navigate('', {trigger:true});
+
+											if($('#notificationModal'))
+												$('#notificationModal').remove();
+											that.$el.append(that.notificationTemplate( { 'data': { 'message': "You should validate your email " }} ));
+											$('#notificationModal').modal();
+
+
+											return;
+										}
+
+										else if(that.currentUser.get('role_id') == 1){
 											adminView = new AdminView( { el: "#container" } );
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('admin',{trigger:true});
@@ -73,7 +94,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 										that.buttonsManage();
 									}
 								});
-							},
+							}
 						});	
 
 					} else{
@@ -125,6 +146,48 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 							} 
 						}
 					}
+				},
+
+				confirmEmail: function(link) {
+					arrLink = link.split("&id=");
+					encryptPass = arrLink[0];
+					user_id = arrLink[1];
+					var that = this;
+
+
+					this.currentUser = new UserModel({
+						id : user_id,
+						password : encryptPass
+					});
+
+					that = this;
+
+					$.ajax({
+						url: "validate-user",
+						type: "POST",
+						data: JSON.stringify(this.currentUser),
+						dataType: "json",
+						contentType: "application/json; charset=utf-8",
+
+						success: function(data) {
+							alert("success" + JSON.stringify(data));
+							that.currentUser = new UserModel ( data);
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate({'data': {'message': "Your email has validated. Have a nice day "}}));
+							$('#notificationModal').modal();
+							that.buttonsManage();
+						},
+						error: function(data) {
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					});
+
 				}
 			});
 			

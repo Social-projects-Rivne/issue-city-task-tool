@@ -58,9 +58,18 @@ public class BawlUserDetailsService implements UserDetailsService {
 		if (role.intValue() == 1) {
 			roles.add("ROLE_MANAGER");
 			roles.add("ROLE_ADMIN");
+
 			
 		} else if (role.intValue() == 2) {
 			roles.add("ROLE_MANAGER");
+		}
+
+		else if (role.intValue() == 0) {
+			roles.add("ROLE_USER");
+		}
+
+		else if (role.intValue() == -1) {
+			roles.add("USER_NOT_CONFIRMED");
 		}
 		
 		return roles;

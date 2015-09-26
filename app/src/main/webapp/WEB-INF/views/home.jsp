@@ -45,7 +45,9 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#statistics" id="stat">Statistics</a></li>
 						</ul>
-					
+					<ul class="nav navbar-nav navbar-right">
+						<li><a id="signUp" >Sign Up</a></li>
+					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a id="login" >Login</a></li>
 					</ul>
@@ -58,10 +60,12 @@
 	</div>
 	<div class="login modal fade" >
 	</div>
+	<div class="signUp modal fade" >
+	</div>
 	<div id="container">
 	</div>
 <!-- Placed at the end of the document so the pages load faster -->
-	<script data-main="<c:url value="/resources/js/common" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
+	<script data-main="<c:url value="/resources/js/common.js" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 	<script>
  require(['main']);
  </script>

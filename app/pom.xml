@@ -137,6 +137,12 @@
 			<version>1.0.0.M2</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.cribbstechnologies.clients</groupId>
+			<artifactId>mandrillClient</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -179,7 +185,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
+				<version>1.4.0</version>
 				<configuration>
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>

@@ -1,5 +1,6 @@
 define([ 'underscore', 'backbone','view/AdminView', 
-        'view/ManagerView',], function(_, Backbone, AdminView, ManagerView) {
+        'view/ManagerView', 'view/UserRegistrationView'], function(_, Backbone, AdminView, ManagerView,
+																   UserRegistrationView) {
 
 	var Router = Backbone.Router.extend({
 
@@ -16,6 +17,9 @@ define([ 'underscore', 'backbone','view/AdminView',
 			"issue/:id" : "issue", // #issue/1
 			"filter": "filter",
 			"profile":"profile",
+
+			"user-reg": "userReg",
+			"email-confirm/:link" : "emailConfirm"
 		},
 		
 		initialize : function() {
@@ -84,6 +88,16 @@ define([ 'underscore', 'backbone','view/AdminView',
 		search : function(name) {
 			//alert('you serch ' + name);
 			//adminView.search(name);
+		},
+
+		userReg : function ()  {
+			console.log('userreg function');
+
+			userRegView.render();
+		},
+
+		emailConfirm: function(link) {
+			loginView.confirmEmail(link);
 		}
 	});
 	return Router

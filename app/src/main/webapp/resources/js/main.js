@@ -4,22 +4,15 @@ require([
         'underscore',
         'backbone',
         'router',
-        /*'view/IssueView',
-        'model/CommentModel',*/
         'view/MapView',
         'view/AddIssueView',
         'view/ManagerView',
         'view/LoginView',
         'view/IssueFilterView',
-        /*'collection/CommentCollection',
-        'model/IssueModel',
-        'view/MapView',
-        'map',
-        'homeScript',*/
         'view/StatisticView',
         'view/ProfileView',
         'view/ImageEditorView',
-		'gmaps'
+		"view/UserRegistrationView"
 
         ]
 , function($, _, Backbone,
@@ -36,13 +29,17 @@ require([
 	IssueFilterView,
 	StatisticView,
 	ProfileView,
-	ImageEditorView) {
-	
+	ImageEditorView,
+	UserRegistrationView) {
+
 	//var comments = null;
 	router = null;
 	adminView = null;
 	managerView = null;
-	
+	userRegView = null;
+	USER_NOT_CONFIRMED = -1;
+	USER = 0;
+
 	jQuery(document).ready(function($){
 		// show login form on unauthorized response
 		$.ajaxSetup({statusCode: {401: function(){router.navigate('login', {trigger: true}); } } });
@@ -51,6 +48,7 @@ require([
 		issueFilterView = new IssueFilterView({el:"#container"});
 		
 		loginView = new LoginView({el:"body"});
+		userRegView = new UserRegistrationView( {el: "body"});
 		
 		issueFilterView = new IssueFilterView({el:"#container"});
 		

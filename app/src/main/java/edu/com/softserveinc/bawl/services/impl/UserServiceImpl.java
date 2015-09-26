@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
 		}
 		else 
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
 		userDao.saveAndFlush(user);
 	}
 
