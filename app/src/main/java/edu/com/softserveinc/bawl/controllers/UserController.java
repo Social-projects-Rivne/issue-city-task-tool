@@ -107,10 +107,10 @@ public class UserController {
 
 		try {
 			service.editUser(user);
-			String role = user.getRole_id() == 1 ? "Admin" : "Manager";
+			/*String role = user.getRole_id() == 1 ? "Admin" : "Manager";
 			mailService.notifyUser(user.getId(),
 					"Your account has been updated.\n\nCurrent login: "
-							+ user.getLogin() + "\nCurrent role: " + role);
+							+ user.getLogin() + "\nCurrent role: " + role);*/
 			message.put("message", "User was successfully edited");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occurred! User was not updated" + ex.toString());

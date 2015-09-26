@@ -7,6 +7,9 @@
 target/
 hibernate.cfg.xml
 Servers
+app/.idea/
+app/Bawl.iml
+
 *~
 <<<<<<< HEAD
 Servers/Tomcat v8.0 Server at localhost-config/catalina.policy
