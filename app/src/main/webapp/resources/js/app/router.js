@@ -19,11 +19,10 @@ define([ 'underscore', 'backbone','view/AdminView',
 			"profile":"profile",
 
 			"user-reg": "userReg",
-			"email-confirm/:link" : "emailConfirm"
+			"email-confirm/*link" : "emailConfirm"
 		},
 		
 		initialize : function() {
-			console.log('router initialazed');
 			Backbone.history.start();
 		},
 
@@ -46,9 +45,8 @@ define([ 'underscore', 'backbone','view/AdminView',
 		},
 
 		cryOut : function() {
-			//router.navigate("/", {trigger: true}); 
+
 			mapView.render();
-			//router.navigate('cry-out', {trigger: false});
 			addIssueView.render();
 		},
 		
@@ -91,7 +89,6 @@ define([ 'underscore', 'backbone','view/AdminView',
 		},
 
 		userReg : function ()  {
-			console.log('userreg function');
 
 			userRegView.render();
 		},

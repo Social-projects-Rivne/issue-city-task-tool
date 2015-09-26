@@ -30,6 +30,7 @@
                      if($('#notificationModal')) {
                          $('#notificationModal').remove();
                      }
+                     $(".signUp.modal").modal("hide");
                      that.$el.append(that.notificationTemplate( { 'data': response } ));
                      $('#notificationModal').modal();
                  },
@@ -47,13 +48,7 @@
          },
 
          getModel: function(){
-                 return new UserModel({
-                     name : "illia",
-                     email: "elvissrivne@gmail.com",
-                     login : "elviss",
-                     password : 123456,
-                     role_id: USER_NOT_CONFIRMED
-                 });
+             return new UserModel( $("#signUpForm").serializeJSON() );
          },
 
 

@@ -170,7 +170,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						contentType: "application/json; charset=utf-8",
 
 						success: function(data) {
-							alert("success" + JSON.stringify(data));
 							that.currentUser = new UserModel ( data);
 							if($('#notificationModal')) {
 								$('#notificationModal').remove();

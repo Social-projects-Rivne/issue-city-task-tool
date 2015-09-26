@@ -73,22 +73,24 @@ public class UserController {
 			{
 				service.addUser(user);
 
-				mailService.notifyUser(user.getId(),
+				/*mailService.notifyUser(user.getId(),
 						"Your account has been created.\n\nCurrent login: "
-								+ user.getLogin() + "\nCurrent role: " + role);
+								+ user.getLogin() + "\nCurrent role: " + role);*/
 				message.put("message", "User was successfully added");
 			}
 
 			else if (role.equals ("Not confirmed")) {
-				MandrillMailService mailService =  MandrillMailService.getMandrillMail();
 				service.addUser(user);
-				//for recieve update pass
-				UserModel dbModel =  service.getByLogin(user.getLogin());
+				UserModel dbModel = service.getByLogin(user.getLogin());
+
 				message.put("message", "Successfully registered. Please confirm your email");
-				mailService.sendRegNotification(dbModel);
+				try {
+					MandrillMailService mailService = MandrillMailService.getMandrillMail();
+					mailService.sendRegNotification(dbModel);
+				} catch(Exception ex){
+					message.put("message", "Something wrong with sending email");
+				}
 			}
-
-
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not added");
 		}
@@ -120,10 +122,8 @@ public class UserController {
 	@RequestMapping(value = "validate-user", method = RequestMethod.POST)
 	public @ResponseBody UserModel validateUser(
 			@RequestBody UserModel user) {
-
-
 		try {
-			System.out.println("VALIDATE METHOD!!!" + user.toString());
+
 			UserModel dbModel = service.getById(user.getId());
 			if (dbModel.getPassword().equals(user.getPassword())){
 				dbModel.setRole_id(USER);
