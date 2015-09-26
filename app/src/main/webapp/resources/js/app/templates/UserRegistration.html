@@ -1,53 +1,75 @@
+    <style>
 
-    <div id="signUpBox" style="margin-top:150px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
+        textarea:focus, input:focus{
+            outline: 0;
+        }
+
+        input:focus:invalid,
+        textarea:focus:invalid{
+            border:1px solid #F5192F;
+            box-shadow:0 0 4px #F5192F;
+        }
+
+        input:focus:valid,
+        textarea:focus:valid{
+            border: 1px solid #64C364;
+            box-shadow: 0 0 4px #64C364;
+        }
+
+    </style>
+    <div id="signUpBox" style="margin-top:150px;" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-2">
         <div class="panel" style="border: 0px;">
             <div class="panel-heading  navbar-default">
                 <div class="panel-title" style=" color: #fff !important;
                                                         font-family: 'Josefin Sans', sans-serif;
-                                                        font-size: 1.2em;">Sign Up</div>
+                                                        font-size: 1.2em;">Sign Up
+                </div>
             </div>
+
             <div class="panel-body">
-                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6"></div>
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6">       
+            </div>
 
-                <form id="signUpForm" class="form-horizontal" role="form">
+                <form class="form-horizontal" method="" action="">
 
-                    <div class="input-group">
+                <!--Name-->
+                <div class="input-group" id="login">
+                    <span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
+                    <input id="Name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
+                </div>
+                
+                <!--Email-->
+                 <div class="input-group" id="login">
+                    <span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
+                    <input id="email" type="emai" class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
+                </div>
 
-                        <input type="text" name="name" id="reg_name" tabindex="1" class="form-control" placeholder="name" value="">
+                <!--login-->
+                 <div class="input-group" id="login">
+                    <span class="input-group-addon"><label for="login" class="col-sm-2 control-label">Login</label></span>
+                    <input id="Login" type="text" class="form-control" placeholder="Enter your login" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$"title="The first character must be a letter. (4-20 characters)">
+                </div>
+
+                 <!--Password-->
+
+                 <div class="input-group" id="login">
+                    <span class="input-group-addon"><label for="login" class="col-sm-0 control-label">Password</label></span>
+                        <input id="password" type="password" class="form-control" name="j_password" data-toggle="Enter yourpassword" placeholder="password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
+
+                        <input type="text" class="form-control" style="display: none;">
+                    <span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;"><i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
+                </div>
+
+
+                   
+
+                <div style="margin-top:5px" class="form-group">
+                    <div class="col-sm-12 controls btnCenter">
+                        <button id="btn-reg" class="btn btn-success" type="submit">Login</button>
+                        <button id="btn-close" class="btn btn-primary" type="button">Close</button>
                     </div>
-
-                    <div class="input-group">
-
-                        <input id="reg_email" type="text" class="form-control" name="email" value="" placeholder="Email:">
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <input id="reg_login" type="text" class="form-control" name="login" value="" placeholder="Login:">
-
-                    </div>
-                   <input type="hidden" name="role_id" value="-1"/>
-
-                    <div class="input-group">
-                        <input id="reg_password" type="password" class="form-control" name="password" data-toggle="password" placeholder="password">
-                    <span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
-                                            <i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
-                    </div>
-
-
-                    <div style="margin-top:5px" class="form-group">
-                        <!-- Buttons -->
-                        <div class="col-sm-12 controls btnCenter">
-                            <!-- changed from <a> to <button> -->
-                            <button  type="submit" id="reg_submit" class="btn btn-success" type="button">Register</button>
-                            <!-- button for facebook login -->
-                            <!-- <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>-->
-                            <button id="reg_btn-close" class="btn btn-primary" type="button">Close</button>
-                        </div>
-                    </div>
-
                 </form>
+                </div>
             </div>
         </div>
     </div>
