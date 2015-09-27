@@ -54,20 +54,19 @@
 
                  <div class="input-group" id="login">
                     <span class="input-group-addon"><label for="login" class="col-sm-0 control-label">Password</label></span>
-                        <input id="password" type="password" class="form-control" name="j_password" data-toggle="Enter yourpassword" placeholder="password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
+                        <input id="pid" type="password" class="form-control" name="j_password" data-toggle="Enter yourpassword" placeholder="Enter your password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
 
                         <input type="text" class="form-control" style="display: none;">
-                    <span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;"><i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
+                    <span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" onclick="ShowHidePassword('pid')"style="cursor: pointer;"><i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
                 </div>
 
-
-                   
-
+                <!--Button-->
                 <div style="margin-top:5px" class="form-group">
                     <div class="col-sm-12 controls btnCenter">
-                        <button id="btn-reg" class="btn btn-success" type="submit">Login</button>
+                        <button id="btn-reg" class="btn btn-success" type="submit">Sign Up</button>
                         <button id="btn-close" class="btn btn-primary" type="button">Close</button>
                     </div>
+
                 </form>
                 </div>
             </div>
@@ -75,7 +74,16 @@
     </div>
 
 
+<script>
 
-
-
+function ShowHidePassword(id) {
+    element = document.getElementById(id);
+        if (element.type == 'password') {
+            element.type = 'text'
+        element.parentNode.replaceChild(inp, element);
+    } else {
+        element.type = 'password'     
+    }
+} 
+</script>
                 

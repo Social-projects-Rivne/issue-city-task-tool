@@ -15,6 +15,7 @@
          },
          events: {
              'click #signUp' : 'showUserRegForm',
+             'click #btn-close' : 'hideUserRegForm',
              'click #reg_submit': 'onSubmit'
          },
 
@@ -56,6 +57,11 @@
          showUserRegForm: function(){
              this.render();
              router.navigate("user-reg", {trigger: true});
+         },  
+         
+          hideUserRegForm: function(){         
+             $(".signUp.modal").modal('hide');
+					
          },
 
 

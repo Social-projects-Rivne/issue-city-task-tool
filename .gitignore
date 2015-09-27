@@ -9,6 +9,8 @@ hibernate.cfg.xml
 Servers
 app/.idea/
 app/Bawl.iml
+desktop.ini
+/target
 
 *~
 <<<<<<< HEAD
