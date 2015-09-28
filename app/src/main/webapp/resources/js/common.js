@@ -10,23 +10,32 @@ requirejs.config({
 
 		templates:{
 			deps :['text']
-		}, 
-		
-		main:{
-			deps :['bootstrap','leaflet','js/issue-script','markers','router']
 		},
-		
+
+		gmaps: {
+			deps: ['jquery']
+		},
+
+		jquery_serialize : {
+			deps: ['jquery']
+		},
+
+		main:{
+			deps :['bootstrap','leaflet','js/issue-script','markers','router'] /*'gmaps'*/
+		},
+
 		map:{
-			deps :['markers'],
+			deps :['markers']
 		},
 		'view/MapView':{
-			deps :['map','leaflet'],
+			deps :['map','leaflet']
 		}
+
     },
 	paths:{
 
 		// libs
-		jquery: 'js/lib/jquery',
+		jquery: ['js/lib/jquery','jquery.serializejson'],
 		underscore: 'js/lib/underscore',
 		backbone: 'js/lib/backbone',
 		text: 'js/lib/text',
@@ -38,7 +47,12 @@ requirejs.config({
 		templates: 'js/app/templates',
 		
 		bootstrap:'js/bootstrap.min',
-		
+
+		gmaps: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDLXIjNBbjQ5nI9I8KIuR3hslBebOYNH4s&signed_in=true&callback=initMap',
+		'async':'../vendor/requirejs-plugins/src/async',
+		'jquery_serialize' : 'js/lib/jquery.serializejson',
+
+
 		//bad scripts
 		homeScript: 'js/home-script',
         validation: 'js/validation-script',
@@ -55,4 +69,4 @@ requirejs.config({
 
 
 //Load our app module and pass it to our definition function
-require(['main', 'bootstrap']);
+require(['main', 'bootstrap', 'gmaps', 'jquery_serialize']);

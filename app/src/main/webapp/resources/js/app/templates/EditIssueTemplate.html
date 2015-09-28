@@ -12,55 +12,57 @@
 			                <div class="form-group">
 			                    <label for="description" class="control-label col-xs-4">Description</label>
 			                    <div class="col-xs-6">
-			                        <input type="text" class="form-control input-sm" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
+			                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
 			                    </div>
 			                </div>
                 <!--attachment-->
 		                <div class="form-group">
 		                    <label for="attachment" class="control-label col-xs-4">Attachments</label>
 		                    <div class="col-xs-6">
-		                        <input type="text" class="form-control input-sm" id="edit-issue-form-attachment" value="<%= attachments %>" placeholder="attachment" name="attachment">
+		                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-attachments" value="<%= attachments %>" placeholder="attachment" name="attachment">
 		                    </div>
 		                </div>
                <!--category-->
                		    <div class="form-group">
 				            <label for="category" class="control-label col-xs-4" name="category">Category</label>
 						    	<div class="col-xs-6">
-						    	<select type="text" class="form-control input-sm" value="<%= categoryId %>"> 
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
+						    	<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-category"> 
+									<option selected><%= categoryId %></option>
+									<option>Option1</option>
+									<option>Option2</option>
+									<option>Option3</option>
 								</select>
 								</div>
 							</div>
                <!--status-->
 					    <div class="form-group">
-				            <label for="status" class="control-label col-xs-4" id="edit-issue-form-status" name="status">Status</label>
+				            <label for="status" class="control-label col-xs-4" name="status">Status</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm" value="<%= statusId %>"> 
-									<option>New</option>
-									<option>To Resolve</option>
-									<option>Approved</option>
-									<option>Resolved</option>
+						    		<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-status"> 
+									<option value="1">new</option>
+        							<option value="2">approved</option>
+				  		            <option value="3">resolved</option>
+				  		            <option value="4">deleted</option>
+				  		            <option value="5">to resolve</option>
 								</select>
 								</div>
 						</div>
                <!--priority-->
                			
                 		<div class="form-group">
-				            <label for="priority" class="control-label col-xs-4" id="edit-issue-form-priority" name="priority">Priority</label>
+				            <label for="priority" class="control-label col-xs-4" name="priority">Priority</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm" value="<%= priorityId %>"> 
-									<option>Low</option>
-									<option>Medium</option>
-									<option>High</option>
+						    		<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-priority">
+										<option value="1">Low</option>
+										<option value="2">Medium</option>
+										<option value="3">High</option>
 									</select>
 								</div>
 						</div>
                 	
             </div>
     		<div class="modal-footer">
-    				<button class='btn btn-primary editIssueConfirm'>OK</button>
+    				<button id="<%= id %>" class="btn btn-primary editIssueConfirm">OK</button>
         			<button class="btn" data-dismiss="modal">Cancel</button>
     		</div>
 		</div>

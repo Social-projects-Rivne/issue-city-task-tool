@@ -1,0 +1,72 @@
+<div class="container edit-profile">
+     <h4 class="edit-profile">Edit Profile </h4>
+
+    <hr class="edit-profile">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3 edit-profile">
+            <div class="text-center">
+                <img src="<%= avatar %>" class="avatar img-thumbnail edit-profile" alt="avatar">
+                 <h6 class="edit-profile">Upload a different photo...</h6>
+
+                <input class="form-control" type="file">
+            </div>
+        </div>
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <div style="display: none;" class="alert alert-info alert-dismissable"> <a class="panel-close close" data-dismiss="alert">×</a>  <i class="fa fa-coffee"></i>
+This
+                is an <strong class="">.alert</strong>. Use this to show important messages
+                to the user.</div>
+             <h3 class="edit-profile">Personal info</h3>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group edit-profile">
+                    <label class="col-lg-4 control-label">First name:</label>
+                    <div class="col-lg-7">
+                        <input class="form-control edit-profile" placeholder="First name" value="<%= name %>" type="text">
+                    </div>
+                </div>
+                <div class="form-group edit-profile">
+                    <label class="col-lg-4 control-label">Last name:</label>
+                    <div class="col-lg-7">
+                        <input class="form-control edit-profile" placeholder="Last name" value="" type="text">
+                    </div>
+                </div>
+                <div class="form-group edit-profile">
+                    <label class="col-lg-4 control-label">Email:</label>
+                    <div class="col-lg-7">
+                        <input class="form-control edit-profile" placeholder="Email" value="<%= email %>" type="text">
+                    </div>
+                </div>
+                <div class="form-group edit-profile">
+                    <label class="col-md-4 control-label">Login:</label>
+                    <div class="col-md-7">
+                        <input class="form-control edit-profile" value="<%= login %>" type="text">
+                    </div>
+                </div>
+                <div class="form-group edit-profile">
+                    <label class="col-md-4 control-label">Password:</label>
+                    <div class="col-md-7">
+                        <input class="form-control edit-profile" value="" type="password">
+                    </div>
+                </div>
+                <div class="form-group edit-profile">
+                    <label class="col-md-4 control-label">Confirm password:</label>
+                    <div class="col-md-7">
+                        <input class="form-control edit-profile" value="" type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8 edit-profile">
+                        <input class="btn btn-primary" value="Save Changes" type="button"> <span class=""></span>
+
+                        <input class="btn btn-default" value="Cancel" type="reset">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr class="">

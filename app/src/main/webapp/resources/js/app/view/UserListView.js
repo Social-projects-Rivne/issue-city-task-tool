@@ -38,7 +38,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					if($('#editModal')) $('#editModal').remove();
 					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
 					$('#editModal').modal();
-					
+					//set user role on edit form
+					$("#userRole").val( this.model.get(e.currentTarget.id).attributes.role_id);
+
 					userName = $('#userName');
 					userEmail = $('#userEmail');
 					userLogin = $('#userLogin');
@@ -133,6 +135,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
+							role_id: $('#userRole').val(),
 						} ).save( {}, {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();
@@ -155,47 +158,22 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						});
 					}
-					//editIssue
+					
 					if(e.currentTarget.name == 'edit issue') {
-						
-						var issues = new IssueCollection();
-						issues.fetch();
-						
-						console.log ("UserListView - edit issue before confirmation confirm !!");
-						
-						var newIssue = issues.get(e.currentTarget.id);
-						
+						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
 						$('#editIssueModal').modal('hide');
-						newIssue.set( {
+						mapView.model.get(e.currentTarget.id).set( {
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
-						category: $('#edit-issue-form-category').val(),
+						categoryId: $('#edit-issue-form-category').val(),
 						statusId: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val(),
 						
-						} ).save( "issue/" + e.currentTarget.id
-								
-							/*	{
-							success: function(model, response) {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': response } ));
-								$('#notificationModal').modal();
-							},
-							error: function() {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-								$('#notificationModal').modal();
+						} ).save ( {
+							success: function() {
+								managerView.resetFilter();
 							}
-						} */
-								
-						);
-						
-						console.log ($('#edit-issue-form-description').val());
-						console.log ($('#edit-issue-form-attachments').val());
-						console.log ($('#edit-issue-form-category').val());
-						console.log ($('#edit-issue-form-status').val());
-						console.log ($('#edit-issue-form-priority').val());
-						
+						} );
 					}
 					
 					

@@ -1,0 +1,88 @@
+    <style>
+
+        textarea:focus, input:focus{
+            outline: 0;
+        }
+
+        input:focus:invalid,
+        textarea:focus:invalid{
+            border:1px solid #F5192F;
+            box-shadow:0 0 4px #F5192F;
+        }
+
+        input:focus:valid,
+        textarea:focus:valid{
+            border: 1px solid #64C364;
+            box-shadow: 0 0 4px #64C364;
+        }
+
+    </style>
+    <div id="signUpBox" style="margin-top:150px;" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-2">
+        <div class="panel" style="border: 0px;">
+            <div class="panel-heading  navbar-default">
+                <div class="panel-title" style=" color: #fff !important;
+                                                        font-family: 'Josefin Sans', sans-serif;
+                                                        font-size: 1.2em;">Sign Up
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6">       
+                </div>
+
+                <form class="form-horizontal" id="signUpForm" method="" action="">
+
+					<!--Name-->
+					<div class="input-group" id="login">
+						<span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
+						<input name="name" id="reg_name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
+					</div>
+					
+					<!--Email-->
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
+						<input id="reg_email" type="emai" name="email"  class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
+					</div>
+
+					<!--login-->
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-2 control-label">Login</label></span>
+						<input id="reg_login" type="text" name="login" class="form-control" placeholder="Enter your login" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$"title="The first character must be a letter. (4-20 characters)">
+					</div>
+
+					 <!--Password-->
+
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-0 control-label">Password</label></span>
+							<input id="reg_password" type="password" class="form-control" name="password" data-toggle="Enter yourpassword" placeholder="Enter your password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
+
+							<input type="text" class="form-control" style="display: none;">
+						<span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" onclick="ShowHidePassword('pid')"style="cursor: pointer;"><i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
+					</div>
+
+					<!--Button-->
+					<div style="margin-top:5px" class="form-group">
+						<div class="col-sm-12 controls btnCenter">
+							<button id="reg_submit" class="btn btn-success" type="submit">Sign Up</button>
+							<button id="reg_btn-close" class="btn btn-primary" type="button">Close</button>
+						</div>
+					</div>
+                </form>                
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+function ShowHidePassword(id) {
+    element = document.getElementById(id);
+        if (element.type == 'password') {
+            element.type = 'text'
+        element.parentNode.replaceChild(inp, element);
+    } else {
+        element.type = 'password'     
+    }
+} 
+</script>
+                

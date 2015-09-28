@@ -1,0 +1,59 @@
+<div class="row admin_template">
+    <!--left admin panel-->
+    <div id="left_admin_panel" class="col-lg-3">
+
+	    <div class="col-lg-6 admin-attachment">
+	    <!-- <div class="admin-avatar"> -->
+            <img src="<%= loginView.currentUser.get('avatar')%>" class="img-thumbnail admin-attachment" alt="attachment_1">
+        </div>
+        
+        <div class="col-lg-6 admin-name">
+            <b>
+            <label id="admin_name"><a href="#viewprofile" title="Click here to view your profile"><%= loginView.currentUser.get('name')%></a></label>
+            </b>
+            <br>
+            <br>
+            <br>
+            <p>
+            <button type="submit" class="btn btn-mini" id="admin_log_out">Log out</button>
+            </p>
+        </div>
+        <!--left panel menu-->
+
+        <div class="col-lg-12 admin">
+            <ul class="admin">
+                <li class="admin"><a class="admin" id="add-user" class="btn btn-primary">Add user</a></li> 
+            </ul>
+        </div>
+       </div>
+
+<div>
+ <div class="row"> 
+ 	<!-- users avatar -->
+ 	
+	<!-- view form column -->
+	<div class="col-md-9 personal-info">
+		<form class="form-horizontal" role="form">
+	<!-- users name -->                
+		<div class="form-group view-profile">
+        	<label class="col-lg-4 control-label">User name:</label>
+			<label class="col-lg-4 control-label"><%= name %></label>
+		</div>
+	<!-- users email -->
+		<div class="form-group view-profile">
+			<label class="col-lg-4 control-label">Email:</label>
+			<label class="col-lg-4 control-label"><%= email %></label>
+		</div>
+	<!-- users login -->
+		<div class="form-group view-profile">
+			<label class="col-md-4 control-label">Login:</label>
+			<label class="col-md-4 control-label"><%= login %></label>
+		</div>
+		</form>
+	<!-- button for edit profile -->
+		<div class="col-md-8 view-profile">
+			<button class="btn btn-mini" id="profile">Edit profile</button>
+		</div>          
+	</div>
+ </div>
+</div>

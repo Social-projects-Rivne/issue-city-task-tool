@@ -3,27 +3,29 @@
         <!--left admin panel-->
         <div id="left_admin_panel" class="col-lg-3">
 
-            <div class="col-lg-3">
-                <img src="http://lorempixel.com/60/60/people/" class="img-thumbnail" alt="attachment_1">
+            <div class="col-lg-6 manager-attachment">
+                <img src="<%= loginView.currentUser.get('avatar')%>" class="img-thumbnail manager-attachment" alt="attachment_1">
             </div>
-            <div class="col-lg-9">
-                <b><label id="manager_name">Manager name</label></b>
+            <div class="col-lg-6 manager-name">
+                <b><label id="manager_name"><a href="#profile" title="Click here to view your profile"><%= loginView.currentUser.get('name')%></a></label></b>
+                <br>
+                <br>
                 <br>
                 <button type="submit" class="btn btn-mini" id="manager_log_out">Log out</button>
             </div>
 
             <!--left panel menu-->
-            <div class="col-lg-12">
-                <ul id="manager_menu">
-                    <li><a href="#" id="new_issues">New issues</a> 
+            <div class="col-lg-12 manager manager-menu">
+                <ul class ="manager" id="manager_menu">
+                    <li class ="manager"><a class="manager" href="#" id="new_issues">New issues</a> 
                     </li>
-                    <li><a href="#" id="all_issues">All issues</a> 
+                    <li class ="manager"><a class="manager" href="#" id="all_issues">All issues</a> 
                     </li>
-                    <li><a href="#" id="resolved_issues">Resolved issues</a> 
+                    <li class ="manager"><a class="manager" href="#" id="resolved_issues">Resolved issues</a> 
                     </li>
-                    <li><a href="#" id="add-category-link" data-html="true" data-toggle="popover" title="Category name" data-content="<div class='input-group'><input id='category-name' type='text' class='form-control'><span id='add-category' class='btn btn-primary input-group-addon'>Add</span></div>">Add category</a> 
+                    <li class ="manager"><a class="manager" href="#" id="add-category-link" data-html="true" data-toggle="popover" title="Category name" data-content="<div class='input-group'><input id='category-name' type='text' class='form-control'><span id='add-category' class='btn btn-primary input-group-addon'>Add</span></div>">Add category</a> 
                     </li>
-                    <li><a href="#cry-out" id="new_">New issue</a> 
+                    <li class ="manager"><a class="manager" href="#cry-out" id="new_">New issue</a> 
                     </li>
                 </ul>
             </div>

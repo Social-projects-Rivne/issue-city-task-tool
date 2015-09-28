@@ -10,6 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					'click #reset-filter'	: 'resetFilter',
 					'click #add-user'		: 'showAddUserForm',
 					'click .addFormConfirm'	: 'addUser',
+					'click #left_admin_panel #admin_log_out'	: 'logOut',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -33,19 +34,22 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 				},
 				
 				render: function() {
-					userListView.render();
+					userListView.model.fetch({ success: function(){
+							userListView.render();
+						}
+			
+					});
 				},
 				
 				//function which will be search users by their name
 				search: function(){
-					router.navigate('admin/search/' + $('.form-control').val());
-					usersFilter = userListView.model.findWhere({name: $('.form-control').val()});
+					router.navigate('admin/search/' + $('.search .form-control').val());
+					usersFilter = userListView.model.findWhere({name: $('.search .form-control').val()});
 					userListView.model = new UserCollection(usersFilter);
 					userListView.render();
 				},
 				//it reset filters and render all users without filters
 				resetFilter: function(){
-					alert('we try to reset filter');
 					userListView.model.fetch({success: function(){
 							router.navigate('admin');
 							userListView.render();
@@ -117,6 +121,17 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					});
 				},
 				
+				logOut: function(){
+					$.ajax('auth/logout');
+					loginView.currentUser = null;
+					router.navigate('', {trigger:true});
+					if($('#notificationModal'))
+						$('#notificationModal').remove();
+					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
+					$('#notificationModal').modal();
+					loginView.buttonsManage();
+				},
+
 				addUser: function(e) {
 					var isValid = true;
 					
@@ -147,7 +162,8 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 							email: $('#add-user-form-email').val(),
 							login: $('#add-user-form-login').val(),
 							password: $('#add-user-form-password').val(),
-							avatar: $('#add-user-form-avatar').val()
+							avatar: $('#add-user-form-avatar').val(),
+							role_id: $('#userRole').val(),
 						} ).save( {}, {
 							success: function(model, response) {
 								userListView.model.fetch( { success: function() {
@@ -166,6 +182,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					}
 					
 				}
+
 			});
 			
 			return AdminView;
