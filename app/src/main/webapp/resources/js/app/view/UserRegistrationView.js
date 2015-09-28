@@ -15,7 +15,7 @@
          },
          events: {
              'click #signUp' : 'showUserRegForm',
-             'click #btn-close' : 'hideUserRegForm',
+             'click #reg_btn-close' : 'hideUserRegForm',
              'click #reg_submit': 'onSubmit'
          },
 

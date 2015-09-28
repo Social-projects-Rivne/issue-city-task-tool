@@ -170,13 +170,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						contentType: "application/json; charset=utf-8",
 
 						success: function(data) {
-							that.currentUser = new UserModel ( data);
 							if($('#notificationModal')) {
 								$('#notificationModal').remove();
 							}
 							that.$el.append(that.notificationTemplate({'data': {'message': "Your email has validated. Have a nice day "}}));
 							$('#notificationModal').modal();
-							that.buttonsManage();
 						},
 						error: function(data) {
 							if($('#notificationModal')) {

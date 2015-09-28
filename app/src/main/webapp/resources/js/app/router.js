@@ -37,6 +37,7 @@ define([ 'underscore', 'backbone','view/AdminView',
 
 		viewprofile : function() {
 			viewUserProfile.render();
+		},
 
 		login: function(){
 			loginView.render();

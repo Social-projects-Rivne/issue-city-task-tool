@@ -68,33 +68,20 @@ public class UserController {
 	public @ResponseBody Map<String, String> addUserAction(
 			@RequestBody UserModel user, Map<String, String> message) {
 		try {
-			String role = getRoleName(user.getRole_id());
-			if (role.equals("Admin") || role.equals("Manager"))
-			{
-				service.addUser(user);
 
-				/*mailService.notifyUser(user.getId(),
-						"Your account has been created.\n\nCurrent login: "
-								+ user.getLogin() + "\nCurrent role: " + role);*/
-				message.put("message", "User was successfully added");
-			}
+			service.addUser(user);
+			UserModel dbModel = service.getByLogin(user.getLogin());
 
-			else if (role.equals ("Not confirmed")) {
-				service.addUser(user);
-				UserModel dbModel = service.getByLogin(user.getLogin());
-
-				message.put("message", "Successfully registered. Please confirm your email");
-				try {
-					MandrillMailService mailService = MandrillMailService.getMandrillMail();
-					mailService.sendRegNotification(dbModel);
-				} catch(Exception ex){
-					message.put("message", "Something wrong with sending email");
-				}
+			message.put("message", "Successfully registered. Please confirm your email");
+			try {
+				MandrillMailService mailService = MandrillMailService.getMandrillMail();
+				mailService.sendRegNotification(dbModel);
+			} catch(Exception ex){
+				message.put("message", "Something wrong with sending email");
 			}
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not added");
 		}
-
 		return message;
 	}
 
