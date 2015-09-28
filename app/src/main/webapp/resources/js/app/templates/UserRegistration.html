@@ -28,47 +28,46 @@
 
             <div class="panel-body">
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6">       
-            </div>
-
-                <form class="form-horizontal" method="" action="">
-
-                <!--Name-->
-                <div class="input-group" id="login">
-                    <span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
-                    <input id="Name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
-                </div>
-                
-                <!--Email-->
-                 <div class="input-group" id="login">
-                    <span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
-                    <input id="email" type="emai" class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
                 </div>
 
-                <!--login-->
-                 <div class="input-group" id="login">
-                    <span class="input-group-addon"><label for="login" class="col-sm-2 control-label">Login</label></span>
-                    <input id="Login" type="text" class="form-control" placeholder="Enter your login" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$"title="The first character must be a letter. (4-20 characters)">
-                </div>
+                <form class="form-horizontal" id="signUpForm" method="" action="">
 
-                 <!--Password-->
+					<!--Name-->
+					<div class="input-group" id="login">
+						<span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
+						<input name="name" id="reg_name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
+					</div>
+					
+					<!--Email-->
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
+						<input id="reg_email" type="emai" name="email"  class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
+					</div>
 
-                 <div class="input-group" id="login">
-                    <span class="input-group-addon"><label for="login" class="col-sm-0 control-label">Password</label></span>
-                        <input id="pid" type="password" class="form-control" name="j_password" data-toggle="Enter yourpassword" placeholder="Enter your password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
+					<!--login-->
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-2 control-label">Login</label></span>
+						<input id="reg_login" type="text" name="login" class="form-control" placeholder="Enter your login" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$"title="The first character must be a letter. (4-20 characters)">
+					</div>
 
-                        <input type="text" class="form-control" style="display: none;">
-                    <span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" onclick="ShowHidePassword('pid')"style="cursor: pointer;"><i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
-                </div>
+					 <!--Password-->
 
-                <!--Button-->
-                <div style="margin-top:5px" class="form-group">
-                    <div class="col-sm-12 controls btnCenter">
-                        <button id="btn-reg" class="btn btn-success" type="submit">Sign Up</button>
-                        <button id="btn-close" class="btn btn-primary" type="button">Close</button>
-                    </div>
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-0 control-label">Password</label></span>
+							<input id="reg_password" type="password" class="form-control" name="password" data-toggle="Enter yourpassword" placeholder="Enter your password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
 
-                </form>
-                </div>
+							<input type="text" class="form-control" style="display: none;">
+						<span tabindex="100" title="Click here to show/hide password" class="add-on input-group-addon" onclick="ShowHidePassword('pid')"style="cursor: pointer;"><i class="glyphicon icon-eye-open glyphicon-eye-open"></i></span>
+					</div>
+
+					<!--Button-->
+					<div style="margin-top:5px" class="form-group">
+						<div class="col-sm-12 controls btnCenter">
+							<button id="reg_submit" class="btn btn-success" type="submit">Sign Up</button>
+							<button id="reg_btn-close" class="btn btn-primary" type="button">Close</button>
+						</div>
+					</div>
+                </form>                
             </div>
         </div>
     </div>
