@@ -17,6 +17,7 @@ define([ 'underscore', 'backbone','view/AdminView',
 			"issue/:id" : "issue", // #issue/1
 			"filter": "filter",
 			"profile":"profile",
+			"viewprofile":"viewprofile",
 
 			"user-reg": "userReg",
 			"email-confirm/*link" : "emailConfirm"
@@ -33,6 +34,9 @@ define([ 'underscore', 'backbone','view/AdminView',
 		profile : function() {
 			profileView.render();
 		},
+
+		viewprofile : function() {
+			viewUserProfile.render();
 
 		login: function(){
 			loginView.render();
