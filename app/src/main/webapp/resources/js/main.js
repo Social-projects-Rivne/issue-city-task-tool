@@ -11,6 +11,7 @@ require([
         'view/IssueFilterView',
         'view/StatisticView',
         'view/ProfileView',
+	'view/ViewUserProfile',
         'view/ImageEditorView',
 		"view/UserRegistrationView"
 
@@ -29,6 +30,7 @@ require([
 	IssueFilterView,
 	StatisticView,
 	ProfileView,
+	ViewUserProfile,
 	ImageEditorView,
 	UserRegistrationView) {
 
@@ -54,6 +56,7 @@ require([
 		
 		statisticView = new StatisticView( { el: 'body' } );
 		profileView = new ProfileView({el:"#container"});
+		viewUserProfile = new ViewUserProfile({el:"#container"});
 		imageEditorView = new ImageEditorView( { el: 'body' } );
 
 
