@@ -592,6 +592,12 @@ h3.edit-profile {
     font-weight: normal;
     font-size: 1em;	
 }
+.form-group.view-profile {
+	color: #989898;
+	font-family: 'Josefin Sans', sans-serif;
+    font-weight: normal;
+    font-size: 16px;	
+}
 .container.edit-profile {
 	border: 1px solid #d5445c;
 	margin-top: 30px;
@@ -604,6 +610,11 @@ hr.edit-profile {
 .col-md-8.edit-profile {
 	text-align: center;
 	margin-top: 10px;
+}
+.col-md-8.view-profile {
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 100px;
 }
 .avatar.img-thumbnail.edit-profile {
 	padding: 0px;
