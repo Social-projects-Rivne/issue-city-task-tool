@@ -1,4 +1,4 @@
-package edu.com.softserveinc.bawl.services;
+package edu.com.softserveinc.bawl.services.impl;
 
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
@@ -11,9 +11,11 @@ import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.services.MailService;
+import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +26,13 @@ import org.apache.log4j.Logger;
 /**
  * Created by Illia on 9/25/2015.
  */
-public class MandrillMailService {
+
+public class MandrillMailServiceImpl implements MailService {
 
     /**
      *  Logger field
      */
-    public static final Logger LOG=Logger.getLogger(MandrillMailService.class);
+    public static final Logger LOG=Logger.getLogger(MandrillMailServiceImpl.class);
 
     private final static String rootUrl = "http://localhost:8080/Bawl/";
     private final static String MAIN_URL = rootUrl + "#email-confirm/";
@@ -42,10 +45,13 @@ public class MandrillMailService {
     private static ObjectMapper mapper = new ObjectMapper();
     private static Properties props = new Properties();
 
-    private static MandrillMailService mailService = null;
+    private static MandrillMailServiceImpl mailService = null;
+
+    @Autowired
+    private UserService userService;
 
 
-    public static void initialize() {
+    private static void initialize() {
 
         config.setApiKey(API_KEY);
         config.setApiVersion("1.0");
@@ -57,19 +63,16 @@ public class MandrillMailService {
         request.setHttpClient(client);
     }
 
-    public static MandrillMailService getMandrillMail(){
+    public static MandrillMailServiceImpl getMandrillMail(){
         if (mailService == null){
 
-            mailService = new MandrillMailService();
+            mailService = new MandrillMailServiceImpl();
             initialize();
         }
         return mailService;
     }
 
 
-    public void before() {
-
-    }
 
     public void sendRegNotification(UserModel model){
         String html;
@@ -85,6 +88,8 @@ public class MandrillMailService {
         sendMessage(model.getEmail(), html);
 
     }
+
+
 
     private void sendMessage(String email, String html) {
         MandrillMessageRequest mmr = new MandrillMessageRequest();
@@ -106,5 +111,15 @@ public class MandrillMailService {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void notifyForIssue(int issueId, String msg) {
+
+    }
+
+    @Override
+    public void notifyUser(int userId, String msg) {
+        sendMessage(userService.getById(userId).getEmail(), msg);
     }
 }

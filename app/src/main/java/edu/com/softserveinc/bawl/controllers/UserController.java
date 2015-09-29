@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 //import java.util.logging.Logger;
 
-import edu.com.softserveinc.bawl.services.MandrillMailService;
+import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.com.softserveinc.bawl.models.UserModel;
-import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.UserService;
-
-import javax.persistence.Convert;
-import javax.persistence.Converter;
 
 import org.apache.log4j.Logger;
 
@@ -37,9 +33,6 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
-
-	@Autowired
-	private MailService mailService;
 
 	@RequestMapping("get-users")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -82,8 +75,7 @@ public class UserController {
 
 			message.put("message", "Successfully registered. Please confirm your email");
 			try {
-				MandrillMailService mailService = MandrillMailService.getMandrillMail();
-				mailService.sendRegNotification(dbModel);
+				MandrillMailServiceImpl.getMandrillMail().sendRegNotification(dbModel);
 			} catch(Exception ex){
 				message.put("message", "Something wrong with sending email");
 			}
@@ -102,10 +94,10 @@ public class UserController {
 
 		try {
 			service.editUser(user);
-			/*String role = user.getRole_id() == 1 ? "Admin" : "Manager";
-			mailService.notifyUser(user.getId(),
+			String role = getRoleName (user.getRole_id());
+			MandrillMailServiceImpl.getMandrillMail().notifyUser(user.getId(),
 					"Your account has been updated.\n\nCurrent login: "
-							+ user.getLogin() + "\nCurrent role: " + role);*/
+							+ user.getLogin() + "\nCurrent role: " + role);
 			message.put("message", "User was successfully edited");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occurred! User was not updated" + ex.toString());
@@ -139,8 +131,8 @@ public class UserController {
 			@PathVariable int id, Map<String, String> message) {
 
 		try {
-			mailService.notifyUser(id, "Your account has been terminated.");
 			service.deleteUser(id);
+			MandrillMailServiceImpl.getMandrillMail().notifyUser(id, "Your account has been terminated.");
 			message.put("message", "User was successfully deleted");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not deleted");
@@ -158,5 +150,19 @@ public class UserController {
 		else {
 			return service.getByLogin(currentUserLoginName);
 		}
+	}
+
+	@RequestMapping(value = "send-notification", method = RequestMethod.POST)
+
+	public @ResponseBody Map<String, String>  sendNotification(
+			@PathVariable int userId, @PathVariable String message) {
+
+		try {
+			MandrillMailServiceImpl.getMandrillMail().notifyUser(userId, message);
+		} catch (Exception ex) {
+			LOG.error(ex.getMessage());
+		}
+		return null;
+
 	}
 }
