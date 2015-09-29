@@ -1,11 +1,11 @@
- define([ 'underscore', 'backbone', 'model/UserModel','text!templates/UserRegistration.html', 'text!templates/NotificationTemplate.html' ],
-		 function(_, Backbone, UserModel, RegistrationTemplate, NotificationTemplate) {
+ define([ 'underscore', 'backbone', 'model/UserModel','text!templates/SendingNottification.html', 'text!templates/NotificationTemplate.html' ],
+		 function(_, Backbone, UserModel, RegistrationTemplate, SendingNottification) {
 
      var UserRegistrationView = Backbone.View.extend({
 
          template: _.template(RegistrationTemplate),
          model : null,
-         notificationTemplate: _.template(NotificationTemplate),
+         SendingNottification: _.template(SendingNottification),
                  
          initialize: function () {
              $('.signUp.modal').empty();
@@ -64,6 +64,6 @@
          }
 
      });
-        return UserRegistrationView ;
+        return SendingNottificationView ;
 });  
             
