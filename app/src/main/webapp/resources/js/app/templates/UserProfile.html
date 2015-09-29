@@ -1,4 +1,38 @@
-<div class="container edit-profile">
+<div class="row admin_template">
+    <!--left admin panel-->
+    <div id="left_admin_panel" class="col-lg-3">
+
+	    <div class="col-lg-6 admin-attachment">
+	    <!-- <div class="admin-avatar"> -->
+            <img src="<%= loginView.currentUser.get('avatar')%>" class="img-thumbnail admin-attachment" alt="attachment_1">
+        </div>
+        
+        <div class="col-lg-6 admin-name">
+            <b>
+            <label id="admin_name"><a href="#viewprofile" title="Click here to view your profile"><%= loginView.currentUser.get('name')%></a></label>
+            </b>
+            <br>
+            <br>
+            <br>
+            <p>
+            <button type="submit" class="btn btn-mini" id="admin_log_out">Log out</button>
+            </p>
+        </div>
+        <!--left panel menu-->
+
+        <div class="col-lg-12 admin">
+            <ul class="admin">
+                <li class="admin"><a class="admin" id="add-user" class="btn btn-primary">Add user</a></li> 
+            </ul>
+        </div>
+       </div>
+
+<div>
+ <div class="row"> 
+ 	<!-- users avatar -->
+ 	
+	<!-- view form column -->
+	<div class="container edit-profile">
      <h4 class="edit-profile">Edit Profile </h4>
 
     <hr class="edit-profile">
@@ -70,3 +104,5 @@ This
     </div>
 </div>
 <hr class="">
+ </div>
+</div>
