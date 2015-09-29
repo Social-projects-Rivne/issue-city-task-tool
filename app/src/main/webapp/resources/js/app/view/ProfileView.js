@@ -17,7 +17,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 				render: function(id) {
 					this.model = loginView.currentUser;
 					this.$el.html(this.userProfileTemplate(this.model.toJSON()));
-					console.log(this.model);
 				},
 			
 			});
