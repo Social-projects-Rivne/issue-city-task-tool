@@ -7,19 +7,24 @@ define([ 'underscore', 'backbone','view/AdminView',
 		routes : {
 			"" : "home",
 			"login" : "login",
+      
 			//routs for admin
+      
 			"admin" : "admin",
 			"admin/search/:name" : "search",
-			//manager's routs
+			
+      //manager's routs 
+      
 			"manager" : "manager",
-			//routs for map 
-			"cry-out" : "cryOut",
+			
+      //routs for map 
+			
+      "cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
 			"filter": "filter",
 			"profile":"profile",
 			"viewprofile":"viewprofile",
-
-			"user-reg": "userReg",
+      "user-reg": "userReg",
 			"email-confirm/*link" : "emailConfirm"
 		},
 		

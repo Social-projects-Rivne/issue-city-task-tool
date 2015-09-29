@@ -12,6 +12,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
                     				"<div class='btn-group'>" +
                     					"<button class='btn glyphicon glyphicon-pencil' id='"+ this.model.get("id") +"'></button>" +
                     					"<button class='btn glyphicon glyphicon-remove' id='"+ this.model.get("id") +"'></button>" +
+                              "<button class='btn glyphicon glyphicon-envelope' id='"+ this.model.get("id") +"'></button>" +                              
                     				"</div>" +
                     			"</div>" +
                     		"</td>");

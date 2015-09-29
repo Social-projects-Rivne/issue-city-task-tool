@@ -1,0 +1,55 @@
+    </style>
+    <div id="signUpBox" style="margin-top:150px;" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-2">
+        <div class="panel" style="border: 0px;">
+            <div class="panel-heading  navbar-default">
+                <div class="panel-title" style=" color: #fff !important;
+                                                        font-family: 'Josefin Sans', sans-serif;
+                                                        font-size: 1.2em;">Sign Up
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6">       
+                </div>
+
+                <form class="form-horizontal" id="signUpForm" method="" action="">
+
+					<!--Name-->
+					<div class="input-group" id="login">
+						<span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
+						<input name="name" id="reg_name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
+					</div>
+					
+					<!--Email-->
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
+						<input id="reg_email" type="emai" name="email"  class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
+					</div>
+
+		
+					<!--Button-->
+					<div style="margin-top:5px" class="form-group">
+						<div class="col-sm-12 controls btnCenter">
+							<button id="reg_submit" class="btn btn-success" type="submit">Sign Up</button>
+							<button id="reg_btn-close" class="btn btn-primary" type="button">Close</button>
+						</div>
+					</div>
+                </form>                
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+function ShowHidePassword(id) {
+    element = document.getElementById(id);
+        if (element.type == 'password') {
+            element.type = 'text'
+        element.parentNode.replaceChild(inp, element);
+    } else {
+        element.type = 'password'     
+    }
+} 
+</script>
+                
