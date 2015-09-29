@@ -22,8 +22,15 @@ import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.StatusService;
 
+import org.apache.log4j.Logger;
+
 @Controller
 public class IssueController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(IssueController.class);
 
 	@Autowired
 	private IssueService service;

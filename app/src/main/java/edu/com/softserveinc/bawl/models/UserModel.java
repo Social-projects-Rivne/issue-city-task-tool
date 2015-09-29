@@ -11,12 +11,20 @@ import javax.persistence.GeneratedValue;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import org.apache.log4j.Logger;
+
 //TODO:Add comments for annotation
 //TODO:Add more constructors
 
 @Entity
 @Table(name="users")
 public class UserModel {
+    
+    /**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(UserModel.class);
+
 	/**
 	 * User ID
 	 */

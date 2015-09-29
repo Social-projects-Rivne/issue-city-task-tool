@@ -10,9 +10,16 @@ import edu.com.softserveinc.bawl.dao.StatusDao;
 import edu.com.softserveinc.bawl.models.StatusModel;
 import edu.com.softserveinc.bawl.services.StatusService;
 
+import org.apache.log4j.Logger;
+
 @Service
 @Transactional
 public class StatusServiceImpl implements StatusService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger( StatusServiceImpl.class);
 	
 	@Autowired
 	private StatusDao statusDao; 

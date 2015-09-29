@@ -9,9 +9,16 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name = "problems")
 public class IssueModel {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(IssueModel.class);
 
 	@Id
 	@GeneratedValue

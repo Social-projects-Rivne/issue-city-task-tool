@@ -14,9 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 
+import org.apache.log4j.Logger;
+
 @Controller
 @RequestMapping("/subscriptions")
 public class SubscriptionController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(StatusController.class);
 
 	@Autowired
 	private SubscriptionService service;

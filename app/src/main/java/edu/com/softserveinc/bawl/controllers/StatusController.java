@@ -11,8 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.com.softserveinc.bawl.models.StatusModel;
 import edu.com.softserveinc.bawl.services.StatusService;
 
+import org.apache.log4j.Logger;
+
 @Controller
 public class StatusController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(StatusController.class);
 	
 	@Autowired
 	private StatusService service;

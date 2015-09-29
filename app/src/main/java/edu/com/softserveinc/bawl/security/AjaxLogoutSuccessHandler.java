@@ -10,10 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 @Component
 public class AjaxLogoutSuccessHandler extends
 		AbstractAuthenticationTargetUrlRequestHandler implements
 		LogoutSuccessHandler {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(AjaxLogoutSuccessHandler.class);
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request,

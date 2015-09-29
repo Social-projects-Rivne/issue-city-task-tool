@@ -19,8 +19,15 @@ import edu.com.softserveinc.bawl.services.CommentService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.StatusService;
 
+import org.apache.log4j.Logger;
+
 @Controller
 public class StatisticController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(StatisticController.class);
 	
 	@Autowired
 	private IssueService issueService;

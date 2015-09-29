@@ -16,10 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.softserveinc.bawl.dao.UserDao;
 import edu.com.softserveinc.bawl.models.UserModel;
+
+import org.apache.log4j.Logger;
  
 @Transactional(readOnly = true)
 @Service
 public class BawlUserDetailsService implements UserDetailsService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(BawlUserDetailsService.class);
 	
 	@Autowired
 	private UserDao userDao;

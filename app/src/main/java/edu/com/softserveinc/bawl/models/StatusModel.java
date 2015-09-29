@@ -8,9 +8,17 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name = "statuses")
 public class StatusModel {
+	
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(StatusModel.class);
+
 	@Id
 	@GeneratedValue
 	@Column(unique=true, name = "id")

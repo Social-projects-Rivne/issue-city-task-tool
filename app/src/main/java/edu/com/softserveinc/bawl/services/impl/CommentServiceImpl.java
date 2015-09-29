@@ -10,9 +10,16 @@ import edu.com.softserveinc.bawl.dao.CommentDao;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.CommentService;
 
+import org.apache.log4j.Logger;
+
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(CommentServiceImpl.class);
 	
 	@Autowired
     private CommentDao commentDao;

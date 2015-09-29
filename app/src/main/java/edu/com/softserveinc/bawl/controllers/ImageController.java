@@ -15,8 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.apache.log4j.Logger;
+
 @Controller
 public class ImageController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(ImageController.class);
 	
 	@RequestMapping(value = "crop-image", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> crop(@RequestBody Map<String, String> request) {

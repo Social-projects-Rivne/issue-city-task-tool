@@ -6,10 +6,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 
 @Entity
 @Table(name="comments")
 public class CommentModel {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(CommentModel.class);
 
 	@Id
 	@GeneratedValue

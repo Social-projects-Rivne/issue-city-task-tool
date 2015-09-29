@@ -10,9 +10,16 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name = "subscriptions", uniqueConstraints=@UniqueConstraint(columnNames={"issueId", "email"}))
 public class SubscriptionModel {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(SubscriptionModel.class);
 	
 	@Id
 	@GeneratedValue

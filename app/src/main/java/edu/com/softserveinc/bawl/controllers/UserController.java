@@ -2,7 +2,7 @@ package edu.com.softserveinc.bawl.controllers;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import edu.com.softserveinc.bawl.services.MandrillMailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,16 @@ import edu.com.softserveinc.bawl.services.UserService;
 import javax.persistence.Convert;
 import javax.persistence.Converter;
 
+import org.apache.log4j.Logger;
+
 @Controller
 public class UserController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(UserController.class);
+	
 	private final static int USER_NOT_CONFIRMED = -1;
 	private final static int USER = 0;
 

@@ -12,9 +12,16 @@ import edu.com.softserveinc.bawl.dao.UserDao;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.UserService;
 
+import org.apache.log4j.Logger;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
     private UserDao userDao;

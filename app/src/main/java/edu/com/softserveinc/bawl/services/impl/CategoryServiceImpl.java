@@ -10,9 +10,16 @@ import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.services.CategoryService;
 
+import org.apache.log4j.Logger;
+
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(CategoryServiceImpl.class);
 	
 	@Autowired
     private CategoryDao categoryDao;

@@ -10,9 +10,16 @@ import edu.com.softserveinc.bawl.dao.SubscriptionDao;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 
+import org.apache.log4j.Logger;
+
 @Service
 @Transactional
 public class SubscriptionServiceImpl implements SubscriptionService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(SubscriptionServiceImpl.class);
 
 	@Autowired
 	private SubscriptionDao dao;

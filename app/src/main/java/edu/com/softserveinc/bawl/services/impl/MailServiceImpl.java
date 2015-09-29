@@ -16,8 +16,15 @@ import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import edu.com.softserveinc.bawl.services.UserService;
 
+import org.apache.log4j.Logger;
+
 @Service
 public class MailServiceImpl implements MailService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(MailServiceImpl.class);
 
 	@Autowired private JavaMailSender mailSender;
 	

@@ -8,6 +8,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class for problem's category 
  * 
@@ -17,6 +19,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "categories")
 public class CategoryModel {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(CategoryModel.class);
 
 
 	//TODO: add annotation for connect this class to IssueModel

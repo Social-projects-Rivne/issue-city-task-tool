@@ -10,9 +10,16 @@ import edu.com.softserveinc.bawl.dao.IssueDao;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.services.IssueService;
 
+import org.apache.log4j.Logger;
+
 @Service
 @Transactional
 public class IssueServiceImpl implements IssueService {
+
+	/**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(IssueServiceImpl.class);
 
 	@Autowired
 	private IssueDao issueDao; 

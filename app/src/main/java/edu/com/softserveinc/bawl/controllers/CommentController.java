@@ -14,9 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.CommentService;
 
+import org.apache.log4j.Logger;
+
 
 @Controller
 public class CommentController {
+
+	/**
+	 * Logger field
+	 */
+	public static final Logger LOG=Logger.getLogger(CommentController.class);
 	
 	@Autowired
 	private CommentService service;

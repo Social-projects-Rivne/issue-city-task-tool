@@ -19,10 +19,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 /**
  * Created by Illia on 9/25/2015.
  */
 public class MandrillMailService {
+
+    /**
+     *  Logger field
+     */
+    public static final Logger LOG=Logger.getLogger(MandrillMailService.class);
 
     private final static String rootUrl = "http://localhost:8080/Bawl/";
     private final static String MAIN_URL = rootUrl + "#email-confirm/";
