@@ -35,10 +35,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void editUser(UserModel user) {
 		if (Arrays.asList("_", "", null).contains(user.getPassword())) {
-			user.setPassword(userDao.findOne(user.getId()).getPassword());
+			//user.setPassword(userDao.findOne(user.getId()).getPassword());
 		}
 		else 
-			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+			//user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
 		userDao.saveAndFlush(user);
 	}
