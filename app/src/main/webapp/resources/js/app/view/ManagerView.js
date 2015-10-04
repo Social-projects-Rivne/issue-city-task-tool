@@ -133,6 +133,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'delete issue' } ] } ));
 					$('#confirmationModal').modal();
+					return e;
 				},
 
 				viewOnMap: function(e){
