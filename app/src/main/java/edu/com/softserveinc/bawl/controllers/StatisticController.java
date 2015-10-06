@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.com.softserveinc.bawl.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.StatusModel;
-import edu.com.softserveinc.bawl.services.CategoryService;
-import edu.com.softserveinc.bawl.services.CommentService;
-import edu.com.softserveinc.bawl.services.IssueService;
-import edu.com.softserveinc.bawl.services.StatusService;
 
 import org.apache.log4j.Logger;
 
@@ -40,11 +37,14 @@ public class StatisticController {
 	
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private HistoryService historyService;
 	
 	@RequestMapping(value = "statistic-by-categories", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String, String>> statisticByCategory() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
-		List<IssueModel> issues = issueService.loadIsssueList();
+		List<IssueModel> issues = historyService.getLastUniqueIssues();
 		List<CategoryModel> categories = categoryService.loadCategoriesList();
 		
 		for (int i = 0, tmp; i < categories.size(); i++) {
@@ -67,7 +67,7 @@ public class StatisticController {
 	@RequestMapping(value = "statistic-by-statuses", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String, String>> statisticByStatus() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
-		List<IssueModel> issues = issueService.loadIsssueList();
+		List<IssueModel> issues = historyService.getLastUniqueIssues();
 		List<StatusModel> statuses = statusService.loadStatusList();
 		
 		for (int i = 0, tmp; i < statuses.size(); i++) {
@@ -90,7 +90,7 @@ public class StatisticController {
 	@RequestMapping(value = "statistic-by-comments", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String, String>> statisticByComments() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
-		List<IssueModel> issues = issueService.loadIsssueList();
+		List<IssueModel> issues = historyService.getLastUniqueIssues();
 		
 		for (int i = 0; i < issues.size(); i++) {
 			

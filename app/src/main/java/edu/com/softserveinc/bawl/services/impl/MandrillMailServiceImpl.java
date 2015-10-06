@@ -17,16 +17,19 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Illia on 9/25/2015.
  */
-
+@Service
 public class MandrillMailServiceImpl implements MailService {
 
     /**
@@ -34,7 +37,8 @@ public class MandrillMailServiceImpl implements MailService {
      */
     public static final Logger LOG=Logger.getLogger(MandrillMailServiceImpl.class);
 
-    private final static String rootUrl = "http://localhost:8080/Bawl/";
+
+    private final static String rootUrl = "http://localhost:8080/";
     private final static String MAIN_URL = rootUrl + "#email-confirm/";
     private final static String API_KEY = "MJ7XduK_1GX6JxuNezXYjw";
 
@@ -50,8 +54,14 @@ public class MandrillMailServiceImpl implements MailService {
     @Autowired
     private UserService userService;
 
+    //TODO add this to get real url of application
+    /*
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }*/
 
-    private static void initialize() {
+
+    private static void initialize(){
 
         config.setApiKey(API_KEY);
         config.setApiVersion("1.0");

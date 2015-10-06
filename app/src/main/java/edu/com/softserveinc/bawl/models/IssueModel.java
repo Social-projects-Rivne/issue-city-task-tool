@@ -1,15 +1,12 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import org.apache.log4j.Logger;
+
 
 @Entity
 @Table(name = "problems")
@@ -47,9 +44,8 @@ public class IssueModel {
 	@NotNull
 	@Column(name = "priority_id")
 	private int priorityId;
-	
-	@NotNull
-	@Column(name = "status_id")
+
+	@Transient
 	private int statusId;
 
 	/**
@@ -96,7 +92,7 @@ public class IssueModel {
 	/**
 	 * Setup category id of problem
 	 * 
-	 * @param category_id
+	 * @param categoryId
 	 */
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
@@ -195,7 +191,7 @@ public class IssueModel {
 	
 	/**
 	 * Return statusId
-	 * 
+	 *
 	 * @return statusId
 	 */
 	public int getStatusId() {
@@ -204,7 +200,7 @@ public class IssueModel {
 
 	/**
 	 * Setup statusId
-	 * 
+	 *
 	 * @param statusId
 	 */
 	public void setStatusId(int statusId) {

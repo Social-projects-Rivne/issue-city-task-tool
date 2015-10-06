@@ -68,6 +68,33 @@ INSERT INTO `comments` VALUES (1,'It is true! ','bbb5b@vv.cz',1,'Max');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `history`
+--
+
+DROP TABLE IF EXISTS `history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `issue_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL,
+  `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `history` WRITE;
+/*!40000 ALTER TABLE `history` DISABLE KEYS */;
+INSERT INTO `history` VALUES (1,1,1,1, "2015-05-10");
+/*!40000 ALTER TABLE `history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `problems`
 --
 
@@ -82,7 +109,6 @@ CREATE TABLE `problems` (
   `mapPointer` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `priority_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,7 +119,7 @@ CREATE TABLE `problems` (
 
 LOCK TABLES `problems` WRITE;
 /*!40000 ALTER TABLE `problems` DISABLE KEYS */;
-INSERT INTO `problems` VALUES (1,'http://www.oda.cv.ua/sites/default/files/photos/svitlofor.jpg',1,'smth with trafic light','LatLng(50.61759, 26.26458)','Traffic light doesnt work',1,1);
+INSERT INTO `problems` VALUES (1,'http://www.oda.cv.ua/sites/default/files/photos/svitlofor.jpg',1,'smth with trafic light','LatLng(50.61759, 26.26458)','Traffic light doesnt work',1);
 /*!40000 ALTER TABLE `problems` ENABLE KEYS */;
 UNLOCK TABLES;
 
