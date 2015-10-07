@@ -129,7 +129,7 @@ public class HistoryServiceImpl implements HistoryService {
 
             issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
             issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
-            return new IssueModel();
+
         }
         return issueModel;
     }
