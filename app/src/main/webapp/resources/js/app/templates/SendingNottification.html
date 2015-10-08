@@ -1,46 +1,55 @@
-<div class="modal fade" id="NottificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Message</h4>
-      </div>
-        
-        <div class="panel-body">
-          <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6"></div>
-            <form id="submitForm" class="form-horizontal" role="form">
+    </style>
+    <div id="signUpBox" style="margin-top:150px;" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-2">
+        <div class="panel" style="border: 0px;">
+            <div class="panel-heading  navbar-default">
+                <div class="panel-title" style=" color: #fff !important;
+                                                        font-family: 'Josefin Sans', sans-serif;
+                                                        font-size: 1.2em;">Sign Up
+                </div>
+            </div>
 
-<fieldset>
+            <div class="panel-body">
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6">       
+                </div>
 
-<!-- Subject-->
-<div class="control-group">
-  <label class="control-label" for="passwordinput-0">Subject</label>
-  <div class="controls">
-    <input id="subject" name="subject" type="text" placeholder="Subject" class="input-xlarge form-control">
-  </div>
-</div>
+                <form class="form-horizontal" id="signUpForm" method="" action="">
 
-<!-- Message -->
-<div class="control-group">
-  <label class="control-label" for="textarea-0">Message</label>
-  <div class="controls">                     
-    <textarea class="form-control" id="message" placeholder="Message" name="message"></textarea>
-  </div>
-</div>
+					<!--Name-->
+					<div class="input-group" id="login">
+						<span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
+						<input name="name" id="reg_name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
+					</div>
+					
+					<!--Email-->
+					 <div class="input-group" id="login">
+						<span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
+						<input id="reg_email" type="emai" name="email"  class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
+					</div>
 
-<!-- Button -->
-<div class="control-group">
-  <label class="control-label" for="singlebutton-0"></label>
-  <div class="controls">
-    <button type="submit" class="btn btn-success">Button</button>
-  </div>
-</div>
+		
+					<!--Button-->
+					<div style="margin-top:5px" class="form-group">
+						<div class="col-sm-12 controls btnCenter">
+							<button id="reg_submit" class="btn btn-success" type="submit">Sign Up</button>
+							<button id="reg_btn-close" class="btn btn-primary" type="button">Close</button>
+						</div>
+					</div>
+                </form>                
+            </div>
+        </div>
+    </div>
 
-</fieldset>
-</form>
 
- </form>
- </div>
-</div>
-</div>
-</div>
+<script>
+
+function ShowHidePassword(id) {
+    element = document.getElementById(id);
+        if (element.type == 'password') {
+            element.type = 'text'
+        element.parentNode.replaceChild(inp, element);
+    } else {
+        element.type = 'password'     
+    }
+} 
+</script>
+                

@@ -76,10 +76,10 @@
 <script>
 
 function ShowHidePassword(id) {
-    var element = document.getElementById(id);
+    element = document.getElementById(id);
         if (element.type == 'password') {
             element.type = 'text'
-   //     element.parentNode.replaceChild(inp, element);
+        element.parentNode.replaceChild(inp, element);
     } else {
         element.type = 'password'     
     }

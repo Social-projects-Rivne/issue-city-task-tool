@@ -1,20 +1,24 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.models.UserModel;
-import edu.com.softserveinc.bawl.models.UserNotificationModel;
-import edu.com.softserveinc.bawl.services.UserService;
+import java.util.Collection;
+import java.util.Map;
+//import java.util.logging.Logger;
+
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collection;
-import java.util.Map;
+import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.services.UserService;
 
-//import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 @Controller
 public class UserController {
@@ -31,7 +35,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping("get-users")
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Collection<UserModel> getUsersAction() {
 		
 		Collection<UserModel> users = userService.loadUsersList();
@@ -43,12 +47,23 @@ public class UserController {
 
 	private String getRoleName(int role_id) {
 		switch (role_id) {
-			case 1: return "Admin";
-			case 2: return "Manager";
-			case 3: return "User";
-			default: return "Not confirmed";
+			case 1:
+				return "Admin";
+
+			case 2:
+				return "Manager";
+
+			case 3:
+				return "User";
+
+			default:
+				return "Not confirmed";
 		}
 	}
+
+
+	
+	
 	@RequestMapping(value = "user", method = RequestMethod.POST)
 
 	public @ResponseBody Map<String, String> addUserAction(
@@ -69,6 +84,8 @@ public class UserController {
 		}
 		return message;
 	}
+
+
 
 	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
 	//@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_ADMIN'")
@@ -105,6 +122,7 @@ public class UserController {
 			//message.put("message", "Some problem occurred! User was not validated" + ex.toString());
 		}
 		return null;
+
 	}
 
 	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
@@ -134,17 +152,15 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value="send-notification", method = RequestMethod.POST)
-	public @ResponseBody UserNotificationModel  submittedFromData(@RequestBody UserNotificationModel  userNotificationModel) {
-		System.out.println(userNotificationModel.getEmail() + " " +userNotificationModel.getSubject()+ " "+  userNotificationModel.getMessage());
-		//MandrillMailServiceImpl.getMandrillMail().notifyUser(userNotificationModel.getEmail(), userNotificationModel.getSubject(),userNotificationModel.getMessage() );
+	@RequestMapping(value = "send-notification", method = RequestMethod.POST)
+	public @ResponseBody Map<String, String>  sendNotification(
+			@PathVariable int userId, @PathVariable String message) {
+		try {
+			MandrillMailServiceImpl.getMandrillMail().notifyUser(userId, message);
+		} catch (Exception ex) {
+			LOG.error(ex.getMessage());
+		}
+		return null;
 
-		return userNotificationModel ;
 	}
 }
-
-
-
-
-
-

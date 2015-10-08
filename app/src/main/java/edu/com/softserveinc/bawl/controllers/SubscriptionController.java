@@ -52,6 +52,7 @@ public class SubscriptionController {
 			message.put("message",
 					"Some problem occured! New subscription was NOT added");
 		}
+
 		return message;
 	}
 
