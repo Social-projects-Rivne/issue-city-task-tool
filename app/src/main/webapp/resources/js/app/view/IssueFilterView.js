@@ -11,7 +11,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 					'click #filter': 'render',
 					'click #set-issue-filter': 'setFilter',
 					'click #reset-issue-filter': 'resetFilter'
-				},			
+				},
+
+
 					
 
 				initialize: function() {
@@ -45,6 +47,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 				},
 
 				setFilter: function(){
+
 					radioCategory = $("#issue-filter #category");
 					radioStatus = $("#issue-filter #status");
 					radioPriority = $("#issue-filter #priority");

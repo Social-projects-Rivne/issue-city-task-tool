@@ -41,8 +41,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 
 				login: function(){
 					that = this;
-					var login = $("#j_username").val();
-					var password = $(" #j_password").val();
+					var login = $("#username").val();
+					var password = $(" #password").val();
 					if(login != "" && password != ""){
 						//send user's login and password
 						$.ajax({

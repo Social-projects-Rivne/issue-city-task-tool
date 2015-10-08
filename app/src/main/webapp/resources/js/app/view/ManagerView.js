@@ -6,20 +6,20 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 			var ManagerView = Backbone.View.extend({
 				
 				events: {
-					'click #issue-filter  #filter-issue': 'issueFilter',
-					'click #issue-filter  #reset-filter-issue': 'resetFilter',
-					'change .category': 'quickChangeCategory',
-					'change .status': 'quickChangeStatus',
-					'click .table .btn.delete-issue': 'showRemoveConfirmation',
-					'click .confirm': 'confirm',
-					'click #add-category-link': 'showAddCategoryForm',
-					'click #add-category': 'addCategory',
-					'click .btn.view-on-map': 'viewOnMap',
-					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
-					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
-					'click .edit-issue'	: 'showEditIssueForm',
-					'click .editIssueConfirm' : 'editIssue',
-					'click #left_admin_panel #manager_log_out':'logOut'
+					'click #issue-filter  #filter-issue'			: 'issueFilter',
+					'click #issue-filter  #reset-filter-issue'		: 'resetFilter',
+					'change .category'								: 'quickChangeCategory',
+					'change .status'								: 'quickChangeStatus',
+					'click .table .btn.delete-issue'				: 'showRemoveConfirmation',
+					'click .confirm'								: 'confirm',
+					'click #add-category-link'						: 'showAddCategoryForm',
+					'click #add-category'							: 'addCategory',
+					'click .btn.view-on-map'						: 'viewOnMap',
+					'mouseenter .issue-table > tbody > tr  ' 		: 'issueFocus',
+					'mouseleave .issue-table > tbody > tr  '		: 'issueUnFocus',
+					'click .edit-issue'								: 'showEditIssueForm',
+					'click .editIssueConfirm' 						: 'editIssue',
+					'click #left_admin_panel #manager_log_out'		: 'logOut'
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -244,7 +244,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				quickChangeCategory: function(e) {
 					this.issue.set( {
 						id: e.currentTarget.id,
-						category: e.currentTarget.value,
+						category: e.currentTarget.value
 					} );
 					this.issue.save();
 				},
@@ -252,7 +252,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				quickChangeStatus: function(e) {
 					this.issue.set( {
 						id: e.currentTarget.id,
-						status: e.currentTarget.value,
+						status: e.currentTarget.value
 					} );
 					this.issue.save();
 				},
@@ -284,9 +284,11 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					//get issue from collection by ID for load fields in template
 					issue=this.issues.get(e.currentTarget.id);//+
 					console.log (issue.toJSON()); //+
-					
+
+					//for render
+					//this.$el.append(this.editIssueTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] });   // ?
 					this.$el.append(this.editIssueTemplate(issue.toJSON()));   // ?
-					
+
 					$('#editIssueModal').modal();
 					console.log ('--- --- data inserted from DB to fields ok'); //+
 					
@@ -340,7 +342,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if (this.value == 'Wrong name!') this.value ='';
 						this.style.color = 'black';
 					});
-					
+
 				},
 
 				logOut: function(){
@@ -355,8 +357,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 			editIssue: function(e) {
-					var isValid = true;
-					
+
+				var isValid = true;
 				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
