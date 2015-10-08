@@ -138,6 +138,7 @@ public class UserController {
 	public @ResponseBody UserNotificationModel  submittedFromData(@RequestBody UserNotificationModel  userNotificationModel) {
 		System.out.println(userNotificationModel.getEmail() + " " +userNotificationModel.getSubject()+ " "+  userNotificationModel.getMessage());
 		//MandrillMailServiceImpl.getMandrillMail().notifyUser(userNotificationModel.getEmail(), userNotificationModel.getSubject(),userNotificationModel.getMessage() );
+		MandrillMailServiceImpl.getMandrillMail().notifyByAdmin(userNotificationModel.getEmail(), userNotificationModel.getSubject(),userNotificationModel.getMessage() );
 
 		return userNotificationModel ;
 	}
