@@ -58,6 +58,11 @@ public class IssueServiceImpl implements IssueService {
 		saveToHistory(issueModel, userId);
 	}
 
+	@Override
+	public List<IssueModel> loadIssuesList() {
+		return issueDao.findAll();
+	}
+
 
 	private void saveToHistory(IssueModel problem,int userId){
 		HistoryModel historyModel = new HistoryModel();

@@ -15,6 +15,8 @@ public interface IssueService {
 	
 	public void deleteProblem(int issueId, int userId);
 
+	public List<IssueModel> loadIssuesList() ;
+
 	
 	
 }
