@@ -133,9 +133,6 @@ public class IssueController {
 			} catch (Exception ex) {
 				message.put("message", "Some problem occured! Issue was not added");
 			}
-
-		}	else if ( userId== 0){
-			message.put("message", "Please login first");
 		}
 
 		return message;
@@ -144,7 +141,7 @@ public class IssueController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody String editIssue(@RequestBody Map request) {
-
+		
 		String message = null;
 		
 		if(request.size() == 10) {
@@ -199,15 +196,12 @@ public class IssueController {
 					issue.setStatusId(statusId);
 					issueService.editProblem(issue, userId);
 					mailService.notifyForIssue(issueId, "Issue has been updated.");
-					message = "Issue has been updated";
 				}
-			} else if ( userId== 0){
-				message = "Please login first";
 			}
-
+			
 		}
 
-
+		
 		return message;
 	}
 	

@@ -5,5 +5,7 @@ public interface MailService {
 	public void notifyForIssue(int issueId, String msg);
 	
 	public void notifyUser(int userId, String msg);
+	public void notifyByAdmin(String email,String subject,String message );
+
 
 }

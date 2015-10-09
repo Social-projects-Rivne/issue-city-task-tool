@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.models.HistoryModel;
-import jdk.internal.dynalink.linker.LinkerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,9 +52,8 @@ public class IssueServiceImpl implements IssueService {
 		
 	@Override
 	public void deleteProblem(int issueId, int userId) {
-		IssueModel issueModel = issueDao.findOne(issueId);
-		issueModel.setStatusId (STATUS_DELETED);
-		saveToHistory(issueModel, userId);
+		HistoryModel historyModel = new HistoryModel();
+		historyModel.setStatusId(STATUS_DELETED);
 	}
 
 	@Override

@@ -51,7 +51,7 @@ require([
 		
 		loginView = new LoginView({el:"body"});
 		userRegView = new UserRegistrationView( {el: "body"});
-
+		
 		issueFilterView = new IssueFilterView({el:"#container"});
 		
 		statisticView = new StatisticView( { el: 'body' } );

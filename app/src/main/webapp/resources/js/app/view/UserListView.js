@@ -1,17 +1,23 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueModel', 
-        'collection/UserCollection', 'view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html' ],
-		function($, _, Backbone, UserModel, IssueModel, UserCollection, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate) {
+        'collection/UserCollection','model/SendingNottificationModel','view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html','text!templates/SendingNottification.html' ],
+		function($, _, Backbone, UserModel, IssueModel, UserCollection, SendingNottificationModel, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate, SendingNottificationTemplate) {
 			
 			var that = null;
-	
+			function l (x) {
+				console.log(x);
+			}
+
 			var UserListView = Backbone.View.extend({
 				
 				initialize : function() {
 					this.model = new UserCollection();
+					this.SNmodel = new SendingNottificationModel();
+
 					this.model.fetch();
 					this.model.on('remove', this.render, this);
 					this.model.on('change', this.render, this);
 					that = this;
+			
 				},
 				
 				events: {
@@ -19,13 +25,50 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					'click .editFormConfirm': 'editConfirm',
 					'click .btn.glyphicon-remove': 'showRemoveConfirmation',
 					'click .confirm': 'confirm',
+					'click .btn.glyphicon-envelope': 'showSendingNottification',
+					'submit #submitForm': 'submitSendingNottification'
 				},
 				
 				template: _.template(AdminTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				editUserTemplate: _.template(EditUserTemplate),
-				
+				SendingNottificationTemplate: _.template(SendingNottificationTemplate),
+
+				submitSendingNottification: function(e){
+					 var that = this;
+            		 e.preventDefault();
+
+		             this.SNmodel = this.getModel();
+		             this.SNmodel.save( {}, {
+		                 success: function(SNmodel, response) {
+		                     if($('#notificationModal')) {
+		                         $('#notificationModal').remove();
+		                     }
+		                     $(".signUp.modal").modal("hide");
+		                     that.$el.append(that.notificationTemplate( { 'data': response } ));
+		                     $('#notificationModal').modal();
+		                 },
+		                 error: function() {
+		                     if($('#notificationModal')) {
+		                         $('#notificationModal').remove();
+		                     }
+		                     that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+		                     $('#notificationModal').modal();
+		                 }
+		             } );
+		             return false;
+				},
+
+ 			getModel: function(){
+				var userId = $('#NottificationModal').data('userId');
+	    		var model = this.model.get(userId);
+	    		var email = model.get('email');
+	    		l(email);
+	    		var sendAttrs = $.extend({email: email}, $("#submitForm").serializeJSON());
+	    		l(sendAttrs);
+             	return new SendingNottificationModel(sendAttrs);
+         },
 				render: function() {
 					this.$el.html(this.template);
 					this.model.each(function(user) {
@@ -83,6 +126,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				},
 				
 				editConfirm: function(e) {
+					console.log()
 					var isValid = true;
 					console.log('UserListView: editConfirm');
 					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(userName.val())) {
@@ -108,11 +152,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				},
 				
 				showRemoveConfirmation: function(e) {
-					if($('#confirmationModal')) $('#confirmationModal').remove();
-					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this user?' }, { 'id': e.currentTarget.id }, { 'action': 'delete user' } ] } ));
-					$('#confirmationModal').modal();
+				if($('#confirmationModal')) $('#confirmationModal').remove();
+				this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this user?' }, { 'id': e.currentTarget.id }, { 'action': 'delete user' } ] } ));
+				$('#confirmationModal').modal();
 				},
-				
+
+				showSendingNottification: function(e) {
+					var userId = e.currentTarget.id;
+
+					$('#NottificationModal').remove();
+
+					this.$el.append(this.SendingNottificationTemplate( { 
+						'data': [] 
+					}));
+					var $NottificationModal = $('#NottificationModal');
+					$NottificationModal.data('userId', userId);
+					$NottificationModal.modal();
+				},
+
 				confirm: function(e) {
 					$('#confirmationModal').modal('hide');
 					$('#editModal').modal('hide');
@@ -179,6 +236,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					
 				}
 			});	
-			
+
 			return UserListView;
-		})
+		});

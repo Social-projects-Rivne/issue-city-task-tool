@@ -9,22 +9,18 @@ import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by Illia on 9/25/2015.
@@ -99,8 +95,6 @@ public class MandrillMailServiceImpl implements MailService {
 
     }
 
-
-
     private void sendMessage(String email, String html) {
         MandrillMessageRequest mmr = new MandrillMessageRequest();
         MandrillHtmlMessage message = new MandrillHtmlMessage();
@@ -109,6 +103,28 @@ public class MandrillMailServiceImpl implements MailService {
         message.setFrom_name("Bawl Service");
         message.setHeaders(headers);
         message.setHtml(html);
+        MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Admin", email)};
+        message.setTo(recipients);
+        message.setTrack_clicks(true);
+        message.setTrack_opens(true);
+        mmr.setMessage(message);
+
+        try {
+            SendMessageResponse response = messagesRequest.sendMessage(mmr);
+        } catch (RequestFailedException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+    private void sendAdminMessage(String email,String subject,String Message) { // for notification from admin panel
+        MandrillMessageRequest mmr = new MandrillMessageRequest();
+        MandrillHtmlMessage message = new MandrillHtmlMessage();
+        Map<String, String> headers = new HashMap<String, String>();
+        message.setFrom_email("bawlapp@ukr.net");
+        message.setFrom_name("Bawl Service");
+        message.setHeaders(headers);
+        message.setSubject(subject);
+        message.setHtml(Message);
         MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Admin", email)};
         message.setTo(recipients);
         message.setTrack_clicks(true);
@@ -132,4 +148,9 @@ public class MandrillMailServiceImpl implements MailService {
     public void notifyUser(int userId, String msg) {
         sendMessage(userService.getById(userId).getEmail(), msg);
     }
+    @Override
+    public void notifyByAdmin(String email,String subject,String Message ) {
+        sendAdminMessage(email, subject, Message);
+    }
+
 }
