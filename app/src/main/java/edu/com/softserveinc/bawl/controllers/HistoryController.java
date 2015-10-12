@@ -1,8 +1,11 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.dto.UserHistoryDto;
+import edu.com.softserveinc.bawl.dto.IssueHistoryDto;
+import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDto;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
@@ -79,5 +82,41 @@ public class HistoryController {
                 .getName());
         return userHistoryDto;
     }
+
+    @RequestMapping(value = "user/{id}/history", method = RequestMethod.GET)
+    public @ResponseBody List<UserIssuesHistoryDto> getUserIssuesHistories(@PathVariable int id){
+        List<UserIssuesHistoryDto> list = new ArrayList<UserIssuesHistoryDto>();
+
+        List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
+
+        List<IssueModel> issues = issueService.loadIssuesList();
+
+        for ( HistoryModel historyModel : listOfHistoriesByUserID){
+            for(IssueModel issueModel : issues){
+                if(issueModel.getId()==historyModel.getIssueId())
+                {
+                    UserIssuesHistoryDto uihdto = new UserIssuesHistoryDto();
+                    uihdto.setIssueName(issueModel.getName());
+
+                    IssueHistoryDto ihdto= new IssueHistoryDto();
+                    ihdto.setDate(historyModel.getDate());
+                    UserModel um =userService.getById(historyModel.getUserId());
+                    ihdto.setChangedByUser(um.getName());
+                    ihdto.setStatus(historyModel.getStatusId());
+
+                    uihdto.setIssueHistoryDto(ihdto);
+
+                    uihdto.setCurrentStatus(issueModel.getStatusId());
+
+                    list.add(uihdto);
+                }
+
+            }
+
+        }
+
+        return list;
+    }
+
 
 }
