@@ -11,7 +11,8 @@ import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.services.CategoryService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration//(locations={"CategoryServiceTest-context.xml"})
+@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"
+		,"classpath:test-root-context.xml"})
 public class CategoryServiceTest {
 
 @Autowired
