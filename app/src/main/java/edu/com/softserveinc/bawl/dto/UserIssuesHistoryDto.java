@@ -1,8 +1,5 @@
 package edu.com.softserveinc.bawl.dto;
 
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by lubko on 09.10.15.
  */

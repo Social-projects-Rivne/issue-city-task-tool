@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.models.UserModel;
-import edu.com.softserveinc.bawl.models.UserNotificationModel;
+import edu.com.softserveinc.bawl.dto.UserNotificationDto;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.apache.log4j.Logger;
@@ -134,13 +134,16 @@ public class UserController {
 		}
 	}
 
+	 /* This metod send notification to email from #admin panel */
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
-	public @ResponseBody UserNotificationModel  submittedFromData(@RequestBody UserNotificationModel  userNotificationModel) {
-		System.out.println(userNotificationModel.getEmail() + " " +userNotificationModel.getSubject()+ " "+  userNotificationModel.getMessage());
-		//MandrillMailServiceImpl.getMandrillMail().notifyUser(userNotificationModel.getEmail(), userNotificationModel.getSubject(),userNotificationModel.getMessage() );
-		MandrillMailServiceImpl.getMandrillMail().notifyByAdmin(userNotificationModel.getEmail(), userNotificationModel.getSubject(),userNotificationModel.getMessage() );
-
-		return userNotificationModel ;
+	public @ResponseBody
+	Map<String, String> submittedFromData(@RequestBody UserNotificationDto userNotificationModel, Map<String, String> message) {
+		try { MandrillMailServiceImpl.getMandrillMail().notifyByAdmin(userNotificationModel.getEmail(),
+				userNotificationModel.getSubject(),userNotificationModel.getMessage() );
+			  message.put("message", "Message was successfully sended");
+		}catch (Exception ex) { message.put("message", "Some problem occured! Message was not sended");
+			}
+		return message ;
 	}
 }
 

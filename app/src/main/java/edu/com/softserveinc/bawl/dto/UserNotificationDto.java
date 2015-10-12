@@ -1,10 +1,10 @@
-package edu.com.softserveinc.bawl.models;
+package edu.com.softserveinc.bawl.dto;
 
 import java.io.Serializable;
 /**
  * Created by Oleg on 08.10.2015.
  */
-public class UserNotificationModel implements Serializable {
+public class UserNotificationDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
