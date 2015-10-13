@@ -1,27 +1,20 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import java.util.List;
-import java.util.Map;
-
-import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.StatusModel;
 import edu.com.softserveinc.bawl.services.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.StatusModel;
-
-import org.apache.log4j.Logger;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class IssueController {
@@ -92,7 +85,6 @@ public class IssueController {
 			int statusId = 0;
 			//int categoryId = categories.stream().filter(c -> c.getName() == category).findFirst().get().getId();
 			//int statusId = categories.stream().filter(c -> c.getName() == category).findFirst().get().getId();
-
 
 			for (int i = 0; i < categories.size(); i++) {
 				categoryModel = categories.get(i);

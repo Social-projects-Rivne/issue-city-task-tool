@@ -1,0 +1,65 @@
+package edu.com.softserveinc.bawl.dto;
+
+import edu.com.softserveinc.bawl.dto.comparators.UserHistoryDtoComparator;
+import edu.com.softserveinc.bawl.models.HistoryModel;
+import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.services.UserService;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Created by Oleg on 13.10.2015.
+ */
+public class DTOMapper {
+    public static UserIssuesHistoryDto getUserIssuesHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService) {
+        UserIssuesHistoryDto uihdto = new UserIssuesHistoryDto();
+        uihdto.setIssueName(issueModel.getName());
+
+        IssueHistoryDto ihdto= new IssueHistoryDto();
+        ihdto.setDate(historyModel.getDate());
+        UserModel um =userService.getById(historyModel.getUserId());
+        ihdto.setChangedByUser(um.getName());
+        ihdto.setStatus(historyModel.getStatusId());
+
+        uihdto.setIssueHistoryDto(ihdto);
+
+        uihdto.setCurrentStatus(issueModel.getStatusId());
+        return uihdto;
+    }
+
+    public static UserHistoryDto getUserHistoyDto(HistoryModel historyModel, IssueModel issueModel, UserService userService ){
+        UserHistoryDto userHistoryDto = new UserHistoryDto();
+        userHistoryDto.setStatusId(historyModel.getStatusId());
+        userHistoryDto.setDate(historyModel.getDate());
+        userHistoryDto.setIssueName(issueModel.getName());
+        String roleName = userService
+                .getById(historyModel.getUserId())
+                .getRole_id() == 0 ? "User" : "Manager";
+        userHistoryDto.setRoleName(roleName);
+        userHistoryDto.setUsername(userService
+                .getById(historyModel.getUserId())
+                .getName());
+        return userHistoryDto;
+    }
+
+    public static List<UserHistoryDto> getUserHistoryDtos(List<HistoryModel> histories, List<IssueModel> allIssues, UserService userService) {
+        List<UserHistoryDto> historyDtoList = new ArrayList<UserHistoryDto>();
+        //join 2 tables on IssueId
+        for(HistoryModel historyModel : histories){
+            for(IssueModel issueModel : allIssues){
+                if (issueModel.getId() == historyModel.getIssueId()){
+                    UserHistoryDto userHistoryDto = getUserHistoyDto(historyModel, issueModel, userService);
+                    historyDtoList.add(userHistoryDto);
+
+                }
+            }
+        }
+
+
+        Collections.sort(historyDtoList, new UserHistoryDtoComparator());
+        return historyDtoList;
+    }
+}

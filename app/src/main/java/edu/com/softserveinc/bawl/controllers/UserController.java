@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.dto.UserNotificationDto;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.apache.log4j.Logger;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Random;
 
 //import java.util.logging.Logger;
 

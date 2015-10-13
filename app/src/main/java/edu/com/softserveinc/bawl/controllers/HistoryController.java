@@ -1,11 +1,10 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import edu.com.softserveinc.bawl.dto.DTOMapper;
 import edu.com.softserveinc.bawl.dto.UserHistoryDto;
-import edu.com.softserveinc.bawl.dto.IssueHistoryDto;
 import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDto;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -44,43 +42,12 @@ public class HistoryController {
     public @ResponseBody List<UserHistoryDto> getUserHistoryAction(
             @PathVariable int id ) {
 
-        List<UserHistoryDto> historyDtoList = new ArrayList<UserHistoryDto>();
+
         List<HistoryModel> histories = historyService.getHistoriesByIssueID(id);
         List<IssueModel> allIssues = issueService.loadIssuesList();
 
-        //join 2 tables on IssueId
-        for(HistoryModel historyModel : histories){
-            for(IssueModel issueModel : allIssues){
-                if (issueModel.getId() == historyModel.getIssueId()){
-                    UserHistoryDto userHistoryDto = getUserHistoyDto(historyModel, issueModel);
-                    historyDtoList.add(userHistoryDto);
-
-                }
-            }
-        }
-
-        historyDtoList.sort(new Comparator<UserHistoryDto>() {
-            @Override
-            public int compare(UserHistoryDto historyDto1, UserHistoryDto historyDto12) {
-                return historyDto1.getDate().compareTo(historyDto12.getDate());
-            }
-        });
+        List<UserHistoryDto> historyDtoList = DTOMapper.getUserHistoryDtos(histories, allIssues, userService);
         return historyDtoList;
-    }
-
-    private UserHistoryDto getUserHistoyDto(HistoryModel historyModel, IssueModel issueModel ){
-        UserHistoryDto userHistoryDto = new UserHistoryDto();
-        userHistoryDto.setStatusId(historyModel.getStatusId());
-        userHistoryDto.setDate(historyModel.getDate());
-        userHistoryDto.setIssueName(issueModel.getName());
-        String roleName = userService
-                .getById(historyModel.getUserId())
-                .getRole_id() == 0 ? "User" : "Manager";
-        userHistoryDto.setRoleName(roleName);
-        userHistoryDto.setUsername(userService
-                .getById(historyModel.getUserId())
-                .getName());
-        return userHistoryDto;
     }
 
     @RequestMapping(value = "user/{id}/history", method = RequestMethod.GET)
@@ -95,18 +62,7 @@ public class HistoryController {
             for(IssueModel issueModel : issues){
                 if(issueModel.getId()==historyModel.getIssueId())
                 {
-                    UserIssuesHistoryDto uihdto = new UserIssuesHistoryDto();
-                    uihdto.setIssueName(issueModel.getName());
-
-                    IssueHistoryDto ihdto= new IssueHistoryDto();
-                    ihdto.setDate(historyModel.getDate());
-                    UserModel um =userService.getById(historyModel.getUserId());
-                    ihdto.setChangedByUser(um.getName());
-                    ihdto.setStatus(historyModel.getStatusId());
-
-                    uihdto.setIssueHistoryDto(ihdto);
-
-                    uihdto.setCurrentStatus(issueModel.getStatusId());
+                    UserIssuesHistoryDto uihdto = DTOMapper.getUserIssuesHistoryDto(historyModel, issueModel, userService);
 
                     list.add(uihdto);
                 }
