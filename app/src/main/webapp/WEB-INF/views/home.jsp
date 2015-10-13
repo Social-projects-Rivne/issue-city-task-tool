@@ -69,6 +69,6 @@
 	<script>
  require(['main']);
  </script>
- <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+ <script src="<c:url value="/resources/js/lib/bootstrap.min.js" />"></script>
 </body>
 </html>
