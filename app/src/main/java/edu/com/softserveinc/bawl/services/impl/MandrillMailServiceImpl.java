@@ -116,6 +116,24 @@ public class MandrillMailServiceImpl implements MailService {
             System.out.println(e.getMessage());
         }
     }
+
+	public void sendPasswordToUser(UserModel model, String pass){
+
+            String html;
+
+            html = String.format("" +
+                    "<html>" +
+                    "<body>" +
+                    "<h3>Changed password </h3>" +
+                    "Now your password is " +
+                    pass +
+                    "</body>" +
+                    "</html>" /*, model.getName()*/);
+            sendMessage(model.getEmail(), html);
+
+
+    }
+
     private void sendAdminMessage(String email,String subject,String Message) { // for notification from admin panel
         MandrillMessageRequest mmr = new MandrillMessageRequest();
         MandrillHtmlMessage message = new MandrillHtmlMessage();

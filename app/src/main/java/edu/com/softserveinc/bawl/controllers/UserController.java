@@ -145,6 +145,44 @@ public class UserController {
 			}
 		return message ;
 	}
+
+	@RequestMapping(value="user/{id}/changepass", method = RequestMethod.GET)
+	public @ResponseBody String changeUserPassword(@PathVariable int id){
+		UserModel userModel=userService.getById(id);
+
+		String newPassword = generatePassword(1, 5);
+		userModel.setPassword(newPassword);
+
+		MandrillMailServiceImpl.getMandrillMail().sendPasswordToUser(userModel, newPassword);
+
+		String massege="Your pass have been changed ! Watch about it on your mail ! 'pass'="+newPassword;//later it will be whithout password
+
+		userService.editUser(userModel);
+
+		return massege;
+	}
+
+	private String generatePassword (int from, int to){
+
+		String pass  = "";
+		Random r     = new Random();
+		int cntchars = from + r.nextInt(to - from + 1);
+
+		for (int i = 0; i < cntchars; ++i) {
+			char next = 0;
+			int range = 10;
+
+			switch(r.nextInt(3)) {
+				case 0: {next = '0'; range = 10;} break;
+				case 1: {next = 'a'; range = 26;} break;
+				case 2: {next = 'A'; range = 26;} break;
+			}
+
+			pass += (char)((r.nextInt(range)) + next);
+		}
+
+		return pass;
+	}
 }
 
 
