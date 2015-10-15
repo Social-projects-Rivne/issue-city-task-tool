@@ -15,19 +15,19 @@ import java.util.List;
  */
 public class DTOMapper {
     public static UserIssuesHistoryDto getUserIssuesHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService) {
-        UserIssuesHistoryDto uihdto = new UserIssuesHistoryDto();
-        uihdto.setIssueName(issueModel.getName());
+        UserIssuesHistoryDto userIssuesHistoryDto = new UserIssuesHistoryDto();
+        userIssuesHistoryDto.setIssueName(issueModel.getName());
 
-        IssueHistoryDto ihdto= new IssueHistoryDto();
-        ihdto.setDate(historyModel.getDate());
+        IssueHistoryDto issueHistoryDtodto = new IssueHistoryDto();
+        issueHistoryDtodto.setDate(historyModel.getDate());
         UserModel um =userService.getById(historyModel.getUserId());
-        ihdto.setChangedByUser(um.getName());
-        ihdto.setStatus(historyModel.getStatusId());
+        issueHistoryDtodto.setChangedByUser(um.getName());
+        issueHistoryDtodto.setStatus(historyModel.getStatusId());
 
-        uihdto.setIssueHistoryDto(ihdto);
+        userIssuesHistoryDto.setIssueHistoryDto(issueHistoryDtodto);
 
-        uihdto.setCurrentStatus(issueModel.getStatusId());
-        return uihdto;
+        userIssuesHistoryDto.setCurrentStatus(issueModel.getStatusId());
+        return userIssuesHistoryDto;
     }
 
     public static UserHistoryDto getUserHistoyDto(HistoryModel historyModel, IssueModel issueModel, UserService userService ){
