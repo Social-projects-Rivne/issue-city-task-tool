@@ -53,11 +53,20 @@ public class IssueController {
 	}
 
 
-	//@PreAuthorize("hasRole('ROLE_MANAGER')")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@RequestMapping(value = "issue/all", method = RequestMethod.GET)
 	public @ResponseBody List<IssueDto> getAllIssues(){
 
-		List<IssueDto> listIssueDto = DTOMapper.getAllIssuesDto(issueService.loadIssuesList());
+		List<IssueModel> listIssueModel= issueService.loadIssuesList();
+
+		for (IssueModel issueModel : listIssueModel){
+
+			if(issueModel.getStatusId() == 5){
+				listIssueModel.remove(issueModel);
+			}
+		}
+
+		List<IssueDto> listIssueDto = DTOMapper.getAllIssuesDto(listIssueModel);
 
 		return listIssueDto;
 	}
