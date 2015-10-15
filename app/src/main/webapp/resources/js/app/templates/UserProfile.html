@@ -9,7 +9,7 @@
         
         <div class="col-lg-6 admin-name">
             <b>
-            <label id="admin_name"><a href="#viewprofile" title="Click here to view your profile"><%= loginView.currentUser.get('name')%></a></label>
+            <label id="admin_name"><a ><%= loginView.currentUser.get('name')%></a></label>
             </b>
             <br>
             <br>
@@ -22,7 +22,7 @@
 
         <div class="col-lg-12 admin">
             <ul class="admin">
-                <li class="admin"><a class="admin" id="add-user" class="btn btn-primary">Add user</a></li> 
+                <li class="admin"><a class="admin" href="#viewprofile" title="Click here to view your profile">My Profile</a></li>
             </ul>
         </div>
        </div>

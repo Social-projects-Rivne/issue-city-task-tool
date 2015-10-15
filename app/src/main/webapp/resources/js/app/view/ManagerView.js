@@ -19,7 +19,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
-					'click #left_admin_panel #manager_log_out':'logOut'
+					'click #left_admin_panel #manager_log_out':'logOut',
+					'click #all_issues': 'allIssues'
 				},
 				
 				managerTemplate: _.template(ManagerTemplate),
@@ -276,7 +277,19 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				showAddCategoryForm: function(e) {
 					e.preventDefault();
 				},
-				
+
+				allIssues: function (e) {
+					this.$("#issue-table-body").empty();
+					that = this;
+					this.issues.each( function(issue){
+						that.$("#issue-table-body").append(that.$("#issue-table-body").
+								append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }))
+						);
+					});
+					this.$("#issue-table-body").find('select').hide();
+
+				},
+
 				showEditIssueForm: function(e){
 					// remove existing modal
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
