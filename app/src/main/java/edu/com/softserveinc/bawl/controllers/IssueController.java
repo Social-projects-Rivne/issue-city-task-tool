@@ -158,24 +158,29 @@ public class IssueController {
 					CategoryModel categoryModel = null;
 					int categoryId = 0;
 					int issueId = Integer.parseInt(request.get("id").toString());
-					IssueModel issue = historyService.getLastIssueByIssueID(issueId);
+					List<IssueModel> issueModel = issueService.loadIssuesList();
+					for (IssueModel issueModelWithID : issueModel) {
+						if (issueId == issueModelWithID.getId()) {
+							IssueModel issue = issueModelWithID;
 
-					for (int i = 0; i < categories.size(); i++) {
-						categoryModel = categories.get(i);
-						if (category.equals(categoryModel.getName())) {
-							categoryId = categoryModel.getId();
-							break;
+							for (int i = 0; i < categories.size(); i++) {
+								categoryModel = categories.get(i);
+								if (category.equals(categoryModel.getName())) {
+									categoryId = categoryModel.getId();
+									break;
+								}
+							}
+
+							if (categoryId == 0) {
+								categoryService.addCategory(new CategoryModel(category));
+								categoryId = categoryService.getCategoryByName(category).getId();
+							}
+
+							issue.setCategoryId(categoryId);
+							issueService.editProblem(issue, userId);
+							mailService.notifyForIssue(issueId, "Issue has been updated.");
 						}
 					}
-
-					if (categoryId == 0) {
-						categoryService.addCategory(new CategoryModel(category));
-						categoryId = categoryService.getCategoryByName(category).getId();
-					}
-
-					issue.setCategoryId(categoryId);
-					issueService.editProblem(issue, userId);
-					mailService.notifyForIssue(issueId, "Issue has been updated.");
 				}
 
 				if (request.get("status") != "") {
@@ -184,29 +189,32 @@ public class IssueController {
 					StatusModel statusModel = null;
 					int statusId = 0;
 					int issueId = Integer.parseInt(request.get("id").toString());
-					IssueModel issue = historyService.getLastIssueByIssueID(issueId);
+					List<IssueModel> issueModel = issueService.loadIssuesList();
+					for (IssueModel issueModelWithID : issueModel) {
+						if (issueId == issueModelWithID.getId()) {
+							IssueModel issue = issueModelWithID;
 
-					for (int i = 0; i < statuses.size(); i++) {
-						statusModel = statuses.get(i);
-						if (status.equals(statusModel.getName())) {
-							statusId = statusModel.getId();
-							break;
+							for (int i = 0; i < statuses.size(); i++) {
+								statusModel = statuses.get(i);
+								if (status.equals(statusModel.getName())) {
+									statusId = statusModel.getId();
+									break;
+								}
+							}
+
+							if (!request.get("attachments").toString().equals(""))
+								issue.setAttachments(request.get("attachments").toString());
+							if (!request.get("description").toString().equals(""))
+								issue.setDescription(request.get("description").toString());
+
+							issue.setStatusId(statusId);
+							issueService.editProblem(issue, userId);
+							mailService.notifyForIssue(issueId, "Issue has been updated.");
 						}
 					}
-					if (!request.get("attachments").toString().equals(""))
-						issue.setAttachments(request.get("attachments").toString());
-					if (!request.get("description").toString().equals(""))
-						issue.setDescription(request.get("description").toString());
-
-					issue.setStatusId(statusId);
-					issueService.editProblem(issue, userId);
-					mailService.notifyForIssue(issueId, "Issue has been updated.");
 				}
 			}
-			
 		}
-
-		
 		return message;
 	}
 	
