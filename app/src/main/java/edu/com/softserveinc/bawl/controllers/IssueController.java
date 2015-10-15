@@ -1,5 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import edu.com.softserveinc.bawl.dto.DTOMapper;
+import edu.com.softserveinc.bawl.dto.IssueDto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.StatusModel;
@@ -13,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +50,16 @@ public class IssueController {
 	public @ResponseBody IssueModel getIssue(@PathVariable("id") int issueId) {
 		IssueModel issues = historyService.getLastIssueByIssueID(issueId);
 		return issues;
+	}
+
+
+	//@PreAuthorize("hasRole('ROLE_MANAGER')")
+	@RequestMapping(value = "issue/all", method = RequestMethod.GET)
+	public @ResponseBody List<IssueDto> getAllIssues(){
+
+		List<IssueDto> listIssueDto = DTOMapper.getAllIssuesDto(issueService.loadIssuesList());
+
+		return listIssueDto;
 	}
 
 	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)

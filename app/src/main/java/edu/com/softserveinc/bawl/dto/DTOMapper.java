@@ -62,4 +62,24 @@ public class DTOMapper {
         Collections.sort(historyDtoList, new UserHistoryDtoComparator());
         return historyDtoList;
     }
+
+    public static List<IssueDto> getAllIssuesDto(List<IssueModel> allIssues){
+
+        List<IssueDto> listIssueDto =new ArrayList<IssueDto>();
+
+        for(IssueModel issueModel :  allIssues){
+            IssueDto issueDto = new IssueDto();
+
+            issueDto.setName(issueModel.getName());
+            issueDto.setDescription(issueModel.getDescription());
+            issueDto.setAttachments(issueModel.getAttachments());
+            issueDto.setMapPointer(issueModel.getMapPointer());
+            issueDto.setCategoryId(issueModel.getCategoryId());
+            issueDto.setPriorityId(issueModel.getPriorityId());
+            issueDto.setStatusId(issueModel.getStatusId());
+
+            listIssueDto.add(issueDto);
+        }
+        return listIssueDto;
+    }
 }
