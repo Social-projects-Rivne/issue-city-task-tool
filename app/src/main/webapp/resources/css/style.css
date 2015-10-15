@@ -563,14 +563,10 @@ ul.manager {
 /* USER PROFILE */
 h4.edit-profile {
 	text-align: left;
-	color: #fff;
+	color: #d5445c;
 	margin: 0px;
 	padding: 10px;
-	background: -moz-linear-gradient(to right, #d5445c, #ea556f);
-    background: -ms-linear-gradient(to right, #d5445c, #ea556f);
-    background: -o-linear-gradient(to right, #d5445c, #ea556f);
-    background: -webkit-linear-gradient(to right, #d5445c, #ea556f);
-    background: linear-gradient(to right, #d5445c, #ea556f);
+	
 }
 h6.edit-profile {
     font-family: 'Josefin Sans', sans-serif;
@@ -599,6 +595,8 @@ h3.edit-profile {
     font-size: 16px;	
 }
 .container.edit-profile {
+	position:relative;
+	left:12%;
 	margin-top: 30px;
 	width: 50%;
 	padding-right: 0px;
@@ -749,7 +747,7 @@ a.forgot {
 }
 .row {
     margin-left: 0 !important;
-    margin-right: 0 !important;
+    margin-right: 0 !importan
 }
 /*styles for login template*/
 

@@ -10,6 +10,8 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.v
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,18 +21,20 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader=WebContextLoader.class)
+@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"
+,"classpath:test-root-context.xml"})
 public class HomeControllerTest {
 
-	@Autowired
-	private WebApplicationContext wac;
-	
 	private MockMvc mockMvc;
+
+	@Mock
+	private HomeController mockHomeController;
 
 	@Before
 	public void setup() {
-		mockMvc = MockMvcBuilders.webApplicationContextSetup(this.wac).build();
-//		mockMvc = MockMvcBuilders.standaloneSetup(HomeController.class).build();
+//		mockMvc = MockMvcBuilders.webApplicationContextSetup(this.wa99c).build();
+		MockitoAnnotations.initMocks(this);
+		mockMvc = MockMvcBuilders.standaloneSetup(new HomeController()).build();
 	}
 
 	@Test

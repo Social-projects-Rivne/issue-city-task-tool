@@ -11,7 +11,7 @@
 	<tx:annotation-driven />
 	
 	<beans:import resource="test-data-context.xml" />
-	<beans:import resource="test-sec-context.xml" />
+
 	<beans:import resource="test-mail-context.xml" />
 
 </beans:beans>

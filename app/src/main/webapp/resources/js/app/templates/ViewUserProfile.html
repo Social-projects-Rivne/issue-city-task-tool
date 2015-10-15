@@ -9,7 +9,7 @@
         
         <div class="col-lg-6 admin-name">
             <b>
-            <label id="admin_name"><a href="#viewprofile" title="Click here to view your profile"><%= loginView.currentUser.get('name')%></a></label>
+            <label id="user_name"><%= loginView.currentUser.get('name')%></a></label>
             </b>
             <br>
             <br>
@@ -19,13 +19,22 @@
             </p>
         </div>
         <!--left panel menu-->
+		<div class="col-lg-12 manager manager-menu">
+			<ul class="manager" id="manager_menu">
+			<li class ="manager"><a class="manager" href="#viewprofile" title="Click here to view your profile" id="my_profile">My Profile</a>
+			</li>
+			<li class ="manager"><a class="manager" href="#" id="my_history">My History</a>
+			</li>
+			</ul>
+
+		</div>
 
        </div>
 
 <div>
- <div class="row"> 
+ <div class="row">
  	<!-- users avatar -->
- 	
+
 	<!-- view form column -->
 	<div class="col-md-9 personal-info">
 		<form class="form-horizontal" role="form">
@@ -38,17 +47,18 @@
 		<div class="form-group view-profile">
 			<label class="col-lg-4 control-label">Email:</label>
 			<label class="col-lg-4 control-label"><%= email %></label>
+			<center><button  class="btn btn-mini" id="profile">Edit profile</button></center>
 		</div>
 	<!-- users login -->
 		<div class="form-group view-profile">
 			<label class="col-md-4 control-label">Login:</label>
 			<label class="col-md-4 control-label"><%= login %></label>
+			<center><button  class="btn btn-mini" id="reset_password">Reset Password</button></center>
 		</div>
 		</form>
 	<!-- button for edit profile -->
-		<div class="col-md-8 view-profile">
-			<button class="btn btn-mini" id="profile">Edit profile</button>
-		</div>          
+
 	</div>
  </div>
 </div>
+

@@ -6,8 +6,7 @@
          template: _.template(RegistrationTemplate),
          model : null,
          notificationTemplate: _.template(NotificationTemplate),
-
-
+                 
          initialize: function () {
              $('.signUp.modal').empty();
              $('.signUp.modal').append(this.template);
@@ -18,7 +17,6 @@
              'click #reg_btn-close' : 'hideUserRegForm',
              'click #reg_submit': 'onSubmit'
          },
-
 
          onSubmit: function (e) {
 
@@ -44,15 +42,11 @@
                  }
              } );
 
-
-
          },
 
          getModel: function(){
              return new UserModel( $("#signUpForm").serializeJSON() );
          },
-
-
 
          showUserRegForm: function(){
              this.render();
@@ -64,15 +58,10 @@
 					
          },
 
-
-
          render: function () {
              $(".signUp.modal").modal("show");
              return this;
          }
-
-
-
 
      });
         return UserRegistrationView ;

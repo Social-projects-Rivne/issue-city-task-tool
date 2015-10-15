@@ -46,7 +46,7 @@ requirejs.config({
 		collection: 'js/app/collection',
 		templates: 'js/app/templates',
 		
-		bootstrap:'js/bootstrap.min',
+		bootstrap:'js/lib/bootstrap.min',
 
 		gmaps: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDLXIjNBbjQ5nI9I8KIuR3hslBebOYNH4s&signed_in=true&callback=initMap',
 		'async':'../vendor/requirejs-plugins/src/async',
@@ -56,8 +56,8 @@ requirejs.config({
 		//bad scripts
 		homeScript: 'js/home-script',
         validation: 'js/validation-script',
-        markers: 'js/leaflet.awesome-markers',
-        leaflet:'js/leaflet',
+        markers: 'js/lib/leaflet.awesome-markers',
+        leaflet:'js/lib/leaflet',
         
         map:[ 
             

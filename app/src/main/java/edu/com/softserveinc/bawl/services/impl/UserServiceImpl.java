@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 			//user.setPassword(userDao.findOne(user.getId()).getPassword());
 		}
 		else 
-			//user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
 		userDao.saveAndFlush(user);
 	}

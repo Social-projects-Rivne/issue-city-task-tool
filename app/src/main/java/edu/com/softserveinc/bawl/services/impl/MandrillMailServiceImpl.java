@@ -1,4 +1,4 @@
-package edu.com.softserveinc.bawl.services;
+package edu.com.softserveinc.bawl.services.impl;
 
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
@@ -9,29 +9,32 @@ import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.services.MailService;
+import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 /**
  * Created by Illia on 9/25/2015.
  */
-public class MandrillMailService {
+@Service
+public class MandrillMailServiceImpl implements MailService {
 
     /**
      *  Logger field
      */
-    public static final Logger LOG=Logger.getLogger(MandrillMailService.class);
+    public static final Logger LOG=Logger.getLogger(MandrillMailServiceImpl.class);
 
-    private final static String rootUrl = "http://localhost:8080/Bawl/";
+
+    private final static String rootUrl = "http://localhost:8080/";
     private final static String MAIN_URL = rootUrl + "#email-confirm/";
     private final static String API_KEY = "MJ7XduK_1GX6JxuNezXYjw";
 
@@ -42,10 +45,19 @@ public class MandrillMailService {
     private static ObjectMapper mapper = new ObjectMapper();
     private static Properties props = new Properties();
 
-    private static MandrillMailService mailService = null;
+    private static MandrillMailServiceImpl mailService = null;
+
+    @Autowired
+    private UserService userService;
+
+    //TODO add this to get real url of application
+    /*
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }*/
 
 
-    public static void initialize() {
+    private static void initialize(){
 
         config.setApiKey(API_KEY);
         config.setApiVersion("1.0");
@@ -57,19 +69,16 @@ public class MandrillMailService {
         request.setHttpClient(client);
     }
 
-    public static MandrillMailService getMandrillMail(){
+    public static MandrillMailServiceImpl getMandrillMail(){
         if (mailService == null){
 
-            mailService = new MandrillMailService();
+            mailService = new MandrillMailServiceImpl();
             initialize();
         }
         return mailService;
     }
 
 
-    public void before() {
-
-    }
 
     public void sendRegNotification(UserModel model){
         String html;
@@ -107,4 +116,59 @@ public class MandrillMailService {
             System.out.println(e.getMessage());
         }
     }
+
+	public void sendPasswordToUser(UserModel model, String pass){
+
+            String html;
+
+            html = String.format("" +
+                    "<html>" +
+                    "<body>" +
+                    "<h3>Changed password </h3>" +
+                    "Now your password is " +
+                    pass +
+                    "</body>" +
+                    "</html>" /*, model.getName()*/);
+            sendMessage(model.getEmail(), html);
+
+
+    }
+
+    private void sendAdminMessage(String email,String subject,String Message) { // for notification from admin panel
+        MandrillMessageRequest mmr = new MandrillMessageRequest();
+        MandrillHtmlMessage message = new MandrillHtmlMessage();
+        Map<String, String> headers = new HashMap<String, String>();
+        message.setFrom_email("bawlapp@ukr.net");
+        message.setFrom_name("Bawl Service");
+        message.setHeaders(headers);
+        message.setSubject(subject);
+        message.setHtml(Message);
+        MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Admin", email)};
+        message.setTo(recipients);
+        message.setTrack_clicks(true);
+        message.setTrack_opens(true);
+        mmr.setMessage(message);
+
+        try {
+            SendMessageResponse response = messagesRequest.sendMessage(mmr);
+        } catch (RequestFailedException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void notifyForIssue(int issueId, String msg) {
+
+    }
+
+    @Override
+    public void notifyUser(int userId, String msg) {
+        sendMessage(userService.getById(userId).getEmail(), msg);
+    }
+    @Override
+    public void notifyByAdmin(String email,String subject,String Message ) {
+        sendAdminMessage(email, subject, Message);
+    }
+
 }

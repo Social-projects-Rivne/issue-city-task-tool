@@ -1,4 +1,4 @@
-package edu.com.softserveinc.bawl.services.impl;
+/*package edu.com.softserveinc.bawl.services.impl;
 
 import java.util.Collection;
 
@@ -21,9 +21,7 @@ import org.apache.log4j.Logger;
 @Service
 public class MailServiceImpl implements MailService {
 
-	/**
-     *  Logger field
-     */
+
     public static final Logger LOG=Logger.getLogger(MailServiceImpl.class);
 
 	@Autowired private JavaMailSender mailSender;
@@ -93,3 +91,4 @@ public class MailServiceImpl implements MailService {
 	}
 
 }
+*/

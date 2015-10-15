@@ -8,7 +8,7 @@
 
 /*global L*/
 
-require(['leaflet'], 
+require(['leaflet'],
     function(){
 (function (window, document, undefined) {
     "use strict";
