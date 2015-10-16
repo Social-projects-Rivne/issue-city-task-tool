@@ -7,7 +7,6 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
-<script data-main="<c:url value="/resources/js/common.js" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet">
 <!-- delete it later or add to project -->
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
@@ -66,7 +65,8 @@
 	<div id="container">
 	</div>
 
-<!-- Placed at the end of the document so the pages load faster -->	
+<!-- Placed at the end of the document so the pages load faster -->
+	<script data-main="<c:url value="/resources/js/common.js" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
 	<script>
  		require(['main']);
  	</script>
