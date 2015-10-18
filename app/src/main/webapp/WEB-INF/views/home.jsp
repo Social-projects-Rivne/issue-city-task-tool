@@ -4,22 +4,34 @@
 <head>
 <title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b8d6143f20ad159f2af22ce358f7903700fe3c99
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet">
-<!-- delete it later or add to project -->
+
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+<script src="<c:url value="/resources/js/issue-script.js" />"></script>
+<script data-main="<c:url value="/resources/js/common.js" />" src="<c:url value="/resources/js/lib/require.js" />"></script>
+
+<!-- CSS -->
 <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/ionicons.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/leaflet.awesome-markers.css" />">
-<script src="<c:url value="/resources/js/issue-script.js" />"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-responsive.min.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+<<<<<<< HEAD
 	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
+=======
+
+<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
+>>>>>>> b8d6143f20ad159f2af22ce358f7903700fe3c99
 
 </head>
 <body>

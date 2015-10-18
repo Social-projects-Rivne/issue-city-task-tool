@@ -47,13 +47,15 @@ public class IssueServiceImpl implements IssueService {
 	
 	@Override
 	public void deleteProblem(IssueModel problem, int userId) {
+		problem.setStatusId(STATUS_DELETED);
 		saveToHistory(problem, userId);
 	}
 		
 	@Override
 	public void deleteProblem(int issueId, int userId) {
-		HistoryModel historyModel = new HistoryModel();
-		historyModel.setStatusId(STATUS_DELETED);
+		IssueModel issueModel = issueDao.findOne(issueId);
+		issueModel.setStatusId(STATUS_DELETED);
+		saveToHistory(issueModel, userId);
 	}
 
 	@Override
