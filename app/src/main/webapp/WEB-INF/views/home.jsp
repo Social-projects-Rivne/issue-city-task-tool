@@ -8,10 +8,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
-<<<<<<< HEAD
 
-=======
->>>>>>> b8d6143f20ad159f2af22ce358f7903700fe3c99
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet">
 
 <script src="<c:url value="/resources/js/lib/jquery.js" />"></script>
@@ -26,12 +23,12 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap-responsive.min.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-<<<<<<< HEAD
+
 	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
-=======
+
 
 <link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
->>>>>>> b8d6143f20ad159f2af22ce358f7903700fe3c99
+
 
 </head>
 <body>
