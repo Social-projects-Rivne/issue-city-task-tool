@@ -24,9 +24,6 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 
-	<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
-
-
 <link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700|Josefin+Sans|Advent+Pro:400,200,300,500,600' rel='stylesheet' type='text/css'>
 
 
