@@ -17,7 +17,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
-					'click .edit-issue'	: 'showEditIssueForm',
+					'click .edit-issue'	: 'showgEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
 					'click #left_admin_panel #manager_log_out':'logOut',
 					'click #all_issues': 'allIssues'
