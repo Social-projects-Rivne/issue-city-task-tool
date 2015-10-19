@@ -1,5 +1,7 @@
 package edu.com.softserveinc.bawl.dto;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,7 +11,6 @@ public class UserHistoryDto {
 
     private String username;
     private String issueName;
-
     private Date date;
 
     private String roleName;
@@ -39,7 +40,10 @@ public class UserHistoryDto {
         this.statusId = statusId;
     }
 
-    public Date getDate() {   return date;    }
+    public String getDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.mm.yyyy");
+        return simpleDateFormat.format(date);
+    }
 
     public void setDate(Date date) {   this.date = date;    }
 

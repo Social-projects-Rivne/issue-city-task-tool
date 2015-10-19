@@ -11,18 +11,14 @@ require([
         'view/IssueFilterView',
         'view/StatisticView',
         'view/ProfileView',
-	'view/ViewUserProfile',
+	    'view/ViewUserProfile',
         'view/ImageEditorView',
-		"view/UserRegistrationView"
+		'view/UserRegistrationView',
+		'view/HistoryView'
 
         ]
 , function($, _, Backbone,
 	Router,
-	//IssueView,
-	//CommentModel,
-	//CommentView,
-	//CommentCollection,
-	//IssueModel,
 	MapView,
 	AddIssueView,
 	ManagerView,
@@ -32,13 +28,15 @@ require([
 	ProfileView,
 	ViewUserProfile,
 	ImageEditorView,
-	UserRegistrationView) {
+	UserRegistrationView,
+	HistoryView) {
 
 	//var comments = null;
 	router = null;
 	adminView = null;
 	managerView = null;
 	userRegView = null;
+	historyView = null;
 	USER_NOT_CONFIRMED = -1;
 	USER = 0;
 
@@ -48,22 +46,23 @@ require([
 		mapView = new MapView( { el: "body" } );
 		mapView.render();
 		issueFilterView = new IssueFilterView({el:"#container"});
-		
+
 		loginView = new LoginView({el:"body"});
 		userRegView = new UserRegistrationView( {el: "body"});
-		
+
 		issueFilterView = new IssueFilterView({el:"#container"});
-		
+
 		statisticView = new StatisticView( { el: 'body' } );
 		profileView = new ProfileView({el:"#container"});
 		viewUserProfile = new ViewUserProfile({el:"#container"});
 		imageEditorView = new ImageEditorView( { el: 'body' } );
+		historyView = new HistoryView();
 
 
 		router = new Router();
 
 
 	});
-	
+
 
 });
