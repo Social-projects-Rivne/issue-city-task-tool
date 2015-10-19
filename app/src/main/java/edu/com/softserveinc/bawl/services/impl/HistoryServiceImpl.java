@@ -48,28 +48,14 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public List<HistoryModel> getHistoriesByUserID(final int userId) {
 
-        List<HistoryModel> historiesDb = historyDao.findAll();
-        List<HistoryModel> findHistories = new ArrayList<HistoryModel>();
-
-        for(HistoryModel model: historiesDb){
-            if (model.getUserId() == userId){
-                findHistories.add(model);
-            }
-        }
+        List<HistoryModel> findHistories = historyDao.findByUserId(userId);
         return  findHistories;
 
     }
 
     @Override
     public List<HistoryModel> getHistoriesByIssueID(int issueId) {
-        List<HistoryModel> historiesDb = historyDao.findAll();
-        List<HistoryModel> findHistories = new ArrayList<HistoryModel>();
-
-        for(HistoryModel model: historiesDb){
-            if (model.getIssueId() == issueId){
-                findHistories.add(model);
-            }
-        }
+        List<HistoryModel> findHistories = historyDao.findByIssueId(issueId);
         return  findHistories;
     }
 
@@ -88,6 +74,7 @@ public class HistoryServiceImpl implements HistoryService {
                         uniqueModel = currentModel;
                     }
                 }
+
                 uniqueHistories.add(uniqueModel);
             }
         }
@@ -101,9 +88,9 @@ public class HistoryServiceImpl implements HistoryService {
         return issues;
     }
 
-    private Boolean isNewIssueId (HistoryModel uniqueModel, List<HistoryModel> histories ) {
+    private Boolean isNewIssueId (HistoryModel uniqueModel, List<HistoryModel> uniqueHistories ) {
 
-        for (HistoryModel curModel : histories){
+        for (HistoryModel curModel : uniqueHistories){
             if(curModel.getIssueId() == uniqueModel.getIssueId()){
                 return false;
             }
