@@ -9,6 +9,8 @@ public interface UserService {
 	public void addUser(UserModel user);
 
 	public void editUser(UserModel user);
+
+	public void editUserPass(UserModel user);
 	
 	public void deleteUser(int userId);
 	

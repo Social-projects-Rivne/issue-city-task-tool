@@ -50,7 +50,8 @@ define([ 'underscore', 'backbone','view/AdminView',
 
 		issue : function(id) {
 			$('.col-1-3').hide();
-			issueDetailsView.render(id); 
+			issueDetailsView.render(id);
+			historyView.render(id);
 			// comments must rendering from issue details view
 		},
 

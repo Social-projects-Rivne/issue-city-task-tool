@@ -50,8 +50,8 @@ public class UserController {
 			default: return "Not confirmed";
 		}
 	}
-	@RequestMapping(value = "user", method = RequestMethod.POST)
 
+	@RequestMapping(value = "user", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> addUserAction(
 			@RequestBody UserModel user, Map<String, String> message) {
 		try {
@@ -147,6 +147,15 @@ public class UserController {
 		return message ;
 	}
 
+	@RequestMapping(value="user/{id}/changename/{newname}", method = RequestMethod.GET)
+	public @ResponseBody String changeUserName(@PathVariable int id,@PathVariable String newname){
+		UserModel userModel=userService.getById(id);
+		userModel.setName(newname);
+		userService.editUser(userModel);
+		String message ="Name was succesfully edited";
+		return  message ;
+	}
+
 	@RequestMapping(value="user/{id}/changepass", method = RequestMethod.GET)
 	public @ResponseBody String changeUserPassword(@PathVariable int id){
 		UserModel userModel=userService.getById(id);
@@ -156,9 +165,9 @@ public class UserController {
 
 		MandrillMailServiceImpl.getMandrillMail().sendPasswordToUser(userModel, newPassword);
 
-		String massege="Your pass have been changed ! Watch about it on your mail ! 'pass'="+newPassword;//later it will be whithout password
+		String massege="Your pass have been changed ! Watch about it on your mail ! ";
 
-		userService.editUser(userModel);
+		userService.editUserPass(userModel);
 
 		return massege;
 	}

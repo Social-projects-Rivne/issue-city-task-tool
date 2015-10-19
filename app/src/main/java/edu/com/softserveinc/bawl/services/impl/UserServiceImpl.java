@@ -39,14 +39,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@Override
-	public void editUser(UserModel user) {
+
+	public void editUserPass(UserModel user) {
 		if (Arrays.asList("_", "", null).contains(user.getPassword())) {
 			//user.setPassword(userDao.findOne(user.getId()).getPassword());
 		}
 		else 
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
+		userDao.saveAndFlush(user);
+	}
+
+	@Override
+	public void editUser(UserModel user) {
 		userDao.saveAndFlush(user);
 	}
 
