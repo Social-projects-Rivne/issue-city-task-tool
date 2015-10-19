@@ -14,14 +14,14 @@ import java.util.List;
  * Created by Oleg on 13.10.2015.
  */
 public class DTOMapper {
-    public static UserIssuesHistoryDto getUserIssuesHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService) {
+    public static UserIssuesHistoryDto getUserIssuesHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserModel userModel) {
         UserIssuesHistoryDto userIssuesHistoryDto = new UserIssuesHistoryDto();
         userIssuesHistoryDto.setIssueName(issueModel.getName());
 
         IssueHistoryDto issueHistoryDtodto = new IssueHistoryDto();
         issueHistoryDtodto.setDate(historyModel.getDate());
-        UserModel um =userService.getById(historyModel.getUserId());
-        issueHistoryDtodto.setChangedByUser(um.getName());
+
+        issueHistoryDtodto.setChangedByUser(userModel.getName());
         issueHistoryDtodto.setStatus(historyModel.getStatusId());
 
         userIssuesHistoryDto.setIssueHistoryDto(issueHistoryDtodto);
@@ -30,18 +30,16 @@ public class DTOMapper {
         return userIssuesHistoryDto;
     }
 
-    public static UserHistoryDto getUserHistoyDto(HistoryModel historyModel, IssueModel issueModel, UserService userService ){
+    public static UserHistoryDto getUserHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService){
         UserHistoryDto userHistoryDto = new UserHistoryDto();
         userHistoryDto.setStatusId(historyModel.getStatusId());
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
-        String roleName = userService
-                .getById(historyModel.getUserId())
-                .getRole_id() == 0 ? "User" : "Manager";
+
+        UserModel userModel = userService.getById(historyModel.getUserId());
+        String roleName = userModel.getRole_id() == 0 ? "User" : "Manager";
         userHistoryDto.setRoleName(roleName);
-        userHistoryDto.setUsername(userService
-                .getById(historyModel.getUserId())
-                .getName());
+        userHistoryDto.setUsername(userModel.getName());
         return userHistoryDto;
     }
 
@@ -51,7 +49,7 @@ public class DTOMapper {
         for(HistoryModel historyModel : histories){
             for(IssueModel issueModel : allIssues){
                 if (issueModel.getId() == historyModel.getIssueId()){
-                    UserHistoryDto userHistoryDto = getUserHistoyDto(historyModel, issueModel, userService);
+                    UserHistoryDto userHistoryDto = getUserHistoryDto(historyModel, issueModel, userService);
                     historyDtoList.add(userHistoryDto);
 
                 }
