@@ -58,14 +58,14 @@ public class HistoryController {
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();
         UserModel userModel = userService.getById(id);
-
+        //loop in loop while model are nor relatives
         for ( HistoryModel historyModel : listOfHistoriesByUserID){
             for(IssueModel issueModel : issues){
                 if(issueModel.getId()==historyModel.getIssueId())
                 {
-                    UserIssuesHistoryDto uihdto = DTOMapper.getUserIssuesHistoryDto(historyModel, issueModel, userModel);
+                    UserIssuesHistoryDto userIssuesHistoryDto = DTOMapper.getUserIssuesHistoryDto(historyModel, issueModel, userModel);
 
-                    list.add(uihdto);
+                    list.add(userIssuesHistoryDto);
                 }
 
             }
