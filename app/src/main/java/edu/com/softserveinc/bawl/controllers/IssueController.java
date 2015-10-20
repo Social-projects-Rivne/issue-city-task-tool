@@ -54,7 +54,7 @@ public class IssueController {
 
 
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	@RequestMapping(value = "issue/all", method = RequestMethod.GET)
+	@RequestMapping(value = "issue/", method = RequestMethod.GET)
 	public @ResponseBody List<IssueDto> getAllIssues(){
 
 		List<IssueModel> listIssueModel= issueService.loadIssuesList();
@@ -241,7 +241,7 @@ public class IssueController {
 		}
 	}
 
-	private int getCurrentUserId(){
+	public int getCurrentUserId(){
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
 			return 0;

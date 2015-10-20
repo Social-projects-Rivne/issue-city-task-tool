@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import edu.com.softserveinc.bawl.dto.IssueHistoryDto;
 import edu.com.softserveinc.bawl.dto.UserNotificationDto;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.UserService;
@@ -156,8 +157,12 @@ public class UserController {
 		return  message ;
 	}
 
-	@RequestMapping(value="user/{id}/changepass", method = RequestMethod.GET)
-	public @ResponseBody String changeUserPassword(@PathVariable int id){
+	@RequestMapping(value="user/changepass", method = RequestMethod.GET)
+	public @ResponseBody String changeUserPassword(){
+
+		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		int id = userService.getByLogin(currentUserLoginName).getId();
 		UserModel userModel=userService.getById(id);
 
 		String newPassword = generatePassword(1, 5);
@@ -165,33 +170,26 @@ public class UserController {
 
 		MandrillMailServiceImpl.getMandrillMail().sendPasswordToUser(userModel, newPassword);
 
-		String massege="Your pass have been changed ! Watch about it on your mail ! ";
+		String message="Your pass have been changed ! Watch about it on your mail ! ";
 
 		userService.editUserPass(userModel);
 
-		return massege;
+		return message;
 	}
 
 	private String generatePassword (int from, int to){
 
-		String pass  = "";
-		Random r     = new Random();
-		int cntchars = from + r.nextInt(to - from + 1);
+		StringBuilder sb = new StringBuilder();
+		int n = 8; // how many characters in password
+		String set = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"; // characters to choose from
 
-		for (int i = 0; i < cntchars; ++i) {
-			char next = 0;
-			int range = 10;
-
-			switch(r.nextInt(3)) {
-				case 0: {next = '0'; range = 10;} break;
-				case 1: {next = 'a'; range = 26;} break;
-				case 2: {next = 'A'; range = 26;} break;
-			}
-
-			pass += (char)((r.nextInt(range)) + next);
+		for (int i= 0; i < n; i++) {
+			int k = (int)(Math.random()*set.length());   // random number between 0 and set.length()-1 inklusive
+			sb.append(set.charAt(k));
 		}
+		String result = sb.toString();
 
-		return pass;
+		return result;
 	}
 }
 

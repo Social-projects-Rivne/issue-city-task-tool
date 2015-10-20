@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.dto.UserHistoryDto;
 import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDto;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
@@ -55,16 +56,16 @@ public class HistoryController {
         List<UserIssuesHistoryDto> list = new ArrayList<UserIssuesHistoryDto>();
 
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
-
         List<IssueModel> issues = issueService.loadIssuesList();
-
+        UserModel userModel = userService.getById(id);
+        //loop in loop while model are nor relatives
         for ( HistoryModel historyModel : listOfHistoriesByUserID){
             for(IssueModel issueModel : issues){
                 if(issueModel.getId()==historyModel.getIssueId())
                 {
-                    UserIssuesHistoryDto uihdto = DTOMapper.getUserIssuesHistoryDto(historyModel, issueModel, userService);
+                    UserIssuesHistoryDto userIssuesHistoryDto = DTOMapper.getUserIssuesHistoryDto(historyModel, issueModel, userModel);
 
-                    list.add(uihdto);
+                    list.add(userIssuesHistoryDto);
                 }
 
             }

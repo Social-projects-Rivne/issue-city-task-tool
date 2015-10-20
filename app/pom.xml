@@ -141,6 +141,8 @@
 			<version>1.0.0.M2</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!--Powermock-->
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-module-junit4</artifactId>
@@ -165,6 +167,25 @@
 			<artifactId>super-csv</artifactId>
 			<version>2.3.1</version>
 		</dependency>
+
+
+
+		<!--Cucumber
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>1.2.3</version>
+		</dependency>-->
 
 
 
