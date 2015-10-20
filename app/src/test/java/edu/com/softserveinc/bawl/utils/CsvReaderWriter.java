@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class CsvReaderWriter {
 
-    private static final String PATH_HISTORY_MODEL_CSV = "target/HistoryModels.csv";
+    private static final String PATH_HISTORY_MODEL_CSV = "src/test/resources/HistoryModels.csv";
 
     private static CellProcessor[] getHistoryModelWriterProcessors() {
 

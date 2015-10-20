@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.services.impl.HistoryServiceImpl;
 
 import edu.com.softserveinc.bawl.utils.CsvReaderWriter;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,8 @@ import static org.mockito.Mockito.*;
 public class HistoryServiceTest2 {
 
     private HistoryService historyService = null;
-    private HistoryDao historyDao = null;
+
+    private HistoryDao historyDao;
 
 
 
@@ -95,7 +97,13 @@ public class HistoryServiceTest2 {
 
         for(HistoryModel model : findHistories){
             assertEquals(userId, model.getUserId() );
+
         }
+    }
+
+    @Test
+    public void getLastUniqueIssues_shouldReturnUniqueIssues(){
+
     }
 
 
