@@ -20,7 +20,7 @@ import java.util.List;
 @Transactional
 public class HistoryServiceImpl implements HistoryService {
 
-    public static final Logger LOG=Logger.getLogger(CommentServiceImpl.class);
+    public static final Logger LOG = Logger.getLogger(CommentServiceImpl.class);
 
     @Autowired
     private HistoryDao historyDao;
@@ -46,16 +46,12 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public List<HistoryModel> getHistoriesByUserID(final int userId) {
-
-        List<HistoryModel> findHistories = historyDao.findByUserId(userId);
-        return  findHistories;
-
+        return historyDao.findByUserId(userId);
     }
 
     @Override
     public List<HistoryModel> getHistoriesByIssueID(int issueId) {
-        List<HistoryModel> findHistories = historyDao.findByIssueId(issueId);
-        return  findHistories;
+        return historyDao.findByIssueId(issueId);
     }
 
     @Override
@@ -65,7 +61,6 @@ public class HistoryServiceImpl implements HistoryService {
         List<HistoryModel> histories =  historyDao.findAll();
         for(HistoryModel searchModel : histories){
             HistoryModel uniqueModel = searchModel;
-
             if ( isNewIssueId(uniqueModel, uniqueHistories)) {
                 for (HistoryModel currentModel : histories) {
                     if (searchModel.getIssueId() == currentModel.getIssueId() &&
@@ -74,7 +69,6 @@ public class HistoryServiceImpl implements HistoryService {
                         uniqueModel = currentModel;
                     }
                 }
-
                 uniqueHistories.add(uniqueModel);
             }
         }
@@ -123,7 +117,6 @@ public class HistoryServiceImpl implements HistoryService {
 
             issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
             issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
-            return new IssueModel();
         }
         return issueModel;
     }
