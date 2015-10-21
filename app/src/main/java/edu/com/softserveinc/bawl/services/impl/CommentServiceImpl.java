@@ -16,9 +16,6 @@ import org.apache.log4j.Logger;
 @Transactional
 public class CommentServiceImpl implements CommentService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(CommentServiceImpl.class);
 	
 	@Autowired

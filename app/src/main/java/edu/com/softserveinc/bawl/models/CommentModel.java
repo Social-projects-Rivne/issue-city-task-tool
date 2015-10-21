@@ -1,21 +1,14 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.apache.log4j.Logger;
+
+import javax.persistence.*;
 
 
 @Entity
 @Table(name="comments")
 public class CommentModel {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(CommentModel.class);
 
 	@Id
