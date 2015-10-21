@@ -3,7 +3,7 @@ define([ 'underscore', 'backbone', 'model/CategoryModel' ], function(_, Backbone
 	var CategoryCollection = Backbone.Collection.extend({
 		
 		model : CategoryModel,
-		url : 'get-categories'
+		url : 'categories'
 	});
 
 	return CategoryCollection;

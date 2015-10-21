@@ -38,7 +38,7 @@ import org.springframework.test.web.server.setup.MockMvcBuilders
     model.setName("foobar")
     categories.add(model)
     when(categoryService.loadCategoriesList()).thenReturn(categories)
-    mockMvc.perform(get("/get-categories")).andExpect(status.isOk).andExpect(content.string("[{\"id\":1,\"name\":\"foobar\"}]"))
+    mockMvc.perform(get("/categories")).andExpect(status.isOk).andExpect(content.string("[{\"id\":1,\"name\":\"foobar\"}]"))
   }
 
 }

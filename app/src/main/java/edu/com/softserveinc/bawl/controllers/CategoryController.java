@@ -17,6 +17,7 @@ import java.util.Map;
  * Controller for issue categories
  */
 @Controller
+@RequestMapping(value = "categories")
 public class CategoryController {
 
     /**
@@ -24,23 +25,37 @@ public class CategoryController {
      */
     public static final Logger LOG = Logger.getLogger(CategoryController.class);
 
+    public static final String MESSAGE_TEXT = "message";
+    public static final String SUCCESS = "Success. New category was added";
+    public static final String FAILURE = "Failed. New category was not added";
+
     @Autowired
     private CategoryService service;
 
-    @RequestMapping("get-categories")
+    /**
+     * Returns list of the categories
+     * @return list of the categories
+     */
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<CategoryModel> getCategories() {
         return service.loadCategoriesList();
     }
 
-    @RequestMapping(value = "category", method = RequestMethod.POST)
+    /**
+     * Creates new category
+     * @param category new category
+     * @param message message
+     * @return message
+     */
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> addCategory(@RequestBody CategoryModel category, Map<String, String> message) {
         try {
              service.addCategory(category);
-             message.put("message", "New category was successfully added");
+             message.put(MESSAGE_TEXT, SUCCESS);
         } catch (Exception e) {
-             message.put("message", "Some problem occured! New category was not added");
+             message.put(MESSAGE_TEXT, FAILURE);
         }
         return message;
     }
