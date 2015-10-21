@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Illia on 10/4/2015.
@@ -70,6 +69,7 @@ public class HistoryServiceImpl implements HistoryService {
             if ( isNewIssueId(uniqueModel, uniqueHistories)) {
                 for (HistoryModel currentModel : histories) {
                     if (searchModel.getIssueId() == currentModel.getIssueId() &&
+                            uniqueModel.getDate() != null &&
                             uniqueModel.getDate().before(currentModel.getDate())) { //check last date with current IssueId
                         uniqueModel = currentModel;
                     }
