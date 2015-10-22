@@ -1,24 +1,23 @@
 package edu.com.softserveinc.bawl.services;
 
+import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.CommentDao;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.impl.CommentServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml", "classpath:test-mail-context.xml"})
-
-public class CommentServiceTest extends Mockito {
+public class CommentServiceTest extends AbstractBawlTest {
 
     private CommentService commentService;
     private CommentDao commentDao;
@@ -65,12 +64,12 @@ public class CommentServiceTest extends Mockito {
         CommentModel commentModel = new CommentModel();
         int IssueId = 4;
         commentModel.setIssueId(IssueId);
-        when(commentDao.findByIssueId(IssueId)).thenReturn((List<CommentModel>) commentModel);
+        when(commentDao.findByIssueId(IssueId)).thenReturn(Collections.singletonList(commentModel));
         List<CommentModel> actualModel = commentService.getCommentsByIssueId(IssueId);
         CommentModel expectedModel = new CommentModel();
         expectedModel.setIssueId(IssueId);
         verify(commentDao).findByIssueId(IssueId);
-        assertEquals(expectedModel,actualModel);
+        assertEquals(Collections.singletonList(expectedModel),actualModel);
 
     }
 }

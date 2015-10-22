@@ -1,19 +1,12 @@
 package edu.com.softserveinc.bawl.services;
 
+import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.models.CategoryModel;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.services.CategoryService;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"
-		,"classpath:test-root-context.xml"})
-public class CategoryServiceTest {
+public class CategoryServiceTest extends AbstractBawlTest {
 
 @Autowired
 private CategoryService service; 

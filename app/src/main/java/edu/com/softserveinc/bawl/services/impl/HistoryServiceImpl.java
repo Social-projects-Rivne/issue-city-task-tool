@@ -15,6 +15,7 @@ import java.util.List;
 
 
 @Transactional
+@Service
 public class HistoryServiceImpl implements HistoryService {
 
     public static final Logger LOG = Logger.getLogger(CommentServiceImpl.class);
@@ -54,16 +55,17 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public List<IssueModel> getLastUniqueIssues() {
         List<HistoryModel> uniqueHistories = historyDao.getUniqueLastByDateHistories();
-        List<IssueModel> issues = getIssueModelsFromHistoryModels(uniqueHistories);
-        return issues;
+        return getIssueModelsFromHistoryModels(uniqueHistories);
     }
 
     private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> histories) {
-        List<IssueModel> issues = new ArrayList<IssueModel>();
+        List<IssueModel> issues = new ArrayList<>();
         for(HistoryModel historyModel : histories){
             IssueModel issueModel = issueDao.findOne(historyModel.getIssueId());
-            issueModel.setStatusId (historyModel.getStatusId());
-            issues.add(issueModel);
+            if (issueModel != null) {
+                issueModel.setStatusId(historyModel.getStatusId());
+                issues.add(issueModel);
+            }
         }
         return issues;
     }

@@ -33,6 +33,7 @@
 		<powermock-module-junit4.version>1.6.3</powermock-module-junit4.version>
 		<mandrillClient.version>1.0.0</mandrillClient.version>
 		<super-csv.version>2.3.1</super-csv.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
 	</properties>
 
 	<dependencies>
@@ -218,6 +219,12 @@
 					<artifactId>spring-asm</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
 		</dependency>
 
 	</dependencies>
