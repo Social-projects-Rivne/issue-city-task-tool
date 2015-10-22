@@ -1,10 +1,10 @@
 package edu.com.softserveinc.bawl.query;
 
-import scala.util.parsing.combinator.testing.Str;
-
 /**
  * Created by Illia on 10/22/2015.
  */
+//TODO remove this class and use named query approach like
+//TODO http://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-with-named-queries/
 public final class HistoryQuery {
 
     public final static  String uniqueLastByDateHistories =
