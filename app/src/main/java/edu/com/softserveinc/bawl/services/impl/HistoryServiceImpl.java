@@ -56,32 +56,14 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public List<IssueModel> getLastUniqueIssues() {
-
-        List<HistoryModel> uniqueHistories = new ArrayList<HistoryModel>();
-        List<HistoryModel> histories =  historyDao.findAll();
-        for(HistoryModel searchModel : histories){
-            HistoryModel uniqueModel = searchModel;
-            if ( isNewIssueId(uniqueModel, uniqueHistories)) {
-                for (HistoryModel currentModel : histories) {
-                    if (searchModel.getIssueId() == currentModel.getIssueId() &&
-                            uniqueModel.getDate() != null &&
-                            uniqueModel.getDate().before(currentModel.getDate())) { //check last date with current IssueId
-                        uniqueModel = currentModel;
-                    }
-                }
-                uniqueHistories.add(uniqueModel);
-            }
-        }
-
+        List<HistoryModel> uniqueHistories = historyDao.getUniqueLastByDateHistories();
         List<IssueModel> issues = getIssueModelsFromHistoryModels(uniqueHistories);
         return issues;
     }
 
-
-    //bad method. a lot of database queries
-    private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> uniqueHistories) {
+    private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> histories) {
         List<IssueModel> issues = new ArrayList<IssueModel>();
-        for(HistoryModel historyModel : uniqueHistories){
+        for(HistoryModel historyModel : histories){
             IssueModel issueModel = issueDao.findOne(historyModel.getIssueId());
             issueModel.setStatusId (historyModel.getStatusId());
             issues.add(issueModel);
@@ -89,35 +71,11 @@ public class HistoryServiceImpl implements HistoryService {
         return issues;
     }
 
-    private Boolean isNewIssueId (HistoryModel uniqueModel, List<HistoryModel> uniqueHistories ) {
-
-        for (HistoryModel curModel : uniqueHistories){
-            if(curModel.getIssueId() == uniqueModel.getIssueId()){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
+   @Override
     public IssueModel getLastIssueByIssueID(int issueId) {
-
-        List<HistoryModel> histories =  historyDao.findAll();
-        IssueModel issueModel = null;
-        HistoryModel lastAddedHistoryModel;
-        if (histories.size() != 0) {
-
-            lastAddedHistoryModel = histories.get(0);
-            for (HistoryModel currentModel : histories) {
-                if (currentModel.getIssueId() == issueId &&
-                        lastAddedHistoryModel.getDate().before(currentModel.getDate())) { //check last date with current IssueId
-                    lastAddedHistoryModel = currentModel;
-                }
-            }
-
-            issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
-            issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
-        }
+        HistoryModel lastAddedHistoryModel = historyDao.getLastByIssueIDHistory(issueId);
+        IssueModel issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
+        issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
         return issueModel;
     }
 
