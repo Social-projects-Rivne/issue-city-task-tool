@@ -13,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Illia on 10/4/2015.
- */
-@Service
+
 @Transactional
 public class HistoryServiceImpl implements HistoryService {
 

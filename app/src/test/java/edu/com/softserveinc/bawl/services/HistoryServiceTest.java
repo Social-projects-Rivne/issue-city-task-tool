@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -47,12 +48,15 @@ public class HistoryServiceTest {
     private HistoryService historyService = null;
 
     private HistoryDao historyDao;
+    private IssueDao issueDao;
 
     @Before
     public void setup() {
         historyService = new HistoryServiceImpl();
         historyDao = mock(HistoryDao.class);
         Whitebox.setInternalState(historyService, "historyDao", historyDao);
+        issueDao = mock(IssueDao.class);
+        Whitebox.setInternalState(historyService, "issueDao", issueDao);
         when(historyDao.findAll()).thenReturn(getTestHistoryModels());
     }
 
@@ -98,7 +102,6 @@ public class HistoryServiceTest {
 
     @Test
     public void getHistoriesByUserID_shouldReturnListHistoriesByConcreteUser(){
-
         int userId = 2;
         List<HistoryModel> findHistories = historyService.getHistoriesByUserID(userId);
 
@@ -128,39 +131,52 @@ public class HistoryServiceTest {
         IssueModel issueModel1 = new IssueModel();
         issueModel1.setId(1);
         IssueModel issueModel2 = new IssueModel();
-        issueModel1.setId(2);
-        IssueModel issueModel3 = new IssueModel();
-        issueModel1.setId(3);
-        List<IssueModel> expectedModels = new ArrayList<>();
-        expectedModels.add(issueModel1);
-        expectedModels.add(issueModel2);
-        expectedModels.add(issueModel3);
+        issueModel2.setId(2);
 
+        List<IssueModel> issueModels = new ArrayList<IssueModel>();
+        issueModels.add(issueModel1);
+        issueModels.add(issueModel2);
+
+        HistoryModel historyModel1 = mock(HistoryModel.class);
+        when(historyModel1.getIssueId()).thenReturn(1);
+        HistoryModel historyModel2 = mock(HistoryModel.class);
+        when(historyModel2.getIssueId()).thenReturn(2);
+        List<HistoryModel> historyModels = new ArrayList<HistoryModel>();
+        historyModels.add(historyModel1);
+        historyModels.add(historyModel2);
         when(issueDao.findOne(1)).thenReturn(issueModel1);
         when(issueDao.findOne(2)).thenReturn(issueModel2);
-        when(issueDao.findOne(3)).thenReturn(issueModel3);
-        Whitebox.setInternalState(historyService, "issueDao", issueDao);
+        when(historyDao.getUniqueLastByDateHistories()).thenReturn(historyModels);
+        List<IssueModel> expectedIssueModels = new ArrayList<IssueModel>();
+        IssueModel expectedIssueModel1 = new IssueModel();
+        expectedIssueModel1.setId(1);
+        IssueModel expectedIssueModel2 = new IssueModel();
+        expectedIssueModel2.setId(2);
+        expectedIssueModels.add(expectedIssueModel1);
+        expectedIssueModels.add(expectedIssueModel2);
 
-        List<IssueModel> uniqueIssues = historyService.getLastUniqueIssues();
+        List<IssueModel> actualIssueModels = historyService.getLastUniqueIssues();
 
-        assertThat(uniqueIssues, is(expectedModels));
+        verify(historyDao).getUniqueLastByDateHistories();
+        assertThat(actualIssueModels, is(expectedIssueModels) );
 
     }
 
     @Test
     public void getLastIssueByIssueID_shouldReturnLastIssueByIssueID(){
-
-        IssueDao issueDao = mock(IssueDao.class);
-        IssueModel issueModel1 = new IssueModel();
-        issueModel1.setId(1);
         int issueId = 1;
+        IssueModel issueModel = new IssueModel();
+        issueModel.setId(issueId);
+        HistoryModel historyModel = mock(HistoryModel.class);
+        when(historyDao.getLastByIssueIDHistory(issueId)).thenReturn(historyModel);
+        when(historyModel.getIssueId()).thenReturn(issueId);
+        when(issueDao.findOne(1)).thenReturn(issueModel);
+        IssueModel expectedModel = new IssueModel();
+        expectedModel.setId(issueId);
 
-        when(issueDao.findOne(1)).thenReturn(issueModel1);
-        Whitebox.setInternalState(historyService, "issueDao", issueDao);
+        IssueModel actualModel = historyService.getLastIssueByIssueID(issueId);
 
-        IssueModel issueModel = historyService.getLastIssueByIssueID(issueId);
-
-        assertThat(issueModel.getId(), is(issueId));
+        assertThat(actualModel, is(expectedModel));
     }
 
 

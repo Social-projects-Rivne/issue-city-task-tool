@@ -14,21 +14,8 @@ import java.util.List;
  */
 public interface HistoryDao  extends JpaRepository<HistoryModel, Integer> {
 
-    /*String query = "SELECT h.* FROM history AS h, (SELECT issue_id, date, MAX(id) AS ID FROM history GROUP BY issue_id, date) AS hMaxId,(SELECT issue_id, MAX(date) AS MaxDate FROM history GROUP BY issue_id) AS hMaxDate WHERE hMaxId.issue_id = hMaxDate.issue_id AND hMaxId.date = hMaxDate.MaxDate AND h.id = hMaxId.id";
-    String query2 = "SELECT h.* FROM history AS h,(\n" +
-               "    SELECT issue_id, date, MAX(id) AS ID\n" +
-               "    FROM history\n" +
-               "    GROUP BY issue_id, date\n" +
-               ") AS hMaxId,\n" +
-               "(\n" +
-               "    SELECT issue_id, MAX(date) AS MaxDate\n" +
-               "    FROM history\n" +
-               "    GROUP BY issue_id\n" +
-               ") AS hMaxDate\n" +
-               "WHERE hMaxId.issue_id = hMaxDate.issue_id\n" +
-              "AND hMaxId.date = hMaxDate.MaxDate\n" +
-              "AND h.id = hMaxId.id";*/
     List <HistoryModel> findByUserId (int userId);
+
     List <HistoryModel> findByIssueId (int issueId);
 
     @Query(value = HistoryQuery.uniqueLastByDateHistories, nativeQuery = true)
