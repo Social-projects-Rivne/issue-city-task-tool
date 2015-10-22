@@ -1,16 +1,15 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
-	var HistoryIssueModel = Backbone.Model.extend({
-			//url: 'issue',
+
+	return Backbone.Model.extend({
 			defaults: {
 				date: "",
 				username: "",
 				statusId:"",
 				roleName:"",
-				issueName: "",
+				issueName: ""
 			}
 		});
 		
-	return HistoryIssueModel;
 });
 
 	

@@ -1,6 +1,6 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
-	var StatusModel = Backbone.Model.extend({
+	return Backbone.Model.extend({
 		urlRoot: 'status',
 		defaults: {
 			id: null,
@@ -8,5 +8,4 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		}
 	});
 	
-	return StatusModel;
 });

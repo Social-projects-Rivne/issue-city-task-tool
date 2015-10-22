@@ -1,6 +1,6 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
-	var CategoryModel = Backbone.Model.extend({
+	return Backbone.Model.extend({
 		urlRoot: 'categories/add',
 		defaults: {
 			id: null,
@@ -8,5 +8,4 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		}
 	});
 	
-	return CategoryModel;
 });
