@@ -23,7 +23,6 @@ public class CommentServiceTest extends Mockito {
     private CommentService commentService;
     private CommentDao commentDao;
 
-
     @Before
     public void setup() {
         commentService = new CommentServiceImpl();
@@ -59,5 +58,19 @@ public class CommentServiceTest extends Mockito {
         for (CommentModel model : findComments) {
             assertEquals(IssueId, model.getIssueId());
         }
+    }
+
+    @Test
+    public void testGetCommentsByIssueId1() throws Exception {
+        CommentModel commentModel = new CommentModel();
+        int IssueId = 4;
+        commentModel.setIssueId(IssueId);
+        when(commentDao.findByIssueId(IssueId)).thenReturn((List<CommentModel>) commentModel);
+        List<CommentModel> actualModel = commentService.getCommentsByIssueId(IssueId);
+        CommentModel expectedModel = new CommentModel();
+        expectedModel.setIssueId(IssueId);
+        verify(commentDao).findByIssueId(IssueId);
+        assertEquals(expectedModel,actualModel);
+
     }
 }
