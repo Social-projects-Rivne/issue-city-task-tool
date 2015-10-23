@@ -31,5 +31,12 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
+
+	<mvc:view-controller path="/" view-name="index" />
+
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/" />
+		<beans:property name="suffix" value=".html" />
+	</beans:bean>
 		
 </beans:beans>
