@@ -1,22 +1,15 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.apache.log4j.Logger;
+
+import javax.persistence.*;
 
 
 @Entity
 @Table(name="comments")
 public class CommentModel {
 
-	/**
-     *  Logger field
-     */
-    public static final Logger LOG=Logger.getLogger(CommentModel.class);
+    public static final Logger LOG = Logger.getLogger(CommentModel.class);
 
 	@Id
 	@GeneratedValue
@@ -50,13 +43,6 @@ public class CommentModel {
 		this.userName = userName;
 		this.email = email;
 		this.issueId = issueId;
-	}
-	
-	public CommentModel(String comment, String userName, String email, String issueI) {
-		this.comment = comment;
-		this.userName = userName;
-		this.email = email;
-		this.issueId = (int)issueId;
 	}
 
 	public int getId() {
@@ -142,12 +128,11 @@ public class CommentModel {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "CommentModel [id=" + id + ", comment=" + comment
 				+ ", userName=" + userName + ", email=" + email + ", issueId="
 				+ issueId + "]";
 	}
-
 }

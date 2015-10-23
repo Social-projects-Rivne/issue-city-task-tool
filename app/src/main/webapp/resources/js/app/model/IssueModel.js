@@ -1,6 +1,6 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
-	var IssueModel = Backbone.Model.extend({
+	return Backbone.Model.extend({
 		urlRoot: 'issue',
 		defaults: {
 			id: null,
@@ -16,5 +16,4 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		}
 	});
 	
-	return IssueModel;
 });

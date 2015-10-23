@@ -1,17 +1,17 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueModel', 
-        'collection/UserCollection','model/SendingNottificationModel','view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html','text!templates/SendingNottification.html' ],
-		function($, _, Backbone, UserModel, IssueModel, UserCollection, SendingNottificationModel, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate, SendingNottificationTemplate) {
+        'collection/UserCollection','model/SendingNotificationModel','view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html','text!templates/SendingNotification.html' ],
+		function($, _, Backbone, UserModel, IssueModel, UserCollection, SendingNotificationModel, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate, SendingNotificationTemplate) {
 			
 			var that = null;
 			function l (x) {
 				console.log(x);
 			}
 
-			var UserListView = Backbone.View.extend({
+			return Backbone.View.extend({
 				
 				initialize : function() {
 					this.model = new UserCollection();
-					this.SNmodel = new SendingNottificationModel();
+					this.SNmodel = new SendingNotificationModel();
 
 					this.model.fetch();
 					this.model.on('remove', this.render, this);
@@ -33,7 +33,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				editUserTemplate: _.template(EditUserTemplate),
-				SendingNottificationTemplate: _.template(SendingNottificationTemplate),
+				SendingNottificationTemplate: _.template(SendingNotificationTemplate),
 
 				submitSendingNottification: function(e){
 					 var that = this;
@@ -42,19 +42,22 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 		             this.SNmodel = this.getModel();
 		             this.SNmodel.save( {}, {
 		                 success: function(SNmodel, response) {
-		                     if($('#notificationModal')) {
-		                         $('#notificationModal').remove();
+							 var notificationModal = $('#notificationModal');
+
+                             if(notificationModal) {
+		                         notificationModal.remove();
 		                     }
 		                     $(".signUp.modal").modal("hide");
 		                     that.$el.append(that.notificationTemplate( { 'data': response } ));
-		                     $('#notificationModal').modal();
+		                     notificationModal.modal();
 		                 },
 		                 error: function() {
-		                     if($('#notificationModal')) {
-		                         $('#notificationModal').remove();
+                             var notificationModal = $('#notificationModal');
+                             if(notificationModal) {
+		                         notificationModal.remove();
 		                     }
 		                     that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-		                     $('#notificationModal').modal();
+		                     notificationModal.modal();
 		                 }
 		             } );
 		             return false;
@@ -67,7 +70,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 	    		l(email);
 	    		var sendAttrs = $.extend({email: email}, $("#submitForm").serializeJSON());
 	    		l(sendAttrs);
-             	return new SendingNottificationModel(sendAttrs);
+             	return new SendingNotificationModel(sendAttrs);
          },
 				render: function() {
 					this.$el.html(this.template);
@@ -78,9 +81,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				},
 				
 				showEditForm: function(e) {
-					if($('#editModal')) $('#editModal').remove();
+                    var editModal = $('#editModal');
+                    if(editModal) editModal.remove();
 					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
-					$('#editModal').modal();
+					editModal.modal();
 					//set user role on edit form
 					$("#userRole").val( this.model.get(e.currentTarget.id).attributes.role_id);
 
@@ -126,7 +130,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				},
 				
 				editConfirm: function(e) {
-					console.log()
+					console.log();
 					var isValid = true;
 					console.log('UserListView: editConfirm');
 					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(userName.val())) {
@@ -145,9 +149,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					}
 					
 					if(isValid) {
-						if($('#confirmationModal')) $('#confirmationModal').remove();
+                        var confirmationModal = $('#confirmationModal');
+
+                        if(confirmationModal) confirmationModal.remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'id': e.currentTarget.id }, { 'action': 'edit user' } ] } ));
-						$('#confirmationModal').modal();
+						confirmationModal.modal();
 					}
 				},
 				
@@ -192,7 +198,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
-							role_id: $('#userRole').val(),
+							role_id: $('#userRole').val()
 						} ).save( {}, {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();
@@ -224,7 +230,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						attachments: $('#edit-issue-form-attachments').val(),
 						categoryId: $('#edit-issue-form-category').val(),
 						statusId: $('#edit-issue-form-status').val(),
-						priorityId: $('#edit-issue-form-priority').val(),
+						priorityId: $('#edit-issue-form-priority').val()
 						
 						} ).save ( {
 							success: function() {
@@ -237,5 +243,4 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				}
 			});	
 
-			return UserListView;
 		});

@@ -49,7 +49,7 @@ public class CsvReaderWriter {
     private static CellProcessor[] getHistoryModelReaderProcessors() {
 
         return new CellProcessor[] {
-                new UniqueHashCode(new ParseInt()), // id (must be unique)
+                new ParseInt(), // id (must be unique)
                 new ParseInt(), // issue_id
                 new ParseInt(), // user_id
                 new ParseInt(), // status_id

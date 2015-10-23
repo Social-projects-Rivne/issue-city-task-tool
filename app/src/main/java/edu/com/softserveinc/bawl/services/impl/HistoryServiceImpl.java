@@ -10,18 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by Illia on 10/4/2015.
- */
-@Service
+
 @Transactional
+@Service
 public class HistoryServiceImpl implements HistoryService {
 
-    public static final Logger LOG=Logger.getLogger(CommentServiceImpl.class);
+    public static final Logger LOG = Logger.getLogger(CommentServiceImpl.class);
 
     @Autowired
     private HistoryDao historyDao;
@@ -47,84 +44,37 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public List<HistoryModel> getHistoriesByUserID(final int userId) {
-
-        List<HistoryModel> findHistories = historyDao.findByUserId(userId);
-        return  findHistories;
-
+        return historyDao.findByUserId(userId);
     }
 
     @Override
     public List<HistoryModel> getHistoriesByIssueID(int issueId) {
-        List<HistoryModel> findHistories = historyDao.findByIssueId(issueId);
-        return  findHistories;
+        return historyDao.findByIssueId(issueId);
     }
 
     @Override
     public List<IssueModel> getLastUniqueIssues() {
-
-        List<HistoryModel> uniqueHistories = new ArrayList<HistoryModel>();
-        List<HistoryModel> histories =  historyDao.findAll();
-        for(HistoryModel searchModel : histories){
-            HistoryModel uniqueModel = searchModel;
-
-            if ( isNewIssueId(uniqueModel, uniqueHistories)) {
-                for (HistoryModel currentModel : histories) {
-                    if (searchModel.getIssueId() == currentModel.getIssueId() &&
-                            uniqueModel.getDate().before(currentModel.getDate())) { //check last date with current IssueId
-                        uniqueModel = currentModel;
-                    }
-                }
-
-                uniqueHistories.add(uniqueModel);
-            }
-        }
-
-        List<IssueModel> issues = getIssueModelsFromHistoryModels(uniqueHistories);
-        return issues;
+        List<HistoryModel> uniqueHistories = historyDao.getUniqueLastByDateHistories();
+        return getIssueModelsFromHistoryModels(uniqueHistories);
     }
 
-
-    //bad method. a lot of database queries
-    private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> uniqueHistories) {
-        List<IssueModel> issues = new ArrayList<IssueModel>();
-        for(HistoryModel historyModel : uniqueHistories){
+    private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> histories) {
+        List<IssueModel> issues = new ArrayList<>();
+        for(HistoryModel historyModel : histories){
             IssueModel issueModel = issueDao.findOne(historyModel.getIssueId());
-            issueModel.setStatusId (historyModel.getStatusId());
-            issues.add(issueModel);
+            if (issueModel != null) {
+                issueModel.setStatusId(historyModel.getStatusId());
+                issues.add(issueModel);
+            }
         }
         return issues;
     }
 
-    private Boolean isNewIssueId (HistoryModel uniqueModel, List<HistoryModel> uniqueHistories ) {
-
-        for (HistoryModel curModel : uniqueHistories){
-            if(curModel.getIssueId() == uniqueModel.getIssueId()){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
+   @Override
     public IssueModel getLastIssueByIssueID(int issueId) {
-
-        List<HistoryModel> histories =  historyDao.findAll();
-        IssueModel issueModel = null;
-        HistoryModel lastAddedHistoryModel;
-        if (histories.size() != 0) {
-
-            lastAddedHistoryModel = histories.get(0);
-            for (HistoryModel currentModel : histories) {
-                if (currentModel.getIssueId() == issueId &&
-                        lastAddedHistoryModel.getDate().before(currentModel.getDate())) { //check last date with current IssueId
-                    lastAddedHistoryModel = currentModel;
-                }
-            }
-
-            issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
-            issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
-            return new IssueModel();
-        }
+        HistoryModel lastAddedHistoryModel = historyDao.getLastByIssueIDHistory(issueId);
+        IssueModel issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
+        issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
         return issueModel;
     }
 

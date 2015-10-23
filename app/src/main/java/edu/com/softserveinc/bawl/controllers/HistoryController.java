@@ -17,18 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Illia on 10/8/2015.
- */
 @Controller
 public class HistoryController {
     /**
      * Logger field
      */
-    public static final Logger LOG=Logger.getLogger(UserController.class);
+    public static final Logger LOG = Logger.getLogger(UserController.class);
 
     @Autowired
     private IssueService issueService;
@@ -40,39 +36,23 @@ public class HistoryController {
     private UserService userService;
 
     @RequestMapping(value = "issue/{id}/history", method = RequestMethod.GET)
-    public @ResponseBody List<UserHistoryDto> getUserHistoryAction(
-            @PathVariable int id ) {
-
+    public @ResponseBody List<UserHistoryDto> getUserHistoryAction(@PathVariable int id ) {
 
         List<HistoryModel> histories = historyService.getHistoriesByIssueID(id);
         List<IssueModel> allIssues = issueService.loadIssuesList();
 
-        List<UserHistoryDto> historyDtoList = DTOMapper.getUserHistoryDtos(histories, allIssues, userService);
-        return historyDtoList;
+        return DTOMapper.getUserHistoryDtos(histories, allIssues, userService);
     }
 
     @RequestMapping(value = "user/{id}/history", method = RequestMethod.GET)
     public @ResponseBody List<UserIssuesHistoryDto> getUserIssuesHistories(@PathVariable int id){
-        List<UserIssuesHistoryDto> list = new ArrayList<UserIssuesHistoryDto>();
 
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();
         UserModel userModel = userService.getById(id);
-        //loop in loop while model are nor relatives
-        for ( HistoryModel historyModel : listOfHistoriesByUserID){
-            for(IssueModel issueModel : issues){
-                if(issueModel.getId()==historyModel.getIssueId())
-                {
-                    UserIssuesHistoryDto userIssuesHistoryDto = DTOMapper.getUserIssuesHistoryDto(historyModel, issueModel, userModel);
 
-                    list.add(userIssuesHistoryDto);
-                }
+        return DTOMapper.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
 
-            }
-
-        }
-
-        return list;
     }
 
 

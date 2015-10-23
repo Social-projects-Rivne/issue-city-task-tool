@@ -1,13 +1,12 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
-	var SendingNottificationModel = Backbone.Model.extend({
+	return Backbone.Model.extend({
 		urlRoot: 'send-notification',
 		defaults: {
 			email: "",
-      subject: "",
-			message: "",
+      		subject: "",
+			message: ""
 		}
 	});
 	
-	return SendingNottificationModel;
 });
