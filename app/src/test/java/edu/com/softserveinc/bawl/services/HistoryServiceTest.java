@@ -8,7 +8,6 @@ import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.services.impl.HistoryServiceImpl;
 import edu.com.softserveinc.bawl.utils.CsvReaderWriter;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 
@@ -19,10 +18,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class HistoryServiceTest extends AbstractBawlTest {
@@ -104,26 +100,17 @@ public class HistoryServiceTest extends AbstractBawlTest {
         }
     }
 
-
-    //TODO needs to be fixed
     @Test
-    @Ignore
     public void getLastUniqueIssues_shouldReturnUniqueIssues(){
 
-        IssueDao issueDao = mock(IssueDao.class);
         IssueModel issueModel1 = new IssueModel();
         issueModel1.setId(1);
         IssueModel issueModel2 = new IssueModel();
         issueModel2.setId(2);
-
-        List<IssueModel> issueModels = new ArrayList<>();
-        issueModels.add(issueModel1);
-        issueModels.add(issueModel2);
-
-        HistoryModel historyModel1 = mock(HistoryModel.class);
-        when(historyModel1.getIssueId()).thenReturn(1);
-        HistoryModel historyModel2 = mock(HistoryModel.class);
-        when(historyModel2.getIssueId()).thenReturn(2);
+        HistoryModel historyModel1 = new HistoryModel();
+        historyModel1.setIssueId(1);
+        HistoryModel historyModel2 = new HistoryModel();
+        historyModel2.setIssueId(2);
         List<HistoryModel> historyModels = new ArrayList<>();
         historyModels.add(historyModel1);
         historyModels.add(historyModel2);
