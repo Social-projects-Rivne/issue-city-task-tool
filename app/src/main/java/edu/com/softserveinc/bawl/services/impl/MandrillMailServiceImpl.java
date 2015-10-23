@@ -83,6 +83,7 @@ public class MandrillMailServiceImpl implements MailService {
     public void sendRegNotification(UserModel model){
         String html;
         String link = MAIN_URL + model.getPassword() + "&id=" + model.getId();
+        //TODO move to template
         html = String.format("" +
                 "<html>" +
                 "<body>" +
@@ -99,8 +100,8 @@ public class MandrillMailServiceImpl implements MailService {
         MandrillMessageRequest mmr = new MandrillMessageRequest();
         MandrillHtmlMessage message = new MandrillHtmlMessage();
         Map<String, String> headers = new HashMap<String, String>();
-        message.setFrom_email("bawlapp@ukr.net");
-        message.setFrom_name("Bawl Service");
+        message.setFrom_email("bawlapp@ukr.net"); //TODO why not in property file?
+        message.setFrom_name("Bawl Service"); //TODO why not in property file?
         message.setHeaders(headers);
         message.setHtml(html);
         MandrillRecipient[] recipients = new MandrillRecipient[]{new MandrillRecipient("Admin", email)};
@@ -120,7 +121,7 @@ public class MandrillMailServiceImpl implements MailService {
 	public void sendPasswordToUser(UserModel model, String pass){
 
             String html;
-
+            //TODO move to template
             html = String.format("" +
                     "<html>" +
                     "<body>" +
@@ -134,12 +135,13 @@ public class MandrillMailServiceImpl implements MailService {
 
     }
 
+    //TODO obvious duplication of     private void sendMessage(String email, String html) {
     private void sendAdminMessage(String email,String subject,String Message) { // for notification from admin panel
         MandrillMessageRequest mmr = new MandrillMessageRequest();
         MandrillHtmlMessage message = new MandrillHtmlMessage();
         Map<String, String> headers = new HashMap<String, String>();
-        message.setFrom_email("bawlapp@ukr.net");
-        message.setFrom_name("Bawl Service");
+        message.setFrom_email("bawlapp@ukr.net"); //TODO why not in property file?
+        message.setFrom_name("Bawl Service"); //TODO why not in property file?
         message.setHeaders(headers);
         message.setSubject(subject);
         message.setHtml(Message);
