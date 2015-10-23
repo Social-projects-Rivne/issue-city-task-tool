@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.utils;
 
 import edu.com.softserveinc.bawl.models.HistoryModel;
+import edu.com.softserveinc.bawl.models.StatusModel;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseInt;
@@ -20,12 +21,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Illia on 10/13/2015.
- */
 public class CsvReaderWriter {
 
     private static final String PATH_HISTORY_MODEL_CSV = "src/test/resources/HistoryModels.csv";
+    private  static final String PATH_STATUS_MODEL_CSV = "src/test/resources/StatusModels.csv";
 
     private static CellProcessor[] getHistoryModelWriterProcessors() {
 
@@ -38,6 +37,15 @@ public class CsvReaderWriter {
         };
     }
 
+    private static CellProcessor[] getStatusModelWriterProcessors() {
+
+        return new CellProcessor[] {
+                new UniqueHashCode(), // id (must be unique)
+                new NotNull(), // name
+
+        };
+    }
+
     private static CellProcessor[] getHistoryModelReaderProcessors() {
 
         return new CellProcessor[] {
@@ -46,6 +54,14 @@ public class CsvReaderWriter {
                 new ParseInt(), // user_id
                 new ParseInt(), // status_id
                 new ParseDate("MM/dd/yy HH:mm:ss aaa") // date
+        };
+    }
+
+    private static CellProcessor[] getStatusModelReaderProcessors() {
+
+        return new CellProcessor[] {
+                new UniqueHashCode(new ParseInt()), // id (must be unique)
+                new ParseInt(), // name
         };
     }
 
@@ -71,6 +87,53 @@ public class CsvReaderWriter {
                 beanWriter.close();
             }
         }
+    }
+
+    public static void writeStatusModelCsv( List<StatusModel> statusModels) throws IOException {
+        ICsvBeanWriter beanWriter = null;
+        try {
+            beanWriter = new CsvBeanWriter(new FileWriter( new File(PATH_STATUS_MODEL_CSV)),
+                    CsvPreference.STANDARD_PREFERENCE);
+
+            // the header elements are used to map the bean values to each column (names must match)
+            final String[] header = new String[] { "id", "name"};
+            final CellProcessor[] processors = getStatusModelWriterProcessors();
+
+            // write the header
+            beanWriter.writeHeader(header);
+            // write the beans
+            for( final StatusModel model : statusModels ) {
+                beanWriter.write(model, header, processors);
+            }
+        }
+        finally {
+            if( beanWriter != null ) {
+                beanWriter.close();
+            }
+        }
+    }
+
+    public static List<StatusModel> readStatusModelCsv() throws IOException {
+
+        ICsvBeanReader beanReader = null;
+        List<StatusModel> statusModels = new ArrayList<StatusModel>();
+        try {
+            beanReader = new CsvBeanReader(new FileReader(PATH_STATUS_MODEL_CSV), CsvPreference.STANDARD_PREFERENCE);
+
+            // the header elements are used to map the values to the bean (names must match)
+            final String[] header = beanReader.getHeader(true);
+            final CellProcessor[] processors = getStatusModelReaderProcessors();
+            StatusModel statusModel = null;
+            while( (statusModel = beanReader.read(StatusModel.class, header, processors)) != null ) {
+                statusModels.add(statusModel);
+            }
+        }
+        finally {
+            if( beanReader != null ) {
+                beanReader.close();
+            }
+        }
+        return statusModels;
     }
 
     public static List<HistoryModel> readHistoryModelCsv() throws IOException {

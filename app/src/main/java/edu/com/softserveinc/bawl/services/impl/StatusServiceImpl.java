@@ -30,9 +30,7 @@ public class StatusServiceImpl implements StatusService {
 	}
 	
 	@Override
-	public StatusModel getStatusByName(String name){
-		return statusDao.findByName(name);
-	}
+	public StatusModel getStatusByName(String name){return statusDao.findByName(name);}
 	
 	@Override
 	public List<StatusModel> loadStatusList() {
