@@ -24,10 +24,11 @@ public class LambdaTest {
     public static class State {
         private static final int N = 10000;
         final List<Double> list;
+
         public State() {
             list = new ArrayList<>(N);
             for (int i = 0; i < N; ++i)
-                list.add((double)i);
+                list.add((double) i);
         }
     }
 
@@ -43,8 +44,8 @@ public class LambdaTest {
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public double benchmarkB(State state) {
         double min = Double.MAX_VALUE;
-        for (Double d : state.list ) {
-            if ( d < min ) {
+        for (Double d : state.list) {
+            if (d < min) {
                 min = d;
             }
         }
