@@ -75,7 +75,7 @@ public class DTOMapper {
                 }
             }
         }
-        Collections.sort(historyDtoList, (p1, p2) -> p1.getDate().compareTo(p2.getDate()));
+        Collections.sort(historyDtoList);
         return historyDtoList;
     }
 

@@ -1,13 +1,9 @@
 package edu.com.softserveinc.bawl.dto;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Illia on 10/9/2015.
- */
-public class UserHistoryDto {
+public class UserHistoryDto implements Comparable<UserHistoryDto> {
 
     private String username;
     private String issueName;
@@ -52,4 +48,12 @@ public class UserHistoryDto {
     public void setRoleName(String roleName) {  this.roleName = roleName;  }
 
 
+    public static int compare(UserHistoryDto o1, UserHistoryDto o2) {
+        return o1.date.compareTo(o2.date);
+    }
+
+    @Override
+    public int compareTo(UserHistoryDto o) {
+        return compare(this, o);
+    }
 }
