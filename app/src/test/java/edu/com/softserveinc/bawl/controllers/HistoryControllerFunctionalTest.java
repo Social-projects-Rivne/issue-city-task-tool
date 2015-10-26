@@ -16,14 +16,12 @@ import static org.springframework.test.web.server.request.MockMvcRequestBuilders
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-/**
- * Created by Illia on 10/26/2015.
- */
 public class HistoryControllerFunctionalTest extends AbstractBawlTest {
 
-  private MockMvc mockMvc  = null;
-  String MEDIA_TYPE = "application/json;charset=UTF-8";
-  String EMPTY_COLLECTION = "[]";
+  public static final String MEDIA_TYPE = "application/json;charset=UTF-8";
+  public static final String EMPTY_COLLECTION = "[]";
+
+  private MockMvc mockMvc;
 
   @InjectMocks
   private HistoryController historyController;
