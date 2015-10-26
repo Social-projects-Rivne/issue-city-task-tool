@@ -8,7 +8,6 @@ public class UserHistoryDto implements Comparable<UserHistoryDto> {
     private String username;
     private String issueName;
     private Date date;
-
     private String roleName;
     private int statusId;
 
@@ -46,7 +45,6 @@ public class UserHistoryDto implements Comparable<UserHistoryDto> {
     public String getRoleName() { return roleName;}
 
     public void setRoleName(String roleName) {  this.roleName = roleName;  }
-
 
     public static int compare(UserHistoryDto o1, UserHistoryDto o2) {
         return o1.date.compareTo(o2.date);

@@ -35,6 +35,11 @@ public class HistoryController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Returns list of UserHistoryDto by issue id
+     * @param id issue id
+     * @return list of UserHistoryDto
+     */
     @RequestMapping(value = "issue/{id}/history", method = RequestMethod.GET)
     public @ResponseBody List<UserHistoryDto> getUserHistoryAction(@PathVariable int id ) {
 
@@ -44,6 +49,11 @@ public class HistoryController {
         return DTOMapper.getUserHistoryDtos(histories, allIssues, userService);
     }
 
+    /**
+     * Returns list of UserIssuesHistoryDto by user id
+     * @param id user id
+     * @return list of UserIssuesHistoryDto
+     */
     @RequestMapping(value = "user/{id}/history", method = RequestMethod.GET)
     public @ResponseBody List<UserIssuesHistoryDto> getUserIssuesHistories(@PathVariable int id){
 

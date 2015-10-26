@@ -9,7 +9,6 @@ public class IssueHistoryDto {
 
     private Date date;
 
-
     private String changedByUser;
 
     private int statusID;
