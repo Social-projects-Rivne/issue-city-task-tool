@@ -1,8 +1,6 @@
-package edu.com.softserveinc.bawl.perf;
+package edu.com.softserveinc.bawl.benchmarks;
 
 import edu.com.softserveinc.bawl.dto.UserHistoryDto;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
@@ -22,8 +20,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@Ignore
-public class ComparatorTest {
+public class ComparatorBenchmark {
 
 
     @org.openjdk.jmh.annotations.State(Scope.Benchmark)
@@ -178,11 +175,10 @@ public class ComparatorTest {
     }
 
 
-    @Test
-    public void runJmh() throws RunnerException, IOException {
+    public static void main(String... args) throws RunnerException, IOException {
         final Options opt = new OptionsBuilder()
                 .jvmArgs("-XX:+UnlockCommercialFeatures")
-                .include(ComparatorTest.class.getSimpleName())
+                .include(ComparatorBenchmark.class.getSimpleName())
                 .warmupIterations(10)
                 .measurementIterations(10)
                 .forks(1)
