@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.services;
 
-
+import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.StatusDao;
 import edu.com.softserveinc.bawl.models.StatusModel;
 import edu.com.softserveinc.bawl.services.impl.StatusServiceImpl;
@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"} )
-
-public class StatusServiceImplTest {
+public class StatusServiceImplTest extends AbstractBawlTest {
     private StatusService statusService = null;
     private StatusDao statusDao;
 
@@ -63,11 +60,14 @@ public class StatusServiceImplTest {
         }
 
 
-        @Test
-    public void loadStatusList_shouldReturnfindAllFromDao (){
 
+    @Test
+    public void loadStatusList_shouldReturnListOfAllStatuses() {
 
-        }
+        statusService.loadStatusList();
+
+        verify(statusDao, times(1)).findAll();
+    }
 
     }
 
