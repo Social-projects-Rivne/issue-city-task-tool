@@ -60,11 +60,14 @@ public class StatusServiceImplTest extends AbstractBawlTest {
         }
 
 
-        @Test
-    public void loadStatusList_shouldReturnfindAllFromDao (){
 
+    @Test
+    public void loadStatusList_shouldReturnListOfAllStatuses() {
 
-        }
+        statusService.loadStatusList();
+
+        verify(statusDao, times(1)).findAll();
+    }
 
     }
 
