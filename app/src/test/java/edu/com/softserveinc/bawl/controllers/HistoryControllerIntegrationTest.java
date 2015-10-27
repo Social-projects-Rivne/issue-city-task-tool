@@ -22,16 +22,16 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-integration-data-root-context.xml"})
+@ContextConfiguration(locations = {"classpath:test-root-context.xml"})
 public class HistoryControllerIntegrationTest {
 
-  private MockMvc mockMvc  = null;
-  String MEDIA_TYPE = "application/json;charset=UTF-8";
-  String EMPTY_COLLECTION = "[]";
-  int USER_ID = 1;
-  int ISSUE_ID = 1;
+  public static final  String MEDIA_TYPE = "application/json;charset=UTF-8";
+  public static final String EMPTY_COLLECTION = "[]";
+  public static final int USER_ID = 1;
+  public static final int ISSUE_ID = 1;
+  public static final String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "statusId"};
 
-  String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "statusId"};
+  private MockMvc mockMvc;
 
   @Autowired
   private HistoryController historyController;
