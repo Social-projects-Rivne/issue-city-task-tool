@@ -10,6 +10,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 /**
  * Class for problem's category 
  * 
@@ -35,6 +37,10 @@ public class CategoryModel {
 	@NotEmpty
 	@Column(unique=true, name = "name")
 	private String name;
+
+	@NotEmpty
+	@Column(unique=false, name="isdeleted")
+	private int isdeleted;
 	
 	public CategoryModel() {}
 	
@@ -49,6 +55,10 @@ public class CategoryModel {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public int getIsdeleted() { return isdeleted; }
+
+	public void setIsdeleted(int isdeleted) { this.isdeleted = isdeleted; }
 
 	public String getName() {
 		return name;
