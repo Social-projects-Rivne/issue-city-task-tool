@@ -25,13 +25,12 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao;
 	
 	@Override
-	public void addCategory(CategoryModel category) {
-		categoryDao.saveAndFlush(category);
-	}
+	public void addCategory(CategoryModel category) { categoryDao.saveAndFlush(category); }
 
 	@Override
 	public void deleteCategory(CategoryModel category) {
-		categoryDao.delete(category);
+		category.setIsdeleted(1);
+		categoryDao.saveAndFlush(category);
 	}
 
 	@Override

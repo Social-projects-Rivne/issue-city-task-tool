@@ -16,6 +16,6 @@
 
 	<beans:import resource="persistence-context.xml" />
 	<beans:import resource="security-context.xml" />
-	<beans:import resource="mail-context.xml" />
+
 
 </beans:beans>

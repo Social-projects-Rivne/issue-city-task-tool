@@ -16,7 +16,6 @@
 	<tx:annotation-driven />
 	
 	<import resource="test-data-context.xml" />
-	<import resource="test-mail-context.xml" />
 	<import resource="test-web-context.xml" />
 	<import resource="test-sec-context.xml" />
 
