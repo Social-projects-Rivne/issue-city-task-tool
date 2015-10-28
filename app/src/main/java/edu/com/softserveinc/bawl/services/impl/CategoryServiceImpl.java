@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static edu.com.softserveinc.bawl.models.CategoryModel.CategoryModelState.DELETED;
+import static edu.com.softserveinc.bawl.models.CategoryState.DELETED;
 
 @Service
 @Transactional
@@ -25,7 +25,9 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao;
 	
 	@Override
-	public void addCategory(CategoryModel category) { categoryDao.saveAndFlush(category); }
+	public CategoryModel addCategory(CategoryModel category) {
+        return categoryDao.saveAndFlush(category);
+    }
 
 	@Override
 	public void deleteCategory(CategoryModel category) {

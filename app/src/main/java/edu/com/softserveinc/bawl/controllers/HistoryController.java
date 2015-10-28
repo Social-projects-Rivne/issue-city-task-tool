@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.DTOMapper;
+import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.UserHistoryDto;
 import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDto;
 import edu.com.softserveinc.bawl.models.HistoryModel;
@@ -46,7 +46,7 @@ public class HistoryController {
         List<HistoryModel> histories = historyService.getHistoriesByIssueID(id);
         List<IssueModel> allIssues = issueService.loadIssuesList();
 
-        return DTOMapper.getUserHistoryDtos(histories, allIssues, userService);
+        return DTOAssembler.getUserHistoryDtos(histories, allIssues, userService);
     }
 
     /**
@@ -61,7 +61,7 @@ public class HistoryController {
         List<IssueModel> issues = issueService.loadIssuesList();
         UserModel userModel = userService.getById(id);
 
-        return DTOMapper.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
+        return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
 
     }
 

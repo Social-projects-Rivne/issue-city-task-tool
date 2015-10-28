@@ -1,15 +1,24 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 import org.apache.log4j.Logger;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
-@Table(name = "problems")
+@Table(name = "ISSUE")
 public class IssueModel {
 
 	/**
@@ -19,34 +28,39 @@ public class IssueModel {
 
 	@Id
 	@GeneratedValue
-	@Column(unique=true, name = "id")
+	@Column(unique=true, name = "ID")
 	private int id;
 
-	@NotEmpty
-	@Column(name = "name")
+	@NotNull
+	@Column(name = "NAME")
 	private String name;
 
-	@NotEmpty
-	@Column(name = "description")
+	@NotNull
+	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@NotEmpty
-	@Column(name = "mapPointer")
+	@NotNull
+	@Column(name = "MAP_POINTER")
 	private String mapPointer;
 
-	@Column(name = "attachments")
+	@Column(name = "ATTACHMENTS")
 	private String attachments;
-	
+
 	@NotNull
-	@Column(name = "category_id")
-	private int categoryId;
-	
-	@NotNull
-	@Column(name = "priority_id")
+	@Column(name = "PRIORITY_ID")
 	private int priorityId;
 
-	@Transient
-	private int statusId;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private CategoryModel category;
+
+    @OneToMany(mappedBy="issue", fetch = FetchType.EAGER)
+    private List<HistoryModel> histories;
+
+    @Column(name="STATUS")
+    @Enumerated(EnumType.ORDINAL)
+    private IssueStatus status;
 
 	/**
 	 * Default constructor
@@ -54,14 +68,14 @@ public class IssueModel {
 	public IssueModel() {}
 
 	public IssueModel(String name, String description, String mapPointer,
-			String attachments, int categoryId, int priorityId, int statusId) {
+			String attachments, CategoryModel category, int priorityId, IssueStatus status) {
 		this.name = name;
 		this.description = description;
 		this.mapPointer = mapPointer;
 		this.attachments = attachments;
-		this.categoryId = categoryId;
+		this.category = category;
 		this.priorityId = priorityId;
-		this.statusId = statusId;
+		this.status = status;
 	}
 
 	/**
@@ -83,19 +97,19 @@ public class IssueModel {
 
 	/**
 	 * 
-	 * @return category id
+	 * @return category
 	 */
-	public int getCategoryId() {
-		return categoryId;
+	public CategoryModel getCategory() {
+		return category;
 	}
 
 	/**
-	 * Setup category id of problem
+	 * Setup category
 	 * 
-	 * @param categoryId
+	 * @param category
 	 */
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(CategoryModel category) {
+		this.category = category;
 	}
 
 	/**
@@ -188,32 +202,29 @@ public class IssueModel {
 	public void setPriorityId(int priorityId) {
 		this.priorityId = priorityId;
 	}
-	
-	/**
-	 * Return statusId
-	 *
-	 * @return statusId
-	 */
-	public int getStatusId() {
-		return statusId;
-	}
 
-	/**
-	 * Setup statusId
-	 *
-	 * @param statusId
-	 */
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
-	}
+    public List<HistoryModel> getHistories() {
+        return histories;
+    }
 
-	@Override
+    public void setHistories(List<HistoryModel> histories) {
+        this.histories = histories;
+    }
+
+    public IssueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueStatus status) {
+        this.status = status;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((attachments == null) ? 0 : attachments.hashCode());
-		result = prime * result + categoryId;
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
@@ -221,7 +232,7 @@ public class IssueModel {
 				+ ((mapPointer == null) ? 0 : mapPointer.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + priorityId;
-		result = prime * result + statusId;
+		result = prime * result + status.ordinal();
 		return result;
 	}
 
@@ -239,7 +250,7 @@ public class IssueModel {
 				return false;
 		} else if (!attachments.equals(other.attachments))
 			return false;
-		if (categoryId != other.categoryId)
+		if (category!= null && !category.equals(other.category))
 			return false;
 		if (description == null) {
 			if (other.description != null)
@@ -260,7 +271,7 @@ public class IssueModel {
 			return false;
 		if (priorityId != other.priorityId)
 			return false;
-		if (statusId != other.statusId)
+		if (status != other.status)
 			return false;
 		return true;
 	}
@@ -269,8 +280,8 @@ public class IssueModel {
 	public String toString() {
 		return "IssueModel [id=" + id + ", name=" + name + ", description="
 				+ description + ", mapPointer=" + mapPointer + ", categoryId="
-				+ categoryId + ", priorityId=" + priorityId + ", statusId="
-				+ statusId + "]";
+				+ category.getId() + ", priorityId=" + priorityId + ", statusId="
+				+ status + "]";
 	}
 
 }

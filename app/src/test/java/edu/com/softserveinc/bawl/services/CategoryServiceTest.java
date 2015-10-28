@@ -3,6 +3,7 @@ package edu.com.softserveinc.bawl.services;
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class CategoryServiceTest extends AbstractBawlTest {
         CategoryModel testModel = new CategoryModel();
         categoryService.deleteCategory(testModel);
         verify(categoryDao, times(1)).saveAndFlush(testModel);
-        assertEquals(CategoryModel.CategoryModelState.DELETED, testModel.getState());
+        assertEquals(CategoryState.DELETED, testModel.getState());
     }
 
     @Test

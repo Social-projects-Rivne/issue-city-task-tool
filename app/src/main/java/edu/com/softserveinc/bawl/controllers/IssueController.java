@@ -1,11 +1,15 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.DTOMapper;
+import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.IssueDto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.StatusModel;
-import edu.com.softserveinc.bawl.services.*;
+import edu.com.softserveinc.bawl.models.IssueStatus;
+import edu.com.softserveinc.bawl.services.CategoryService;
+import edu.com.softserveinc.bawl.services.HistoryService;
+import edu.com.softserveinc.bawl.services.IssueService;
+import edu.com.softserveinc.bawl.services.MailService;
+import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -13,9 +17,12 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,9 +41,6 @@ public class IssueController {
 	private CategoryService categoryService;
 
 	@Autowired
-	private StatusService statusService;
-	
-	@Autowired
 	private MailService mailService;
 
 	@Autowired
@@ -47,34 +51,20 @@ public class IssueController {
 
 	@PostAuthorize("hasRole('ROLE_MANAGER') or {2,5}.contains(returnObject.getStatusId())")
 	@RequestMapping("issue/{id}")
-	public @ResponseBody IssueModel getIssue(@PathVariable("id") int issueId) {
-		IssueModel issues = historyService.getLastIssueByIssueID(issueId);
-		return issues;
+	public @ResponseBody IssueDto getIssue(@PathVariable("id") int issueId) {
+		return DTOAssembler.getIssueDto(historyService.getLastIssueByIssueID(issueId));
 	}
 
 
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@RequestMapping(value = "issue/", method = RequestMethod.GET)
 	public @ResponseBody List<IssueDto> getAllIssues(){
-
-		List<IssueModel> listIssueModel= issueService.loadIssuesList();
-
-		for (IssueModel issueModel : listIssueModel){
-
-			if(issueModel.getStatusId() == 5){
-				listIssueModel.remove(issueModel);
-			}
-		}
-
-		List<IssueDto> listIssueDto = DTOMapper.getAllIssuesDto(listIssueModel);
-
-		return listIssueDto;
+		return DTOAssembler.getAllIssuesDto(issueService.loadIssuesList());
 	}
 
 	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public @ResponseBody void deleteIssue(@PathVariable("id") int issueId) {
-
 		int userId = getCurrentUserId();
 		if (userId != 0){
 			issueService.deleteProblem(issueId, userId);
@@ -85,9 +75,8 @@ public class IssueController {
  
 	@PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")//2=approved, 5=toresolve
 	@RequestMapping("get-issues")
-	public @ResponseBody List<IssueModel> getIssues() {
-		List<IssueModel> issues = historyService.getLastUniqueIssues();
-		return issues;
+	public @ResponseBody List<IssueDto> getIssues() {
+		return DTOAssembler.getAllIssuesDto(historyService.getLastUniqueIssues());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -97,49 +86,20 @@ public class IssueController {
 		int userId = getCurrentUserId();
 		if (userId != 0) {
 
-			String category = request.get("category").toString().toLowerCase();
+			String categoryName = request.get("category").toString().toLowerCase();
 			String status = request.get("status").toString().toLowerCase();
-			List<CategoryModel> categories = categoryService.loadCategoriesList();
-			List<StatusModel> statuses = statusService.loadStatusList();
-			CategoryModel categoryModel = null;
-			StatusModel statusModel = null;
-			int categoryId = 0;
-			int statusId = 0;
-			//int categoryId = categories.stream().filter(c -> c.getName() == category).findFirst().get().getId();
-			//int statusId = categories.stream().filter(c -> c.getName() == category).findFirst().get().getId();
+			CategoryModel category = categoryService.getCategoryByName(categoryName);
 
-			for (int i = 0; i < categories.size(); i++) {
-				categoryModel = categories.get(i);
-				if (category.equals(categoryModel.getName())) {
-					categoryId = categoryModel.getId();
-					break;
-				}
-			}
-
-			for (int i = 0; i < statuses.size(); i++) {
-				statusModel = statuses.get(i);
-				if (status.equals(statusModel.getName())) {
-					statusId = statusModel.getId();
-					break;
-				}
-			}
-
-			if (categoryId == 0) {
-				categoryService.addCategory(new CategoryModel(category));
-				categoryId = categoryService.getCategoryByName(category).getId();
-			}
-
-			if (statusId == 0) {
-				statusService.addStatus(new StatusModel(status));
-				statusId = statusService.getStatusByName(status).getId();
+			if (category == null) {
+				category = categoryService.addCategory(new CategoryModel(categoryName));
 			}
 
 			IssueModel issue = new IssueModel(request.get("name").toString(),
 					request.get("description").toString(), request
 					.get("mapPointer").toString(), request.get(
-					"attachments").toString(), categoryId,
+					"attachments").toString(), category,
 					Integer.parseInt(request.get("priorityId").toString()),
-					statusId);
+					IssueStatus.get(status));
 
 			try {
 				issueService.addProblem(issue, userId);
@@ -161,31 +121,19 @@ public class IssueController {
 		if(request.size() == 10) {
 			int userId = getCurrentUserId();
 			if (userId != 0) {
-				if (request.get("category") != "") {
-					String category = request.get("category").toString().toLowerCase();
-					List<CategoryModel> categories = categoryService.loadCategoriesList();
-					CategoryModel categoryModel = null;
-					int categoryId = 0;
+				final Object categoryName = request.get("category");
+				if (categoryName != null) {
+					CategoryModel category = categoryService.getCategoryByName(categoryName.toString().toLowerCase());
 					int issueId = Integer.parseInt(request.get("id").toString());
 					List<IssueModel> issueModel = issueService.loadIssuesList();
+
+					if (category == null) {
+						category = categoryService.addCategory(new CategoryModel(categoryName.toString().toLowerCase()));
+					}
 					for (IssueModel issueModelWithID : issueModel) {
 						if (issueId == issueModelWithID.getId()) {
 							IssueModel issue = issueModelWithID;
-
-							for (int i = 0; i < categories.size(); i++) {
-								categoryModel = categories.get(i);
-								if (category.equals(categoryModel.getName())) {
-									categoryId = categoryModel.getId();
-									break;
-								}
-							}
-
-							if (categoryId == 0) {
-								categoryService.addCategory(new CategoryModel(category));
-								categoryId = categoryService.getCategoryByName(category).getId();
-							}
-
-							issue.setCategoryId(categoryId);
+							issue.setCategory(category);
 							issueService.editProblem(issue, userId);
 							mailService.notifyForIssue(issueId, "Issue has been updated.");
 						}
@@ -194,8 +142,6 @@ public class IssueController {
 
 				if (request.get("status") != "") {
 					String status = request.get("status").toString().toLowerCase();
-					List<StatusModel> statuses = statusService.loadStatusList();
-					StatusModel statusModel = null;
 					int statusId = 0;
 					int issueId = Integer.parseInt(request.get("id").toString());
 					List<IssueModel> issueModel = issueService.loadIssuesList();
@@ -203,20 +149,12 @@ public class IssueController {
 						if (issueId == issueModelWithID.getId()) {
 							IssueModel issue = issueModelWithID;
 
-							for (int i = 0; i < statuses.size(); i++) {
-								statusModel = statuses.get(i);
-								if (status.equals(statusModel.getName())) {
-									statusId = statusModel.getId();
-									break;
-								}
-							}
-
 							if (!request.get("attachments").toString().equals(""))
 								issue.setAttachments(request.get("attachments").toString());
 							if (!request.get("description").toString().equals(""))
 								issue.setDescription(request.get("description").toString());
 
-							issue.setStatusId(statusId);
+							issue.setStatus(IssueStatus.get(status));
 							issueService.editProblem(issue, userId);
 							mailService.notifyForIssue(issueId, "Issue has been updated.");
 						}
@@ -235,7 +173,7 @@ public class IssueController {
 		int userId = getCurrentUserId();
 		if (userId != 0) {
 			IssueModel issue = historyService.getLastIssueByIssueID(id);
-			issue.setStatusId(5);
+			issue.setStatus(IssueStatus.RESOLVED);
 			issueService.editProblem(issue, userId);
 			mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
 		}

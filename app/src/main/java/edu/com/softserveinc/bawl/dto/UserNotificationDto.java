@@ -1,21 +1,12 @@
 package edu.com.softserveinc.bawl.dto;
 
 import java.io.Serializable;
-/**
- * Created by Oleg on 08.10.2015.
- */
-public class UserNotificationDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+public class UserNotificationDto implements Serializable {
 
     private String email;
     private String subject;
     private String message;
-
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public String getEmail() {
         return email;

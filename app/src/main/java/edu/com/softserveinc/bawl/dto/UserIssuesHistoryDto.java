@@ -1,8 +1,6 @@
 package edu.com.softserveinc.bawl.dto;
 
-/**
- * Created by lubko on 09.10.15.
- */
+
 public class UserIssuesHistoryDto {
 
     private String issueName ;
@@ -10,7 +8,6 @@ public class UserIssuesHistoryDto {
     private IssueHistoryDto issueHistoryDto;
 
     private int currentStatus;
-
 
     public String getIssueName() {
         return issueName;
