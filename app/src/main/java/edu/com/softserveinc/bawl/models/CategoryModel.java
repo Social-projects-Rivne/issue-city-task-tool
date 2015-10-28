@@ -1,16 +1,15 @@
 package edu.com.softserveinc.bawl.models;
 
+import org.apache.log4j.Logger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
-import org.apache.log4j.Logger;
-
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
  * Class for problem's category 
@@ -19,7 +18,7 @@ import java.util.List;
  *
  */
 @Entity
-@Table(name = "categories")
+@Table(name = "CATEGORIES")
 public class CategoryModel {
 
 	/**
@@ -27,25 +26,32 @@ public class CategoryModel {
      */
     public static final Logger LOG=Logger.getLogger(CategoryModel.class);
 
+    public enum CategoryModelState {
+        NEW, DELETED
+    }
 
 	//TODO: add annotation for connect this class to IssueModel
 	@Id
 	@GeneratedValue
-	@Column(unique=true, name = "id")
+	@Column(unique=true, name = "ID")
 	int id;
 
-	@NotEmpty
-	@Column(unique=true, name = "name")
+    @NotNull
+	@Column(unique=true, name = "NAME")
 	private String name;
 
-	@NotEmpty
-	@Column(unique=false, name="isdeleted")
-	private int isdeleted;
+	@NotNull
+	@Column(unique=false, name="STATE")
+    @Enumerated(EnumType.ORDINAL)
+	private CategoryModelState state;
 	
-	public CategoryModel() {}
+	public CategoryModel() {
+        setState(CategoryModelState.NEW);
+    }
 	
 	public CategoryModel(String name) {
 		this.name = name;
+        setState(CategoryModelState.NEW);
 	}
 	
 	public int getId() {
@@ -56,9 +62,9 @@ public class CategoryModel {
 		this.id = id;
 	}
 
-	public int getIsdeleted() { return isdeleted; }
+	public CategoryModelState getState() { return state; }
 
-	public void setIsdeleted(int isdeleted) { this.isdeleted = isdeleted; }
+	public void setState(CategoryModelState state) { this.state = state; }
 
 	public String getName() {
 		return name;
