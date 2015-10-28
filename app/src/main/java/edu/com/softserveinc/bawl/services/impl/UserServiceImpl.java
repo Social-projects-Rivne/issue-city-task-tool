@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 		if (Arrays.asList("_", "", null).contains(user.getPassword())) {
 			//user.setPassword(userDao.findOne(user.getId()).getPassword());
 		}
-		else 
+		else
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
 		userDao.saveAndFlush(user);

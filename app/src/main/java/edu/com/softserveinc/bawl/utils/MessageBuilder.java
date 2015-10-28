@@ -36,7 +36,7 @@ public class MessageBuilder {
         return this;
     }
 
-    public MessageBuilder setRecipients(MandrillRecipient [] recipients){
+    public MessageBuilder setRecipients(MandrillRecipient ... recipients){
         this.recipients = recipients;
         return this;
     }

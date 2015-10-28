@@ -1,11 +1,11 @@
 package edu.com.softserveinc.bawl.services;
 
-public interface MailService {
-	
-	public void notifyForIssue(int issueId, String msg);
-	
-	public void notifyUser(int userId, String msg);
-	public void notifyByAdmin(String email,String subject,String message );
+import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 
+public interface MailService {
+
+	public void notifyForIssue(int issueId, String msg);
+
+	public void sendMessage(MandrillHtmlMessage message);
 
 }
