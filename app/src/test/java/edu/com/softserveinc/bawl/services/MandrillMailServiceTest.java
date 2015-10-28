@@ -1,9 +1,13 @@
 package edu.com.softserveinc.bawl.services;
 
+import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
+import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 
+import edu.com.softserveinc.bawl.utils.MailPatterns;
+import edu.com.softserveinc.bawl.utils.MessageBuilder;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,7 +35,11 @@ public class MandrillMailServiceTest extends AbstractBawlTest{
         UserModel userModel = new UserModel();
         userModel.setName("mail test");
         userModel.setEmail("elvissrivne@gmail.com");
-        mailService.sendRegNotification(userModel);
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+                .setPattern("some text")
+                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+                .build();
+        mailService.sendMessage(mandrillMessage);
     }
 
 }
