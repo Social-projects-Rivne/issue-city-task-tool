@@ -35,7 +35,7 @@ public class MandrillMailServiceImpl implements MailService {
     /**
      *  Logger field
      */
-    public static final Logger LOG=Logger.getLogger(MandrillMailServiceImpl.class);
+    public static final Logger LOG = Logger.getLogger(MandrillMailServiceImpl.class);
 
     private static MandrillRESTRequest request = new MandrillRESTRequest();
     private static MandrillConfiguration config = new MandrillConfiguration();
@@ -43,11 +43,9 @@ public class MandrillMailServiceImpl implements MailService {
     private static HttpClient client;
     private static ObjectMapper mapper = new ObjectMapper();
     private static Properties properties = new Properties();
+    MandrillMessageRequest messageRequest;
 
     private static MandrillMailServiceImpl mailService = null;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private SubscriptionService subscriptionService;
@@ -78,11 +76,11 @@ public class MandrillMailServiceImpl implements MailService {
         return mailService;
     }
 
-    public void sendMessage(MandrillHtmlMessage message){
-        MandrillMessageRequest mmr = new MandrillMessageRequest();
-        mmr.setMessage(message);
+    public void sendMessage(MandrillHtmlMessage mandrillMessage){
+        messageRequest = new MandrillMessageRequest();
+        messageRequest.setMessage(mandrillMessage);
         try {
-            SendMessageResponse response = messagesRequest.sendMessage(mmr);
+            SendMessageResponse response = messagesRequest.sendMessage(messageRequest);
         } catch (RequestFailedException e) {
             LOG.warn(e);
         }
@@ -90,19 +88,22 @@ public class MandrillMailServiceImpl implements MailService {
 
     @Override
     public void notifyForIssue(int issueId, String msg) {
-
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
         for (SubscriptionModel sub: subs){
+            messageRequest = new MandrillMessageRequest();
             String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
             String link = properties.getProperty("mail.base_url") + "subscriptions/" + sub.getId() + "/delete/" + digest;
+            MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+                    .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
+                    .setRecipients(new MandrillRecipient("User", sub.getEmail()))
+                    .build();
+            messageRequest.setMessage(mandrillMessage);
             try {
-                MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-                        .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
-                        .setRecipients(new MandrillRecipient("User", sub.getEmail()))
-                        .build();
-            } catch (Exception ex) {
-                LOG.warn(ex);
+                SendMessageResponse response = messagesRequest.sendMessage(messageRequest);
+            } catch (RequestFailedException e) {
+                LOG.warn(e);
             }
+
         }
     }
 
