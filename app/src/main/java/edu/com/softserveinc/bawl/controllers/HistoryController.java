@@ -42,11 +42,8 @@ public class HistoryController {
      */
     @RequestMapping(value = "issue/{id}/history", method = RequestMethod.GET)
     public @ResponseBody List<UserHistoryDto> getUserHistoryAction(@PathVariable int id ) {
-
-        List<HistoryModel> histories = historyService.getHistoriesByIssueID(id);
-        List<IssueModel> allIssues = issueService.loadIssuesList();
-
-        return DTOAssembler.getUserHistoryDtos(histories, allIssues, userService);
+        IssueModel issue = issueService.getById(id);
+        return DTOAssembler.getUserHistoryDtos(issue, userService);
     }
 
     /**

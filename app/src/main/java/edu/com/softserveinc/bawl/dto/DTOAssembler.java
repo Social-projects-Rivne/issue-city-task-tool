@@ -3,7 +3,7 @@ package edu.com.softserveinc.bawl.dto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.UserService;
 
@@ -16,6 +16,17 @@ import java.util.List;
  * @see 'http://martinfowler.com/eaaCatalog/dataTransferObject.html'
  */
 public class DTOAssembler {
+
+    public static UserDTO getUserDtoFrom(UserModel userModel) {
+        UserDTO userDTO =  new UserDTO();
+        userDTO.setId(userModel.getId());
+        userDTO.setName(userModel.getName());
+        userDTO.setEmail(userModel.getEmail());
+        userDTO.setLogin(userModel.getLogin());
+        userDTO.setAvatar(userModel.getAvatar());
+        userDTO.setRoleId(String.valueOf(userModel.getRole().id));
+        return userDTO;
+    }
 
     public static List<StatusDTO> getStatusDtos() {
         List<StatusDTO> categoryDTOs = new ArrayList<>();
@@ -99,17 +110,14 @@ public class DTOAssembler {
     }
 
 
-    public static List<UserHistoryDto> getUserHistoryDtos(List<HistoryModel> histories, List<IssueModel> allIssues, UserService userService) {
+    public static List<UserHistoryDto> getUserHistoryDtos(IssueModel issue, UserService userService) {
         List<UserHistoryDto> historyDtoList = new ArrayList<UserHistoryDto>();
-        //join 2 tables on IssueId
-        for(HistoryModel historyModel : histories){
-            for(IssueModel issueModel : allIssues){
-                if (issueModel.getId() == historyModel.getIssue().getId()){
-                    UserHistoryDto userHistoryDto = getUserHistoryDto(historyModel, issueModel, userService);
-                    historyDtoList.add(userHistoryDto);
-
-                }
-            }
+        if (null == issue) {
+            return historyDtoList;
+        }
+        for(HistoryModel historyModel : issue.getHistories()){
+              UserHistoryDto userHistoryDto = getUserHistoryDto(historyModel, issue, userService);
+              historyDtoList.add(userHistoryDto);
         }
         Collections.sort(historyDtoList);
         return historyDtoList;
@@ -121,8 +129,7 @@ public class DTOAssembler {
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
         UserModel userModel = userService.getById(historyModel.getUserId());
-        String roleName = userModel.getRole_id() == 0 ? "User" : "Manager";
-        userHistoryDto.setRoleName(roleName);
+        userHistoryDto.setRoleName(userModel.getRole().get());
         userHistoryDto.setUsername(userModel.getName());
         return userHistoryDto;
     }

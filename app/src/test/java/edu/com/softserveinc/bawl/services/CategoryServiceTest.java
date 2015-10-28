@@ -3,7 +3,7 @@ package edu.com.softserveinc.bawl.services;
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.models.CategoryState;
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

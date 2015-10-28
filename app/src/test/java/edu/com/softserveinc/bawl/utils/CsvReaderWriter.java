@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.utils;
 
 import edu.com.softserveinc.bawl.models.HistoryModel;
-import edu.com.softserveinc.bawl.models.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseInt;

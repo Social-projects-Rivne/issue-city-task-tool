@@ -5,7 +5,7 @@ import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.impl.HistoryServiceImpl;
 import edu.com.softserveinc.bawl.utils.CsvReaderWriter;
 import org.junit.Before;

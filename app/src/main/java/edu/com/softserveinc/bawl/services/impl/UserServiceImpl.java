@@ -1,18 +1,17 @@
 package edu.com.softserveinc.bawl.services.impl;
 
-import java.util.Arrays;
-import java.util.Collection;
-
+import edu.com.softserveinc.bawl.dao.UserDao;
+import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
+import edu.com.softserveinc.bawl.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.com.softserveinc.bawl.dao.UserDao;
-import edu.com.softserveinc.bawl.models.UserModel;
-import edu.com.softserveinc.bawl.services.UserService;
-
-import org.apache.log4j.Logger;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Service
 @Transactional
@@ -29,6 +28,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(UserModel user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		user.setRole(UserRole.USER_NOT_CONFIRMED);
 		userDao.saveAndFlush(user);
 	}
 

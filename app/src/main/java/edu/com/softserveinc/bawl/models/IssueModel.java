@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
 import javax.persistence.Column;

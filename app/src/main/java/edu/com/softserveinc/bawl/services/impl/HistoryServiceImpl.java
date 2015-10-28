@@ -4,7 +4,7 @@ import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package edu.com.softserveinc.bawl.models;
+package edu.com.softserveinc.bawl.models.enums;
 
 public enum IssueStatus {
 

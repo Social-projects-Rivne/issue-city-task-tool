@@ -1,21 +1,23 @@
 package edu.com.softserveinc.bawl.services;
 
-import java.util.List;
-
 import edu.com.softserveinc.bawl.models.IssueModel;
+
+import java.util.List;
 
 
 public interface IssueService {
 	
-	public void addProblem(IssueModel problem, int userId);
+	void addProblem(IssueModel problem, int userId);
 
-	public void editProblem(IssueModel problem, int userId);
+	void editProblem(IssueModel problem, int userId);
 
-	public void deleteProblem(IssueModel problem, int userId);
+	void deleteProblem(IssueModel problem, int userId);
 	
-	public void deleteProblem(int issueId, int userId);
+	void deleteProblem(int issueId, int userId);
 
-	public List<IssueModel> loadIssuesList() ;
+	List<IssueModel> loadIssuesList() ;
+
+	IssueModel getById(int issueId) ;
 
 	
 	

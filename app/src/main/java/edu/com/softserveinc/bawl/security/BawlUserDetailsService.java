@@ -1,9 +1,9 @@
 package edu.com.softserveinc.bawl.security;
  
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import edu.com.softserveinc.bawl.dao.UserDao;
+import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,10 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.com.softserveinc.bawl.dao.UserDao;
-import edu.com.softserveinc.bawl.models.UserModel;
-
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
  
 @Transactional(readOnly = true)
 @Service
@@ -33,13 +32,15 @@ public class BawlUserDetailsService implements UserDetailsService {
  
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
+
 			UserModel domainUser = userDao.findByLogin(username);
-			
+			final Collection<? extends GrantedAuthority> authorities = getAuthorities(domainUser.getRole());
+
 			boolean enabled = true;
 			boolean accountNonExpired = true;
 			boolean credentialsNonExpired = true;
 			boolean accountNonLocked = true;
-			
+
 			return new User(
 					domainUser.getLogin(), 
 					domainUser.getPassword(),
@@ -47,38 +48,36 @@ public class BawlUserDetailsService implements UserDetailsService {
 					accountNonExpired,
 					credentialsNonExpired,
 					accountNonLocked,
-					getAuthorities(domainUser.getRole_id()));
-			
+					authorities);
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
-	public Collection<? extends GrantedAuthority> getAuthorities(Integer role) {
-		List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(role));
+	public static Collection<? extends GrantedAuthority> getAuthorities(UserRole role) {
+		final List<String> springGrantedAuthoritiesRoles = getSpringGrantedAuthoritiesRoles(role.id);
+		List<GrantedAuthority> authList = getGrantedAuthorities(springGrantedAuthoritiesRoles);
 		return authList;
 	}
 	
-	public List<String> getRoles(Integer role) {
+	public static List<String> getSpringGrantedAuthoritiesRoles(Integer role) {
 		List<String> roles = new ArrayList<String>();
-		
-		if (role.intValue() == 1) {
-			roles.add("ROLE_MANAGER");
-			roles.add("ROLE_ADMIN");
-
-			
-		} else if (role.intValue() == 2) {
-			roles.add("ROLE_MANAGER");
+		switch (role) {
+			case -1 : {
+				roles.add("USER_NOT_CONFIRMED");
+			}
+			case 0 : {
+				roles.add("ROLE_USER");
+			}
+			case 1 : {
+				roles.add("ROLE_MANAGER");
+				roles.add("ROLE_ADMIN");
+			}
+			case 2: {
+				roles.add("ROLE_MANAGER");
+			}
 		}
-
-		else if (role.intValue() == 0) {
-			roles.add("ROLE_USER");
-		}
-
-		else if (role.intValue() == -1) {
-			roles.add("USER_NOT_CONFIRMED");
-		}
-		
 		return roles;
 	}
 	

@@ -198,7 +198,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
-							role_id: $('#userRole').val()
+							roleId: $('#userRole').val()
 						} ).save( {}, {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();

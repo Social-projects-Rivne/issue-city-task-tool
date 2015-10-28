@@ -2,8 +2,11 @@ package edu.com.softserveinc.bawl.controllers;
 
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
+import edu.com.softserveinc.bawl.dto.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.UserDTO;
 import edu.com.softserveinc.bawl.dto.UserNotificationDto;
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
@@ -27,9 +30,6 @@ public class UserController {
 	 */
 	public static final Logger LOG=Logger.getLogger(UserController.class);
 
-	private final static int USER_NOT_CONFIRMED = -1;
-	private final static int USER = 0;
-
 	@Autowired
 	private UserService userService;
 
@@ -44,14 +44,7 @@ public class UserController {
 		return users;
 	}
 
-	private String getRoleName(int role_id) {
-		switch (role_id) {
-			case 1: return "Admin";
-			case 2: return "Manager";
-			case 3: return "User";
-			default: return "Not confirmed";
-		}
-	}
+
 
 	@RequestMapping(value = "user", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> addUserAction(
@@ -84,7 +77,7 @@ public class UserController {
 
 		try {
 			userService.editUser(userModel);
-			String role = getRoleName (userModel.getRole_id());
+			String role = userModel.getRole().get();
 			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
 					.setPattern(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel.getLogin(), role)
 					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
@@ -105,7 +98,7 @@ public class UserController {
 		try {
 			dbModel = userService.getById(user.getId());
 			if (dbModel.getPassword().equals(user.getPassword())){
-				dbModel.setRole_id(USER);
+				dbModel.setRole(UserRole.USER);
 				userService.editUser(dbModel);
 				return dbModel;
 			}
@@ -137,12 +130,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "currentuser", method = RequestMethod.GET)
-	public @ResponseBody UserModel getCurrentUserAction(){
+	public @ResponseBody UserDTO getCurrentUserAction(){
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
 			return null;
 		} else {
-			return userService.getByLogin(currentUserLoginName);
+			return DTOAssembler.getUserDtoFrom(userService.getByLogin(currentUserLoginName));
 		}
 	}
 

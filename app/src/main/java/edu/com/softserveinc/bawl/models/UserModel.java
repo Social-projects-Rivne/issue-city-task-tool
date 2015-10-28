@@ -1,17 +1,19 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull; 
-import javax.validation.constraints.Size;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-
+import edu.com.softserveinc.bawl.models.enums.UserRole;
+import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import org.apache.log4j.Logger;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 //TODO:Add comments for annotation
 //TODO:Add more constructors
@@ -61,11 +63,9 @@ public class UserModel {
     /**
      * Reole id min = 0 max = 3
 	 */ 
-//	@Size(min = 0, max = 3) 
-    @NotNull(message="It can't be empty")
     @Column(name="role_id") //name of column in table
-    //TODO: Add hibernate annotation for relation between tables
-    protected int role_id;
+	@Enumerated(EnumType.ORDINAL)
+    protected UserRole role;
     
      /**
 	 * Passvord min length = 6, max length = 32
@@ -88,17 +88,17 @@ public class UserModel {
      * @param name
      * @param email
      * @param login
-     * @param role_id
+     * @param role
      * @param password
      * @param avatar
      */
     public UserModel(String name, String email, String login,
-    		int role_id, String password, String avatar ){
+    		int role, String password, String avatar ){
     	
     	this.name = name;
     	this.email = email;
     	this.login = login;
-    	this.role_id = role_id;
+    	this.role = UserRole.getById(role);
     	this.password = password;
     	this.avatar = avatar;
     }
@@ -176,21 +176,20 @@ public class UserModel {
 		return this.login;
 	}
     
-  //Role_id get set
     /**
      * Method for setup user's Role_id
      * 
-     * @param role_id
+     * @param role
      */
-    public void setRole_id(int role_id){
-    	this.role_id = role_id;
+    public void setRole(UserRole role){
+    	this.role = role;
     }
     /**
      * 
-     * @return user's role_id
+     * @return user's role
      */
-    public int getRole_id(){
-		return this.role_id;
+    public UserRole getRole(){
+		return this.role;
 	}
     
     //Password get set
@@ -238,7 +237,7 @@ public class UserModel {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + role_id;
+		result = prime * result + role.ordinal();
 		return result;
 	}
 	@Override
@@ -277,14 +276,14 @@ public class UserModel {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (role_id != other.role_id)
+		if (role != other.role)
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		return "UserModel [id=" + id + ", name=" + name + ", email=" + email
-				+ ", login=" + login + ", role_id=" + role_id + "]";
+				+ ", login=" + login + ", role=" + role + "]";
 	}
     
 }

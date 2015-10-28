@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static edu.com.softserveinc.bawl.models.CategoryState.DELETED;
+import static edu.com.softserveinc.bawl.models.enums.CategoryState.DELETED;
 
 @Service
 @Transactional

@@ -4,7 +4,7 @@ import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.IssueDto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
