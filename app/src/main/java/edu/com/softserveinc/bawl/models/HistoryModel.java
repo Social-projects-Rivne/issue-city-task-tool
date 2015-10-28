@@ -135,4 +135,5 @@ public class HistoryModel {
                 + ", issueId=" + issueId + ", statusId=" + statusId +"]";
     }
 
+
 }
