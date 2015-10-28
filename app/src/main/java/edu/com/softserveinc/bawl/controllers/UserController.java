@@ -1,22 +1,23 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.IssueHistoryDto;
+import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
+import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.dto.UserNotificationDto;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
+import edu.com.softserveinc.bawl.utils.MailPatterns;
+import edu.com.softserveinc.bawl.utils.MessageBuilder;
+import edu.com.softserveinc.bawl.utils.PassGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collection;
 import java.util.Map;
-import java.util.Random;
-
-//import java.util.logging.Logger;
+import java.util.Properties;
 
 @Controller
 public class UserController {
@@ -25,7 +26,7 @@ public class UserController {
 	 * Logger field
 	 */
 	public static final Logger LOG=Logger.getLogger(UserController.class);
-	
+
 	private final static int USER_NOT_CONFIRMED = -1;
 	private final static int USER = 0;
 
@@ -35,7 +36,7 @@ public class UserController {
 	@RequestMapping("get-users")
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Collection<UserModel> getUsersAction() {
-		
+
 		Collection<UserModel> users = userService.loadUsersList();
 		for (UserModel user: users){
 			user.setPassword("_");
@@ -55,34 +56,40 @@ public class UserController {
 	@RequestMapping(value = "user", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> addUserAction(
 			@RequestBody UserModel user, Map<String, String> message) {
+
 		try {
 
 			userService.addUser(user);
 			UserModel dbModel = userService.getByLogin(user.getLogin());
+			Properties properties = MessageBuilder.getProperties();
+			String link = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
+					dbModel.getPassword() + "&id=" + dbModel.getId();
+			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+					.setPattern(MailPatterns.REGISTRATION_PATTERN, dbModel.getName(), link)
+					.setRecipients(new MandrillRecipient(dbModel.getName(), dbModel.getEmail()))
+					.build();
+			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 
-			message.put("message", "Successfully registered. Please confirm your email");
-			try {
-				MandrillMailServiceImpl.getMandrillMail().sendRegNotification(dbModel);
-			} catch(Exception ex){
-				message.put("message", "Something wrong with sending email");
-			}
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not added");
 		}
+		message.put("message", "Successfully registered. Please confirm your email");
+
 		return message;
 	}
 
 	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
-	//@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_ADMIN'")
 	public @ResponseBody Map<String, String> editUserAction(
-			@RequestBody UserModel user, Map<String, String> message) {
+			@RequestBody UserModel userModel, Map<String, String> message) {
 
 		try {
-			userService.editUser(user);
-			String role = getRoleName (user.getRole_id());
-			MandrillMailServiceImpl.getMandrillMail().notifyUser(user.getId(),
-					"Your account has been updated.\n\nCurrent login: "
-							+ user.getLogin() + "\nCurrent role: " + role);
+			userService.editUser(userModel);
+			String role = getRoleName (userModel.getRole_id());
+			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+					.setPattern(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel.getLogin(), role)
+					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+					.build();
+			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 			message.put("message", "User was successfully edited");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occurred! User was not updated" + ex.toString());
@@ -92,21 +99,20 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "validate-user", method = RequestMethod.POST)
-	public @ResponseBody UserModel validateUser(
-			@RequestBody UserModel user) {
-		try {
+	public @ResponseBody UserModel validateUser (@RequestBody UserModel user) {
 
-			UserModel dbModel = userService.getById(user.getId());
+		UserModel dbModel = null;
+		try {
+			dbModel = userService.getById(user.getId());
 			if (dbModel.getPassword().equals(user.getPassword())){
 				dbModel.setRole_id(USER);
 				userService.editUser(dbModel);
 				return dbModel;
 			}
-			//message.put("message", "User was successfully validated");
 		} catch (Exception ex) {
-			//message.put("message", "Some problem occurred! User was not validated" + ex.toString());
+			LOG.warn(ex);
 		}
-		return null;
+		return dbModel;
 	}
 
 	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
@@ -116,7 +122,12 @@ public class UserController {
 
 		try {
 			userService.deleteUser(id);
-			MandrillMailServiceImpl.getMandrillMail().notifyUser(id, "Your account has been terminated.");
+			UserModel userModel = userService.getById(id);
+			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+					.setPattern(MailPatterns.DELETE_ACCOUNT_PATTERN)
+					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+					.build();
+			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 			message.put("message", "User was successfully deleted");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not deleted");
@@ -124,27 +135,32 @@ public class UserController {
 
 		return message;
 	}
-		
+
 	@RequestMapping(value = "currentuser", method = RequestMethod.GET)
 	public @ResponseBody UserModel getCurrentUserAction(){
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
 			return null;
-		}
-		else {
+		} else {
 			return userService.getByLogin(currentUserLoginName);
 		}
 	}
 
 	 /* This metod send notification to email from #admin panel */
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
-	public @ResponseBody
-	Map<String, String> submittedFromData(@RequestBody UserNotificationDto userNotificationModel, Map<String, String> message) {
-		try { MandrillMailServiceImpl.getMandrillMail().notifyByAdmin(userNotificationModel.getEmail(),
-				userNotificationModel.getSubject(),userNotificationModel.getMessage() );
-			  message.put("message", "Message was successfully sended");
-		}catch (Exception ex) { message.put("message", "Some problem occured! Message was not sended");
-			}
+	public @ResponseBody Map<String, String>
+	submittedFromData(@RequestBody UserNotificationDto userNotificationModel, Map<String, String> message) {
+		try {
+			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+					.setPattern(userNotificationModel.getMessage())
+					.setRecipients(new MandrillRecipient("Bawl user", userNotificationModel.getEmail()))
+					.setSubject(userNotificationModel.getSubject())
+					.build();
+			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+			message.put("message", "Message was successfully sended");
+		} catch (Exception ex) {
+			message.put("message", "Some problem occured! Message was not sended");
+		}
 		return message ;
 	}
 
@@ -161,36 +177,20 @@ public class UserController {
 	public @ResponseBody String changeUserPassword(){
 
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
-
-		int id = userService.getByLogin(currentUserLoginName).getId();
-		UserModel userModel=userService.getById(id);
-
-		String newPassword = generatePassword(1, 5);
+		UserModel userModel = userService.getByLogin(currentUserLoginName);
+		String newPassword = PassGenerator.generate(1, 5);
 		userModel.setPassword(newPassword);
-
-		MandrillMailServiceImpl.getMandrillMail().sendPasswordToUser(userModel, newPassword);
-
-		String message="Your pass have been changed ! Watch about it on your mail ! ";
-
+		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+				.setPattern(MailPatterns.PASSWORD_RESET_PATTERN, userModel.getName())
+				.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+				.build();
+		MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 		userService.editUserPass(userModel);
-
+		String message="Your pass have been changed ! Watch about it on your mail ! ";
 		return message;
 	}
 
-	private String generatePassword (int from, int to){
 
-		StringBuilder sb = new StringBuilder();
-		int n = 8; // how many characters in password
-		String set = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"; // characters to choose from
-
-		for (int i= 0; i < n; i++) {
-			int k = (int)(Math.random()*set.length());   // random number between 0 and set.length()-1 inklusive
-			sb.append(set.charAt(k));
-		}
-		String result = sb.toString();
-
-		return result;
-	}
 }
 
 
