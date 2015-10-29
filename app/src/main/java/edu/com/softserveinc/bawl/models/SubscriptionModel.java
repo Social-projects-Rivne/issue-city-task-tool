@@ -1,25 +1,17 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-
+import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.Email;
 
-import org.apache.log4j.Logger;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "subscriptions", uniqueConstraints=@UniqueConstraint(columnNames={"issueId", "email"}))
+
 public class SubscriptionModel {
 
-	/**
-     *  Logger field
-     */
-    public static final Logger LOG=Logger.getLogger(SubscriptionModel.class);
+    public static final Logger LOG = Logger.getLogger(SubscriptionModel.class);
 	
 	@Id
 	@GeneratedValue
@@ -34,12 +26,15 @@ public class SubscriptionModel {
 	@Column(name = "email")
 	private String email;
 
-	public SubscriptionModel() {
-	}
+	public SubscriptionModel() {}
 
 	public SubscriptionModel(int issueId, String email) {
 		this.issueId = issueId;
 		this.email = email;
+	}
+
+	public static Logger getLOG() {
+		return LOG;
 	}
 
 	public int getId() {
@@ -99,8 +94,7 @@ public class SubscriptionModel {
 
 	@Override
 	public String toString() {
-		return "SubscriptionModel [id=" + id + ", issueId=" + issueId
-				+ ", email=" + email + "]";
+		return "SubscriptionModel [id=" + id + ", issueId=" + issueId + ", email=" + email + "]";
 	}
 
 }

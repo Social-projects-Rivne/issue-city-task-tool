@@ -1,8 +1,8 @@
 package edu.com.softserveinc.bawl.services;
 
-import java.util.Collection;
-
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
+
+import java.util.Collection;
 
 public interface SubscriptionService {
 	
@@ -15,6 +15,5 @@ public interface SubscriptionService {
 	public void delete(int id);
 	
 	public Collection<SubscriptionModel> listByIssueId(int issueId);
-	
 
 }
