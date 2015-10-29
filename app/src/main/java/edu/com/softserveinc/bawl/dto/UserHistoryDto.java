@@ -36,6 +36,9 @@ public class UserHistoryDto implements Comparable<UserHistoryDto> {
     }
 
     public String getDate() {
+        if (date == null) {
+            return null;
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.mm.yyyy");
         return simpleDateFormat.format(date);
     }
@@ -47,6 +50,9 @@ public class UserHistoryDto implements Comparable<UserHistoryDto> {
     public void setRoleName(String roleName) {  this.roleName = roleName;  }
 
     public static int compare(UserHistoryDto o1, UserHistoryDto o2) {
+        if (o1.date == null || o2.date == null) {
+            return -1;
+        }
         return o1.date.compareTo(o2.date);
     }
 

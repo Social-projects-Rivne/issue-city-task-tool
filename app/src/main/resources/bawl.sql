@@ -161,7 +161,7 @@ CREATE TABLE `users` (
   `login` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`),
   UNIQUE KEY `UK_ow0gan20590jrb00upg3va2fn` (`login`)

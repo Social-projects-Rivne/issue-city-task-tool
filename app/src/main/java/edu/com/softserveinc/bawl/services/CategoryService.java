@@ -1,13 +1,13 @@
 package edu.com.softserveinc.bawl.services;
 
-import java.util.List;
-
 import edu.com.softserveinc.bawl.models.CategoryModel;
+
+import java.util.List;
 
 public interface CategoryService {
 	
 	
-	public void addCategory(CategoryModel category);
+	public CategoryModel addCategory(CategoryModel category);
 
 	public void deleteCategory(CategoryModel category);
 

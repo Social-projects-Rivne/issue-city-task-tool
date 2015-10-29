@@ -1,18 +1,23 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
 @Entity
-@Table(name="history")
+@Table(name="HISTORY")
 public class HistoryModel {
 
     /**
@@ -22,32 +27,27 @@ public class HistoryModel {
 
     @Id
     @GeneratedValue
-    @Column(unique=true, name="id")
+    @Column(unique=true, name="ID")
     private int id;
 
-    @Column(name="issue_id")
-    private int issueId;
-
-    @Column(name="user_id")
+    @Column(name="USER_ID")
     private int userId;
 
-    @Column(name="status_id")
-    private int statusId;
+    @Column(name="STATUS")
+    @Enumerated(EnumType.ORDINAL)
+    private IssueStatus status;
 
-    @Column(name="date")
+    @Column(name="DATE")
     private Date date;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "ISSUE_ID")
+    private IssueModel issue;
 
+    private int issueId;
 
-
-    public HistoryModel(){};
-
-    public HistoryModel(int issueId, int userId, int statusId) {
-        this.issueId = issueId;
-        this.userId = userId;
-        this.statusId = statusId;
-    }
-
+    public HistoryModel(){}
 
 
     public int getId() {
@@ -66,20 +66,16 @@ public class HistoryModel {
         this.userId = userId;
     }
 
-    public int getIssueId() {
-        return issueId;
+    public IssueStatus getStatus() {
+        return status;
     }
 
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
+    public void setStatus(IssueStatus status) {
+        this.status = status;
     }
 
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatusId(int status) {
+        this.status = IssueStatus.get(status);
     }
 
     public Date getDate() {
@@ -90,16 +86,29 @@ public class HistoryModel {
         this.date = date;
     }
 
+    public IssueModel getIssue() {
+        return issue;
+    }
 
+    public void setIssue(IssueModel issue) {
+        this.issue = issue;
+    }
 
+    public int getIssueId() {
+        return issueId;
+    }
+
+    public void setIssueId(int issueId) {
+        this.issueId = issueId;
+    }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
-        result = prime * result + issueId;
-        result = prime * result + statusId;
+        result = prime * result + issue.getId();
+        result = prime * result + status.ordinal();
         result = prime * result + userId;
         return result;
     }
@@ -116,11 +125,11 @@ public class HistoryModel {
 
         if (id != other.id)
             return false;
-        if (issueId != other.issueId)
+        if (issue == null || (issue.getId() != other.issue.getId()))
             return false;
         if (userId != other.userId)
             return false;
-        if (statusId != other.statusId)
+        if (status.ordinal() != other.status.ordinal())
             return false;
 
         if (!date.equals(other.date))
@@ -132,7 +141,7 @@ public class HistoryModel {
     @Override
     public String toString() {
         return "HistoryModel [id=" + id + ", userId=" + userId
-                + ", issueId=" + issueId + ", statusId=" + statusId +"]";
+                + ", issueId=" + issue.getId() + ", statusId=" + status +"]";
     }
 
 

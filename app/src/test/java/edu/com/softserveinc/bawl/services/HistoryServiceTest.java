@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.impl.HistoryServiceImpl;
 import edu.com.softserveinc.bawl.utils.CsvReaderWriter;
 import org.junit.Before;
@@ -74,7 +75,7 @@ public class HistoryServiceTest extends AbstractBawlTest {
         historyService.deleteHistory(historyModel);
 
         verify(historyDao, times(1)).saveAndFlush(historyModel);
-        assertEquals(4, historyModel.getStatusId());
+        assertEquals(IssueStatus.DELETED, historyModel.getStatus());
     }
 
 
@@ -95,7 +96,7 @@ public class HistoryServiceTest extends AbstractBawlTest {
         List<HistoryModel> findHistories = historyService.getHistoriesByIssueID(issueId);
 
         for(HistoryModel model : findHistories){
-            assertEquals(issueId, model.getIssueId() );
+            assertEquals(issueId, model.getIssue().getId() );
 
         }
     }
@@ -105,12 +106,14 @@ public class HistoryServiceTest extends AbstractBawlTest {
 
         IssueModel issueModel1 = new IssueModel();
         issueModel1.setId(1);
+        issueModel1.setStatus(IssueStatus.NEW);
         IssueModel issueModel2 = new IssueModel();
         issueModel2.setId(2);
+        issueModel2.setStatus(IssueStatus.NEW);
         HistoryModel historyModel1 = new HistoryModel();
-        historyModel1.setIssueId(1);
+        historyModel1.setIssue(issueModel1);
         HistoryModel historyModel2 = new HistoryModel();
-        historyModel2.setIssueId(2);
+        historyModel2.setIssue(issueModel2);
         List<HistoryModel> historyModels = new ArrayList<>();
         historyModels.add(historyModel1);
         historyModels.add(historyModel2);
@@ -120,8 +123,10 @@ public class HistoryServiceTest extends AbstractBawlTest {
         List<IssueModel> expectedIssueModels = new ArrayList<>();
         IssueModel expectedIssueModel1 = new IssueModel();
         expectedIssueModel1.setId(1);
+        expectedIssueModel1.setStatus(IssueStatus.NEW);
         IssueModel expectedIssueModel2 = new IssueModel();
         expectedIssueModel2.setId(2);
+        expectedIssueModel2.setStatus(IssueStatus.NEW);
         expectedIssueModels.add(expectedIssueModel1);
         expectedIssueModels.add(expectedIssueModel2);
 
@@ -137,12 +142,15 @@ public class HistoryServiceTest extends AbstractBawlTest {
         int issueId = 1;
         IssueModel issueModel = new IssueModel();
         issueModel.setId(issueId);
+        issueModel.setStatus(IssueStatus.NEW);
         HistoryModel historyModel = mock(HistoryModel.class);
         when(historyDao.getLastByIssueIDHistory(issueId)).thenReturn(historyModel);
-        when(historyModel.getIssueId()).thenReturn(issueId);
+        when(historyModel.getIssue()).thenReturn(issueModel);
+        when(historyModel.getStatus()).thenReturn(IssueStatus.NEW);
         when(issueDao.findOne(1)).thenReturn(issueModel);
         IssueModel expectedModel = new IssueModel();
         expectedModel.setId(issueId);
+        expectedModel.setStatus(IssueStatus.NEW);
 
         IssueModel actualModel = historyService.getLastIssueByIssueID(issueId);
 

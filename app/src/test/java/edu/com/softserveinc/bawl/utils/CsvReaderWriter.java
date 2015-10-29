@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.utils;
 
 import edu.com.softserveinc.bawl.models.HistoryModel;
-import edu.com.softserveinc.bawl.models.StatusModel;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseInt;
@@ -89,7 +89,7 @@ public class CsvReaderWriter {
         }
     }
 
-    public static void writeStatusModelCsv( List<StatusModel> statusModels) throws IOException {
+    public static void writeStatusModelCsv( List<IssueStatus> statusModels) throws IOException {
         ICsvBeanWriter beanWriter = null;
         try {
             beanWriter = new CsvBeanWriter(new FileWriter( new File(PATH_STATUS_MODEL_CSV)),
@@ -102,7 +102,7 @@ public class CsvReaderWriter {
             // write the header
             beanWriter.writeHeader(header);
             // write the beans
-            for( final StatusModel model : statusModels ) {
+            for( final IssueStatus model : statusModels ) {
                 beanWriter.write(model, header, processors);
             }
         }
@@ -113,18 +113,18 @@ public class CsvReaderWriter {
         }
     }
 
-    public static List<StatusModel> readStatusModelCsv() throws IOException {
+    public static List<IssueStatus> readStatusModelCsv() throws IOException {
 
         ICsvBeanReader beanReader = null;
-        List<StatusModel> statusModels = new ArrayList<StatusModel>();
+        List<IssueStatus> statusModels = new ArrayList<IssueStatus>();
         try {
             beanReader = new CsvBeanReader(new FileReader(PATH_STATUS_MODEL_CSV), CsvPreference.STANDARD_PREFERENCE);
 
             // the header elements are used to map the values to the bean (names must match)
             final String[] header = beanReader.getHeader(true);
             final CellProcessor[] processors = getStatusModelReaderProcessors();
-            StatusModel statusModel = null;
-            while( (statusModel = beanReader.read(StatusModel.class, header, processors)) != null ) {
+            IssueStatus statusModel = null;
+            while( (statusModel = beanReader.read(IssueStatus.class, header, processors)) != null ) {
                 statusModels.add(statusModel);
             }
         }

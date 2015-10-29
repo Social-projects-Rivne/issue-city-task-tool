@@ -4,6 +4,7 @@ import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public void deleteHistory(HistoryModel history) {
-        history.setStatusId(4);
+        history.setStatus(IssueStatus.DELETED);
         historyDao.saveAndFlush(history);
     }
 
@@ -60,21 +61,19 @@ public class HistoryServiceImpl implements HistoryService {
 
     private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> histories) {
         List<IssueModel> issues = new ArrayList<>();
-        for(HistoryModel historyModel : histories){
-            IssueModel issueModel = issueDao.findOne(historyModel.getIssueId());
-            if (issueModel != null) {
-                issueModel.setStatusId(historyModel.getStatusId());
-                issues.add(issueModel);
-            }
-        }
+        histories.forEach(historyModel -> {
+            issues.add(historyModel.getIssue());
+        });
         return issues;
     }
 
    @Override
     public IssueModel getLastIssueByIssueID(int issueId) {
         HistoryModel lastAddedHistoryModel = historyDao.getLastByIssueIDHistory(issueId);
-        IssueModel issueModel = issueDao.findOne(lastAddedHistoryModel.getIssueId());
-        issueModel.setStatusId(lastAddedHistoryModel.getStatusId());
+        final IssueModel issueModel = lastAddedHistoryModel.getIssue();
+        if (null != issueModel) {
+            issueModel.setStatus(lastAddedHistoryModel.getStatus());
+        }
         return issueModel;
     }
 

@@ -1,15 +1,18 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import org.apache.log4j.Logger;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ import java.util.List;
  *
  */
 @Entity
-@Table(name = "categories")
+@Table(name = "CATEGORY")
 public class CategoryModel {
 
 	/**
@@ -27,25 +30,30 @@ public class CategoryModel {
      */
     public static final Logger LOG=Logger.getLogger(CategoryModel.class);
 
-
-	//TODO: add annotation for connect this class to IssueModel
-	@Id
+    @Id
 	@GeneratedValue
-	@Column(unique=true, name = "id")
+	@Column(unique=true, name = "ID")
 	int id;
 
-	@NotEmpty
-	@Column(unique=true, name = "name")
+    @NotNull
+	@Column(unique=true, name = "NAME")
 	private String name;
 
-	@NotEmpty
-	@Column(unique=false, name="isdeleted")
-	private int isdeleted;
+	@NotNull
+	@Column(unique=false, name="STATE")
+    @Enumerated(EnumType.ORDINAL)
+	private CategoryState state;
+
+    @OneToMany(mappedBy="category", fetch = FetchType.EAGER)
+    private List<IssueModel> issues;
 	
-	public CategoryModel() {}
+	public CategoryModel() {
+        setState(CategoryState.NEW);
+    }
 	
 	public CategoryModel(String name) {
 		this.name = name;
+        setState(CategoryState.NEW);
 	}
 	
 	public int getId() {
@@ -56,9 +64,9 @@ public class CategoryModel {
 		this.id = id;
 	}
 
-	public int getIsdeleted() { return isdeleted; }
+	public CategoryState getState() { return state; }
 
-	public void setIsdeleted(int isdeleted) { this.isdeleted = isdeleted; }
+	public void setState(CategoryState state) { this.state = state; }
 
 	public String getName() {
 		return name;
@@ -68,37 +76,11 @@ public class CategoryModel {
 		this.name = name;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    public List<IssueModel> getIssues() {
+        return issues;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CategoryModel other = (CategoryModel) obj;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "CategoryModel [id=" + id + ", name=" + name + "]";
-	}
-
+    public void setIssues(List<IssueModel> issues) {
+        this.issues = issues;
+    }
 }

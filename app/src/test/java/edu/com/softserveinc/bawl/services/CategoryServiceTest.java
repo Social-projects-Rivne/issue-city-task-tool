@@ -3,20 +3,16 @@ package edu.com.softserveinc.bawl.services;
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.powermock.reflect.Whitebox;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by alex on 21.10.15.
@@ -49,7 +45,7 @@ public class CategoryServiceTest extends AbstractBawlTest {
         CategoryModel testModel = new CategoryModel();
         categoryService.deleteCategory(testModel);
         verify(categoryDao, times(1)).saveAndFlush(testModel);
-        assertEquals(1, testModel.getIsdeleted());
+        assertEquals(CategoryState.DELETED, testModel.getState());
     }
 
     @Test

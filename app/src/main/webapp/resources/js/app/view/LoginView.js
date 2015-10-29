@@ -61,7 +61,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 										//routing by user's role
 
 										//If user didn't validate his email
-										if(that.currentUser.get('role_id') == USER_NOT_CONFIRMED){
+										if(that.currentUser.get('roleId') == USER_NOT_CONFIRMED){
 
 											//TODO must be beter way to do it
 											$.ajax('auth/logout');
@@ -77,11 +77,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 											return;
 										}
 
-										else if(that.currentUser.get('role_id') == 1){
+										else if(that.currentUser.get('roleId') == 1){
 											adminView = new AdminView( { el: "#container" } );
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('admin',{trigger:true});
-										} else if(that.currentUser.get('role_id') == 2){
+										} else if(that.currentUser.get('roleId') == 2){
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('manager',{trigger:true});
 										} else {
@@ -136,11 +136,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						$('.navbar  #manager').hide();
 					} else {
 						$('.navbar  #login').hide();
-						if(this.currentUser.get('role_id') == 1){
+						if(this.currentUser.get('roleId') == 1){
 							$('.navbar  #admin').show();
 							$('.navbar  #manager').show();
 						} else{ 
-							if(this.currentUser.get('role_id') == 2 ){
+							if(this.currentUser.get('roleId') == 2 ){
 								$('.navbar  #admin').hide();
 								$('.navbar  #manager').show();
 							} 

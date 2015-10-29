@@ -3,6 +3,7 @@ package edu.com.softserveinc.bawl.services;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 
@@ -15,13 +16,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-/**
- * Created by Illia on 10/27/2015.
- */
-@RunWith(SpringJUnit4ClassRunner.class)
+import java.util.Collection;
+
 public class MandrillMailServiceTest extends AbstractBawlTest{
 
-    @Autowired
+    private final String EMAIL = "elvissrivne@gmail.com";
+    private final String MESSAGE_PATTERN = "some text";
+    final int ISSUE_ID = 1;
+
     MandrillMailServiceImpl mailService;
 
     @Before
@@ -33,13 +35,20 @@ public class MandrillMailServiceTest extends AbstractBawlTest{
     @Ignore
     public void sendRegNotification_shouldSendNotification(){
         UserModel userModel = new UserModel();
-        userModel.setName("mail test");
-        userModel.setEmail("elvissrivne@gmail.com");
+        userModel.setEmail(EMAIL);
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-                .setPattern("some text")
+                .setPattern(MESSAGE_PATTERN)
                 .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
                 .build();
         mailService.sendMessage(mandrillMessage);
     }
+
+    @Test
+    @Ignore
+    //some problems with subscriptions service
+    public void notifyForIssue_shouldSendNotificationToUsers(){
+        mailService.notifyForIssue(ISSUE_ID, MESSAGE_PATTERN);
+    }
+
 
 }

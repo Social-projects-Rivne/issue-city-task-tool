@@ -21,7 +21,6 @@ public class IssueHistoryDto {
         this.date = date;
     }
 
-
     public String getChangedByUser() {
         return changedByUser;
     }

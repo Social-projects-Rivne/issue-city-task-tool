@@ -1,15 +1,11 @@
 package edu.com.softserveinc.bawl.services;
 
-import java.util.List;
+import edu.com.softserveinc.bawl.dto.StatusDTO;
 
-import edu.com.softserveinc.bawl.models.StatusModel;
+import java.util.List;
 
 public interface StatusService {
 
-	public void addStatus(StatusModel status);
-	
-	public StatusModel getStatusByName(String name);
-	
-	public List<StatusModel> loadStatusList();
+	public List<StatusDTO> loadStatusList();
 
 }

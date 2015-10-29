@@ -2,7 +2,7 @@ package edu.com.softserveinc.bawl.controllers
 
 import java.util
 
-import edu.com.softserveinc.bawl.models.CategoryModel
+import edu.com.softserveinc.bawl.models.{IssueModel, CategoryModel}
 import edu.com.softserveinc.bawl.services.CategoryService
 import org.junit.{Before, Test}
 import org.mockito.Mockito._
@@ -33,6 +33,7 @@ class CategoryControllerFunctionalTest extends CategoryControllerTestData {
     val model: CategoryModel = new CategoryModel
     model.setId(1)
     model.setName(FOOBAR)
+    model.setIssues(new util.ArrayList[IssueModel])
     categories.add(model)
     when(categoryService.loadCategoriesList()).thenReturn(categories)
     mockMvc.perform(get(GET)).andExpect(status.isOk).andExpect(content.string(OBJECT_IN_COLLECTION))
