@@ -91,7 +91,7 @@ public class IssueController {
 			CategoryModel category = categoryService.getCategoryByName(categoryName);
 
 			if (category == null) {
-				category = categoryService.addCategory(new CategoryModel(categoryName));
+				category = categoryService.addCategory(categoryName);
 			}
 
 			IssueModel issue = new IssueModel(request.get("name").toString(),
@@ -128,7 +128,7 @@ public class IssueController {
 					List<IssueModel> issueModel = issueService.loadIssuesList();
 
 					if (category == null) {
-						category = categoryService.addCategory(new CategoryModel(categoryName.toString().toLowerCase()));
+						category = categoryService.addCategory(categoryName.toString().toLowerCase());
 					}
 					for (IssueModel issueModelWithID : issueModel) {
 						if (issueId == issueModelWithID.getId()) {

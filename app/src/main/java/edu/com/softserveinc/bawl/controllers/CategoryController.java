@@ -1,8 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.dto.CategoryDTO;
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
-import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<CategoryDTO> getCategories() {
-        return DTOAssembler.getCategoryDtoFrom(service.loadCategoriesList());
+        return service.loadCategoriesWithoutIssues();
     }
 
     /**
@@ -54,7 +52,7 @@ public class CategoryController {
     @ResponseBody
     public Map<String, String> addCategory(@RequestBody CategoryDTO category, Map<String, String> message) {
         try {
-             service.addCategory(new CategoryModel(category.getName()));
+             service.addCategory(category);
              message.put(MESSAGE_TEXT, SUCCESS);
         } catch (Exception e) {
              message.put(MESSAGE_TEXT, FAILURE);

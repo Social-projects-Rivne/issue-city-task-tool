@@ -39,19 +39,22 @@ public class DTOAssembler {
         return categoryDTOs;
     }
 
-    public static List<CategoryDTO> getCategoryDtoFrom(List<CategoryModel> categoryModels) {
+    public static List<CategoryDTO> getCategoryDtoFrom(List<CategoryModel> categoryModels, boolean mapIssues) {
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         categoryModels.forEach(categoryModel -> {
-            categoryDTOs.add(getCategoryDtoFrom(categoryModel));
+            categoryDTOs.add(getCategoryDtoFrom(categoryModel, mapIssues));
         });
         return categoryDTOs;
     }
 
-    public static CategoryDTO getCategoryDtoFrom(CategoryModel categoryModel) {
+    public static CategoryDTO getCategoryDtoFrom(CategoryModel categoryModel, boolean mapIssues) {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(categoryModel.getId());
         categoryDTO.setName(categoryModel.getName());
         categoryDTO.setState(categoryModel.getState().ordinal());
+        if (mapIssues) {
+            categoryDTO.setIssueDtoList(getAllIssuesDto(categoryModel.getIssues()));
+        }
         return  categoryDTO;
     }
     /**
@@ -61,10 +64,10 @@ public class DTOAssembler {
      */
     public static List<IssueDto> getAllIssuesDto(List<IssueModel> allIssues){
         List<IssueDto> listIssueDto = new ArrayList<>(allIssues.size());
-        allIssues.forEach( issueModel -> {
-                        if(issueModel.getStatus() != IssueStatus.RESOLVED) {
-                            listIssueDto.add(getIssueDto(issueModel));
-                        }
+        allIssues.forEach(issueModel -> {
+                    if (issueModel.getStatus() != IssueStatus.RESOLVED) {
+                        listIssueDto.add(getIssueDto(issueModel));
+                    }
                 }
         );
         return listIssueDto;

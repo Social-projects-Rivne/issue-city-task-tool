@@ -1,6 +1,8 @@
 package edu.com.softserveinc.bawl.services.impl;
 
 import edu.com.softserveinc.bawl.dao.CategoryDao;
+import edu.com.softserveinc.bawl.dto.CategoryDTO;
+import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import org.apache.log4j.Logger;
@@ -25,9 +27,15 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao;
 	
 	@Override
-	public CategoryModel addCategory(CategoryModel category) {
-        return categoryDao.saveAndFlush(category);
+	public CategoryModel addCategory(CategoryDTO category) {
+		return addCategory(category.getName());
     }
+
+	@Override
+	public CategoryModel addCategory(String categoryName) {
+		final CategoryModel categoryModel = new CategoryModel(categoryName);
+		return categoryDao.saveAndFlush(categoryModel);
+	}
 
 	@Override
 	public void deleteCategory(CategoryModel category) {
@@ -46,8 +54,13 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryModel> loadCategoriesList() {
-		return categoryDao.findAll();
+	public List<CategoryDTO> loadCategoriesWithoutIssues() {
+		return DTOAssembler.getCategoryDtoFrom(categoryDao.findAll(), false);
+	}
+
+	@Override
+    public List<CategoryDTO> loadCategoriesListWithIssues() {
+		return DTOAssembler.getCategoryDtoFrom(categoryDao.findAll(), true);
 	}
 
 	@Override

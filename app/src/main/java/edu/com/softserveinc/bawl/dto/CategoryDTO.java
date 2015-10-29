@@ -1,6 +1,8 @@
 package edu.com.softserveinc.bawl.dto;
 
 
+import java.util.List;
+
 public class CategoryDTO {
 
     private int id;
@@ -8,6 +10,8 @@ public class CategoryDTO {
     private String name;
 
     private int state;
+
+    private List<IssueDto> issueDtoList;
 
     public int getId() {
         return id;
@@ -31,5 +35,13 @@ public class CategoryDTO {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public List<IssueDto> getIssueDtoList() {
+        return issueDtoList;
+    }
+
+    public void setIssueDtoList(List<IssueDto> issueDtoList) {
+        this.issueDtoList = issueDtoList;
     }
 }

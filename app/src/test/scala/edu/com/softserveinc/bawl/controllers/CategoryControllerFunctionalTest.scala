@@ -2,6 +2,7 @@ package edu.com.softserveinc.bawl.controllers
 
 import java.util
 
+import edu.com.softserveinc.bawl.dto.{IssueDto, CategoryDTO}
 import edu.com.softserveinc.bawl.models.{IssueModel, CategoryModel}
 import edu.com.softserveinc.bawl.services.CategoryService
 import org.junit.{Before, Test}
@@ -29,13 +30,12 @@ class CategoryControllerFunctionalTest extends CategoryControllerTestData {
   @Test
   @throws(classOf[Exception])
   def testGetCategories() {
-    val categories = new util.ArrayList[CategoryModel]
-    val model: CategoryModel = new CategoryModel
+    val categories = new util.ArrayList[CategoryDTO]
+    val model: CategoryDTO = new CategoryDTO
     model.setId(1)
     model.setName(FOOBAR)
-    model.setIssues(new util.ArrayList[IssueModel])
     categories.add(model)
-    when(categoryService.loadCategoriesList()).thenReturn(categories)
+    when(categoryService.loadCategoriesWithoutIssues()).thenReturn(categories)
     mockMvc.perform(get(GET)).andExpect(status.isOk).andExpect(content.string(OBJECT_IN_COLLECTION))
   }
 

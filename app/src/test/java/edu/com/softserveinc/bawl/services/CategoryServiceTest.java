@@ -2,6 +2,7 @@ package edu.com.softserveinc.bawl.services;
 
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
+import edu.com.softserveinc.bawl.dto.CategoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -35,9 +37,9 @@ public class CategoryServiceTest extends AbstractBawlTest {
 
     @Test
     public void addCategory_shouldCallAddCategoryToDao() {
-        CategoryModel mockCategoryModel = mock(CategoryModel.class);
+        CategoryDTO mockCategoryModel = mock(CategoryDTO.class);
         categoryService.addCategory(mockCategoryModel);
-        verify(categoryDao, times(1)).saveAndFlush(mockCategoryModel);
+        verify(categoryDao, times(1)).saveAndFlush(any(CategoryModel.class));
     }
 
     @Test
@@ -72,7 +74,7 @@ public class CategoryServiceTest extends AbstractBawlTest {
 
     @Test
     public void loadCategoryList_shouldReturnListOfAllCategories() {
-        categoryService.loadCategoriesList();
+        categoryService.loadCategoriesWithoutIssues();
         verify(categoryDao, times(1)).findAll();
     }
 }
