@@ -22,9 +22,8 @@ import java.util.Properties;
 
 public class MandrillMailServiceIntegrationTest extends AbstractBawlTest{
 
-    private final String RIGHT_EMAIL = "elvissrivne@gmail.com";
+    private final String RIGHT_EMAIL = "bawl.java@gmail.com";
     private final String WRONG_EMAIL = "123@123.123";
-
     private final String MESSAGE_PATTERN = "some text";
     private final String USERNAME = "Username";
     private final String PASSWORD = "1234";
@@ -39,7 +38,6 @@ public class MandrillMailServiceIntegrationTest extends AbstractBawlTest{
     }
 
     @Test
-    //@Ignore
     public void sendRegNotification_WithRightEmail_shouldSendNotification() throws RequestFailedException {
         UserModel userModel = getValidUserModel();
         Properties properties = MessageBuilder.getProperties();
@@ -68,7 +66,6 @@ public class MandrillMailServiceIntegrationTest extends AbstractBawlTest{
     }
 
     @Test
-    @Ignore
     //some problems with subscriptions service
     public void notifyForIssue_shouldSendNotificationToUsers() throws RequestFailedException {
         mailService.notifyForIssue(ISSUE_ID, MESSAGE_PATTERN);

@@ -84,7 +84,6 @@ public class MandrillMailServiceImpl implements MailService {
         try {
             response = messagesRequest.sendMessage(messageRequest);
         } catch (RequestFailedException e) {
-            System.out.println("My exception " + e);
             throw e;
         }
         if(!isValidResponse(response)){

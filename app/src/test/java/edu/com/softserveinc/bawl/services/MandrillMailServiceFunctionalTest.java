@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
  */
 public class MandrillMailServiceFunctionalTest extends AbstractBawlTest {
 
-    private final String EMAIL = "elvissrivne@gmail.com";
+    private final String EMAIL = "bawl.java@gmail.com";
     private final String MESSAGE_PATTERN = "some text";
     final int ISSUE_ID = 1;
     final String VALID_SENT_STATUS = "sent";
