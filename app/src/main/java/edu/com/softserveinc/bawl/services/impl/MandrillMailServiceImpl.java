@@ -68,10 +68,11 @@ public class MandrillMailServiceImpl implements MailService {
         request.setHttpClient(client);
     }
 
+    //TODO don't do this. you live in container so use beans approach
     public static MandrillMailServiceImpl getMandrillMail(){
         if (mailService == null){
             mailService = new MandrillMailServiceImpl();
-            initialize();
+            initialize(); // TODO must bi initialized by container
         }
         return mailService;
     }
