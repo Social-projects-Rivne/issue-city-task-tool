@@ -23,7 +23,7 @@ public class SubscriptionServiceTest extends AbstractBawlTest {
     public void setup() {
         subscriptionService = new SubscriptionServiceImpl();
         subscriptionDao = mock(SubscriptionDao.class);
-        Whitebox.setInternalState(subscriptionService, "subscriptionDao",subscriptionDao);
+        Whitebox.setInternalState(subscriptionService, "SubscriptionDao",subscriptionDao);
     }
 
     @Test

@@ -4,11 +4,13 @@ import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
+import com.cribbstechnologies.clients.mandrill.model.response.message.MessageResponse;
 import com.cribbstechnologies.clients.mandrill.model.response.message.SendMessageResponse;
 import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.com.softserveinc.bawl.exception.MailSendException;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
@@ -20,8 +22,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Properties;
 
 /**
@@ -75,34 +77,42 @@ public class MandrillMailServiceImpl implements MailService {
         return mailService;
     }
 
-    public void sendMessage(MandrillHtmlMessage mandrillMessage){
+    public void sendMessage(MandrillHtmlMessage mandrillMessage) throws RequestFailedException {
         messageRequest = new MandrillMessageRequest();
         messageRequest.setMessage(mandrillMessage);
+        SendMessageResponse response = null;
         try {
-            SendMessageResponse response = messagesRequest.sendMessage(messageRequest);
+            response = messagesRequest.sendMessage(messageRequest);
         } catch (RequestFailedException e) {
-            LOG.warn(e);
+            throw e;
         }
+        if(!isValidResponse(response)){
+            throw new MailSendException("Can't send email");
+        }
+
+    }
+    private boolean isValidResponse(SendMessageResponse response){
+        Iterator<MessageResponse> iterator = response.getList().iterator();
+        while (iterator.hasNext()){
+            MessageResponse messageResponse = iterator.next();
+            if(messageResponse.getStatus().equals("sent")){
+                return true;
+            }
+        };
+        return false;
     }
 
     @Override
-    public void notifyForIssue(int issueId, String msg) {
+    public void notifyForIssue(int issueId, String msg) throws RequestFailedException {
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
         for (SubscriptionModel sub: subs){
-            messageRequest = new MandrillMessageRequest();
             String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
             String link = properties.getProperty("mail.base_url") + "subscriptions/" + sub.getId() + "/delete/" + digest;
             MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                     .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
                     .setRecipients(new MandrillRecipient("User", sub.getEmail()))
                     .build();
-            messageRequest.setMessage(mandrillMessage);
-            try {
-                SendMessageResponse response = messagesRequest.sendMessage(messageRequest);
-            } catch (RequestFailedException e) {
-                LOG.warn(e);
-            }
-
+            sendMessage(mandrillMessage);
         }
     }
 
