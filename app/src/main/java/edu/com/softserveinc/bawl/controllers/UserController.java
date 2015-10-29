@@ -161,9 +161,10 @@ public class UserController {
 		return message ;
 	}
 
-	@RequestMapping(value="user/{id}/changename/{newname}", method = RequestMethod.GET)
+	@RequestMapping(value="user/changename/{newname}", method = RequestMethod.GET)
 	public @ResponseBody Map<String, String> changeUserName(@PathVariable int id,@PathVariable String newname, Map<String, String> message){
-		UserModel userModel=userService.getById(id);
+		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserModel userModel=userService.getByLogin(currentUserLoginName);
 		userModel.setName(newname);
 		userService.editUser(userModel);
 		message.put("message", "Name was succesfully edited");
