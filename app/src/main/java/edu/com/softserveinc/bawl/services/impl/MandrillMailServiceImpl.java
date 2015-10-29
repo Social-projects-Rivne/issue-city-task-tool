@@ -10,10 +10,8 @@ import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
-import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
-import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
 import edu.com.softserveinc.bawl.utils.MessageBuilder;
 import org.apache.http.client.HttpClient;
@@ -68,10 +66,11 @@ public class MandrillMailServiceImpl implements MailService {
         request.setHttpClient(client);
     }
 
+    //TODO don't do this. you live in container so use beans approach
     public static MandrillMailServiceImpl getMandrillMail(){
         if (mailService == null){
             mailService = new MandrillMailServiceImpl();
-            initialize();
+            initialize(); // TODO must bi initialized by container
         }
         return mailService;
     }
