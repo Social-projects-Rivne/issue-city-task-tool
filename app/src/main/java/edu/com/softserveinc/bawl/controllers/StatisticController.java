@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.dto.CategoryDTO;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.CategoryService;
@@ -47,12 +47,12 @@ public class StatisticController {
 	public @ResponseBody List<Map<String, String>> statisticByCategory() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
-		List<CategoryModel> categories = categoryService.loadCategoriesList();
+		List<CategoryDTO> categories = categoryService.loadCategoriesListWithIssues();
 
-		for (CategoryModel categoryModel : categories) {
+		for (CategoryDTO categoryModel : categories) {
 			final HashMap<String, String> e = new HashMap<>();
 			e.put("label", categoryModel.getName());
-			e.put("value", "" + categoryModel.getIssues().size());
+			e.put("value", "" + categoryModel.getIssueDtoList().size());
 
 		}
 		return statistic;
