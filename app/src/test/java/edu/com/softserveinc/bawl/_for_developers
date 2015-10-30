@@ -1,0 +1,5 @@
+Before pushing you code make sure it is buildable!!!!
+
+You MUST push only successful tests.
+In case you need to push failing test, please, always annotate them as @Ignore
+Tests that are marked as @Ignored must be fixed by responsible developer to run successfully ASAP .
