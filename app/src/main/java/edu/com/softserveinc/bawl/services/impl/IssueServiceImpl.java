@@ -38,7 +38,6 @@ public class IssueServiceImpl implements IssueService {
 	public void editProblem(IssueModel problem, int userId) {
 		issueDao.saveAndFlush(problem);
 		saveToHistory(problem, userId);
-
 	}
 	
 	@Override

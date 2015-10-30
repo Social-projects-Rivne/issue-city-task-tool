@@ -1,4 +1,0 @@
-id,attachments,category_id,description,mapPointer,name,priority_id,statusId
-1,http://www.oda.cv.ua/sites/default/files/photos/svitlofor.jpg,1,smth with trafic light,LatLng(50.61759, 26.26458),Traffic light doesnt work,1,2
-2,http://www.oda.cv.ua/sites/default/files/photos/svitlofor1.jpg,2,some woman was killed,LatLng(51.61959, 27.27458),Some woman was killed,2,1
-3,http://www.oda.cv.ua/sites/default/files/photos/svitlofor2.jpg,2,some woman was killed now,LatLng(61.61959, 37.27458),Some woman was killed now,3,5
