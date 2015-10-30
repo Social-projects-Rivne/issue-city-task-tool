@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
@@ -18,7 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -35,16 +36,15 @@ public class UserController {
 
 	@RequestMapping("get-users")
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody Collection<UserModel> getUsersAction() {
+	public @ResponseBody
+	List<UserModel> getUsersAction() {
 
-		Collection<UserModel> users = userService.loadUsersList();
+		List<UserModel> users = userService.loadUsersList();
 		for (UserModel user: users){
 			user.setPassword("_");
 		}
 		return users;
 	}
-
-
 
 	@RequestMapping(value = "user", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> addUserAction(
@@ -63,6 +63,8 @@ public class UserController {
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 
+		} catch (RequestFailedException e) {
+			message.put("message", "Some problem with sending email. Try again and check your email");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not added");
 		}
@@ -84,6 +86,8 @@ public class UserController {
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 			message.put("message", "User was successfully edited");
+		} catch (RequestFailedException e) {
+			message.put("message", "Some problem with sending email. Try again and check your email");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occurred! User was not updated" + ex.toString());
 		}
@@ -122,6 +126,8 @@ public class UserController {
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 			message.put("message", "User was successfully deleted");
+		} catch (RequestFailedException e) {
+			message.put("message", "Some problem with sending email. Try again and check your email");
 		} catch (Exception ex) {
 			message.put("message", "Some problem occured! User was not deleted");
 		}
@@ -143,31 +149,31 @@ public class UserController {
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String>
 	submittedFromData(@RequestBody UserNotificationDto userNotificationModel, Map<String, String> message) {
-		try {
-			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
 					.setPattern(userNotificationModel.getMessage())
 					.setRecipients(new MandrillRecipient("Bawl user", userNotificationModel.getEmail()))
 					.setSubject(userNotificationModel.getSubject())
 					.build();
+		try {
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-			message.put("message", "Message was successfully sended");
-		} catch (Exception ex) {
-			message.put("message", "Some problem occured! Message was not sended");
+		} catch (RequestFailedException e) {
+			message.put("message", "Some problem with sending email. Try again and check your email");
 		}
 		return message ;
 	}
 
-	@RequestMapping(value="user/{id}/changename/{newname}", method = RequestMethod.GET)
-	public @ResponseBody String changeUserName(@PathVariable int id,@PathVariable String newname){
-		UserModel userModel=userService.getById(id);
+	@RequestMapping(value="user/changename/{newname}", method = RequestMethod.GET)
+	public @ResponseBody Map<String, String> changeUserName(@PathVariable int id,@PathVariable String newname, Map<String, String> message){
+		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserModel userModel=userService.getByLogin(currentUserLoginName);
 		userModel.setName(newname);
 		userService.editUser(userModel);
-		String message ="Name was succesfully edited";
+		message.put("message", "Name was succesfully edited");
 		return  message ;
 	}
 
 	@RequestMapping(value="user/changepass", method = RequestMethod.GET)
-	public @ResponseBody String changeUserPassword(){
+	public @ResponseBody Map<String, String> changeUserPassword(Map<String, String> message){
 
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
@@ -177,9 +183,13 @@ public class UserController {
 				.setPattern(MailPatterns.PASSWORD_RESET_PATTERN, userModel.getName())
 				.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
 				.build();
-		MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+		try {
+			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+		} catch (RequestFailedException e) {
+			message.put("message", "Some problem with sending email. Try again and check your email");
+		}
 		userService.editUserPass(userModel);
-		String message="Your pass have been changed ! Watch about it on your mail ! ";
+		message.put("message" , "Your pass have been changed ! Watch about it on your mail ! ");
 		return message;
 	}
 

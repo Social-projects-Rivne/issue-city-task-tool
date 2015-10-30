@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.IssueDto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
@@ -64,13 +65,17 @@ public class IssueController {
 
 	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	public @ResponseBody void deleteIssue(@PathVariable("id") int issueId) {
+	public @ResponseBody Map<String, String> deleteIssue(@PathVariable("id") int issueId, Map<String, String> message) {
 		int userId = getCurrentUserId();
 		if (userId != 0){
 			issueService.deleteProblem(issueId, userId);
-			mailService.notifyForIssue(issueId, "Issue has been deleted.");
+			try {
+				mailService.notifyForIssue(issueId, "Issue has been deleted.");
+			} catch (RequestFailedException e) {
+				message.put("message", "Some problem with sending email. Try again and check your email");
+			}
 		}
-
+		return message;
 	}
  
 	@PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")//2=approved, 5=toresolve
@@ -91,7 +96,7 @@ public class IssueController {
 			CategoryModel category = categoryService.getCategoryByName(categoryName);
 
 			if (category == null) {
-				category = categoryService.addCategory(new CategoryModel(categoryName));
+				category = categoryService.addCategory(categoryName);
 			}
 
 			IssueModel issue = new IssueModel(request.get("name").toString(),
@@ -114,9 +119,7 @@ public class IssueController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
-	public @ResponseBody String editIssue(@RequestBody Map request) {
-		
-		String message = null;
+	public @ResponseBody Map<String, String>  editIssue(@RequestBody Map request, Map<String, String> message) {
 		
 		if(request.size() == 10) {
 			int userId = getCurrentUserId();
@@ -128,14 +131,18 @@ public class IssueController {
 					List<IssueModel> issueModel = issueService.loadIssuesList();
 
 					if (category == null) {
-						category = categoryService.addCategory(new CategoryModel(categoryName.toString().toLowerCase()));
+						category = categoryService.addCategory(categoryName.toString().toLowerCase());
 					}
 					for (IssueModel issueModelWithID : issueModel) {
 						if (issueId == issueModelWithID.getId()) {
 							IssueModel issue = issueModelWithID;
 							issue.setCategory(category);
 							issueService.editProblem(issue, userId);
-							mailService.notifyForIssue(issueId, "Issue has been updated.");
+							try {
+								mailService.notifyForIssue(issueId, "Issue has been updated.");
+							} catch (RequestFailedException e) {
+								message.put("message", "Some problem with sending email. Try again and check your email");
+							}
 						}
 					}
 				}
@@ -156,7 +163,11 @@ public class IssueController {
 
 							issue.setStatus(IssueStatus.get(status));
 							issueService.editProblem(issue, userId);
-							mailService.notifyForIssue(issueId, "Issue has been updated.");
+							try {
+								mailService.notifyForIssue(issueId, "Issue has been updated.");
+							} catch (RequestFailedException e) {
+								message.put("message", "Some problem with sending email. Try again and check your email");
+							}
 						}
 					}
 				}
@@ -169,14 +180,19 @@ public class IssueController {
 
 	// method for change status issue on to resolve
 	@RequestMapping(value = "to-resolve/{id}", method = RequestMethod.POST)
-	public @ResponseBody void toResolve(@PathVariable("id") int id) {
+	public @ResponseBody Map<String, String>  toResolve(@PathVariable("id") int id, Map<String, String> message) {
 		int userId = getCurrentUserId();
 		if (userId != 0) {
 			IssueModel issue = historyService.getLastIssueByIssueID(id);
 			issue.setStatus(IssueStatus.RESOLVED);
 			issueService.editProblem(issue, userId);
-			mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
+			try {
+				mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
+			} catch (RequestFailedException e) {
+				message.put("message", "Some problem with sending email. Try again and check your email");
+			}
 		}
+		return message;
 	}
 
 	public int getCurrentUserId(){

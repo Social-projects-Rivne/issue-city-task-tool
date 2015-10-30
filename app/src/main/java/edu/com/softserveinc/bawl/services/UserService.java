@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.services;
 
 import java.util.Collection;
+import java.util.List;
 
 import edu.com.softserveinc.bawl.models.UserModel;
 
@@ -18,6 +19,6 @@ public interface UserService {
 	
 	public UserModel getByLogin(String login);
 
-	public Collection<UserModel> loadUsersList();
+	public List<UserModel> loadUsersList();
 
 }

@@ -1,4 +1,8 @@
 package edu.com.softserveinc.bawl.controllers;
 
-public class UserControllerTest {
+import edu.com.softserveinc.bawl.AbstractBawlTest;
+
+public class UserControllerTest extends AbstractBawlTest {
+
+
 }
