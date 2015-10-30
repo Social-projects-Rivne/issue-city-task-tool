@@ -18,7 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -35,9 +35,10 @@ public class UserController {
 
 	@RequestMapping("get-users")
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody Collection<UserModel> getUsersAction() {
+	public @ResponseBody
+	List<UserModel> getUsersAction() {
 
-		Collection<UserModel> users = userService.loadUsersList();
+		List<UserModel> users = userService.loadUsersList();
 		for (UserModel user: users){
 			user.setPassword("_");
 		}

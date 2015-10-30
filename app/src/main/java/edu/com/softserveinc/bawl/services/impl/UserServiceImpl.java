@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -39,12 +40,12 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-
+	@Override
 	public void editUserPass(UserModel user) {
-		if (Arrays.asList("_", "", null).contains(user.getPassword())) {
+	/*	if (Arrays.asList("_", "", null).contains(user.getPassword())) {
 			//user.setPassword(userDao.findOne(user.getId()).getPassword());
 		}
-		else
+		else */
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
 		userDao.saveAndFlush(user);
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Collection<UserModel> loadUsersList() {
+	public List<UserModel> loadUsersList() {
 		return userDao.findAll();
 	}
 

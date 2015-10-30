@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.utils;
 
 import edu.com.softserveinc.bawl.models.HistoryModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ParseDate;
@@ -24,7 +25,8 @@ import java.util.List;
 public class CsvReaderWriter {
 
     private static final String PATH_HISTORY_MODEL_CSV = "src/test/resources/HistoryModels.csv";
-    private  static final String PATH_STATUS_MODEL_CSV = "src/test/resources/StatusModels.csv";
+    private static final String PATH_STATUS_MODEL_CSV = "src/test/resources/StatusModels.csv";
+    private static  final String PATH_USER_MODEL_CSV = "src/test/resources/UserModels.csv";
 
     private static CellProcessor[] getHistoryModelWriterProcessors() {
 
@@ -46,6 +48,21 @@ public class CsvReaderWriter {
         };
     }
 
+    private static CellProcessor[] getUserModelWriterProcessors() {
+
+        return new CellProcessor[] {
+
+                new UniqueHashCode(), // user_id (must be unique)
+                new NotNull(),  // name
+                new NotNull(),  // email
+                new NotNull(),  // login
+                new NotNull(),  // role_id
+                new NotNull(),  // password
+                new NotNull(),  // avatar
+
+        };
+    }
+
     private static CellProcessor[] getHistoryModelReaderProcessors() {
 
         return new CellProcessor[] {
@@ -62,6 +79,20 @@ public class CsvReaderWriter {
         return new CellProcessor[] {
                 new UniqueHashCode(new ParseInt()), // id (must be unique)
                 new ParseInt(), // name
+        };
+    }
+
+    private static CellProcessor[] getUserModelReaderProcessors() {
+
+        return new CellProcessor[]{
+                new ParseInt(), // user_id (must be unique)
+                new ParseInt(),  // name
+                new ParseInt(),  // email
+                new ParseInt(),  // login
+                new ParseInt(),  // role_id
+                new ParseInt(),  // password
+                new ParseInt()  // avatar
+
         };
     }
 
@@ -103,6 +134,30 @@ public class CsvReaderWriter {
             beanWriter.writeHeader(header);
             // write the beans
             for( final IssueStatus model : statusModels ) {
+                beanWriter.write(model, header, processors);
+            }
+        }
+        finally {
+            if( beanWriter != null ) {
+                beanWriter.close();
+            }
+        }
+    }
+
+    public static void writeUserModelCsv( List<UserModel> userModels) throws IOException {
+        ICsvBeanWriter beanWriter = null;
+        try {
+            beanWriter = new CsvBeanWriter(new FileWriter( new File(PATH_USER_MODEL_CSV)),
+                    CsvPreference.STANDARD_PREFERENCE);
+
+            // the header elements are used to map the bean values to each column (names must match)
+            final String[] header = new String[] { "userId","name","email","login","role","password","avatar"};
+            final CellProcessor[] processors = getUserModelWriterProcessors();
+
+            // write the header
+            beanWriter.writeHeader(header);
+            // write the beans
+            for( final UserModel model : userModels ) {
                 beanWriter.write(model, header, processors);
             }
         }
@@ -157,6 +212,29 @@ public class CsvReaderWriter {
             }
         }
         return historyModels;
+    }
+
+    public static List<UserModel> readUserModelCsv() throws IOException {
+
+        ICsvBeanReader beanReader = null;
+        List<UserModel> userModels = new ArrayList<UserModel>();
+        try {
+            beanReader = new CsvBeanReader(new FileReader(PATH_USER_MODEL_CSV), CsvPreference.STANDARD_PREFERENCE);
+
+            // the header elements are used to map the values to the bean (names must match)
+            final String[] header = beanReader.getHeader(true);
+            final CellProcessor[] processors = getUserModelReaderProcessors();
+            UserModel userModel = null;
+            while( (userModel = beanReader.read(UserModel.class, header, processors)) != null ) {
+                userModels.add(userModel);
+            }
+        }
+        finally {
+            if( beanReader != null ) {
+                beanReader.close();
+            }
+        }
+        return userModels;
     }
 
 }
