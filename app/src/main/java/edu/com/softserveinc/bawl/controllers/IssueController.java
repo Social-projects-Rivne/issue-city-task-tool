@@ -129,10 +129,6 @@ public class IssueController {
 					CategoryModel category = categoryService.getCategoryByName(categoryName.toString().toLowerCase());
 					int issueId = Integer.parseInt(request.get("id").toString());
 					List<IssueModel> issueModel = issueService.loadIssuesList();
-
-					if (category == null) {
-						category = categoryService.addCategory(categoryName.toString().toLowerCase());
-					}
 					for (IssueModel issueModelWithID : issueModel) {
 						if (issueId == issueModelWithID.getId()) {
 							IssueModel issue = issueModelWithID;

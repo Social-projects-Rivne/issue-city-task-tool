@@ -1,8 +1,6 @@
 package edu.com.softserveinc.bawl.services.impl;
 
 import edu.com.softserveinc.bawl.dao.CategoryDao;
-import edu.com.softserveinc.bawl.dto.CategoryDTO;
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import org.apache.log4j.Logger;
@@ -27,15 +25,14 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao;
 	
 	@Override
-	public CategoryModel addCategory(CategoryDTO category) {
-		return addCategory(category.getName());
+	public CategoryModel addCategory(CategoryModel category) {
+        return categoryDao.saveAndFlush(category);
     }
 
 	@Override
-	public CategoryModel addCategory(String categoryName) {
-		final CategoryModel categoryModel = new CategoryModel(categoryName);
-		return categoryDao.saveAndFlush(categoryModel);
-	}
+	public CategoryModel addCategory(String category) {
+        return categoryDao.saveAndFlush(new CategoryModel(category));
+    }
 
 	@Override
 	public void deleteCategory(CategoryModel category) {
@@ -54,17 +51,23 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryDTO> loadCategoriesWithoutIssues() {
-		return DTOAssembler.getCategoryDtoFrom(categoryDao.findAll(), false);
-	}
-
-	@Override
-    public List<CategoryDTO> loadCategoriesListWithIssues() {
-		return DTOAssembler.getCategoryDtoFrom(categoryDao.findAll(), true);
+	public List<CategoryModel> loadCategoriesList() {
+		return categoryDao.findAll();
 	}
 
 	@Override
 	public CategoryModel getCategoryByName(String name){
 		return categoryDao.findByName(name);
 	}
+
+    @Override
+    public CategoryModel getCategoryByNameOrAddNew(String name){
+        final String lowerCaseName = name.toLowerCase();
+        CategoryModel categoryByName = getCategoryByName(lowerCaseName);
+        if (null == categoryByName) {
+            categoryByName = addCategory(name);
+        }
+        return categoryByName;
+    }
+
 }

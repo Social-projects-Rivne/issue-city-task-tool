@@ -30,12 +30,12 @@ class CategoryControllerFunctionalTest extends CategoryControllerTestData {
   @Test
   @throws(classOf[Exception])
   def testGetCategories() {
-    val categories = new util.ArrayList[CategoryDTO]
-    val model: CategoryDTO = new CategoryDTO
+    val categories = new util.ArrayList[CategoryModel]
+    val model: CategoryModel = new CategoryModel
     model.setId(1)
     model.setName(FOOBAR)
     categories.add(model)
-    when(categoryService.loadCategoriesWithoutIssues()).thenReturn(categories)
+    when(categoryService.loadCategoriesList).thenReturn(categories)
     mockMvc.perform(get(GET)).andExpect(status.isOk).andExpect(content.string(OBJECT_IN_COLLECTION))
   }
 

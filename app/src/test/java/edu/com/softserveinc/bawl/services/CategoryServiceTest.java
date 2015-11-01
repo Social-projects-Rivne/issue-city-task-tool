@@ -2,7 +2,6 @@ package edu.com.softserveinc.bawl.services;
 
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
-import edu.com.softserveinc.bawl.dto.CategoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
@@ -37,7 +36,7 @@ public class CategoryServiceTest extends AbstractBawlTest {
 
     @Test
     public void addCategory_shouldCallAddCategoryToDao() {
-        CategoryDTO mockCategoryModel = mock(CategoryDTO.class);
+        CategoryModel mockCategoryModel = mock(CategoryModel.class);
         categoryService.addCategory(mockCategoryModel);
         verify(categoryDao, times(1)).saveAndFlush(any(CategoryModel.class));
     }
@@ -74,7 +73,7 @@ public class CategoryServiceTest extends AbstractBawlTest {
 
     @Test
     public void loadCategoryList_shouldReturnListOfAllCategories() {
-        categoryService.loadCategoriesWithoutIssues();
+        categoryService.loadCategoriesList();
         verify(categoryDao, times(1)).findAll();
     }
 }

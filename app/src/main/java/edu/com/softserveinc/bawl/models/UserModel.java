@@ -184,6 +184,15 @@ public class UserModel {
     public void setRole(UserRole role){
     	this.role = role;
     }
+
+    /**
+     * Method for setup user's Role_id
+     *
+     * @param role
+     */
+    public void setRole(int role){
+    	this.role = UserRole.getById(role);
+    }
     /**
      * 
      * @return user's role

@@ -23,7 +23,7 @@ public class SubscriptionServiceTest extends AbstractBawlTest {
     public void setup() {
         subscriptionService = new SubscriptionServiceImpl();
         subscriptionDao = mock(SubscriptionDao.class);
-        Whitebox.setInternalState(subscriptionService, "SubscriptionDao",subscriptionDao);
+        Whitebox.setInternalState(subscriptionService, "subscriptionDao",subscriptionDao);
     }
 
     @Test
@@ -36,30 +36,13 @@ public class SubscriptionServiceTest extends AbstractBawlTest {
     @Test
     public void testRead() throws Exception {
 
-
     }
 
 
-//
-//    @Test
-//    public void testRead1() throws Exception {
-//        SubscriptionModel subscriptionModel = new SubscriptionModel();
-//        int IssueId = 4;
-//        subscriptionModel.setIssueId(IssueId);
-//        when(subscriptionDao.findByIssueId(IssueId)).thenReturn(Collections.singleton(subscriptionModel));
-//        List<SubscriptionModel> actualModel = (List<SubscriptionModel>) subscriptionService.listByIssueId(IssueId);
-//        SubscriptionModel expectedModel = new SubscriptionModel();
-//        expectedModel.setId(IssueId);
-//        verify(subscriptionDao).findByIssueId(IssueId);
-//        assertEquals(Collections.singleton(expectedModel),(actualModel));
-//    }
-
     @Test
     public void testDelete() throws Exception {
-
-        SubscriptionModel mockSubscriptionModel = mock(SubscriptionModel.class);
-  //      subscriptionService.delete(mockSubscriptionModel);
-        verify(subscriptionDao,times(1)).saveAndFlush(mockSubscriptionModel);
+        subscriptionService.delete(1);
+        verify(subscriptionDao,times(1)).delete(anyInt());
     }
 
 

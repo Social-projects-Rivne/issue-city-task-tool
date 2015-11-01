@@ -86,12 +86,12 @@ public class CsvReaderWriter {
 
         return new CellProcessor[]{
                 new ParseInt(), // user_id (must be unique)
-                new ParseInt(),  // name
-                new ParseInt(),  // email
-                new ParseInt(),  // login
+                new NotNull(),  // name
+                new NotNull(),  // email
+                new NotNull(),  // login
                 new ParseInt(),  // role_id
-                new ParseInt(),  // password
-                new ParseInt()  // avatar
+                new NotNull(),  // password
+                new NotNull()  // avatar
 
         };
     }

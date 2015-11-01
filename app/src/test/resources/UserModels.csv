@@ -1,4 +1,4 @@
-userId,name,email,login,role,password,avatar
+id,name,email,login,role,password,avatar
 1,Admin,admin@gmail.com,admin,1,admin,http://oi66.tinypic.com/2vd2p20.jpg
 2,Petro,some2@gmail.com,petya,0,pAsSwOrD,http://oi67.tinypic.com/2e0tx93.jpg
 3,Ivan,some3@gmail.com,ivan,0,vanya,http://oi66.tinypic.com/2cegh6x.jpg
