@@ -1,4 +1,1 @@
-Domain objects must not leave service layer.
-Dumb controllers should operate only on DTO objects.
-All of the transformation logic should be inside services.
 Refactoring : move business logic out of controllers to service layer
