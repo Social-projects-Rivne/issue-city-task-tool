@@ -38,6 +38,7 @@ public class IssueController {
 	public static final Logger LOG=Logger.getLogger(IssueController.class);
     public static final String ISSUE_ADDED = "Issue was successfully added";
     public static final String ISSUE_NOT_ADDED = "Some problem occured! Issue was not added";
+    public static final String NOT_AUTHORIZED = "You are not authorized for this action";
 
     @Autowired
 	private IssueService issueService;
@@ -97,7 +98,7 @@ public class IssueController {
      * Returns all issues with statuses 2=approved, 5=toresolve
      * @return list of all issues
      */
-	@PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")
+    @PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")
 	@RequestMapping("get-issues")
 	public @ResponseBody List<IssueDto> getIssues() {
 		return DTOAssembler.getAllIssuesDto(historyService.getLastUniqueIssues());
@@ -108,24 +109,23 @@ public class IssueController {
      * @param request
      * @return
      */
-	@RequestMapping(value = "issue", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated")
+    @RequestMapping(value = "issue", method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addIssue(@RequestBody IssueDto request) {
 		ResponseDTO responseDTO = new ResponseDTO();
-		int userId = getCurrentUserId();
-		if (userId != 0) {
-			CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory().toLowerCase());
-			IssueModel issue = new IssueModel(request.getName(),
-					request.getDescription(), request.getMapPointer(),
+
+            CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory().toLowerCase());
+            IssueModel issue = new IssueModel(request.getName(),
+                    request.getDescription(), request.getMapPointer(),
                     request.getAttachments(), category,
                     request.getPriorityId(), IssueStatus.get(request.getStatus()));
-			try {
-				issueService.addProblem(issue, userId);
-				responseDTO.setMessage(ISSUE_ADDED);
-			} catch (Exception ex) {
-				responseDTO.setMessage(ISSUE_NOT_ADDED);
-			}
-		}
 
+            try {
+                issueService.addProblem(issue, getCurrentUserId());
+                responseDTO.setMessage(ISSUE_ADDED);
+            } catch (Exception ex) {
+                responseDTO.setMessage(ISSUE_NOT_ADDED);
+            }
 		return responseDTO;
 	}
 
@@ -208,8 +208,7 @@ public class IssueController {
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
 			return 0;
-		}
-		else {
+		} else {
 			return userService.getByLogin(currentUserLoginName).getId();
 		}
 	}

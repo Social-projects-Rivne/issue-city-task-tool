@@ -7,6 +7,7 @@ define([ 'underscore', 'backbone','view/AdminView',
 		routes : {
 			"" : "home",
 			"login" : "login",
+			"logout" : "logout",
       
 			//routs for admin
       
@@ -19,12 +20,12 @@ define([ 'underscore', 'backbone','view/AdminView',
 			
       //routs for map 
 			
-      "cry-out" : "cryOut",
+      		"cry-out" : "cryOut",
 			"issue/:id" : "issue", // #issue/1
 			"filter": "filter",
 			"profile":"profile",
 			"viewprofile":"viewprofile",
-      "user-reg": "userReg",
+			"user-reg": "userReg",
 			"email-confirm/*link" : "emailConfirm"
 		},
 		
@@ -48,6 +49,24 @@ define([ 'underscore', 'backbone','view/AdminView',
 			loginView.render();
 		},
 
+		logout: function(){
+			$.ajax({
+				url: 'auth/logout',
+				type: 'POST',
+				success: function(){
+                    $('.navbar  #admin').hide();
+                    $('.navbar  #manager').hide();
+                    $('.navbar  #cry-out').hide();
+                    $('.navbar  #filter').hide();
+                    $('.navbar  #stat').hide();
+                    $('.navbar  #signUp').show();
+                    $('.navbar  #login').show();
+                    $('.navbar  #logout').hide();
+                }
+			});
+			mapView.render();
+		},
+
 		issue : function(id) {
 			$('.col-1-3').hide();
 			issueDetailsView.render(id);
@@ -56,7 +75,6 @@ define([ 'underscore', 'backbone','view/AdminView',
 		},
 
 		cryOut : function() {
-
 			mapView.render();
 			addIssueView.render();
 		},

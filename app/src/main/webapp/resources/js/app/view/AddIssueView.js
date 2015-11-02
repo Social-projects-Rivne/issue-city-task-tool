@@ -1,13 +1,23 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html',
-         'model/CategoryModel', 'collection/CategoryCollection', 'text!templates/NotificationTemplate.html' ],
-		function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection, NotificationTemplate) {
-			
-			var that = null;
+define(     ['jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html',
+            'model/CategoryModel', 'collection/CategoryCollection', 'text!templates/NotificationTemplate.html' ],
+		    function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection, NotificationTemplate
+      ) {
+
+                var FILL_FORM_MESSAGE = "Please fill the form correctly!";
+                var ERROR_FILL_FORM_CSS = "{'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}";
+                var ERROR_FILL_FIELD_CSS = "{'color', 'red'}";
+                var WRONG_NAME = 'Wrong name!';
+                var WRONG_CATEGORY = 'Wrong category!';
+                var WRONG_DESCRIPTION = 'Wrong description!';
+                var FIELD_VALIDATE_PATTERN = new RegExp("^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$");
+			    var that;
+                var categoryCollection;
 	
-			var AddIssueView = Backbone.View.extend({
+			return Backbone.View.extend({
+
 				template: _.template(AddIssueTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
-				
+
 				initialize: function() {
 					that = this;
 					this.model = new IssueModel();
@@ -24,77 +34,73 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 				},
 				
 				render: function() {
-					
+
 					categoryCollection.fetch( { success: function() {
+
 						that.$el.html(that.template( { "categories": categoryCollection.toJSON() } ));
-						
+
 						issueName = $('#issue-name');
 						issueCategory = $('#issue-category');
 						issueDescription = $('#issue-description');
 						error = $('#error');
 						
-						issueName.on('blur', function() {
-							if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
-								this.value = 'Wrong name!';
-								this.style.color = 'red';
-							}
-						});
-
-						issueName.on('focus', function() {
-							if (this.value == 'Wrong name!') this.value ='';
-							this.style.color = 'black';
-						});
+                        issueName.on({
+                            blur : function() {
+                                onblur(this, WRONG_NAME);
+                            },
+                            focus : function() {
+                                onfocus(this, WRONG_NAME);
+                            }});
 						
-						issueCategory.on('blur', function() {
-							if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
-								this.value = 'Wrong category!';
-								this.style.color = 'red';
-							}
-						});
-
-						issueCategory.on('focus', function() {
-							if (this.value == 'Wrong category!') this.value ='';
-							this.style.color = 'black';
-						});
+						issueCategory.on({
+                            blur: function() {
+                                onblur(this, WRONG_CATEGORY);
+                            },
+                            focus: function() {
+                                onfocus(this, WRONG_CATEGORY);
+                            }});
 						
-						issueDescription.on('blur', function() {
-							if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
-								this.value = 'Wrong description!';
-								this.style.color = 'red';
-							}
-						});
+						issueDescription.on({
+                            blur: function() {
+                                onblur(this, WRONG_DESCRIPTION);
+                            },
+						    focus : function() {
+                                onfocus(this, WRONG_DESCRIPTION);
+						}});
 
-						issueDescription.on('focus', function() {
-							if (this.value == 'Wrong description!') this.value ='';
-							this.style.color = 'black';
-						});
+                        var onblur = function (field, text) {
+                            if (!FIELD_VALIDATE_PATTERN.test(field.value)) {
+                                field.value = text;
+                                field.style.color = 'red';
+                            }
+                        }
+                        var onfocus = function (field, text) {
+                            if (field.value == text) {
+                                field.value ='';
+                                field.style.color = 'black';
+                            }
+                        }
+
 					} } ); 
 					
 					return this;
 				},
 				
 				addIssue: function() {
-					var isValid = true;
+
+                    var testField = function(field, error) {
+                        if (!FIELD_VALIDATE_PATTERN.test(field.val())) {
+                            field.val(WRONG_NAME);
+                            error.html(FILL_FORM_MESSAGE);
+                            field[0].style.cssText = ERROR_FILL_FIELD_CSS;
+                            error[0].style.cssText = ERROR_FILL_FORM_CSS;
+                            return false;
+                        }
+                        return true;
+                    }
+
 					
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueName.val())) {
-						issueName.val('Wrong name!').css('color', 'red');
-						error.css({'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}).html('Please fill the form correctly!');
-						isValid = false;
-					}
-					
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
-						issueCategory.val('Wrong category!').css('color', 'red');
-						error.css({'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}).html('Please fill the form correctly!');
-						isValid = false;
-					}
-					
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
-						issueDescription.val('Wrong description!').css('color', 'red');
-						error.css({'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}).html('Please fill the form correctly!');
-						isValid = false;
-					}
-					
-					if(isValid) {
+					if(testField(issueName, error) && testField(issueCategory, error) && testField(issueDescription, error)) {
 						this.model.set( { mapPointer: $('#map-pointer').val(),
 							name: $('#issue-name').val(),
 							description: $('#issue-description').val(),
@@ -173,6 +179,4 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates
 					}
 				}
 			});
-			
-			return AddIssueView;
 		})

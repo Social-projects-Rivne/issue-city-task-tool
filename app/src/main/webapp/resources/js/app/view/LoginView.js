@@ -58,6 +58,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 									//when request done we create admin or manager view and rout user on his page
 									success: function(data){
 										that.currentUser = new UserModel(data);
+										$('.navbar  #cry-out').show();
+										$('.navbar  #logout').show();
+										$('.navbar  #filter').show();
+										$('.navbar  #stat').show();
+										$('.navbar  #signUp').hide();
 										//routing by user's role
 
 										//If user didn't validate his email
@@ -94,7 +99,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 										that.buttonsManage();
 									}
 								});
-							}
+							},
+                            error : function(data) {
+                                $("#loginMessage")[0].textContent = "Incorrect name or password";
+                            }
 						});	
 
 					} else{
@@ -116,12 +124,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				},
 
 				showLoginForm: function() {
-					this.render();
+                    $("#loginMessage")[0].textContent = "";
+                    this.render();
 					router.navigate("login", {trigger: true});
 				},
 				
 				hideLoginForm: function() {
-					$(".login.modal").modal('hide');
+                    $(".login.modal").modal('hide');
 					//router.navigate("", {trigger: false});
 				},
 				
@@ -134,8 +143,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						$('.navbar  #login').show();
 						$('.navbar  #admin').hide();
 						$('.navbar  #manager').hide();
+						$('.navbar  #cry-out').hide();
+						$('.navbar  #signUp').show();
 					} else {
 						$('.navbar  #login').hide();
+						$('.navbar  #cry-out').show();
+						$('.navbar  #signUp').hide();
 						if(this.currentUser.get('roleId') == 1){
 							$('.navbar  #admin').show();
 							$('.navbar  #manager').show();
