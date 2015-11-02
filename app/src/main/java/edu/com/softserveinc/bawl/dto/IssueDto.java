@@ -21,6 +21,10 @@ public class IssueDto {
 
     private int statusId;
 
+    private String category;
+
+    private String status;
+
     public int getId() {
         return id;
     }
@@ -85,4 +89,19 @@ public class IssueDto {
         this.statusId = statusId;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

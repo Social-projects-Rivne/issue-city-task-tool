@@ -3,6 +3,7 @@ package edu.com.softserveinc.bawl.controllers;
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.IssueDto;
+import edu.com.softserveinc.bawl.dto.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.UserHistoryDto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
@@ -35,8 +36,10 @@ public class IssueController {
 	 * Logger field
 	 */
 	public static final Logger LOG=Logger.getLogger(IssueController.class);
+    public static final String ISSUE_ADDED = "Issue was successfully added";
+    public static final String ISSUE_NOT_ADDED = "Some problem occured! Issue was not added";
 
-	@Autowired
+    @Autowired
 	private IssueService issueService;
 
 	@Autowired
@@ -70,7 +73,7 @@ public class IssueController {
 
 
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	@RequestMapping(value = "issue/", method = RequestMethod.GET)
+	@RequestMapping(value = "issue", method = RequestMethod.GET)
 	public @ResponseBody List<IssueDto> getAllIssues(){
 		return DTOAssembler.getAllIssuesDto(issueService.loadIssuesList());
 	}
@@ -89,44 +92,41 @@ public class IssueController {
 		}
 		return message;
 	}
- 
-	@PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")//2=approved, 5=toresolve
+
+    /**
+     * Returns all issues with statuses 2=approved, 5=toresolve
+     * @return list of all issues
+     */
+	@PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")
 	@RequestMapping("get-issues")
 	public @ResponseBody List<IssueDto> getIssues() {
 		return DTOAssembler.getAllIssuesDto(historyService.getLastUniqueIssues());
 	}
 
-	@SuppressWarnings("rawtypes")
+    /**
+     * Adds new issue
+     * @param request
+     * @return
+     */
 	@RequestMapping(value = "issue", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> addIssue(@RequestBody Map request,
-			Map<String, String> message) {
+	public @ResponseBody ResponseDTO addIssue(@RequestBody IssueDto request) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		int userId = getCurrentUserId();
 		if (userId != 0) {
-
-			String categoryName = request.get("category").toString().toLowerCase();
-			String status = request.get("status").toString().toLowerCase();
-			CategoryModel category = categoryService.getCategoryByName(categoryName);
-
-			if (category == null) {
-				category = categoryService.addCategory(categoryName);
-			}
-
-			IssueModel issue = new IssueModel(request.get("name").toString(),
-					request.get("description").toString(), request
-					.get("mapPointer").toString(), request.get(
-					"attachments").toString(), category,
-					Integer.parseInt(request.get("priorityId").toString()),
-					IssueStatus.get(status));
-
+			CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory().toLowerCase());
+			IssueModel issue = new IssueModel(request.getName(),
+					request.getDescription(), request.getMapPointer(),
+                    request.getAttachments(), category,
+                    request.getPriorityId(), IssueStatus.get(request.getStatus()));
 			try {
 				issueService.addProblem(issue, userId);
-				message.put("message", "Issue was successfully added");
+				responseDTO.setMessage(ISSUE_ADDED);
 			} catch (Exception ex) {
-				message.put("message", "Some problem occured! Issue was not added");
+				responseDTO.setMessage(ISSUE_NOT_ADDED);
 			}
 		}
 
-		return message;
+		return responseDTO;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -203,7 +203,8 @@ public class IssueController {
 		return message;
 	}
 
-	public int getCurrentUserId(){
+
+	private int getCurrentUserId(){
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
 			return 0;
