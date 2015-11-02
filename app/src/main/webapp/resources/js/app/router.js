@@ -5,28 +5,19 @@ define([ 'underscore', 'backbone','view/AdminView',
 	var Router = Backbone.Router.extend({
 
 		routes : {
-			"" : "home",
-			"login" : "login",
-			"logout" : "logout",
-      
-			//routs for admin
-      
-			"admin" : "admin",
-			"admin/search/:name" : "search",
-			
-      //manager's routs 
-      
-			"manager" : "manager",
-			
-      //routs for map 
-			
-      		"cry-out" : "cryOut",
-			"issue/:id" : "issue", // #issue/1
-			"filter": "filter",
-			"profile":"profile",
-			"viewprofile":"viewprofile",
-			"user-reg": "userReg",
-			"email-confirm/*link" : "emailConfirm"
+			"" 						: "home",
+			"login" 				: "login",
+			"logout" 				: "logout",
+			"admin" 				: "admin",
+			"admin/search/:name" 	: "search",
+			"manager" 				: "manager",
+      		"cry-out" 				: "cryOut",
+			"issue/:id" 			: "issue",
+			"filter"				: "filter",
+			"profile" 				: "profile",
+			"viewprofile" 			: "viewprofile",
+			"user-reg"				: "userReg",
+			"email-confirm/*link" 	: "emailConfirm"
 		},
 		
 		initialize : function() {

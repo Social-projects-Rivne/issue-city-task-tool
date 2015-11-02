@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.benchmarks;
 
-import edu.com.softserveinc.bawl.dto.UserHistoryDto;
+import edu.com.softserveinc.bawl.dto.UserHistoryDTO;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
@@ -26,12 +26,12 @@ public class ComparatorBenchmark {
     @org.openjdk.jmh.annotations.State(Scope.Benchmark)
     public static class State {
         private static int N;
-        List<UserHistoryDto> historyDtoList;
+        List<UserHistoryDTO> historyDtoList;
 
         public void init() {
             historyDtoList = new ArrayList<>();
             for (int i = 0; i < N; i++) {
-                UserHistoryDto userHistoryDto = new UserHistoryDto();
+                UserHistoryDTO userHistoryDto = new UserHistoryDTO();
                 userHistoryDto.setDate(getTime());
                 userHistoryDto.setIssueName(String.valueOf(i));
                 userHistoryDto.setUsername(String.valueOf(i));
@@ -47,7 +47,7 @@ public class ComparatorBenchmark {
     public void benchmarkStreamList_10(State state) {
         state.N = 10;
         state.init();
-        state.historyDtoList.parallelStream().sorted(UserHistoryDto::compare).collect(Collectors.toList());
+        state.historyDtoList.parallelStream().sorted(new UserHistoryDTO()).collect(Collectors.toList());
 
     }
     @Benchmark
@@ -61,7 +61,7 @@ public class ComparatorBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public List<UserHistoryDto> benchmarkComparatorList_10(State state) {
+    public List<UserHistoryDTO> benchmarkComparatorList_10(State state) {
         state.N = 10;
         state.init();
         Collections.sort(state.historyDtoList);
@@ -73,7 +73,7 @@ public class ComparatorBenchmark {
     public void benchmarkStreamList_100(State state) {
         state.N = 100;
         state.init();
-        state.historyDtoList.parallelStream().sorted(UserHistoryDto::compare).collect(Collectors.toList());
+        state.historyDtoList.parallelStream().sorted(new UserHistoryDTO()).collect(Collectors.toList());
 
     }
     @Benchmark
@@ -87,7 +87,7 @@ public class ComparatorBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public List<UserHistoryDto> benchmarkComparatorList_100(State state) {
+    public List<UserHistoryDTO> benchmarkComparatorList_100(State state) {
         state.N = 100;
         state.init();
         Collections.sort(state.historyDtoList);
@@ -99,7 +99,7 @@ public class ComparatorBenchmark {
     public void benchmarkStreamList_1000(State state) {
         state.N = 1000;
         state.init();
-        state.historyDtoList.parallelStream().sorted(UserHistoryDto::compare).collect(Collectors.toList());
+        state.historyDtoList.parallelStream().sorted(new UserHistoryDTO()).collect(Collectors.toList());
 
     }
 
@@ -114,7 +114,7 @@ public class ComparatorBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public List<UserHistoryDto> benchmarkComparatorList_1000(State state) {
+    public List<UserHistoryDTO> benchmarkComparatorList_1000(State state) {
         state.N = 1000;
         state.init();
         Collections.sort(state.historyDtoList);
@@ -127,7 +127,7 @@ public class ComparatorBenchmark {
     public void benchmarkStreamList_100000(State state) {
         state.N = 100000;
         state.init();
-        state.historyDtoList.parallelStream().sorted(UserHistoryDto::compare).collect(Collectors.toList());
+        state.historyDtoList.parallelStream().sorted(new UserHistoryDTO()).collect(Collectors.toList());
 
     }
     @Benchmark
@@ -141,7 +141,7 @@ public class ComparatorBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public List<UserHistoryDto> benchmarkComparatorList_100000(State state) {
+    public List<UserHistoryDTO> benchmarkComparatorList_100000(State state) {
         state.N = 100000;
         state.init();
         Collections.sort(state.historyDtoList);
@@ -153,7 +153,7 @@ public class ComparatorBenchmark {
     public void benchmarkStreamList_1000000(State state) {
         state.N = 1000000;
         state.init();
-        state.historyDtoList.parallelStream().sorted(UserHistoryDto::compare).collect(Collectors.toList());
+        state.historyDtoList.parallelStream().sorted(new UserHistoryDTO()).collect(Collectors.toList());
 
     }
     @Benchmark
@@ -167,7 +167,7 @@ public class ComparatorBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public List<UserHistoryDto> benchmarkComparatorList_1000000(State state) {
+    public List<UserHistoryDTO> benchmarkComparatorList_1000000(State state) {
         state.N = 1000000;
         state.init();
         Collections.sort(state.historyDtoList);

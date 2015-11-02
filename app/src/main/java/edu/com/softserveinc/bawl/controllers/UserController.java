@@ -4,9 +4,10 @@ import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.UserDTO;
-import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDto;
-import edu.com.softserveinc.bawl.dto.UserNotificationDto;
+import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDTO;
+import edu.com.softserveinc.bawl.dto.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -58,30 +59,27 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> addUserAction(
-			@RequestBody UserModel user, Map<String, String> message) {
-
+	public @ResponseBody ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		try {
-
-			userService.addUser(user);
-			UserModel dbModel = userService.getByLogin(user.getLogin());
+            UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
+                    userDTO.getLogin(), userDTO.getRoleId(), userDTO.getPassword(), userDTO.getAvatar());
+            userModel = userService.addUser(userModel);
 			Properties properties = MessageBuilder.getProperties();
 			String link = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
-					dbModel.getPassword() + "&id=" + dbModel.getId();
+                    userModel.getPassword() + "&id=" + userModel.getId();
 			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-					.setPattern(MailPatterns.REGISTRATION_PATTERN, dbModel.getName(), link)
-					.setRecipients(new MandrillRecipient(dbModel.getName(), dbModel.getEmail()))
+					.setPattern(MailPatterns.REGISTRATION_PATTERN, userModel.getName(), link)
+					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-
+			responseDTO.setMessage("Successfully registered. Please confirm your email");
 		} catch (RequestFailedException e) {
-			message.put("message", "Some problem with sending email. Try again and check your email");
+			responseDTO.setMessage("Some problem with sending email. Try again and check your email");
 		} catch (Exception ex) {
-			message.put("message", "Some problem occured! User was not added");
+			responseDTO.setMessage("Some problem occured! User was not added");
 		}
-		message.put("message", "Successfully registered. Please confirm your email");
-
-		return message;
+		return responseDTO;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -107,7 +105,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
-	public @ResponseBody UserModel validateUser (@RequestBody UserModel user) {
+	public @ResponseBody UserModel validateUser (@RequestBody UserDTO user) {
 
 		UserModel dbModel = null;
 		try {
@@ -159,7 +157,7 @@ public class UserController {
 	 /* This metod send notification to email from #admin panel */
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String>
-	submittedFromData(@RequestBody UserNotificationDto userNotificationModel, Map<String, String> message) {
+	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel, Map<String, String> message) {
 		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
 					.setPattern(userNotificationModel.getMessage())
 					.setRecipients(new MandrillRecipient("Bawl user", userNotificationModel.getEmail()))
@@ -212,7 +210,7 @@ public class UserController {
      * @return list of UserIssuesHistoryDto
      */
     @RequestMapping(value = "/{id}/history", method = RequestMethod.GET)
-    public @ResponseBody List<UserIssuesHistoryDto> getUserIssuesHistories(@PathVariable int id){
+    public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
 
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();

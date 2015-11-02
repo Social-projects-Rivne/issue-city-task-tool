@@ -1,13 +1,12 @@
 package edu.com.softserveinc.bawl.services;
 
-import java.util.Collection;
-import java.util.List;
-
 import edu.com.softserveinc.bawl.models.UserModel;
+
+import java.util.List;
 
 public interface UserService {
 
-	public void addUser(UserModel user);
+	public UserModel addUser(UserModel user);
 
 	public void editUser(UserModel user);
 

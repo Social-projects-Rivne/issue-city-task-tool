@@ -10,8 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -27,10 +25,10 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 	
 	@Override
-	public void addUser(UserModel user) {
+	public UserModel addUser(UserModel user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		user.setRole(UserRole.USER_NOT_CONFIRMED);
-		userDao.saveAndFlush(user);
+		return userDao.saveAndFlush(user);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.IssueDto;
 import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.UserHistoryDto;
+import edu.com.softserveinc.bawl.dto.UserHistoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
@@ -67,7 +67,7 @@ public class IssueController {
 	 * @return list of UserHistoryDto
 	 */
 	@RequestMapping(value = "issue/{id}/history", method = RequestMethod.GET)
-	public @ResponseBody List<UserHistoryDto> getUserHistoryAction(@PathVariable int id ) {
+	public @ResponseBody List<UserHistoryDTO> getUserHistoryAction(@PathVariable int id ) {
 		IssueModel issue = issueService.getById(id);
 		return DTOAssembler.getUserHistoryDtos(issue, userService);
 	}
@@ -109,9 +109,10 @@ public class IssueController {
      * @param request
      * @return
      */
-    @PreAuthorize("isAuthenticated")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "issue", method = RequestMethod.POST)
-	public @ResponseBody ResponseDTO addIssue(@RequestBody IssueDto request) {
+	public @ResponseBody
+	ResponseDTO addIssue(@RequestBody IssueDto request) {
 		ResponseDTO responseDTO = new ResponseDTO();
 
             CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory().toLowerCase());

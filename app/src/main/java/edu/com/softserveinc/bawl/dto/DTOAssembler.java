@@ -32,7 +32,7 @@ public class DTOAssembler {
         userDTO.setEmail(userModel.getEmail());
         userDTO.setLogin(userModel.getLogin());
         userDTO.setAvatar(userModel.getAvatar());
-        userDTO.setRoleId(String.valueOf(userModel.getRole().id));
+        userDTO.setRoleId(userModel.getRole().id);
         return userDTO;
     }
 
@@ -94,8 +94,8 @@ public class DTOAssembler {
         return issueDto;
     }
 
-    public static List<UserIssuesHistoryDto> getAllUserIssuesHistoryDTO(List<HistoryModel> listOfHistoriesByUserID, List<IssueModel> issues, UserModel userModel) {
-        List<UserIssuesHistoryDto> list = new ArrayList<UserIssuesHistoryDto>();
+    public static List<UserIssuesHistoryDTO> getAllUserIssuesHistoryDTO(List<HistoryModel> listOfHistoriesByUserID, List<IssueModel> issues, UserModel userModel) {
+        List<UserIssuesHistoryDTO> list = new ArrayList<UserIssuesHistoryDTO>();
         listOfHistoriesByUserID.forEach(historyModel -> {
             issues.forEach(issueModel -> {
                 if (issueModel.getId() == historyModel.getIssue().getId()) {
@@ -106,11 +106,11 @@ public class DTOAssembler {
         return list;
     }
 
-    public static UserIssuesHistoryDto getSingleUserIssuesHistoryDTO(HistoryModel historyModel, IssueModel issueModel, UserModel userModel) {
+    public static UserIssuesHistoryDTO getSingleUserIssuesHistoryDTO(HistoryModel historyModel, IssueModel issueModel, UserModel userModel) {
 
-        UserIssuesHistoryDto userIssuesHistoryDto = new UserIssuesHistoryDto();
+        UserIssuesHistoryDTO userIssuesHistoryDto = new UserIssuesHistoryDTO();
         userIssuesHistoryDto.setIssueName(issueModel.getName());
-        IssueHistoryDto issueHistoryDto = new IssueHistoryDto();
+        IssueHistoryDTO issueHistoryDto = new IssueHistoryDTO();
         issueHistoryDto.setDate(historyModel.getDate());
         issueHistoryDto.setChangedByUser(userModel.getName());
         issueHistoryDto.setStatus(historyModel.getStatus().id);
@@ -121,21 +121,21 @@ public class DTOAssembler {
     }
 
 
-    public static List<UserHistoryDto> getUserHistoryDtos(IssueModel issue, UserService userService) {
-        List<UserHistoryDto> historyDtoList = new ArrayList<UserHistoryDto>();
+    public static List<UserHistoryDTO> getUserHistoryDtos(IssueModel issue, UserService userService) {
+        List<UserHistoryDTO> historyDtoList = new ArrayList<UserHistoryDTO>();
         if (null == issue) {
             return historyDtoList;
         }
         for(HistoryModel historyModel : issue.getHistories()){
-              UserHistoryDto userHistoryDto = getUserHistoryDto(historyModel, issue, userService);
+              UserHistoryDTO userHistoryDto = getUserHistoryDto(historyModel, issue, userService);
               historyDtoList.add(userHistoryDto);
         }
         Collections.sort(historyDtoList);
         return historyDtoList;
     }
 
-    public static UserHistoryDto getUserHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService){
-        UserHistoryDto userHistoryDto = new UserHistoryDto();
+    public static UserHistoryDTO getUserHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService){
+        UserHistoryDTO userHistoryDto = new UserHistoryDTO();
         userHistoryDto.setStatusId(historyModel.getStatus().id);
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
