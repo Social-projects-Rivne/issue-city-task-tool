@@ -2,7 +2,7 @@ define([ 'underscore', 'backbone', 'model/UserModel' ], function(_, Backbone, Us
 
 	return Backbone.Collection.extend({
 		model : UserModel,
-		url : 'get-users'
+		url : 'users/all'
 	});
 
 });

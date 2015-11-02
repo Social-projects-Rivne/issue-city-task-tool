@@ -2,7 +2,7 @@ define([ 'underscore', 'backbone', 'model/StatusModel' ], function(_, Backbone, 
 
 	return Backbone.Collection.extend({
 		model : StatusModel,
-		url : 'get-statuses'
+		url : 'statuses/all'
 	});
 
 });

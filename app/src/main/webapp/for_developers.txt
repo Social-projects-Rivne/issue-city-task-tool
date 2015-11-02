@@ -2,3 +2,5 @@ Backbone patterns && anti-patterns
 
 http://ricostacruz.com/backbone-patterns/
 http://blog.shinetech.com/2013/11/26/backbone-antipatterns/
+
+TODO: views should be refatored to have user-friendly links

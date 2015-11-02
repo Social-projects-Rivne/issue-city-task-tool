@@ -5,13 +5,14 @@ import edu.com.softserveinc.bawl.services.StatusService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping(value = "/statuses")
 public class StatusController {
 
 	/**
@@ -21,9 +22,9 @@ public class StatusController {
 	
 	@Autowired
 	private StatusService service;
-	
-	@RequestMapping("get-statuses")
+
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	@RequestMapping("/all")
 	public @ResponseBody List<StatusDTO> getStatuses() {
 		return service.loadStatusList();
 	}

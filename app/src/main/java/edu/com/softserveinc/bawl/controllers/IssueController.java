@@ -3,6 +3,7 @@ package edu.com.softserveinc.bawl.controllers;
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.IssueDto;
+import edu.com.softserveinc.bawl.dto.UserHistoryDto;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
@@ -17,17 +18,17 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class IssueController {
 
 	/**
@@ -56,6 +57,17 @@ public class IssueController {
 		return DTOAssembler.getIssueDto(historyService.getLastIssueByIssueID(issueId));
 	}
 
+	/**
+	 * Returns list of UserHistoryDto by issue id
+	 * @param id issue id
+	 * @return list of UserHistoryDto
+	 */
+	@RequestMapping(value = "issue/{id}/history", method = RequestMethod.GET)
+	public @ResponseBody List<UserHistoryDto> getUserHistoryAction(@PathVariable int id ) {
+		IssueModel issue = issueService.getById(id);
+		return DTOAssembler.getUserHistoryDtos(issue, userService);
+	}
+
 
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@RequestMapping(value = "issue/", method = RequestMethod.GET)
@@ -63,8 +75,8 @@ public class IssueController {
 		return DTOAssembler.getAllIssuesDto(issueService.loadIssuesList());
 	}
 
-	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
+	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> deleteIssue(@PathVariable("id") int issueId, Map<String, String> message) {
 		int userId = getCurrentUserId();
 		if (userId != 0){

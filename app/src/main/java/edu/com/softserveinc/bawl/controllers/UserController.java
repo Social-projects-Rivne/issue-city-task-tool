@@ -5,9 +5,14 @@ import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.dto.UserDTO;
+import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDto;
 import edu.com.softserveinc.bawl.dto.UserNotificationDto;
+import edu.com.softserveinc.bawl.models.HistoryModel;
+import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
+import edu.com.softserveinc.bawl.services.HistoryService;
+import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
@@ -17,13 +22,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-@Controller
+@RestController
+@RequestMapping(value = "/users")
 public class UserController {
 
 	/**
@@ -34,19 +45,19 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping("get-users")
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody
-	List<UserModel> getUsersAction() {
+    @Autowired
+    private HistoryService historyService;
 
-		List<UserModel> users = userService.loadUsersList();
-		for (UserModel user: users){
-			user.setPassword("_");
-		}
-		return users;
+    @Autowired
+    private IssueService issueService;
+
+	@RequestMapping("/all")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public @ResponseBody List<UserDTO> getUsersAction() {
+		return DTOAssembler.getAllUsersDtoFrom(userService.loadUsersList());
 	}
 
-	@RequestMapping(value = "user", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> addUserAction(
 			@RequestBody UserModel user, Map<String, String> message) {
 
@@ -73,7 +84,7 @@ public class UserController {
 		return message;
 	}
 
-	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Map<String, String> editUserAction(
 			@RequestBody UserModel userModel, Map<String, String> message) {
 
@@ -95,7 +106,7 @@ public class UserController {
 		return message;
 	}
 
-	@RequestMapping(value = "validate-user", method = RequestMethod.POST)
+	@RequestMapping(value = "/validate", method = RequestMethod.POST)
 	public @ResponseBody UserModel validateUser (@RequestBody UserModel user) {
 
 		UserModel dbModel = null;
@@ -112,7 +123,7 @@ public class UserController {
 		return dbModel;
 	}
 
-	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody Map<String, String> removeUserAction(
 			@PathVariable int id, Map<String, String> message) {
@@ -135,7 +146,7 @@ public class UserController {
 		return message;
 	}
 
-	@RequestMapping(value = "currentuser", method = RequestMethod.GET)
+	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public @ResponseBody UserDTO getCurrentUserAction(){
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
@@ -162,7 +173,7 @@ public class UserController {
 		return message ;
 	}
 
-	@RequestMapping(value="user/changename/{newname}", method = RequestMethod.GET)
+	@RequestMapping(value="/changename/{newname}", method = RequestMethod.GET)
 	public @ResponseBody Map<String, String> changeUserName(@PathVariable int id,@PathVariable String newname, Map<String, String> message){
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserModel userModel=userService.getByLogin(currentUserLoginName);
@@ -172,7 +183,7 @@ public class UserController {
 		return  message ;
 	}
 
-	@RequestMapping(value="user/changepass", method = RequestMethod.GET)
+	@RequestMapping(value="/changepass", method = RequestMethod.GET)
 	public @ResponseBody Map<String, String> changeUserPassword(Map<String, String> message){
 
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -193,6 +204,23 @@ public class UserController {
 		return message;
 	}
 
+
+
+    /**
+     * Returns list of UserIssuesHistoryDto by user id
+     * @param id user id
+     * @return list of UserIssuesHistoryDto
+     */
+    @RequestMapping(value = "/{id}/history", method = RequestMethod.GET)
+    public @ResponseBody List<UserIssuesHistoryDto> getUserIssuesHistories(@PathVariable int id){
+
+        List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
+        List<IssueModel> issues = issueService.loadIssuesList();
+        UserModel userModel = userService.getById(id);
+
+        return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
+
+    }
 
 }
 

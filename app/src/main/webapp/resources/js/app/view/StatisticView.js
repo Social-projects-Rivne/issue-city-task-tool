@@ -54,7 +54,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/StatisticsTemplate.
 					var that = this;
 					$.ajax( {
 						type: 'POST',
-						url: 'statistic-by-categories',
+						url: 'statistics/categories',
 						dataType: 'json',
 						success: function(data) {
 							that.statDiagram(data);
@@ -69,7 +69,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/StatisticsTemplate.
 					var that = this;
 					$.ajax( {
 						type: 'POST',
-						url: 'statistic-by-statuses',
+						url: 'statistics/statuses',
 						dataType: 'json',
 						success: function(data) {
 							that.statDiagram(data);
@@ -84,7 +84,7 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/StatisticsTemplate.
 					var that = this;
 					$.ajax( {
 						type: 'POST',
-						url: 'statistic-by-comments',
+						url: 'statistics/comments',
 						dataType: 'json',
 						success: function(data) {
 							that.statDiagram(data);

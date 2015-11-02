@@ -21,7 +21,7 @@ define([ 'underscore', 'backbone', 'text!templates/ImageEditorTemplate.html' ],
 				cropImage: function() {
 					$.ajax({
 						type: 'POST',
-						url: 'crop-image',
+						url: 'image/crop',
 						contentType: 'application/json',
 						mimeType: 'application/json',
 						data: JSON.stringify(),

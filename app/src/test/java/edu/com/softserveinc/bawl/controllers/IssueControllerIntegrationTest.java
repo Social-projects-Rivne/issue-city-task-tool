@@ -23,7 +23,7 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-root-context.xml"})
-public class HistoryControllerIntegrationTest {
+public class IssueControllerIntegrationTest {
 
   public static final  String MEDIA_TYPE = "application/json;charset=UTF-8";
   public static final String EMPTY_COLLECTION = "[]";
@@ -34,11 +34,11 @@ public class HistoryControllerIntegrationTest {
   private MockMvc mockMvc;
 
   @Autowired
-  private HistoryController historyController;
+  private IssueController issueController;
 
   @Before
   public void setup() {
-    this.mockMvc = MockMvcBuilders.standaloneSetup(this.historyController).build();
+    this.mockMvc = MockMvcBuilders.standaloneSetup(this.issueController).build();
   }
 
   @Test
@@ -59,15 +59,6 @@ public class HistoryControllerIntegrationTest {
       }
     }
   }
-
-  @Test
-  public void testgetUserIssuesHistories() throws Exception {
-    mockMvc.perform(get( String.format ("/user/%1$d/history", USER_ID)))
-            .andExpect(status().isOk())
-            .andExpect(content().mimeType(MEDIA_TYPE));
-    //TODO check fields in result query
-    //method getUserIssuesHistories() has some problems
-    }
 
 
 }

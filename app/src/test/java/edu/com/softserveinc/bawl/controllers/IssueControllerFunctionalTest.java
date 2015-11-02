@@ -1,7 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.AbstractBawlTest;
-import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.junit.Before;
@@ -16,7 +15,7 @@ import static org.springframework.test.web.server.request.MockMvcRequestBuilders
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-public class HistoryControllerFunctionalTest extends AbstractBawlTest {
+public class IssueControllerFunctionalTest extends AbstractBawlTest {
 
   public static final String MEDIA_TYPE = "application/json;charset=UTF-8";
   public static final String EMPTY_COLLECTION = "[]";
@@ -24,9 +23,10 @@ public class HistoryControllerFunctionalTest extends AbstractBawlTest {
   private MockMvc mockMvc;
 
   @InjectMocks
-  private HistoryController historyController;
+  private UserController userController;
+
   @Mock
-  private HistoryService historyService;
+  private IssueController issueController;
 
   @Mock
   private IssueService issueService;
@@ -37,7 +37,7 @@ public class HistoryControllerFunctionalTest extends AbstractBawlTest {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    mockMvc = MockMvcBuilders.standaloneSetup(this.historyController).build();
+    mockMvc = MockMvcBuilders.standaloneSetup(this.issueController).build();
   }
 
   @Test
@@ -48,12 +48,5 @@ public class HistoryControllerFunctionalTest extends AbstractBawlTest {
       .andExpect(content().string(EMPTY_COLLECTION));
   }
 
-    @Test
-    public void testgetUserIssuesHistories() throws Exception {
-        mockMvc.perform(get("/user/1/history"))
-                .andExpect(status().isOk())
-                .andExpect(content().mimeType(MEDIA_TYPE))
-                .andExpect(content().string(EMPTY_COLLECTION));
-    }
 
 }

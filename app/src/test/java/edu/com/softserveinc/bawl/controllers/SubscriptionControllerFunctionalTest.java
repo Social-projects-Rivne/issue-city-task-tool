@@ -1,11 +1,13 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.server.MockMvc;
@@ -33,10 +35,12 @@ public class SubscriptionControllerFunctionalTest  extends AbstractBawlTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("{\"id\" : \"1\",\"issueId\" : \"1\",\"email\" : \"foo@foo\"}".getBytes()))
                 .andExpect(status().isOk());
+        Mockito.verify(subscriptionService, Mockito.times(1)).create(Mockito.any(SubscriptionModel.class));
     }
 
     @Test
     public void testCancelSubscription() throws Exception {
         mockMvc.perform(post("/subscriptions/1/delete/1")).andExpect(status().isOk());
+        Mockito.verify(subscriptionService, Mockito.times(1)).delete(1);
     }
 }

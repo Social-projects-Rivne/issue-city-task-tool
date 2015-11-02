@@ -1,7 +1,7 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 	return Backbone.Model.extend({
-		urlRoot: 'user',
+		urlRoot: 'users',
 		defaults: {
 			id: null,
 			name: "",

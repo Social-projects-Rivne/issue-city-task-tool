@@ -10,17 +10,18 @@ import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.StatusService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping(value = "/statistics")
 public class StatisticController {
 
 	/**
@@ -43,7 +44,7 @@ public class StatisticController {
 	@Autowired
 	private HistoryService historyService;
 	
-	@RequestMapping(value = "statistic-by-categories", method = RequestMethod.POST)
+	@RequestMapping(value = "/categories", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String, String>> statisticByCategory() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
@@ -58,7 +59,7 @@ public class StatisticController {
 		return statistic;
 	}
 	
-	@RequestMapping(value = "statistic-by-statuses", method = RequestMethod.POST)
+	@RequestMapping(value = "/statuses", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String, String>> statisticByStatus() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
@@ -81,7 +82,7 @@ public class StatisticController {
 		return statistic;
 	}
 	
-	@RequestMapping(value = "statistic-by-comments", method = RequestMethod.POST)
+	@RequestMapping(value = "/comments", method = RequestMethod.POST)
 	public @ResponseBody List<Map<String, String>> statisticByComments() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = historyService.getLastUniqueIssues();

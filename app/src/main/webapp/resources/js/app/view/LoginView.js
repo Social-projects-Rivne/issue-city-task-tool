@@ -27,7 +27,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				getCurrentUser: function(){
 					that = this;
 					$.ajax({ contentType:'applicetaion/json',
-							 url: 'currentuser',
+							 url: 'users/current',
 							 //when request done we create admin or manager view and rout user on his page
 							 success: function(data){
 								that.currentUser = new UserModel(data);
@@ -54,7 +54,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 								//get logined user model
 								$.ajax({ 
 									contentType:'applicetaion/json',
-									url: 'currentuser',
+									url: 'users/current',
 									//when request done we create admin or manager view and rout user on his page
 									success: function(data){
 										that.currentUser = new UserModel(data);
@@ -163,7 +163,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					that = this;
 
 					$.ajax({
-						url: "validate-user",
+						url: "users/validate",
 						type: "POST",
 						data: JSON.stringify(this.currentUser),
 						dataType: "json",

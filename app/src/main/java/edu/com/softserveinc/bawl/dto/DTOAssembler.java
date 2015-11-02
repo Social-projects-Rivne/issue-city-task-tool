@@ -17,6 +17,14 @@ import java.util.List;
  */
 public class DTOAssembler {
 
+    public static List<UserDTO> getAllUsersDtoFrom(List<UserModel> userModels) {
+        List<UserDTO> userDTOs = new ArrayList<>();
+        userModels.forEach(userModel -> {
+            userDTOs.add(getUserDtoFrom(userModel));
+        });
+        return userDTOs;
+    }
+
     public static UserDTO getUserDtoFrom(UserModel userModel) {
         UserDTO userDTO =  new UserDTO();
         userDTO.setId(userModel.getId());
