@@ -1,15 +1,11 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import edu.com.softserveinc.bawl.dto.ResponseDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -28,15 +24,15 @@ public class SubscriptionController {
 
     // addSubscription
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public  @ResponseBody Map <String, String> addSubscriptionAction(
-			    @RequestBody SubscriptionModel sub, Map <String, String> message) {
+	public  @ResponseBody ResponseDTO addSubscriptionAction(
+			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
 		try {
-			subscriptionService.create(sub);
-			message.put("message", "New subscription was successfully added");
+			subscriptionService.create(subscriptionModel);
+			responseDTO.setMessage("message\", \"New subscription was successfully added");
 		} catch (Exception e) {
-			message.put("message","Some problem occured! New subscription was NOT added");
+			responseDTO.setMessage("Some problem occured! New subscription was NOT added");
 		}
-		return message;
+		return responseDTO;
 	}
 
     @RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
