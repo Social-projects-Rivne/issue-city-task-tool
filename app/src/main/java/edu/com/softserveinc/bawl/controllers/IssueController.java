@@ -32,13 +32,20 @@ import java.util.Map;
 @RestController
 public class IssueController {
 
-	/**
-	 * Logger field
-	 */
-	public static final Logger LOG=Logger.getLogger(IssueController.class);
+	public static final Logger LOG = Logger.getLogger(IssueController.class);
+
     public static final String ISSUE_ADDED = "Issue was successfully added";
     public static final String ISSUE_NOT_ADDED = "Some problem occured! Issue was not added";
     public static final String NOT_AUTHORIZED = "You are not authorized for this action";
+	public static final String SUCCESS_SEND = "Issue has been deleted.";
+	public static final String FAILURE_SEND = "Some problem with sending email. Try again and check your email";
+	public static final String SUCCESS_DELETE = "Issue has been deleted.";
+	public static final String FAILURE_DELETE = "";
+
+	public static final String SUCCESS_UPDATE = "Issue has been updated.";
+	public static final String FAILURE_UPDATE = "Some problem with sending email. Try again and check your email";
+	public static final String SUCCESS_MARKED = "Issue has been marked as possibly resolved.";
+	public static final String FAILURE_MARKED = "Some problem with sending email. Try again and check your email";
 
     @Autowired
 	private IssueService issueService;
@@ -67,6 +74,7 @@ public class IssueController {
 	 * @param id issue id
 	 * @return list of UserHistoryDto
 	 */
+
 	@RequestMapping(value = "issue/{id}/history", method = RequestMethod.GET)
 	public @ResponseBody List<UserHistoryDTO> getUserHistoryAction(@PathVariable int id ) {
 		IssueModel issue = issueService.getById(id);
@@ -82,23 +90,24 @@ public class IssueController {
 
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@RequestMapping(value = "delete-issue/{id}", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String> deleteIssue(@PathVariable("id") int issueId, Map<String, String> message) {
+	public @ResponseBody ResponseDTO deleteIssue(@PathVariable("id") int issueId, ResponseDTO responseDTO ) {
 		int userId = getCurrentUserId();
 		if (userId != 0){
 			issueService.deleteProblem(issueId, userId);
 			try {
-				mailService.notifyForIssue(issueId, "Issue has been deleted.");
+				mailService.notifyForIssue(issueId, SUCCESS_SEND);
 			} catch (RequestFailedException e) {
-				message.put("message", "Some problem with sending email. Try again and check your email");
+					responseDTO.setMessage(FAILURE_SEND);
 			}
 		}
-		return message;
+		return responseDTO;
 	}
 
     /**
      * Returns all issues with statuses 2=approved, 5=toresolve
      * @return list of all issues
      */
+
     @PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")
 	@RequestMapping("get-issues")
 	public @ResponseBody List<IssueDTO> getIssues() {
@@ -110,6 +119,7 @@ public class IssueController {
      * @param request
      * @return
      */
+
     @RequestMapping(value = "issue", method = RequestMethod.POST)
 	public @ResponseBody
 	ResponseDTO addIssue(@RequestBody IssueDTO request) {
@@ -131,7 +141,7 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
-	public @ResponseBody Map<String, String>  editIssue(@RequestBody Map request, Map<String, String> message) {
+	public @ResponseBody ResponseDTO editIssue(@RequestBody Map request, ResponseDTO responseDTO) {
 		
 		if(request.size() == 10) {
 			int userId = getCurrentUserId();
@@ -147,9 +157,9 @@ public class IssueController {
 							issue.setCategory(category);
 							issueService.editProblem(issue, userId);
 							try {
-								mailService.notifyForIssue(issueId, "Issue has been updated.");
+								mailService.notifyForIssue(issueId, SUCCESS_UPDATE);
 							} catch (RequestFailedException e) {
-								message.put("message", "Some problem with sending email. Try again and check your email");
+								responseDTO.setMessage(FAILURE_UPDATE);
 							}
 						}
 					}
@@ -172,35 +182,35 @@ public class IssueController {
 							issue.setStatus(IssueStatus.get(status));
 							issueService.editProblem(issue, userId);
 							try {
-								mailService.notifyForIssue(issueId, "Issue has been updated.");
+								mailService.notifyForIssue(issueId, SUCCESS_UPDATE);
 							} catch (RequestFailedException e) {
-								message.put("message", "Some problem with sending email. Try again and check your email");
+								responseDTO.setMessage(FAILURE_SEND);
 							}
 						}
 					}
 				}
 			}
 		}
-		return message;
+		return responseDTO;
 	}
 	
 	
 
 	// method for change status issue on to resolve
 	@RequestMapping(value = "to-resolve/{id}", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String>  toResolve(@PathVariable("id") int id, Map<String, String> message) {
+	public @ResponseBody ResponseDTO toResolve(@PathVariable("id") int id, ResponseDTO responseDTO) {
 		int userId = getCurrentUserId();
 		if (userId != 0) {
 			IssueModel issue = historyService.getLastIssueByIssueID(id);
 			issue.setStatus(IssueStatus.RESOLVED);
 			issueService.editProblem(issue, userId);
 			try {
-				mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
+				mailService.notifyForIssue(id, SUCCESS_MARKED);
 			} catch (RequestFailedException e) {
-				message.put("message", "Some problem with sending email. Try again and check your email");
+				responseDTO.setMessage(FAILURE_MARKED);
 			}
 		}
-		return message;
+		return responseDTO;
 	}
 
 
