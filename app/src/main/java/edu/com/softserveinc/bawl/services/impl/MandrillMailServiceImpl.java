@@ -77,30 +77,16 @@ public class MandrillMailServiceImpl implements MailService {
         return mailService;
     }
 
-    public void sendMessage(MandrillHtmlMessage mandrillMessage) throws RequestFailedException {
+    public void sendMessage(MandrillHtmlMessage mandrillMessage) {
         messageRequest = new MandrillMessageRequest();
         messageRequest.setMessage(mandrillMessage);
-        SendMessageResponse response = null;
         try {
-            response = messagesRequest.sendMessage(messageRequest);
+            SendMessageResponse response = messagesRequest.sendMessage(messageRequest);
         } catch (RequestFailedException e) {
-            throw e;
+            LOG.warn(e);
         }
-        if(!isValidResponse(response)){
-            throw new MailSendException("Can't send email");
-        }
+    }
 
-    }
-    private boolean isValidResponse(SendMessageResponse response){
-        Iterator<MessageResponse> iterator = response.getList().iterator();
-        while (iterator.hasNext()){
-            MessageResponse messageResponse = iterator.next();
-            if(messageResponse.getStatus().equals("sent")){
-                return true;
-            }
-        };
-        return false;
-    }
 
     @Override
     public void notifyForIssue(int issueId, String msg) throws RequestFailedException {

@@ -1,13 +1,8 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.UserDTO;
-import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDTO;
-import edu.com.softserveinc.bawl.dto.UserNotificationDTO;
+import edu.com.softserveinc.bawl.dto.*;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -23,15 +18,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 @RestController
@@ -74,8 +62,6 @@ public class UserController {
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 			responseDTO.setMessage("Successfully registered. Please confirm your email");
-		} catch (RequestFailedException e) {
-			responseDTO.setMessage("Some problem with sending email. Try again and check your email");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occured! User was not added");
 		}
@@ -83,9 +69,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody Map<String, String> editUserAction(
-			@RequestBody UserModel userModel, Map<String, String> message) {
-
+	public @ResponseBody ResponseDTO editUserAction(
+			@RequestBody UserModel userModel) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		try {
 			userService.editUser(userModel);
 			String role = userModel.getRole().get();
@@ -94,19 +80,16 @@ public class UserController {
 					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-			message.put("message", "User was successfully edited");
-		} catch (RequestFailedException e) {
-			message.put("message", "Some problem with sending email. Try again and check your email");
+			responseDTO.setMessage("User was successfully edited");
 		} catch (Exception ex) {
-			message.put("message", "Some problem occurred! User was not updated" + ex.toString());
+			responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());
 		}
 
-		return message;
+		return responseDTO;
 	}
 
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
 	public @ResponseBody UserModel validateUser (@RequestBody UserDTO user) {
-
 		UserModel dbModel = null;
 		try {
 			dbModel = userService.getById(user.getId());
@@ -123,9 +106,9 @@ public class UserController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody Map<String, String> removeUserAction(
-			@PathVariable int id, Map<String, String> message) {
-
+	public @ResponseBody ResponseDTO removeUserAction(
+			@PathVariable int id) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		try {
 			userService.deleteUser(id);
 			UserModel userModel = userService.getById(id);
@@ -134,14 +117,12 @@ public class UserController {
 					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
 					.build();
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-			message.put("message", "User was successfully deleted");
-		} catch (RequestFailedException e) {
-			message.put("message", "Some problem with sending email. Try again and check your email");
+			responseDTO.setMessage("User was successfully deleted");
 		} catch (Exception ex) {
-			message.put("message", "Some problem occured! User was not deleted");
+			responseDTO.setMessage("Some problem occured! User was not deleted");
 		}
 
-		return message;
+		return responseDTO;
 	}
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
@@ -155,36 +136,34 @@ public class UserController {
 	}
 
 	 /* This metod send notification to email from #admin panel */
-	@RequestMapping(value="/send-notification", method = RequestMethod.POST)
-	public @ResponseBody Map<String, String>
-	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel, Map<String, String> message) {
+	@RequestMapping(value="send-notification", method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO
+	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
 					.setPattern(userNotificationModel.getMessage())
 					.setRecipients(new MandrillRecipient("Bawl user", userNotificationModel.getEmail()))
 					.setSubject(userNotificationModel.getSubject())
 					.build();
-		try {
-			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-			message.put("message", "Good");
-		} catch (RequestFailedException e) {
-			message.put("message", "Some problem with sending email. Try again and check your email");
-		}
-		return message ;
+		MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+		responseDTO.setMessage("Mail has been sent");
+		return responseDTO ;
 	}
 
 	@RequestMapping(value="/changename/{newname}", method = RequestMethod.GET)
-	public @ResponseBody Map<String, String> changeUserName(@PathVariable int id,@PathVariable String newname, Map<String, String> message){
+	public @ResponseBody ResponseDTO changeUserName(@PathVariable int id,@PathVariable String newname){
+		ResponseDTO responseDTO = new ResponseDTO();
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserModel userModel=userService.getByLogin(currentUserLoginName);
 		userModel.setName(newname);
 		userService.editUser(userModel);
-		message.put("message", "Name was succesfully edited");
-		return  message ;
+		responseDTO.setMessage("Name has been succesfully edited");
+		return  responseDTO ;
 	}
 
 	@RequestMapping(value="/changepass", method = RequestMethod.GET)
-	public @ResponseBody Map<String, String> changeUserPassword(Map<String, String> message){
-
+	public @ResponseBody ResponseDTO changeUserPassword(){
+		ResponseDTO responseDTO = new ResponseDTO();
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
 		String newPassword = PassGenerator.generate(1, 5);
@@ -193,17 +172,11 @@ public class UserController {
 				.setPattern(MailPatterns.PASSWORD_RESET_PATTERN, userModel.getName())
 				.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
 				.build();
-		try {
-			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-		} catch (RequestFailedException e) {
-			message.put("message", "Some problem with sending email. Try again and check your email");
-		}
+		MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 		userService.editUserPass(userModel);
-		message.put("message" , "Your pass have been changed ! Watch about it on your mail ! ");
-		return message;
+		responseDTO.setMessage("Your pass have been changed ! Watch about it on your mail ! ");
+		return responseDTO;
 	}
-
-
 
     /**
      * Returns list of UserIssuesHistoryDto by user id
@@ -212,13 +185,11 @@ public class UserController {
      */
     @RequestMapping(value = "/{id}/history", method = RequestMethod.GET)
     public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
-
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();
         UserModel userModel = userService.getById(id);
 
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
-
     }
 
 }

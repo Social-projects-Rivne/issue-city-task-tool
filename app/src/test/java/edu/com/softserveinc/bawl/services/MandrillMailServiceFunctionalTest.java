@@ -60,8 +60,8 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlTest {
         verify(messagesRequest).sendMessage(any(MandrillMessageRequest.class));
     }
 
-    @Test(expected=RequestFailedException.class)
-    public void sendRegNotification_WithWrongCredentials_ThrowsException() throws RequestFailedException {
+    @Test
+    public void sendRegNotification_WithWrongCredentials_ShouldSendNotification() throws RequestFailedException {
         when(messageResponse.getStatus()).thenReturn(INVALID_SENT_STATUS);
         when(sendMessageResponse.getList()).thenReturn(Arrays.asList(messageResponse));
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
@@ -86,7 +86,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlTest {
         verify(messagesRequest).sendMessage(any(MandrillMessageRequest.class));
     }
 
-    @Test(expected=RequestFailedException.class)
+    @Test
     public void notifyForIssue_WithWrongCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
         when(subscriptionModel.getIssueId()).thenReturn(ISSUE_ID);

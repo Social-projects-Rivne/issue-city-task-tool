@@ -38,6 +38,7 @@ public class HistoryModel {
     private IssueStatus status;
 
     @Column(name="DATE")
+
     private Date date;
 
     @NotNull
