@@ -110,7 +110,6 @@ public class IssueController {
      * @param request
      * @return
      */
-    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "issue", method = RequestMethod.POST)
 	public @ResponseBody
 	ResponseDTO addIssue(@RequestBody IssueDTO request) {
@@ -139,7 +138,7 @@ public class IssueController {
 			if (userId != 0) {
 				final Object categoryName = request.get("category");
 				if (categoryName != null) {
-					CategoryModel category = categoryService.getCategoryByName(categoryName.toString().toLowerCase());
+					CategoryModel category = categoryService.getCategoryByNameOrAddNew(categoryName.toString().toLowerCase());
 					int issueId = Integer.parseInt(request.get("id").toString());
 					List<IssueModel> issueModel = issueService.loadIssuesList();
 					for (IssueModel issueModelWithID : issueModel) {
