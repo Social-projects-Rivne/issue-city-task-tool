@@ -2,7 +2,7 @@ package edu.com.softserveinc.bawl.controllers
 
 import java.util
 
-import edu.com.softserveinc.bawl.dto.{IssueDto, CategoryDTO}
+import edu.com.softserveinc.bawl.dto.{IssueDTO, CategoryDTO}
 import edu.com.softserveinc.bawl.models.{IssueModel, CategoryModel}
 import edu.com.softserveinc.bawl.services.CategoryService
 import org.junit.{Before, Test}

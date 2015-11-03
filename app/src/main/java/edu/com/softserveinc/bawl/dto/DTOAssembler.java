@@ -70,28 +70,28 @@ public class DTOAssembler {
      * @param allIssues
      * @return
      */
-    public static List<IssueDto> getAllIssuesDto(List<IssueModel> allIssues){
-        List<IssueDto> listIssueDto = new ArrayList<>(allIssues.size());
+    public static List<IssueDTO> getAllIssuesDto(List<IssueModel> allIssues){
+        List<IssueDTO> listIssueDTO = new ArrayList<>(allIssues.size());
         allIssues.forEach(issueModel -> {
                     if (issueModel.getStatus() != IssueStatus.RESOLVED) {
-                        listIssueDto.add(getIssueDto(issueModel));
+                        listIssueDTO.add(getIssueDto(issueModel));
                     }
                 }
         );
-        return listIssueDto;
+        return listIssueDTO;
     }
 
-    public static IssueDto getIssueDto(IssueModel issueModel) {
-        IssueDto issueDto = new IssueDto();
-        issueDto.setId(issueModel.getId());
-        issueDto.setName(issueModel.getName());
-        issueDto.setDescription(issueModel.getDescription());
-        issueDto.setAttachments(issueModel.getAttachments());
-        issueDto.setMapPointer(issueModel.getMapPointer());
-        issueDto.setCategoryId(issueModel.getCategory().getId());
-        issueDto.setPriorityId(issueModel.getPriorityId());
-        issueDto.setStatusId(issueModel.getStatus().id);
-        return issueDto;
+    public static IssueDTO getIssueDto(IssueModel issueModel) {
+        IssueDTO issueDTO = new IssueDTO();
+        issueDTO.setId(issueModel.getId());
+        issueDTO.setName(issueModel.getName());
+        issueDTO.setDescription(issueModel.getDescription());
+        issueDTO.setAttachments(issueModel.getAttachments());
+        issueDTO.setMapPointer(issueModel.getMapPointer());
+        issueDTO.setCategoryId(issueModel.getCategory().getId());
+        issueDTO.setPriorityId(issueModel.getPriorityId());
+        issueDTO.setStatusId(issueModel.getStatus().id);
+        return issueDTO;
     }
 
     public static List<UserIssuesHistoryDTO> getAllUserIssuesHistoryDTO(List<HistoryModel> listOfHistoriesByUserID, List<IssueModel> issues, UserModel userModel) {

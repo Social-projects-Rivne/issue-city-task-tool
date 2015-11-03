@@ -2,7 +2,7 @@ package edu.com.softserveinc.bawl.controllers;
 
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.IssueDto;
+import edu.com.softserveinc.bawl.dto.IssueDTO;
 import edu.com.softserveinc.bawl.dto.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.UserHistoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
@@ -57,7 +57,8 @@ public class IssueController {
 
 	@PostAuthorize("hasRole('ROLE_MANAGER') or {2,5}.contains(returnObject.getStatusId())")
 	@RequestMapping("issue/{id}")
-	public @ResponseBody IssueDto getIssue(@PathVariable("id") int issueId) {
+	public @ResponseBody
+	IssueDTO getIssue(@PathVariable("id") int issueId) {
 		return DTOAssembler.getIssueDto(historyService.getLastIssueByIssueID(issueId));
 	}
 
@@ -75,7 +76,7 @@ public class IssueController {
 
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@RequestMapping(value = "issue", method = RequestMethod.GET)
-	public @ResponseBody List<IssueDto> getAllIssues(){
+	public @ResponseBody List<IssueDTO> getAllIssues(){
 		return DTOAssembler.getAllIssuesDto(issueService.loadIssuesList());
 	}
 
@@ -100,7 +101,7 @@ public class IssueController {
      */
     @PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")
 	@RequestMapping("get-issues")
-	public @ResponseBody List<IssueDto> getIssues() {
+	public @ResponseBody List<IssueDTO> getIssues() {
 		return DTOAssembler.getAllIssuesDto(historyService.getLastUniqueIssues());
 	}
 
@@ -112,7 +113,7 @@ public class IssueController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "issue", method = RequestMethod.POST)
 	public @ResponseBody
-	ResponseDTO addIssue(@RequestBody IssueDto request) {
+	ResponseDTO addIssue(@RequestBody IssueDTO request) {
 		ResponseDTO responseDTO = new ResponseDTO();
 
             CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory().toLowerCase());
@@ -130,7 +131,6 @@ public class IssueController {
 		return responseDTO;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Map<String, String>  editIssue(@RequestBody Map request, Map<String, String> message) {
 		
