@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -68,7 +70,8 @@ public class IssueServiceImpl implements IssueService {
 		HistoryModel historyModel = new HistoryModel();
 		historyModel.setStatus(problem.getStatus());
 		historyModel.setIssue(problem);
-		historyModel.setUserId (userId);
+		historyModel.setUserId(userId);
+		historyModel.setDate(new Date());
 		historyDao.saveAndFlush(historyModel);
 	}
 
