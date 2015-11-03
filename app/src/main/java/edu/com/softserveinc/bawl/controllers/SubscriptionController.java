@@ -7,8 +7,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/subscriptions")
 public class SubscriptionController {
@@ -28,7 +26,7 @@ public class SubscriptionController {
 			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
 		try {
 			subscriptionService.create(subscriptionModel);
-			responseDTO.setMessage("message\", \"New subscription was successfully added");
+			responseDTO.setMessage("New subscription was successfully added");
 		} catch (Exception e) {
 			responseDTO.setMessage("Some problem occured! New subscription was NOT added");
 		}
@@ -36,17 +34,15 @@ public class SubscriptionController {
 	}
 
     @RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
-    public  @ResponseBody Map <String, String> cancelSubscription(
+    public  @ResponseBody ResponseDTO cancelSubscription(
             @PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
-            Map <String, String> message) {
+			ResponseDTO responseDTO ) {
         try {
             subscriptionService.delete(id);
-            message.put("message", "New subscription was successfully added");
+			responseDTO.setMessage("New subscription was successfully added");
         } catch (Exception e) {
-            message.put("message","Some problem occured! New subscription was NOT added");
-        }
-        return message;
+			responseDTO.setMessage("Some problem occured! New subscription was NOT added");
+		}
+        return responseDTO;
     }
-
-
 }
