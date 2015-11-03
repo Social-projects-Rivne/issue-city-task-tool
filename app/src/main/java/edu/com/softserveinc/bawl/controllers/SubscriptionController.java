@@ -13,6 +13,16 @@ public class SubscriptionController {
 
 	public static final Logger LOG = Logger.getLogger(StatusController.class);
 
+	public static final String MESSAGE_TEXT_ADD = "New subscription";
+	public static final String SUCCESS_ADD = "was successfully added";
+	public static final String FAILURE_ADD = "was NOT added";
+
+	public static final String MESSAGE_TEXT_DELL = "The subscription";
+	public static final String SUCCESS_DELL = "was successfully delited";
+	public static final String FAILURE_DELL = "Some problem occured! was NOT added";
+
+/* TODO: Mayby need a property file for messages ? */
+
 	@Autowired
 	private SubscriptionService subscriptionService;
 
@@ -26,9 +36,9 @@ public class SubscriptionController {
 			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
 		try {
 			subscriptionService.create(subscriptionModel);
-			responseDTO.setMessage("New subscription was successfully added");
+			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ SUCCESS_ADD);
 		} catch (Exception e) {
-			responseDTO.setMessage("Some problem occured! New subscription was NOT added");
+			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ FAILURE_ADD);
 		}
 		return responseDTO;
 	}
@@ -39,9 +49,9 @@ public class SubscriptionController {
 			ResponseDTO responseDTO ) {
         try {
             subscriptionService.delete(id);
-			responseDTO.setMessage("New subscription was successfully added");
+			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
         } catch (Exception e) {
-			responseDTO.setMessage("Some problem occured! New subscription was NOT added");
+			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
 		}
         return responseDTO;
     }
