@@ -14,10 +14,7 @@ import java.util.Collection;
 @Transactional
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-	/**
-     *  Logger field
-     */
-    public static final Logger LOG=Logger.getLogger(SubscriptionServiceImpl.class);
+    public static final Logger LOG = Logger.getLogger(SubscriptionServiceImpl.class);
 
 	@Autowired
 	private SubscriptionDao subscriptionDao;
@@ -44,12 +41,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Override
 	public void delete(int id) {
 		subscriptionDao.delete(id);
-
 	}
 
 	@Override
-	public Collection<SubscriptionModel> listByIssueId(int issueId) {
+	public Collection <SubscriptionModel> listByIssueId(int issueId) {
 		return subscriptionDao.findByIssueId(issueId);
 	}
-
 }
