@@ -155,7 +155,7 @@ public class UserController {
 	}
 
 	 /* This metod send notification to email from #admin panel */
-	@RequestMapping(value="send-notification", method = RequestMethod.POST)
+	@RequestMapping(value="/send-notification", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String>
 	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel, Map<String, String> message) {
 		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
@@ -165,6 +165,7 @@ public class UserController {
 					.build();
 		try {
 			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+			message.put("message", "Good");
 		} catch (RequestFailedException e) {
 			message.put("message", "Some problem with sending email. Try again and check your email");
 		}
