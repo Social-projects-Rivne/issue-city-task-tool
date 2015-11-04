@@ -18,7 +18,6 @@ public class StatusControllerTest extends AbstractBawlTest {
     public static final String EMPTY_COLLECTION = "[]";
     private MockMvc mockMvc;
 
-
     @InjectMocks
     private StatusController statusController;
     @Mock

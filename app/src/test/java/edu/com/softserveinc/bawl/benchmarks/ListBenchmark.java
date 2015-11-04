@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ListBenchmark {
 
-
     @org.openjdk.jmh.annotations.State(Scope.Benchmark)
     public static class State {
        List arrayList;

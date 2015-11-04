@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 public class StatusServiceImplTest extends AbstractBawlTest {
 
     @Mock private StatusServiceImpl statusService = mock(StatusServiceImpl.class);

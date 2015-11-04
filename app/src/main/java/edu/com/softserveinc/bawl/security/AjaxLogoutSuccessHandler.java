@@ -17,9 +17,6 @@ public class AjaxLogoutSuccessHandler extends
 		AbstractAuthenticationTargetUrlRequestHandler implements
 		LogoutSuccessHandler {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(AjaxLogoutSuccessHandler.class);
 
 	@Override

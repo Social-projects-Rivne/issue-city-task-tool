@@ -15,9 +15,6 @@ import org.apache.log4j.Logger;
 public class AjaxAuthenticationSuccessHandler extends
 		SimpleUrlAuthenticationSuccessHandler {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(AjaxAuthenticationSuccessHandler.class);
 
 	@Override

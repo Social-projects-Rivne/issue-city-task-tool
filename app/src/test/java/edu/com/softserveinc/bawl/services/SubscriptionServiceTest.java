@@ -27,17 +27,27 @@ public class SubscriptionServiceTest extends AbstractBawlTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+       public void testCreate() throws Exception {
         SubscriptionModel mockSubscriptionModel = mock(SubscriptionModel.class);
         subscriptionService.create(mockSubscriptionModel);
         verify(subscriptionDao,times(1)).saveAndFlush(mockSubscriptionModel);
     }
 
     @Test
-    public void testRead() throws Exception {
-
+    public void testCreate2() throws Exception {
+        SubscriptionModel mockSubscriptionModel = mock(SubscriptionModel.class);
+        int issueId = 10;
+        String email= "admin@admin.ru" ;
+        subscriptionService.create(issueId, email);
+        verify(subscriptionDao,times(1)).saveAndFlush(any(SubscriptionModel.class));
     }
 
+    @Test
+    public void testRead() throws Exception {
+        int id = 6;
+        subscriptionService.read(id );
+        verify(subscriptionDao,timeout(1)).findOne(id);
+    }
 
     @Test
     public void testDelete() throws Exception {
@@ -45,19 +55,12 @@ public class SubscriptionServiceTest extends AbstractBawlTest {
         verify(subscriptionDao,times(1)).delete(anyInt());
     }
 
-
     @Test
     public void testListByIssueId() throws Exception {
-
         int IssueId = 2;
-
         Collection <SubscriptionModel> findSubscription = subscriptionService.listByIssueId(IssueId);
-
         for(SubscriptionModel model :findSubscription){
             assertEquals(IssueId, model.getIssueId());
         }
-
     }
-
-
 }

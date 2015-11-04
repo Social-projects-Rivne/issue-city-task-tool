@@ -19,9 +19,6 @@ import java.util.Map;
 @RequestMapping(value = "/image")
 public class ImageController {
 
-	/**
-	 * Logger field
-	 */
 	public static final Logger LOG=Logger.getLogger(ImageController.class);
 	
 	@RequestMapping(value = "/crop", method = RequestMethod.POST)

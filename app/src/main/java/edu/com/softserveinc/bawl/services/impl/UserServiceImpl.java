@@ -16,9 +16,6 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired

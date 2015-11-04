@@ -3,26 +3,16 @@ package edu.com.softserveinc.bawl.models;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import javax.persistence.TemporalType.*;
 
 
 @Entity
 @Table(name="HISTORY")
 public class HistoryModel {
 
-    /**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(HistoryModel.class);
 
     @Id
@@ -37,7 +27,7 @@ public class HistoryModel {
     @Enumerated(EnumType.ORDINAL)
     private IssueStatus status;
 
-    @Column(name="DATE")
+    @Column(name="DATE", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date date;
 
     @NotNull

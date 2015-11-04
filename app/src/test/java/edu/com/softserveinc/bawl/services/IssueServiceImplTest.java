@@ -14,10 +14,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by Vasyl on 21.10.2015.
- */
-
 public class IssueServiceImplTest extends AbstractBawlTest {
 
     private IssueService issueService;

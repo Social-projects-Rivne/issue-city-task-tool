@@ -15,9 +15,6 @@ import java.util.List;
 @RequestMapping(value = "/statuses")
 public class StatusController {
 
-	/**
-	 * Logger field
-	 */
 	public static final Logger LOG=Logger.getLogger(StatusController.class);
 	
 	@Autowired

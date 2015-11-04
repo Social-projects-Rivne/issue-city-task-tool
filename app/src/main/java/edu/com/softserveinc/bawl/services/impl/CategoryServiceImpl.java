@@ -16,9 +16,6 @@ import static edu.com.softserveinc.bawl.models.enums.CategoryState.DELETED;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(CategoryServiceImpl.class);
 	
 	@Autowired
