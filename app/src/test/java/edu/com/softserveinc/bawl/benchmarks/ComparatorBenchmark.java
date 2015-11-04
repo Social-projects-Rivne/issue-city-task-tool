@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 public class ComparatorBenchmark {
 
-
     @org.openjdk.jmh.annotations.State(Scope.Benchmark)
     public static class State {
         private static int N;

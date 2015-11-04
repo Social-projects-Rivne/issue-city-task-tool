@@ -19,9 +19,6 @@ import java.util.List;
 @Transactional
 public class IssueServiceImpl implements IssueService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(IssueServiceImpl.class);
 
 	@Autowired

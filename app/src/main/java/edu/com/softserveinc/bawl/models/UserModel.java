@@ -21,10 +21,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name="users")
 public class UserModel {
-    
-    /**
-     *  Logger field
-     */
+
     public static final Logger LOG=Logger.getLogger(UserModel.class);
 
 	/**

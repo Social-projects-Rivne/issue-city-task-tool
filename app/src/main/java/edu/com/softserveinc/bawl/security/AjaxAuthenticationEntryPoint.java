@@ -13,9 +13,6 @@ import org.apache.log4j.Logger;
 @Component
 public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(AjaxAuthenticationEntryPoint.class);
 
 	public void commence(HttpServletRequest request,

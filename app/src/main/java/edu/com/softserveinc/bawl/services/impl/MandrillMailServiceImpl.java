@@ -32,9 +32,6 @@ import java.util.Properties;
 @Service
 public class MandrillMailServiceImpl implements MailService {
 
-    /**
-     *  Logger field
-     */
     public static final Logger LOG = Logger.getLogger(MandrillMailServiceImpl.class);
 
     private static MandrillRESTRequest request = new MandrillRESTRequest();

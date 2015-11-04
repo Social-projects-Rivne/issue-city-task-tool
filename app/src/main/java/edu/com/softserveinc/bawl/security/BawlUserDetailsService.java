@@ -22,9 +22,6 @@ import java.util.List;
 @Service
 public class BawlUserDetailsService implements UserDetailsService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(BawlUserDetailsService.class);
 	
 	@Autowired

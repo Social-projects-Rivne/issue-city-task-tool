@@ -13,7 +13,6 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 
 public class UserControllerIntegrationTest extends AbstractBawlTest {
 
-
     public static final  String MEDIA_TYPE = "application/json;charset=UTF-8";
     public static final String EMPTY_COLLECTION = "[]";
     public static final int USER_ID = 1;

@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Created by Illia on 10/27/2015.
- */
 public class MessageBuilder {
 
     private String pattern = "";

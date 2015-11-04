@@ -24,9 +24,6 @@ import java.util.Map;
 @RequestMapping(value = "/statistics")
 public class StatisticController {
 
-	/**
-	 * Logger field
-	 */
 	public static final Logger LOG=Logger.getLogger(StatisticController.class);
 	
 	@Autowired

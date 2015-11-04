@@ -26,9 +26,6 @@ import java.util.Properties;
 @RequestMapping(value = "/users")
 public class UserController {
 
-	/**
-	 * Logger field
-	 */
 	public static final Logger LOG=Logger.getLogger(UserController.class);
 
 	@Autowired

@@ -5,9 +5,6 @@ import org.springframework.mail.MailException;
 
 import java.io.IOException;
 
-/**
- * Created by Illia on 10/29/2015.
- */
 public class MailSendException extends RequestFailedException {
 
     String message;

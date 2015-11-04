@@ -13,9 +13,6 @@ import javax.persistence.TemporalType.*;
 @Table(name="HISTORY")
 public class HistoryModel {
 
-    /**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(HistoryModel.class);
 
     @Id

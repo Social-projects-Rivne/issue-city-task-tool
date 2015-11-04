@@ -22,9 +22,6 @@ import java.util.Map;
 @RequestMapping(value = "/categories")
 public class CategoryController {
 
-    /**
-     * Logger field
-     */
     public static final Logger LOG = Logger.getLogger(CategoryController.class);
 
     public static final String MESSAGE_TEXT = "message";

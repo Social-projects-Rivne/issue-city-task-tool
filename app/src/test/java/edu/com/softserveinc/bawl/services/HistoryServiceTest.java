@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-
 public class HistoryServiceTest extends AbstractBawlTest {
 
     private HistoryService historyService = null;

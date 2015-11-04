@@ -18,9 +18,6 @@ import java.util.Arrays;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by Illia on 10/28/2015.
- */
 public class MandrillMailServiceFunctionalTest extends AbstractBawlTest {
 
     private final String EMAIL = "bawl.java@gmail.com";

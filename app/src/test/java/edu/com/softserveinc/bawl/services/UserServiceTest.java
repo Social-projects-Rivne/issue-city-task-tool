@@ -20,9 +20,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by lubko on 29.10.15.
- */
 public class UserServiceTest extends AbstractBawlTest {
 
     private UserService userService = null;

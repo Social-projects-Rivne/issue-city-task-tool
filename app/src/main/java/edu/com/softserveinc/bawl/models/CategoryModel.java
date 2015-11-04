@@ -25,9 +25,6 @@ import java.util.List;
 @Table(name = "CATEGORY")
 public class CategoryModel {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(CategoryModel.class);
 
     @Id
