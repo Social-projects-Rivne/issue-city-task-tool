@@ -30,7 +30,7 @@ public enum IssueStatus {
             case "approved" : return APPROVED;
             case "deleted" : return DELETED;
             case "resolved" : return RESOLVED;
-            case "to resolve" : return TO_RESOLVE;
+            case "to_resolve" : return TO_RESOLVE;
             default: return null;
         }
     }

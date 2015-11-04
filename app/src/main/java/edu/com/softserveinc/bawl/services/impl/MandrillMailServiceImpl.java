@@ -4,14 +4,13 @@ import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
-import com.cribbstechnologies.clients.mandrill.model.response.message.MessageResponse;
 import com.cribbstechnologies.clients.mandrill.model.response.message.SendMessageResponse;
 import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.com.softserveinc.bawl.exception.MailSendException;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
@@ -22,8 +21,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Properties;
 
 /**
@@ -74,6 +73,33 @@ public class MandrillMailServiceImpl implements MailService {
         return mailService;
     }
 
+    public void sendRegNotification(UserModel userModel){
+        String link = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
+                userModel.getPassword() + "&id=" + userModel.getId();
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+                .setPattern(MailPatterns.REGISTRATION_PATTERN, userModel.getName(), link)
+                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+                .build();
+        MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+    }
+
+    public void sendSimpleMessage(String pattern, UserModel userModel, String ... params){
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+                .setPattern(pattern, params)
+                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+                .build();
+        MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+    }
+
+    public void sendMessageWithSubject(String pattern, String subject,  UserModel userModel){
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+                .setPattern(pattern)
+                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
+                .setSubject(subject)
+                .build();
+        MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+    }
+
     public void sendMessage(MandrillHtmlMessage mandrillMessage) {
         messageRequest = new MandrillMessageRequest();
         messageRequest.setMessage(mandrillMessage);
@@ -86,7 +112,7 @@ public class MandrillMailServiceImpl implements MailService {
 
 
     @Override
-    public void notifyForIssue(int issueId, String msg) throws RequestFailedException {
+    public void notifyForIssue(int issueId, String msg){
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
         for (SubscriptionModel sub: subs){
             String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
