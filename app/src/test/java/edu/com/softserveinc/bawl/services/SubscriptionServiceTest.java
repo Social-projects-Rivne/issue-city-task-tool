@@ -27,14 +27,14 @@ public class SubscriptionServiceTest extends AbstractBawlTest {
     }
 
     @Test
-       public void testCreate() throws Exception {
+       public void testCreateParamSubscriptionModel() throws Exception {
         SubscriptionModel mockSubscriptionModel = mock(SubscriptionModel.class);
         subscriptionService.create(mockSubscriptionModel);
         verify(subscriptionDao,times(1)).saveAndFlush(mockSubscriptionModel);
     }
 
     @Test
-    public void testCreate2() throws Exception {
+    public void testCreateParamIssueIdAndEmail() throws Exception {
         SubscriptionModel mockSubscriptionModel = mock(SubscriptionModel.class);
         int issueId = 10;
         String email= "admin@admin.ru" ;
