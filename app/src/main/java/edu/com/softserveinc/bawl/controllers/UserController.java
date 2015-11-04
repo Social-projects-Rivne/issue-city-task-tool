@@ -1,7 +1,5 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
-import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
 import edu.com.softserveinc.bawl.dto.*;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
@@ -12,15 +10,14 @@ import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
-import edu.com.softserveinc.bawl.utils.MessageBuilder;
 import edu.com.softserveinc.bawl.utils.PassGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Properties;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -53,14 +50,7 @@ public class UserController {
             UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
                     userDTO.getLogin(), userDTO.getRoleId(), userDTO.getPassword(), userDTO.getAvatar());
             userModel = userService.addUser(userModel);
-			Properties properties = MessageBuilder.getProperties();
-			String link = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
-                    userModel.getPassword() + "&id=" + userModel.getId();
-			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-					.setPattern(MailPatterns.REGISTRATION_PATTERN, userModel.getName(), link)
-					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
-					.build();
-			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+			MandrillMailServiceImpl.getMandrillMail().sendRegNotification(userModel);
 			responseDTO.setMessage("Successfully registered. Please confirm your email");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occured! User was not added");
@@ -75,11 +65,8 @@ public class UserController {
 		try {
 			userService.editUser(userModel);
 			String role = userModel.getRole().get();
-			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-					.setPattern(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel.getLogin(), role)
-					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
-					.build();
-			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+			MandrillMailServiceImpl.getMandrillMail()
+					.sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), role);
 			responseDTO.setMessage("User was successfully edited");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());
@@ -112,11 +99,7 @@ public class UserController {
 		try {
 			userService.deleteUser(id);
 			UserModel userModel = userService.getById(id);
-			MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-					.setPattern(MailPatterns.DELETE_ACCOUNT_PATTERN)
-					.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
-					.build();
-			MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+			MandrillMailServiceImpl.getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
 			responseDTO.setMessage("User was successfully deleted");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occured! User was not deleted");
@@ -140,12 +123,12 @@ public class UserController {
 	public @ResponseBody ResponseDTO
 	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel) {
 		ResponseDTO responseDTO = new ResponseDTO();
-		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-					.setPattern(userNotificationModel.getMessage())
-					.setRecipients(new MandrillRecipient("Bawl user", userNotificationModel.getEmail()))
-					.setSubject(userNotificationModel.getSubject())
-					.build();
-		MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+		String message = userNotificationModel.getMessage();
+		String subject = userNotificationModel.getSubject();
+		UserModel userModel = new UserModel();
+		userModel.setName("User name");
+		userModel.setEmail(userNotificationModel.getEmail());
+		MandrillMailServiceImpl.getMandrillMail().sendMessageWithSubject(message, subject, userModel);
 		responseDTO.setMessage("Mail has been sent");
 		return responseDTO ;
 	}
@@ -168,12 +151,9 @@ public class UserController {
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
 		String newPassword = PassGenerator.generate(1, 5);
 		userModel.setPassword(newPassword);
-		MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-				.setPattern(MailPatterns.PASSWORD_RESET_PATTERN, userModel.getName())
-				.setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
-				.build();
-		MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
 		userService.editUserPass(userModel);
+		MandrillMailServiceImpl.getMandrillMail()
+				.sendSimpleMessage(MailPatterns.PASSWORD_RESET_PATTERN, userModel, userModel.getName());
 		responseDTO.setMessage("Your pass have been changed ! Watch about it on your mail ! ");
 		return responseDTO;
 	}

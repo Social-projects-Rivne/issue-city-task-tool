@@ -6,8 +6,8 @@ import edu.com.softserveinc.bawl.exception.MailSendException;
 
 public interface MailService {
 
-	public void notifyForIssue(int issueId, String msg) throws RequestFailedException, MailSendException;
+	public void notifyForIssue(int issueId, String msg) ;
 
-	public void sendMessage(MandrillHtmlMessage message) throws RequestFailedException, MailSendException;
+	public void sendMessage(MandrillHtmlMessage message);
 
 }
