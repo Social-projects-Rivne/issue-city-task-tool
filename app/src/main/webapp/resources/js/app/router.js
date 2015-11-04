@@ -1,23 +1,22 @@
-define([ 'underscore', 'backbone','view/AdminView', 
-        'view/ManagerView', 'view/UserRegistrationView'], function(_, Backbone, AdminView, ManagerView,
-																   UserRegistrationView) {
+  define([ 'underscore', 'backbone','view/AdminView','view/ManagerView', 'view/UserRegistrationView'],  
+  function(_, Backbone, AdminView, ManagerView, UserRegistrationView) {
 
 	var Router = Backbone.Router.extend({
 
 		routes : {
-			"" 						: "home",
-			"login" 				: "login",
-			"logout" 				: "logout",
-			"admin" 				: "admin",
-			"admin/search/:name" 	: "search",
-			"manager" 				: "manager",
-      		"cry-out" 				: "cryOut",
-			"issue/:id" 			: "issue",
-			"filter"				: "filter",
-			"profile" 				: "profile",
-			"viewprofile" 			: "viewprofile",
-			"user-reg"				: "userReg",
-			"email-confirm/*link" 	: "emailConfirm"
+			""                    : "home",
+			"login"               : "login",
+			"logout"              : "logout",
+			"admin"               : "admin",
+			"admin/search/:name"  : "search",
+			"manager"             : "manager",
+      "cry-out"             : "cryOut",
+			"issue/:id"           : "issue",
+			"filter"              : "filter",
+			"profile"             : "profile",
+			"viewprofile"         : "viewprofile",
+			"user-reg"            : "userReg",
+			"email-confirm/*link" : "emailConfirm"
 		},
 		
 		initialize : function() {
@@ -109,7 +108,6 @@ define([ 'underscore', 'backbone','view/AdminView',
 		},
 
 		userReg : function ()  {
-
 			userRegView.render();
 		},
 
