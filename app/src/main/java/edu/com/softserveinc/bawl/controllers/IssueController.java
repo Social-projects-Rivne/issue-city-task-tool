@@ -50,7 +50,7 @@ public class IssueController {
 	private UserService userService;
 
 	@Autowired
-	HistoryService historyService;
+	private HistoryService historyService;
 
 	@PostAuthorize("hasRole('ROLE_MANAGER') or {2,5}.contains(returnObject.getStatusId())")
 	@RequestMapping("issue/{id}")

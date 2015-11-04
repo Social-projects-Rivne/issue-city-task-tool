@@ -277,8 +277,8 @@ public class IssueModel {
 	@Override
 	public String toString() {
 		return "IssueModel [id=" + id + ", name=" + name + ", description="
-				+ description + ", mapPointer=" + mapPointer + ", categoryId="
-				+ category.getId() + ", priorityId=" + priorityId + ", statusId="
+				+ description + ", mapPointer=" + mapPointer + ", category="
+				+ category + ", priorityId=" + priorityId + ", statusId="
 				+ status + "]";
 	}
 
