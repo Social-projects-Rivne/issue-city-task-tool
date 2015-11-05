@@ -48,7 +48,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				subscribe: function(e){
 					var folowerEmail = $('[id="folower-email"]').val();
 					console.log(folowerEmail);
-					$.ajax({url:'subscriptions', method:'POST', contentType:'application/json',data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'})
+					$.ajax({url:"/subscriptions/add", method:'POST', contentType:'application/json',data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'})
 					//notitfication
 					if($('#notificationModal'))
 						$('#notificationModal').remove();
