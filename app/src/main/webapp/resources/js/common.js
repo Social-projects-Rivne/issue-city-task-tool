@@ -1,8 +1,8 @@
 requirejs.config({
+
 	baseUrl:"resources",
 
-	shim : {
-		// add here another modules for correct functionflity
+	shim : { // add here another modules for correct functionflity
 		
 		bootstrap : { 
 			deps :['jquery']
@@ -30,11 +30,10 @@ requirejs.config({
 		'view/MapView':{
 			deps :['map','leaflet']
 		}
-
     },
-	paths:{
 
-		// libs
+	paths:{ // libs
+
 		jquery: ['js/lib/jquery','jquery.serializejson'],
 		underscore: 'js/lib/underscore',
 		backbone: 'js/lib/backbone',
@@ -48,10 +47,12 @@ requirejs.config({
 		
 		bootstrap:'js/lib/bootstrap.min',
 
-		gmaps: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDLXIjNBbjQ5nI9I8KIuR3hslBebOYNH4s&signed_in=true&callback=initMap',
+		/* Googl Server key*/
+		googlkey: 'AIzaSyAa1n57LZd7gFR7cNc_YQD0sAaLZe6NDpc',
+
+		 gmaps: 'https://maps.googleapis.com/maps/api/js?key = googlkey',
 		'async':'../vendor/requirejs-plugins/src/async',
 		'jquery_serialize' : 'js/lib/jquery.serializejson',
-
 
 		//bad scripts
 		homeScript: 'js/home-script',
@@ -59,14 +60,12 @@ requirejs.config({
         markers: 'js/lib/leaflet.awesome-markers',
         leaflet:'js/lib/leaflet',
         
-        map:[ 
-            
+        map:[
         	'js/map-script',
         	'http://maps.googleapis.com/maps/api/js?sensor=true'
         ]
 	}
 });
-
 
 //Load our app module and pass it to our definition function
 require(['main', 'bootstrap', 'gmaps', 'jquery_serialize']);
