@@ -3,6 +3,7 @@ package edu.com.softserveinc.bawl.services;
 import edu.com.softserveinc.bawl.AbstractBawlTest;
 import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
+import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.impl.IssueServiceImpl;
@@ -30,7 +31,7 @@ public class IssueServiceImplTest extends AbstractBawlTest {
     }
 
     @Test
-    public void testAddProblem_shouldCallSaveAndFlushIssueToDao() throws Exception {//powermock test private methods
+    public void testAddProblem_shouldCallSaveAndFlushIssueToDao() throws Exception {
         IssueModel mockIssueModel = mock(IssueModel.class);
         final int userId = 1;
         issueService.addProblem(mockIssueModel, userId);
