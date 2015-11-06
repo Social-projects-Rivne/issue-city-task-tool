@@ -9,7 +9,7 @@ class UserHistoryDTO extends Comparable[UserHistoryDTO] with Comparator[UserHist
    @BeanProperty  var username: String = null
    @BeanProperty  var issueName: String = null
    @BeanProperty  var roleName: String = null
-   @BeanProperty  var statusId: Int = 0
+   @BeanProperty  var status: String = ""
    private var date: Date = null
    private var dateStr: String = null
 

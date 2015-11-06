@@ -229,7 +229,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
 						categoryId: $('#edit-issue-form-category').val(),
-						statusId: $('#edit-issue-form-status').val(),
+						status: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val()
 						
 						} ).save ( {

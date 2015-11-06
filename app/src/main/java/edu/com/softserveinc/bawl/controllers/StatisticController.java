@@ -7,7 +7,6 @@ import edu.com.softserveinc.bawl.services.CategoryService;
 import edu.com.softserveinc.bawl.services.CommentService;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
-import edu.com.softserveinc.bawl.services.StatusService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +30,7 @@ public class StatisticController {
 	
 	@Autowired
 	private CategoryService categoryService;
-	
-	@Autowired
-	private StatusService statusService;
+
 	
 	@Autowired
 	private CommentService commentService;
@@ -60,19 +57,19 @@ public class StatisticController {
 	public @ResponseBody List<Map<String, String>> statisticByStatus() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
-		IssueStatus[] statuses = IssueStatus.values();
+		List<String> statuses = IssueStatus.getStatuses();
 		
-		for (int i = 0, tmp; i < statuses.length; i++) {
+		for (int i = 0, tmp; i < statuses.size(); i++) {
 			tmp = 0;
 
 			for (int j = 0; j < issues.size(); j++) {
-				if (issues.get(j).getStatus() == statuses[i]) {
+				if (issues.get(j).getStatus().equals(statuses.get(i))) {
 					tmp++;
 				}
 			}
 			
 			statistic.add(new HashMap<String, String>());
-			statistic.get(i).put("label", statuses[i].name());
+			statistic.get(i).put("label", statuses.get(i));
 			statistic.get(i).put("value", "" + tmp);
 		}
 		

@@ -57,8 +57,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 						this.issueFiltredColection = new IssueCollection(this.issueColection.where({categoryId : category.get('id')}));
 					
 					} else if(radioStatus.prop("checked")){
-					    var statusIdFilter = $("#issue-filter #status-filter").prop('value');
-						this.issueFiltredColection = new IssueCollection(this.issueColection.where({statusId : parseInt(statusIdFilter)}));
+					    var statusFilter = $("#issue-filter #status-filter").prop('value');
+						this.issueFiltredColection = new IssueCollection(this.issueColection.where({status : parseInt(statusFilter)}));
 						console.log(this.issueFiltredColection);
 					
 					} else if(radioPriority.prop("checked")){
