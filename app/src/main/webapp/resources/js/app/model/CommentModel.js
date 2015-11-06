@@ -1,7 +1,7 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 	return Backbone.Model.extend({
-		url: 'add-comment',
+		url: 'comments/add',
 		idAttribute: 'id',
 		id:'',
 		defaults: {

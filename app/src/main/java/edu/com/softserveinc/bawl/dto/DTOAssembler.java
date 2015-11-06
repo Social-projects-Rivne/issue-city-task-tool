@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.dto;
 
 import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
@@ -145,4 +146,21 @@ public class DTOAssembler {
     }
 
 
+    public  static List<CommentDTO> getCommentsFrom(List<CommentModel> comments) {
+        List<CommentDTO> commentsDTO = new ArrayList<>();
+        comments.forEach(commentModel -> {
+            commentsDTO.add(getCommentFrom(commentModel));
+        });
+        return commentsDTO;
+    }
+
+    public static CommentDTO getCommentFrom(CommentModel commentModel) {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setId(commentModel.getId());
+        commentDTO.setIssueId(commentModel.getIssueId());
+        commentDTO.setComment(commentModel.getComment());
+        commentDTO.setUserName(commentModel.getUserName());
+        commentDTO.setEmail(commentModel.getEmail());
+        return commentDTO;
+    }
 }
