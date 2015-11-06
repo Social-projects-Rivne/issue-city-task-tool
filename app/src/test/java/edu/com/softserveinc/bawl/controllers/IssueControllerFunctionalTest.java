@@ -43,7 +43,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlTest {
     public static final String EMPTY_COLLECTION = "[]";
     public static final int ISSUE_ID = 1;
     private static final String IssueDto_JSON = "{\"attachments\": \"\", \"category\": \"road\", \"categoryId\": \"1\"," +
-            "\"description\": \"1234\", \"id\": null, \"mapPointer\": \"LatLng(50.62856, 26.22986)\", \"name\": \"new\", \"priorityId\": \"1\", \"status\": \"new\", \"statusId\": \"1\"}";
+            "\"description\": \"1234\", \"id\": null, \"mapPointer\": \"LatLng(50.62856, 26.22986)\", \"name\": \"new\", \"priorityId\": \"1\", \"status\": \"APPROVED\"}";
 
     private MockMvc mockMvc;
 
@@ -122,7 +122,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlTest {
     public void getIssue_ShouldBeResponseStatusOk_AndEmptyCollection() throws Exception {
         mockMvc.perform(get(String.format("/issue/%d", ISSUE_ID)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":1,\"name\":\"foo\",\"description\":null,\"mapPointer\":null,\"attachments\":null,\"categoryId\":1,\"priorityId\":0,\"statusId\":2,\"category\":null,\"status\":null}"));
+                .andExpect(content().string("{\"id\":1,\"name\":\"foo\",\"description\":null,\"mapPointer\":null,\"attachments\":null,\"categoryId\":1,\"priorityId\":0,\"category\":null,\"status\":\"APPROVED\"}"));
 
 
     }

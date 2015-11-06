@@ -158,8 +158,6 @@ public class IssueController {
 
 				mailService.notifyForIssue(issueId, "Issue has been updated.");
 				issueService.editProblem(editedIssue, userId);
-				System.out.println("Edit issue #:" + editedIssue);
-
 			}
 		}
 		return responseDTO;
