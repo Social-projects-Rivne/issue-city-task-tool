@@ -153,7 +153,7 @@ public class HistoryServiceTest extends AbstractBawlTest {
 
         IssueModel actualModel = historyService.getLastIssueByIssueID(issueId);
 
-        assertThat(actualModel, is(expectedModel));
+        assertEquals(actualModel, expectedModel);
     }
 
 

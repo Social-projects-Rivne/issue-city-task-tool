@@ -17,7 +17,7 @@ public class IssueControllerIntegrationTest extends AbstractBawlTest {
   public static final String EMPTY_COLLECTION = "[]";
   public static final int USER_ID = 1;
   public static final int ISSUE_ID = 1;
-  public static final String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "statusId"};
+  public static final String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "status"};
 
   private MockMvc mockMvc;
 

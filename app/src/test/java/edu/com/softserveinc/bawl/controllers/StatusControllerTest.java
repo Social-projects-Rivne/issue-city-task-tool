@@ -1,9 +1,11 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.services.StatusService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
@@ -19,6 +21,9 @@ public class StatusControllerTest extends AbstractBawlTest {
 
     @InjectMocks
     private StatusController statusController;
+
+    @Mock
+    StatusService statusService;
 
     @Before
     public void setup() {

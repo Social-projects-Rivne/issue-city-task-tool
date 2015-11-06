@@ -257,7 +257,10 @@ public class IssueModel {
 			return false;
 		if (priorityId != other.priorityId)
 			return false;
-		if (status.equals(other.status))
+		if (status == null ) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
 			return false;
 		return true;
 	}
@@ -266,7 +269,7 @@ public class IssueModel {
 	public String toString() {
 		return "IssueModel [id=" + id + ", name=" + name + ", description="
 				+ description + ", mapPointer=" + mapPointer + ", category="
-				+ category + ", priorityId=" + priorityId + ", statusId="
+				+ category + ", priorityId=" + priorityId + ", status="
 				+ status + "]";
 	}
 

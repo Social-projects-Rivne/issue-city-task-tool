@@ -34,7 +34,7 @@ public class CsvReaderWriter {
                 new UniqueHashCode(), // id (must be unique)
                 new NotNull(), // issue_id
                 new NotNull(), // user_id
-                new NotNull(), // status_id
+                new NotNull(), // status
                 new FmtDate("MM/dd/yy HH:mm:ss aaa"), // date
         };
     }
@@ -69,7 +69,7 @@ public class CsvReaderWriter {
                 new ParseInt(), // id (must be unique)
                 new ParseInt(), // issue_id
                 new ParseInt(), // user_id
-                new ParseInt(), // status_id
+                new NotNull(), // status
                 new ParseDate("MM/dd/yy HH:mm:ss aaa") // date
         };
     }
