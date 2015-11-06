@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
 import javax.persistence.*;
@@ -46,7 +47,8 @@ public class IssueModel {
     private List<HistoryModel> histories;
 
     @Column(name="STATUS")
-    private String status;
+	@Enumerated(EnumType.STRING)
+    private IssueStatus status;
 
 	/**
 	 * Default constructor
@@ -54,7 +56,7 @@ public class IssueModel {
 	public IssueModel() {}
 
 	public IssueModel(String name, String description, String mapPointer,
-			String attachments, CategoryModel category, int priorityId, String status) {
+			String attachments, CategoryModel category, int priorityId, IssueStatus status) {
 		this.name = name;
 		this.description = description;
 		this.mapPointer = mapPointer;
@@ -197,11 +199,11 @@ public class IssueModel {
         this.histories = histories;
     }
 
-    public String getStatus() {
+    public IssueStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(IssueStatus status) {
         this.status = status;
     }
 

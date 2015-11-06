@@ -38,9 +38,9 @@ public class DTOAssembler {
 
     public static List<StatusDTO> getStatusDtos() {
         List<StatusDTO> categoryDTOs = new ArrayList<>();
-        for (String status : IssueStatus.getStatuses()) {
+        for (IssueStatus status : IssueStatus.values()) {
             StatusDTO statusDTO = new StatusDTO();
-            statusDTO.setName(status);
+            statusDTO.setName(status.name());
             categoryDTOs.add(statusDTO);
         }
         return categoryDTOs;
@@ -89,7 +89,7 @@ public class DTOAssembler {
         issueDTO.setMapPointer(issueModel.getMapPointer());
         issueDTO.setCategoryId(issueModel.getCategory().getId());
         issueDTO.setPriorityId(issueModel.getPriorityId());
-        issueDTO.setStatus(issueModel.getStatus());
+        issueDTO.setStatus(issueModel.getStatus().name());
         return issueDTO;
     }
 
@@ -112,9 +112,9 @@ public class DTOAssembler {
         IssueHistoryDTO issueHistoryDto = new IssueHistoryDTO();
         issueHistoryDto.setDate(historyModel.getDate());
         issueHistoryDto.setChangedByUser(userModel.getName());
-        issueHistoryDto.setStatus(historyModel.getStatus());
+        issueHistoryDto.setStatus(historyModel.getStatus().name());
         userIssuesHistoryDto.setIssueHistoryDto(issueHistoryDto);
-        userIssuesHistoryDto.setCurrentStatus(issueModel.getStatus());
+        userIssuesHistoryDto.setCurrentStatus(issueModel.getStatus().name());
 
         return userIssuesHistoryDto;
     }
@@ -135,7 +135,7 @@ public class DTOAssembler {
 
     public static UserHistoryDTO getUserHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService){
         UserHistoryDTO userHistoryDto = new UserHistoryDTO();
-        userHistoryDto.setStatus(historyModel.getStatus());
+        userHistoryDto.setStatus(historyModel.getStatus().name());
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
         UserModel userModel = userService.getById(historyModel.getUserId());

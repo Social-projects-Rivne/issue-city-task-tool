@@ -120,7 +120,7 @@ public class IssueController {
             IssueModel issue = new IssueModel(request.getName(),
                     request.getDescription(), request.getMapPointer(),
                     request.getAttachments(), category,
-					request.getPriorityId(), request.getStatus());
+					request.getPriorityId(), IssueStatus.valueOf(request.getStatus()));
             try {
                 issueService.addProblem(issue, getCurrentUserId());
                 responseDTO.setMessage(ISSUE_ADDED);
@@ -147,7 +147,7 @@ public class IssueController {
 
 				if (!request.get("status").toString().equals("")) {
 					String status = request.get("status").toString().toUpperCase();
-					editedIssue.setStatus(status);
+					editedIssue.setStatus(IssueStatus.valueOf(status));
 				}
 				if (!request.get("attachments").toString().equals("")) {
 					editedIssue.setAttachments(request.get("attachments").toString());

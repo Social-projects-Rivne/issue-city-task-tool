@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ParseDate;
+import org.supercsv.cellprocessor.ParseEnum;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.UniqueHashCode;
@@ -69,7 +70,7 @@ public class CsvReaderWriter {
                 new ParseInt(), // id (must be unique)
                 new ParseInt(), // issue_id
                 new ParseInt(), // user_id
-                new NotNull(), // status
+                new ParseEnum(IssueStatus.class), // status
                 new ParseDate("MM/dd/yy HH:mm:ss aaa") // date
         };
     }

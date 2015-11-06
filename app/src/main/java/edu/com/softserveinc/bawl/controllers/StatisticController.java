@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class StatisticController {
 	public @ResponseBody List<Map<String, String>> statisticByStatus() {
 		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
-		List<String> statuses = IssueStatus.getStatuses();
+		List<IssueStatus> statuses = Arrays.asList(IssueStatus.values());
 		
 		for (int i = 0, tmp; i < statuses.size(); i++) {
 			tmp = 0;
@@ -69,7 +70,7 @@ public class StatisticController {
 			}
 			
 			statistic.add(new HashMap<String, String>());
-			statistic.get(i).put("label", statuses.get(i));
+			statistic.get(i).put("label", statuses.get(i).name());
 			statistic.get(i).put("value", "" + tmp);
 		}
 		

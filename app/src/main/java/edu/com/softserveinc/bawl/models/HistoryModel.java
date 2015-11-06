@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
 import javax.persistence.*;
@@ -22,7 +23,8 @@ public class HistoryModel {
     private int userId;
 
     @Column(name="STATUS")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private IssueStatus status;
 
     @Column(name="DATE", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date date;
@@ -53,11 +55,11 @@ public class HistoryModel {
         this.userId = userId;
     }
 
-    public String getStatus() {
+    public IssueStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(IssueStatus status) {
         this.status = status;
     }
 
