@@ -1,14 +1,13 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.AbstractBawlTest;
-import edu.com.softserveinc.bawl.services.StatusService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
+
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
@@ -20,8 +19,6 @@ public class StatusControllerTest extends AbstractBawlTest {
 
     @InjectMocks
     private StatusController statusController;
-    @Mock
-    private StatusService statusService;
 
     @Before
     public void setup() {

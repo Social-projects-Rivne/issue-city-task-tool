@@ -1,19 +1,8 @@
 package edu.com.softserveinc.bawl.models;
 
-import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -57,8 +46,7 @@ public class IssueModel {
     private List<HistoryModel> histories;
 
     @Column(name="STATUS")
-    @Enumerated(EnumType.ORDINAL)
-    private IssueStatus status;
+    private String status;
 
 	/**
 	 * Default constructor
@@ -66,7 +54,7 @@ public class IssueModel {
 	public IssueModel() {}
 
 	public IssueModel(String name, String description, String mapPointer,
-			String attachments, CategoryModel category, int priorityId, IssueStatus status) {
+			String attachments, CategoryModel category, int priorityId, String status) {
 		this.name = name;
 		this.description = description;
 		this.mapPointer = mapPointer;
@@ -209,11 +197,11 @@ public class IssueModel {
         this.histories = histories;
     }
 
-    public IssueStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(IssueStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -230,7 +218,7 @@ public class IssueModel {
 				+ ((mapPointer == null) ? 0 : mapPointer.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + priorityId;
-		result = prime * result + status.ordinal();
+		result = prime * result + status.hashCode();
 		return result;
 	}
 
@@ -269,7 +257,7 @@ public class IssueModel {
 			return false;
 		if (priorityId != other.priorityId)
 			return false;
-		if (status != other.status)
+		if (status.equals(other.status))
 			return false;
 		return true;
 	}

@@ -1,16 +1,25 @@
 package edu.com.softserveinc.bawl.models.enums;
 
-public enum IssueStatus {
 
-	NEW(1),
-    APPROVED(2),
-    RESOLVED(3),
-    DELETED(4),
-    TO_RESOLVE(5);
+import java.util.Arrays;
+import java.util.List;
+
+public class IssueStatus {
+
+
+    public final static String NEW = "NEW";
+    public final static String APPROVED = "APPROVED";
+    public final static String RESOLVED = "RESOLVED";
+    public final static String DELETED = "DELETED";
+    public final static String TO_RESOLVE = "TO_RESOLVE";
 
 	public int id;
 
-	IssueStatus(int id) {
+    public static List<String> getStatuses(){
+        return (Arrays.asList(new String[] {NEW, APPROVED, RESOLVED, DELETED, TO_RESOLVE}));
+    }
+
+	/*IssueStatus(int id) {
 		this.id = id;
 	}
 
@@ -33,5 +42,5 @@ public enum IssueStatus {
             case "to_resolve" : return TO_RESOLVE;
             default: return null;
         }
-    }
+    }*/
 }

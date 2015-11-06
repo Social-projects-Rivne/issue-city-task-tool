@@ -103,7 +103,7 @@ public class CsvReaderWriter {
                     CsvPreference.STANDARD_PREFERENCE);
 
             // the header elements are used to map the bean values to each column (names must match)
-            final String[] header = new String[] { "id", "issueId", "userId", "statusId","date"};
+            final String[] header = new String[] { "id", "issueId", "userId", "status","date"};
             final CellProcessor[] processors = getHistoryModelWriterProcessors();
 
             // write the header

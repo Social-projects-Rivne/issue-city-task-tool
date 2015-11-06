@@ -17,7 +17,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
-					'click .edit-issue'	: 'showgEditIssueForm',
+					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
 					'click #left_admin_panel #manager_log_out':'logOut',
 					'click #all_issues': 'allIssues'
@@ -155,12 +155,11 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					if ($('#issue-filter #status').prop("checked")) {
 						var issuesFilterList = new IssueCollection();
 						this.issues.each(function(issue){
-							if(issue.get('statusId') == $('#issue-filter #status-filter').val()){ 
+							if(issue.get('status') == $('#issue-filter #status-filter').val()){
 								console.log(issue);
 								issuesFilterList.add(issue);
 							}
 						});
-						//issuesFilterList = this.issues.findWhere({statusId: '0'});
 						console.log(issuesFilterList);
 						this.issues = issuesFilterList;
 						console.log(this.issues);
@@ -243,17 +242,19 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				quickChangeCategory: function(e) {
+					this.issue = new IssueModel();
 					this.issue.set( {
 						id: e.currentTarget.id,
-						category: e.currentTarget.value,
+						category: e.currentTarget.value
 					} );
 					this.issue.save();
 				},
 				
 				quickChangeStatus: function(e) {
+					this.issue = new IssueModel();
 					this.issue.set( {
 						id: e.currentTarget.id,
-						status: e.currentTarget.value,
+						status: e.currentTarget.value
 					} );
 					this.issue.save();
 				},

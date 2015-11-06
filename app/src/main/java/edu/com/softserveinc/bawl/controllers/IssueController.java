@@ -11,7 +11,6 @@ import edu.com.softserveinc.bawl.services.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +51,8 @@ public class IssueController {
 	@Autowired
 	private HistoryService historyService;
 
-	@PostAuthorize("hasRole('ROLE_MANAGER') or {2,5}.contains(returnObject.getStatusId())")
+	//TODO do filter or {"",5}.contains(returnObject.getStatusId())
+	@PostAuthorize("hasRole('ROLE_MANAGER') ")
 	@RequestMapping("issue/{id}")
 	public @ResponseBody
 	IssueDTO getIssue(@PathVariable("id") int issueId) {
@@ -100,7 +100,8 @@ public class IssueController {
      * @return list of all issues
      */
 
-    @PostFilter("hasRole('ROLE_MANAGER') or {2,5}.contains(filterObject.getStatusId())")
+	//TODO add filter or {2,5}.contains(filterObject.getStatusId())
+    //@PostFilter("hasRole('ROLE_MANAGER')")
 	@RequestMapping("get-issues")
 	public @ResponseBody List<IssueDTO> getIssues() {
 		return DTOAssembler.getAllIssuesDto(historyService.getLastUniqueIssues());
@@ -119,7 +120,7 @@ public class IssueController {
             IssueModel issue = new IssueModel(request.getName(),
                     request.getDescription(), request.getMapPointer(),
                     request.getAttachments(), category,
-                    request.getPriorityId(), IssueStatus.get(request.getStatus()));
+					request.getPriorityId(), request.getStatus());
             try {
                 issueService.addProblem(issue, getCurrentUserId());
                 responseDTO.setMessage(ISSUE_ADDED);
@@ -132,45 +133,33 @@ public class IssueController {
 	@RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
 	public @ResponseBody ResponseDTO editIssue(@RequestBody Map request) {
 		ResponseDTO responseDTO = new ResponseDTO();
-		if(request.size() == 10) {
+		if(request.size() == 9) {
 			int userId = getCurrentUserId();
 			if (userId != 0) {
-				final Object categoryName = request.get("category");
-				if (categoryName != null) {
-					CategoryModel category = categoryService.getCategoryByNameOrAddNew(categoryName.toString().toLowerCase());
-					int issueId = Integer.parseInt(request.get("id").toString());
-					List<IssueModel> issueModel = issueService.loadIssuesList();
-					for (IssueModel issueModelWithID : issueModel) {
-						if (issueId == issueModelWithID.getId()) {
-							IssueModel issue = issueModelWithID;
-							issue.setCategory(category);
-							issueService.editProblem(issue, userId);
-							mailService.notifyForIssue(issueId, "Issue has been updated.");
+				int issueId = Integer.parseInt(request.get("id").toString());
+				IssueModel editedIssue = issueService.getById(issueId);
 
-						}
-					}
+				if (!request.get("category").toString().equals("")) {
+					final String categoryName =  request.get("category").toString().toUpperCase();
+					CategoryModel category = categoryService.getCategoryByNameOrAddNew(categoryName);
+					editedIssue.setCategory(category);
 				}
 
-				if (request.get("status") != "") {
-					String status = request.get("status").toString().toLowerCase();
-					int statusId = 0;
-					int issueId = Integer.parseInt(request.get("id").toString());
-					List<IssueModel> issueModel = issueService.loadIssuesList();
-					for (IssueModel issueModelWithID : issueModel) {
-						if (issueId == issueModelWithID.getId()) {
-							IssueModel issue = issueModelWithID;
-
-							if (!request.get("attachments").toString().equals(""))
-								issue.setAttachments(request.get("attachments").toString());
-							if (!request.get("description").toString().equals(""))
-								issue.setDescription(request.get("description").toString());
-
-							issue.setStatus(IssueStatus.get(status));
-							issueService.editProblem(issue, userId);
-							mailService.notifyForIssue(issueId, "Issue has been updated.");
-						}
-					}
+				if (!request.get("status").toString().equals("")) {
+					String status = request.get("status").toString().toUpperCase();
+					editedIssue.setStatus(status);
 				}
+				if (!request.get("attachments").toString().equals("")) {
+					editedIssue.setAttachments(request.get("attachments").toString());
+				}
+				if (!request.get("description").toString().equals("")) {
+					editedIssue.setDescription(request.get("description").toString());
+				}
+
+				mailService.notifyForIssue(issueId, "Issue has been updated.");
+				issueService.editProblem(editedIssue, userId);
+				System.out.println("Edit issue #:" + editedIssue);
+
 			}
 		}
 		return responseDTO;
