@@ -34,7 +34,8 @@ public class CategoryController {
      * @return list of the categories
      */
     @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody List<CategoryDTO> getCategories() {
+    @ResponseBody
+    public List<CategoryDTO> getCategories() {
         return DTOAssembler.getCategoryDtoFrom(service.loadCategoriesList(), false);
     }
 
@@ -44,7 +45,8 @@ public class CategoryController {
      * @return message
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody CategoryDTO addCategory(@RequestBody CategoryDTO category) {
+    @ResponseBody
+    public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
         try {
              service.addCategory(new CategoryModel(category.getName()));
              category.setMessage(SUCCESS);

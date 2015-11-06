@@ -26,12 +26,14 @@ public class CommentController {
 	private CommentService service;
 
 	@RequestMapping("get")
-	public  @ResponseBody List<CommentDTO> getCommentsByIssueId(@RequestParam("issueId") int id) {
+	@ResponseBody
+	public List<CommentDTO> getCommentsByIssueId(@RequestParam("issueId") int id) {
 		return DTOAssembler.getCommentsFrom(service.getCommentsByIssueId(id));
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public  @ResponseBody CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
+	@ResponseBody
+	public CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
 		final CommentModel commentModel = new CommentModel(comment.getComment(), comment.getUserName(), comment.getEmail(), comment.getIssueId());
 		service.addComment(commentModel);
 		return comment;
