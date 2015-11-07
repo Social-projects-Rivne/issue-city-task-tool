@@ -162,7 +162,7 @@ public class IssueController {
             }
 
             final String status = issueDTO.getStatus();
-            if (!StringUtils.isEmpty(categoryName)) {
+            if (!StringUtils.isEmpty(status)) {
                 editedIssue.setStatus(IssueStatus.valueOf(status.toUpperCase()));
             }
 

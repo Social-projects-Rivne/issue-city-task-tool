@@ -25,7 +25,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					$(".leaflet-shadow-pane").empty();
 				},
 
-				render : function() {
+				render: function() {
 					$("#container").empty(),
 					$("#container").append(this.mapTemplate);
 					map = L.map('map').setView([50.62, 26.25], 13);

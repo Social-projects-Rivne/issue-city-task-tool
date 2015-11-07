@@ -21,7 +21,7 @@ requirejs.config({
 		},
 
 		main:{
-			deps :['bootstrap','leaflet','js/issue-script','markers','router'] /*'gmaps'*/
+			deps :['bootstrap','leaflet','markers','router'] /*'gmaps'*/
 		},
 
 		map:{
@@ -36,15 +36,15 @@ requirejs.config({
 
 		jquery: ['js/lib/jquery','jquery.serializejson'],
 		underscore: 'js/lib/underscore',
+		backbone_route_control: 'js/lib/backbone-route-control',
 		backbone: 'js/lib/backbone',
 		text: 'js/lib/text',
-
-		router: 'js/app/router',
-		model: 'js/app/model',
-		view: 'js/app/view',
-		collection: 'js/app/collection',
+		router: 'js/router',
+		model: 'js/app/models',
+		view: 'js/app/views',
+		collection: 'js/app/collections',
 		templates: 'js/app/templates',
-		
+		controllers: 'js/app/controllers',
 		bootstrap:'js/lib/bootstrap.min',
 
 		/* Googl Server key*/
@@ -55,13 +55,10 @@ requirejs.config({
 		'jquery_serialize' : 'js/lib/jquery.serializejson',
 
 		//bad scripts
-		homeScript: 'js/home-script',
-        validation: 'js/validation-script',
         markers: 'js/lib/leaflet.awesome-markers',
         leaflet:'js/lib/leaflet',
         
         map:[
-        	'js/map-script',
         	'http://maps.googleapis.com/maps/api/js?sensor=true'
         ]
 	}
