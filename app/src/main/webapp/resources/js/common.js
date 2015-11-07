@@ -2,7 +2,7 @@ requirejs.config({
 
 	baseUrl:"resources",
 
-	shim : { // add here another modules for correct functionflity
+	shim : {
 		
 		bootstrap : { 
 			deps :['jquery']
@@ -21,21 +21,22 @@ requirejs.config({
 		},
 
 		main:{
-			deps :['bootstrap','leaflet','markers','router'] /*'gmaps'*/
+			deps :['bootstrap','leaflet','markers','router']
 		},
 
 		map:{
 			deps :['markers']
 		},
+
 		'view/MapView':{
 			deps :['map','leaflet']
 		}
     },
 
-	paths:{ // libs
+	paths:{
 
 		jquery: ['js/lib/jquery','jquery.serializejson'],
-		underscore: 'js/lib/underscore',
+		underscore: 'js/lib/underscore-min',
 		backbone_route_control: 'js/lib/backbone-route-control',
 		backbone: 'js/lib/backbone',
 		text: 'js/lib/text',

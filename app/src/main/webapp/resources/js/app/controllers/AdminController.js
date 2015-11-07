@@ -1,4 +1,4 @@
-var AdminController = function(AdminView, ManagerView, Main) {
+var AdminController = function(AdminView, ManagerView) {
     return {
         admin: function () {
             if (!_.isNull(loginView.currentUser) && _.isNull(adminView)) {

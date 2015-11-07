@@ -40,7 +40,7 @@ function ($, _, Backbone, Router, BackboneRouteControl,
                     login: new AppController(mapView),
                     issues: new IssueController(),
                     users: new UserController(),
-                    admins: new AdminController(AdminView, ManagerView, this)
+                    admins: new AdminController(AdminView, ManagerView)
                 }
             });
 
