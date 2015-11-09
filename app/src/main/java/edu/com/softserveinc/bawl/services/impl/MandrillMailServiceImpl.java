@@ -25,9 +25,6 @@ import org.springframework.util.DigestUtils;
 import java.util.Collection;
 import java.util.Properties;
 
-/**
- * Created by Illia on 9/25/2015.
- */
 @Service
 public class MandrillMailServiceImpl implements MailService {
 
@@ -110,7 +107,6 @@ public class MandrillMailServiceImpl implements MailService {
         }
     }
 
-
     @Override
     public void notifyForIssue(int issueId, String msg){
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
@@ -124,7 +120,22 @@ public class MandrillMailServiceImpl implements MailService {
             sendMessage(mandrillMessage);
         }
     }
-
-
-
+    /**
+     * Seample Email Sender
+     *
+     * @param   email,
+     * @param   name,
+     * @param   subject,
+     * @param   messagePattern
+     */
+    @Override
+    public void  simpleEmailSender (String email, String name, String subject, String messagePattern){
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+            .setRecipients(new MandrillRecipient(name, email))
+            .setSubject(subject)
+            .setPattern(messagePattern)
+            .build();
+            MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+        }
 }
+

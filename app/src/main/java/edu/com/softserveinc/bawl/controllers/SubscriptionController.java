@@ -35,12 +35,14 @@ public class SubscriptionController {
 	public  @ResponseBody ResponseDTO addSubscriptionAction(
 			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
 		try {
+			subscriptionModel.setIsValid(false);
 			subscriptionService.create(subscriptionModel);
+
 			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ SUCCESS_ADD);
+
 		} catch (Exception e) {
 			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ FAILURE_ADD);
-		}
-		return responseDTO;
+		} return responseDTO;
 	}
 
     @RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)

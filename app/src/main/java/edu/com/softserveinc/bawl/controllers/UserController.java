@@ -118,13 +118,13 @@ public class UserController {
 	 /* This metod send notification to email from #admin panel */
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO
-	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel) {
+	submittedFromData(@RequestBody UserNotificationDTO userNotificationDTO) {
 		ResponseDTO responseDTO = new ResponseDTO();
-		String message = userNotificationModel.getMessage();
-		String subject = userNotificationModel.getSubject();
+		String message = userNotificationDTO.getMessage();
+		String subject = userNotificationDTO.getSubject();
 		UserModel userModel = new UserModel();
 		userModel.setName("User name");
-		userModel.setEmail(userNotificationModel.getEmail());
+		userModel.setEmail(userNotificationDTO.getEmail());
 		MandrillMailServiceImpl.getMandrillMail().sendMessageWithSubject(message, subject, userModel);
 		responseDTO.setMessage("Mail has been sent");
 		return responseDTO ;
@@ -169,7 +169,6 @@ public class UserController {
 
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
-
 }
 
 

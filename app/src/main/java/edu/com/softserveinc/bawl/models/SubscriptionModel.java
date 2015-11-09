@@ -26,11 +26,16 @@ public class SubscriptionModel {
 	@Column(name = "email")
 	private String email;
 
+	@NotNull
+	@Column(name = "isValid")
+	private boolean isValid;
+
 	public SubscriptionModel() {}
 
 	public SubscriptionModel(int issueId, String email) {
 		this.issueId = issueId;
 		this.email = email;
+		this.isValid = isValid;
 	}
 
 	public static Logger getLOG() {
@@ -59,6 +64,14 @@ public class SubscriptionModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(boolean isValid) {
+		this.isValid = isValid;
 	}
 
 	@Override
