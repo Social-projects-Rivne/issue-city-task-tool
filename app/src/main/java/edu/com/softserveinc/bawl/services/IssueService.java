@@ -4,7 +4,6 @@ import edu.com.softserveinc.bawl.models.IssueModel;
 
 import java.util.List;
 
-
 public interface IssueService {
 	
 	void addProblem(IssueModel problem, int userId);
@@ -19,6 +18,5 @@ public interface IssueService {
 
 	IssueModel getById(int issueId) ;
 
-	
-	
+
 }

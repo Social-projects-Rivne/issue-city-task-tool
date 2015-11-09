@@ -160,11 +160,12 @@ public class UserController {
      * @param id user id
      * @return list of UserIssuesHistoryDto
      */
-    @RequestMapping(value = "/{id}/history", method = RequestMethod.GET)
+    @RequestMapping(value = "user/history", method = RequestMethod.GET)
     public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();
-        UserModel userModel = userService.getById(id);
+		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserModel userModel = userService.getByLogin(currentUserLoginName);
 
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }

@@ -7,9 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-/**
- * Created by Illia on 10/5/2015.
- */
 public interface HistoryDao  extends JpaRepository<HistoryModel, Integer> {
 
     String uniqueLastByDateHistories = "SELECT h.* FROM history AS h, ( " +

@@ -1,6 +1,5 @@
 package edu.com.softserveinc.bawl.models.enums;
 
-
 public enum IssueStatus {
     NEW,
     APPROVED,
