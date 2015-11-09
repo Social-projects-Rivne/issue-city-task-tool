@@ -88,15 +88,6 @@ public class MandrillMailServiceImpl implements MailService {
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
-    public void sendMessageWithSubject(String pattern, String subject,  UserModel userModel){
-        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-                .setPattern(pattern)
-                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
-                .setSubject(subject)
-                .build();
-        MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-    }
-
     public void sendMessage(MandrillHtmlMessage mandrillMessage) {
         messageRequest = new MandrillMessageRequest();
         messageRequest.setMessage(mandrillMessage);
@@ -120,6 +111,7 @@ public class MandrillMailServiceImpl implements MailService {
             sendMessage(mandrillMessage);
         }
     }
+
     /**
      * Seample Email Sender
      *
