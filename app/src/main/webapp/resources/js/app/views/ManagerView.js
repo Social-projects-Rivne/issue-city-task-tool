@@ -242,20 +242,14 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 				
 				quickChangeCategory: function(e) {
-					this.issue = new IssueModel();
-					this.issue.set( {
-						id: e.currentTarget.id,
-						category: e.currentTarget.value
-					} );
+					this.issue = this.issues.get( e.currentTarget.id);
+					this.issue.set( {category: e.currentTarget.value});
 					this.issue.save();
 				},
 				
 				quickChangeStatus: function(e) {
-					this.issue = new IssueModel();
-					this.issue.set( {
-						id: e.currentTarget.id,
-						status: e.currentTarget.value
-					} );
+					this.issue = this.issues.get( e.currentTarget.id);
+					this.issue.set( {status: e.currentTarget.value});
 					this.issue.save();
 				},
 				
@@ -264,14 +258,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					newCategory.save( {}, { 
 						success: function(model, response) {
 							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate( { 'data': response } ));
+							that.$el.append(that.notificationTemplate({'data': response}));
+							that.$el.append(that.notificationTemplate({'data':{ 'message': 'Category succsesfully added!'}}));
 							$('#notificationModal').modal();
 						},
-						error: function() {
-							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-							$('#notificationModal').modal();
-						} 
 					} );
 				},
 								
@@ -296,10 +286,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					if($('#editIssueModal')) $('#editIssueModal').remove(); 
 					
 					//get issue from collection by ID for load fields in template
-					issue=this.issues.get(e.currentTarget.id);//+
+					issue= this.issues.get(e.currentTarget.id);//+
 					console.log (issue.toJSON()); //+
-					
-					this.$el.append(this.editIssueTemplate(issue.toJSON()));   // ?
+
+					this.$el.append(this.editIssueTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }));
 					
 					$('#editIssueModal').modal();
 					console.log ('--- --- data inserted from DB to fields ok'); //+

@@ -6,7 +6,9 @@ import edu.com.softserveinc.bawl.dto.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.UserHistoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
@@ -132,19 +134,27 @@ public class IssueController {
     @ResponseBody
     public ResponseDTO addIssue(@RequestBody IssueDTO request) {
         ResponseDTO responseDTO = new ResponseDTO();
-        try {
-            CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory());
-            IssueModel issue = new IssueModel(request.getName(),
-                    request.getDescription(), request.getMapPointer(),
-                    request.getAttachments(), category,
-                    request.getPriorityId(), IssueStatus.valueOf(request.getStatus()));
-            issueService.addProblem(issue, getCurrentUserId());
-            responseDTO.setMessage(ISSUE_ADDED);
-        } catch (Exception ex) {
-            responseDTO.setMessage(ISSUE_NOT_ADDED);
+        UserModel userModel = getCurrentUser();
+        if(userModel != null) {
+            try {
+                CategoryModel category = categoryService.getCategoryByNameOrAddNew(request.getCategory());
+                IssueModel issue = new IssueModel(request.getName(),
+                        request.getDescription(), request.getMapPointer(),
+                        request.getAttachments(), category,
+                        request.getPriorityId(), IssueStatus.valueOf(request.getStatus()));
+                issue.setStatus(getIssueStatusFromUserRole(userModel.getRole()));
+                issueService.addProblem(issue, userModel.getId());
+                responseDTO.setMessage(ISSUE_ADDED);
+            } catch (Exception ex) {
+                responseDTO.setMessage(ISSUE_NOT_ADDED);
+            }
+        } else {
+            responseDTO.setMessage(NOT_AUTHORIZED);
         }
         return responseDTO;
+
     }
+
 
     @RequestMapping(value = "issue/{id}", method = RequestMethod.PUT)
     @ResponseBody
@@ -176,9 +186,15 @@ public class IssueController {
                 editedIssue.setDescription(description);
             }
 
+            final String name = issueDTO.getName();
+            if (!StringUtils.isEmpty(name)) {
+                editedIssue.setName(name);
+            }
+
             mailService.notifyForIssue(issueId, "Issue has been updated.");
             issueService.editProblem(editedIssue, userId);
         }
+        responseDTO.setMessage(SUCCESS_UPDATE);
         return responseDTO;
     }
 
@@ -199,11 +215,30 @@ public class IssueController {
 
 
     private int getCurrentUserId() {
+        UserModel userModel = getCurrentUser();
+        if(userModel != null) {
+            return userModel.getId();
+        }
+        return 0;
+    }
+
+    private IssueStatus getIssueStatusFromUserRole(UserRole userRole){
+        IssueStatus issueStatus;
+        if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
+            issueStatus = IssueStatus.APPROVED;
+        } else{
+            issueStatus = IssueStatus.NEW;
+        }
+        return issueStatus;
+    }
+
+
+    private UserModel getCurrentUser(){
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (currentUserLoginName.equals("anonymousUser")) {
-            return 0;
+            return null;
         } else {
-            return userService.getByLogin(currentUserLoginName).getId();
+            return userService.getByLogin(currentUserLoginName);
         }
     }
 

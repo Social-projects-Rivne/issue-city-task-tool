@@ -61,17 +61,17 @@ public class BawlUserDetailsService implements UserDetailsService {
 	public static List<String> getSpringGrantedAuthoritiesRoles(Integer role) {
 		List<String> roles = new ArrayList<String>();
 		switch (role) {
-			case -1 : {
+			case 0 : {
 				roles.add("USER_NOT_CONFIRMED");
 			}
-			case 0 : {
+			case 1 : {
 				roles.add("ROLE_USER");
 			}
-			case 1 : {
+			case 2 : {
 				roles.add("ROLE_MANAGER");
 				roles.add("ROLE_ADMIN");
 			}
-			case 2: {
+			case 3: {
 				roles.add("ROLE_MANAGER");
 			}
 		}
