@@ -6,20 +6,27 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">User issue editing</h4>			
 			</div>
-			<div class="modal-body">         
+			<div class="modal-body">
+				<!--issue name-->
+				<div class="form-group">
+					<label for="name" class="control-label col-xs-4">Name</label>
+					<div class="col-xs-6">
+						<input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-name" value="<%= data[0].issue.name %>" placeholder="Name" name="Name">
+					</div>
+				</div>
                 
                 <!--description-->
 			                <div class="form-group">
 			                    <label for="description" class="control-label col-xs-4">Description</label>
 			                    <div class="col-xs-6">
-			                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-description" value="<%= description %>" placeholder="Description" name="description">
+			                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-description" value="<%= data[0].issue.description %>" placeholder="Description" name="description">
 			                    </div>
 			                </div>
                 <!--attachment-->
 		                <div class="form-group">
 		                    <label for="attachment" class="control-label col-xs-4">Attachments</label>
 		                    <div class="col-xs-6">
-		                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-attachments" value="<%= attachments %>" placeholder="attachment" name="attachment">
+		                        <input type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-attachments" value="<%= data[0].issue.attachments %>" placeholder="attachment" name="attachment">
 		                    </div>
 		                </div>
                <!--category-->
@@ -27,10 +34,13 @@
 				            <label for="category" class="control-label col-xs-4" name="category">Category</label>
 						    	<div class="col-xs-6">
 						    	<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-category">
-									<option selected><%= categoryId %></option>
-									<option>Option1</option>
-									<option>Option2</option>
-									<option>Option3</option>
+									<% _.map(data[1].categories, function(category) { %>
+									<option <% if(category.id == data[0].issue.categoryId) { %>
+									selected
+									<% } %>
+									><%= category.name %></option>
+
+									<% }); %>
 								</select>
 								</div>
 							</div>
@@ -38,13 +48,14 @@
 					    <div class="form-group">
 				            <label for="status" class="control-label col-xs-4" name="status">Status</label>
 						   		<div class="col-xs-6">
-						    		<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-status"> 
-									<option value="NEW">new</option>
-        							<option value="APPROVED">approved</option>
-				  		            <option value="RESOLVED">resolved</option>
-				  		            <option value="DELETED">deleted</option>
-				  		            <option value="TO_RESOLVE">to resolve</option>
-								</select>
+						    		<select type="text" class="form-control input-sm edit-issue-form" id="edit-issue-form-status">
+										<% _.map(data[2].statuses, function(status) { %>
+										<option <% if(status.name == data[0].issue.status) { %>
+										selected
+										<% } %>
+										><%= status.name %></option>
+										<% }); %>
+									</select>
 								</div>
 						</div>
                <!--priority-->
@@ -62,7 +73,7 @@
                 	
             </div>
     		<div class="modal-footer">
-    				<button id="<%= id %>" class="btn btn-primary editIssueConfirm">OK</button>
+    				<button id="<%= data[0].issue.id %>" class="btn btn-primary editIssueConfirm">OK</button>
         			<button class="btn" data-dismiss="modal">Cancel</button>
     		</div>
 		</div>

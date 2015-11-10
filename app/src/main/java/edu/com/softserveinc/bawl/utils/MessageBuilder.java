@@ -15,6 +15,7 @@ public class MessageBuilder {
     private String message= "";
     private Properties properties;
     MandrillRecipient [] recipients;
+    MandrillRecipient recipient;
     private Map<String, String> headers = new HashMap<String, String>();
 
     public MessageBuilder setPattern(String pattern, String ...params){
@@ -63,4 +64,7 @@ public class MessageBuilder {
         }
         return props;
     }
+
+
+
 }

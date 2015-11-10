@@ -176,9 +176,15 @@ public class IssueController {
                 editedIssue.setDescription(description);
             }
 
+            final String name = issueDTO.getName();
+            if (!StringUtils.isEmpty(name)) {
+                editedIssue.setName(name);
+            }
+
             mailService.notifyForIssue(issueId, "Issue has been updated.");
             issueService.editProblem(editedIssue, userId);
         }
+        responseDTO.setMessage(SUCCESS_UPDATE);
         return responseDTO;
     }
 

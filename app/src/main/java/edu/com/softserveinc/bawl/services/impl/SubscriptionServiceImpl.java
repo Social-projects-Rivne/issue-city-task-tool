@@ -37,7 +37,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public SubscriptionModel read(int id) {
 		return subscriptionDao.findOne(id);
 	}
-	
+
 	@Override
 	public void delete(int id) {
 		subscriptionDao.delete(id);

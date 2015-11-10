@@ -25,9 +25,6 @@ import org.springframework.util.DigestUtils;
 import java.util.Collection;
 import java.util.Properties;
 
-/**
- * Created by Illia on 9/25/2015.
- */
 @Service
 public class MandrillMailServiceImpl implements MailService {
 
@@ -91,15 +88,6 @@ public class MandrillMailServiceImpl implements MailService {
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
-    public void sendMessageWithSubject(String pattern, String subject,  UserModel userModel){
-        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-                .setPattern(pattern)
-                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
-                .setSubject(subject)
-                .build();
-        MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-    }
-
     public void sendMessage(MandrillHtmlMessage mandrillMessage) {
         messageRequest = new MandrillMessageRequest();
         messageRequest.setMessage(mandrillMessage);
@@ -109,7 +97,6 @@ public class MandrillMailServiceImpl implements MailService {
             LOG.warn(e);
         }
     }
-
 
     @Override
     public void notifyForIssue(int issueId, String msg){
@@ -125,6 +112,22 @@ public class MandrillMailServiceImpl implements MailService {
         }
     }
 
-
-
+    /**
+     * Seample Email Sender
+     *
+     * @param   email,
+     * @param   name,
+     * @param   subject,
+     * @param   messagePattern
+     */
+    @Override
+    public void  simpleEmailSender (String email, String name, String subject, String messagePattern){
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+            .setRecipients(new MandrillRecipient(name, email))
+            .setSubject(subject)
+            .setPattern(messagePattern)
+            .build();
+            MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+        }
 }
+
