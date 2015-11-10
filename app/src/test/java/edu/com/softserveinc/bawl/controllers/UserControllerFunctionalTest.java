@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,6 +44,7 @@ public class UserControllerFunctionalTest extends AbstractBawlTest {
     }
 
     @Test
+    @Ignore
     public void testgetUserIssuesHistories() throws Exception {
         mockMvc.perform(get("/users/1/history"))
                 .andExpect(status().isOk())
