@@ -1,8 +1,9 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.models.SubscriptionModel;
+import edu.com.softserveinc.bawl.dto.SubscriptionDTO;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,30 +32,125 @@ public class SubscriptionController {
 	// TODO: Maybe confirmation
 
     // addSubscription
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public  @ResponseBody ResponseDTO addSubscriptionAction(
-			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
-		try {
-			subscriptionModel.setIsValid(false);
-			subscriptionService.create(subscriptionModel);
+//	@RequestMapping(value = "/add", method = RequestMethod.POST)
+//	public  @ResponseBody ResponseDTO addSubscriptionAction(
+//			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
+//		try {
+//			subscriptionModel.setIsValid(false);
+//			subscriptionService.create(subscriptionModel);
+//
+//
+//			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ SUCCESS_ADD);
+//
+//		} catch (Exception e) {
+//			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ FAILURE_ADD);
+//		} return responseDTO;
+//	}
 
-			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ SUCCESS_ADD);
 
-		} catch (Exception e) {
-			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ FAILURE_ADD);
-		} return responseDTO;
-	}
+		/* This metod send notification to email from #admin panel */
+	@RequestMapping(value="/add", method = RequestMethod.POST)
+	public @ResponseBody ResponseDTO addSubscriptionAction(
+			@RequestBody // SubscriptionModel subscriptionModel,
+						 SubscriptionDTO subscriptionDTO,
+						 ResponseDTO responseDTO) {
 
-    @RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
-    public  @ResponseBody ResponseDTO cancelSubscription(
-            @PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
+	//	subscriptionModel.setIsValid(false);
+	//	subscriptionService.create(subscriptionModel);
+
+		//System.out.println(subscriptionDTO.getIssueId() + " "+ subscriptionDTO.getEmail());
+		subscriptionService.create(subscriptionDTO.getIssueId(),subscriptionDTO.getEmail());
+
+
+//		MandrillMailServiceImpl.getMandrillMail().validationSubscription();
+
+		String email = subscriptionDTO.getEmail();
+		String name =  subscriptionDTO.getEmail().toString();
+
+		String subject = "Sibscription email validation";
+		String messagePattern = "";
+//		String messagePattern = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
+//				userModel.getPassword() + "&id=" + userModel.getId();
+		MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+
+		responseDTO.setMessage("Mail has been sent");
+		return responseDTO ;
+		}
+
+/*
+ //  id/valid/ хешсумма
+
+ Хешсумма = Id + email
+
+ Находит по id email хешует и сравнивает с хешем.
+
+ */
+
+
+	@RequestMapping(value = "{id}/valid/{hash}", method = RequestMethod.POST)
+	public  @ResponseBody ResponseDTO validation(
+				@PathVariable(value = "id") Integer id,
+				@PathVariable(value = "hash") Integer hash,
 			ResponseDTO responseDTO ) {
-        try {
-            subscriptionService.delete(id);
+		try {
+			subscriptionService.delete(id);
 			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
-        } catch (Exception e) {
+		} catch (Exception e) {
 			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
 		}
-        return responseDTO;
-    }
+		return responseDTO;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
+	public  @ResponseBody ResponseDTO unSubscription(
+			@PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
+			ResponseDTO responseDTO ) {
+		try {
+			subscriptionService.delete(id);
+			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
+		} catch (Exception e) {
+			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
+		}
+		return responseDTO;
+	}
+
+//
+//    @RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
+//    public  @ResponseBody ResponseDTO cancelSubscription(
+//            @PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
+//			ResponseDTO responseDTO ) {
+//        try {
+//            subscriptionService.delete(id);
+//			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
+//        } catch (Exception e) {
+//			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
+//		}
+//        return responseDTO;
+//    }
+
 }
