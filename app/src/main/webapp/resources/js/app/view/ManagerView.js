@@ -263,14 +263,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					newCategory.save( {}, { 
 						success: function(model, response) {
 							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate( { 'data': response } ));
+							that.$el.append(that.notificationTemplate({'data': response}));
+							that.$el.append(that.notificationTemplate({'data':{ 'message': 'Category succsesfully added!'}}));
 							$('#notificationModal').modal();
 						},
-						error: function() {
-							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-							$('#notificationModal').modal();
-						} 
 					} );
 				},
 								
