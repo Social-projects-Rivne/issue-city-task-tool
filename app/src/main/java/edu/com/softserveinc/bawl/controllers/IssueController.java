@@ -204,20 +204,16 @@ public class IssueController {
     public ResponseDTO toResolve(@PathVariable("id") int id) {
         ResponseDTO responseDTO = new ResponseDTO();
         UserModel userModel = getCurrentUser();
-//        int userId = getCurrentUserId();
         if (userModel.getRole() == UserRole.USER) {
             IssueModel issue = historyService.getLastIssueByIssueID(id);
-//            issue.setStatus(IssueStatus.RESOLVED);
-            issue.setStatus(getIssueStatusForAddIssue(userModel.getRole()));
+            issue.setStatus(getIssueStatusFor_toResolve(userModel.getRole()));
             issueService.editProblem(issue, userModel.getId());
-//            mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
             responseDTO.setMessage(SUCCESS_MARKED);
         } else {
             responseDTO.setMessage(NOT_AUTHORIZED);
         }
         return responseDTO;
     }
-
 
     private int getCurrentUserId() {
         UserModel userModel = getCurrentUser();
