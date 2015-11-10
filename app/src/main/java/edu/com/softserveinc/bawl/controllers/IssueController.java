@@ -142,7 +142,7 @@ public class IssueController {
                         request.getDescription(), request.getMapPointer(),
                         request.getAttachments(), category,
                         request.getPriorityId(), IssueStatus.valueOf(request.getStatus()));
-                issue.setStatus(getIssueStatusFromUserRole(userModel.getRole()));
+                issue.setStatus(getIssueStatusForAddIssue(userModel.getRole()));
                 issueService.addProblem(issue, userModel.getId());
                 responseDTO.setMessage(ISSUE_ADDED);
             } catch (Exception ex) {
@@ -203,12 +203,17 @@ public class IssueController {
     @ResponseBody
     public ResponseDTO toResolve(@PathVariable("id") int id) {
         ResponseDTO responseDTO = new ResponseDTO();
-        int userId = getCurrentUserId();
-        if (userId != 0) {
+        UserModel userModel = getCurrentUser();
+//        int userId = getCurrentUserId();
+        if (userModel.getRole() == UserRole.USER) {
             IssueModel issue = historyService.getLastIssueByIssueID(id);
-            issue.setStatus(IssueStatus.RESOLVED);
-            issueService.editProblem(issue, userId);
-            mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
+//            issue.setStatus(IssueStatus.RESOLVED);
+            issue.setStatus(getIssueStatusForAddIssue(userModel.getRole()));
+            issueService.editProblem(issue, userModel.getId());
+//            mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
+            responseDTO.setMessage(SUCCESS_MARKED);
+        } else {
+            responseDTO.setMessage(NOT_AUTHORIZED);
         }
         return responseDTO;
     }
@@ -222,7 +227,7 @@ public class IssueController {
         return 0;
     }
 
-    private IssueStatus getIssueStatusFromUserRole(UserRole userRole){
+    private IssueStatus getIssueStatusForAddIssue(UserRole userRole){
         IssueStatus issueStatus;
         if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
             issueStatus = IssueStatus.APPROVED;
@@ -232,6 +237,15 @@ public class IssueController {
         return issueStatus;
     }
 
+    private IssueStatus getIssueStatusFor_toResolve(UserRole userRole){
+        IssueStatus issueStatus;
+        if(userRole == UserRole.USER){
+            issueStatus = IssueStatus.TO_RESOLVE;
+        } else{
+            issueStatus = IssueStatus.APPROVED;
+        }
+        return issueStatus;
+    }
 
     private UserModel getCurrentUser(){
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
