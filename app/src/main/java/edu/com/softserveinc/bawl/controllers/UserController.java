@@ -73,19 +73,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
-	public @ResponseBody UserModel validateUser (@RequestBody UserDTO user) {
-		UserModel dbModel = null;
+	public @ResponseBody UserModel validateUser (
+			@RequestBody UserDTO userDTO, UserModel userModel) {
 		try {
-			dbModel = userService.getById(user.getId());
-			if (dbModel.getPassword().equals(user.getPassword())){
-				dbModel.setRole(UserRole.USER);
-				userService.editUser(dbModel);
-				return dbModel;
+			userModel = userService.getById(userDTO.getId());
+			if (userModel.getPassword().equals(userDTO.getPassword())){
+				userModel.setRole(UserRole.USER);
+				userService.editUser(userModel);
+				return userModel;
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex);
 		}
-		return dbModel;
+		return userModel;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
