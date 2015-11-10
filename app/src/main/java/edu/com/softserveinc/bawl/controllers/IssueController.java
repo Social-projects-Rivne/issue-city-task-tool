@@ -222,7 +222,7 @@ public class IssueController {
     private IssueStatus getIssueStatusForResolving(UserRole userRole){
         IssueStatus issueStatus = IssueStatus.TO_RESOLVE;
         if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
-            issueStatus = IssueStatus.APPROVED;
+            issueStatus = IssueStatus.RESOLVED;
         }
         return issueStatus;
     }
