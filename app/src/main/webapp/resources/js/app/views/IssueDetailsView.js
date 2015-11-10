@@ -29,19 +29,32 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 
 				events: {
 					'click #add_comment_button': 'addComment',
-					'click [name="resolve"]': 'chngeStatus',
+					'click [name="resolve"]': 'changeStatus',
 					'click [name*="send-folower-email"]': 'subscribe'
 
 				},
 				//event for btn Resolve
-				chngeStatus: function(e){
+				changeStatus: function(e){
+					var that = this;
 					id = e.currentTarget.id;
-					$.ajax({url: 'to-resolve/'+id, type: 'POST'});
-					//notitfication
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
-					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thanks! We will review your request." } } ));
-					$('#notificationModal').modal();
+					$.ajax({
+							url: 'to-resolve/'+id,
+							type: 'POST',
+							success: function(response) {
+								if($('#notificationModal')) {
+									$('#notificationModal').remove();
+								}
+								$(".signUp.modal").modal("hide");
+								$('body').append(that.notificationTemplate( { 'data': response } ));
+								$('#notificationModal').modal();
+							},
+							error: function(){
+								if($('#notificationModal')) {
+									$('#notificationModal').remove();
+								}
+								$('body').append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('#notificationModal').modal();
+							}});
 				},
 
 				//Subscribition method
