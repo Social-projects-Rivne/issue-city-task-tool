@@ -24,7 +24,7 @@
                         <td id='status-cell'>
                             
                         	<% _.map(data[2].statuses, function(status) { %>
-	                        	<% if(status.id == data[0].issue.statusId) { %>
+	                        	<% if(status.name == data[0].issue.status) { %>
 	                        	<% stat = status.name } %>
                         	<% }); %>
 	                        <select id="<%= data[0].issue.id %>" class="status form-control">

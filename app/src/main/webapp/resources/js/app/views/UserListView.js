@@ -226,17 +226,26 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
 						$('#editIssueModal').modal('hide');
 						mapView.model.get(e.currentTarget.id).set( {
+						name: $('#edit-issue-form-name').val(),
 						description: $('#edit-issue-form-description').val(),
 						attachments: $('#edit-issue-form-attachments').val(),
-						categoryId: $('#edit-issue-form-category').val(),
-						statusId: $('#edit-issue-form-status').val(),
+						category: $('#edit-issue-form-category').val(),
+						status: $('#edit-issue-form-status').val(),
 						priorityId: $('#edit-issue-form-priority').val()
 						
-						} ).save ( {
-							success: function() {
+						} ).save( {}, {
+							success: function (model, response) {
+								if ($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate({'data': response}));
+								$('#notificationModal').modal();
 								managerView.resetFilter();
+							},
+							error: function () {
+								if ($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate({'data': {'message': 'Error!'}}));
+								$('#notificationModal').modal();
 							}
-						} );
+						})
 					}
 					
 					

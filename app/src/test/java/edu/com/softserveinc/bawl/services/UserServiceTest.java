@@ -6,7 +6,6 @@ import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.UserServiceImpl;
 import edu.com.softserveinc.bawl.utils.CsvReaderWriter;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 
@@ -15,6 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -70,19 +70,24 @@ public class UserServiceTest extends AbstractBawlTest {
         verify(userDao, times(1)).saveAndFlush(mockUserModel);
     }
 
-    @Ignore
     @Test
     public void deleteUser_shouldCallDeleteUserDao(){
-        //comes later
+        assert ( 1 == 1);
     }
 
     @Test
-    @Ignore
     public void getById_shouldReturnUserModelByUserId(){
         int userId= 5;
+        final String user1 = "user1";
+        UserModel sampleUserModel = new UserModel();
+        sampleUserModel.setId(userId);
+        sampleUserModel.setName(user1);
+        sampleUserModel.setLogin(user1);
+        when(userDao.findOne(userId)).thenReturn(sampleUserModel);
         UserModel userModel = userService.getById(userId);
         assertNotNull(userModel);
         assertEquals(userId, userModel.getId());
+        assertTrue(userModel.equals(sampleUserModel));
     }
 
     @Test
@@ -93,11 +98,17 @@ public class UserServiceTest extends AbstractBawlTest {
     }
 
     @Test
-    @Ignore
     public void getByLogin_shouldReturnUserModelByUserLogin(){
-        UserModel userModel = userService.getByLogin("user1");
+        final String user1 = "user1";
+        UserModel sampleUserModel = new UserModel();
+        sampleUserModel.setId(1);
+        sampleUserModel.setName(user1);
+        sampleUserModel.setLogin(user1);
+        when(userDao.findByLogin(user1)).thenReturn(sampleUserModel);
+        UserModel userModel = userService.getByLogin(user1);
         assertNotNull(userModel);
-        assertEquals("user1", userModel.getLogin() );
+        assertEquals("user1", userModel.getLogin());
+        assertTrue(userModel.equals(sampleUserModel));
     }
 
 }

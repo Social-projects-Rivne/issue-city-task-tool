@@ -19,19 +19,19 @@ define([ 'jquery', 'underscore', 'backbone'],
 			}  
 			else if(this.model.get("roleName") == "Manager"){
 					this.model.set("userTitle", "Manager");
-				if (this.model.get("statusId") == 1){
+				if (this.model.get("status") == "NEW"){
 					this.model.set("message", " created this issue");
 				}
-				else if (this.model.get("statusId") == 2){
+				else if (this.model.get("status") == "APPROVED"){
 					this.model.set("message", " approved this issue");
 				}
-				else if (this.model.get("statusId") == 3){
+				else if (this.model.get("status") == "RESOLVED"){
 					this.model.set("message", " resolved this issue");
 				}
-				else if (this.model.get("statusId") == 4){
+				else if (this.model.get("status") == "DELETED"){
 					this.model.set("message", " deleted this issue");
 				}
-				else if (this.model.get("statusId") == 5){
+				else if (this.model.get("status") == "TO_RESOLVE"){
 					this.model.set("message", " decided to resolve this issue");
 				}
 			}

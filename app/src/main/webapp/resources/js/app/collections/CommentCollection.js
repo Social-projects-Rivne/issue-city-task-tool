@@ -2,7 +2,7 @@ define([ 'underscore', 'backbone', 'model/CommentModel' ], function(_, Backbone,
 
 	return Backbone.Collection.extend({
 		model: CommentModel,
-		url: 'get-comments'	
+		url: 'comments/get'
 	});
 
 });

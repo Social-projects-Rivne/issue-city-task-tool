@@ -5,8 +5,7 @@ import edu.com.softserveinc.bawl.models.CategoryModel;
 import java.util.List;
 
 public interface CategoryService {
-	
-	
+
 	 CategoryModel addCategory(CategoryModel category);
 
 	 CategoryModel addCategory(String category);

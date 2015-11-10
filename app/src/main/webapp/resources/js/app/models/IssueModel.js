@@ -5,13 +5,12 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 		defaults: {
 			id: null,
 			priorityId: 1,
-			status: "new",
+			status: "NEW",
 			name: "",
 			description: "",
 			mapPointer: "",
 			attachments: "",
 			category: "",
-			statusId: "1",
 			categoryId: "1"
 		}
 	});

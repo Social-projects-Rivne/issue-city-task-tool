@@ -4,7 +4,7 @@ define([ 'underscore', 'backbone' ], function(_, Backbone) {
 			defaults: {
 				date: "",
 				username: "",
-				statusId:"",
+				status:"",
 				roleName:"",
 				issueName: ""
 			}

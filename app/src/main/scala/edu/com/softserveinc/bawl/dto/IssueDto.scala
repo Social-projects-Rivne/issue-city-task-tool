@@ -10,7 +10,6 @@ class IssueDTO {
   @BeanProperty var attachments: String = null
   @BeanProperty var categoryId: Int = 0
   @BeanProperty var priorityId: Int = 0
-  @BeanProperty var statusId: Int = 0
   @BeanProperty var category: String = null
   @BeanProperty var status: String = null
 }

@@ -5,9 +5,6 @@ import edu.com.softserveinc.bawl.models.IssueModel;
 
 import java.util.List;
 
-/**
- * Created by Illia on 10/5/2015.
- */
 public interface HistoryService {
 
     public void addHistory(HistoryModel history);

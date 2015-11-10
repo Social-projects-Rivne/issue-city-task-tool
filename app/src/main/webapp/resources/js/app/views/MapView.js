@@ -25,7 +25,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					$(".leaflet-shadow-pane").empty();
 				},
 
-				render : function() {
+				render: function() {
 					$("#container").empty(),
 					$("#container").append(this.mapTemplate);
 					map = L.map('map').setView([50.62, 26.25], 13);
@@ -45,7 +45,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/IssueCollection', 'view
 					
 					this.model.fetch( { success: function() {
 						that.model.each(function(issue) {
-							if((issue.get('statusId')==2) || (issue.get('statusId')==5))
+							if((issue.get('status')=="APPROVED") || (issue.get('status')=="TO_RESOLVE"))
 								L.marker(issue.get("mapPointer").substr(7, issue.get("mapPointer").length - 1)
 									.split(', '), { icon: that.markers[Math.floor(Math.random() * 5)] }).addTo(map).on('click', onMarkerClick).title = issue.get("id");
 						});

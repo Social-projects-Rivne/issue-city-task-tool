@@ -9,4 +9,5 @@ class CategoryDTO {
   @BeanProperty var name: String = null
   @BeanProperty var state: Int = 0
   @BeanProperty var issueDtoList: List[IssueDTO] = null
+  @BeanProperty var message: String = null
 }

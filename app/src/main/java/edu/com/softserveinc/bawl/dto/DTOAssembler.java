@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.dto;
 
 import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
@@ -40,7 +41,6 @@ public class DTOAssembler {
         List<StatusDTO> categoryDTOs = new ArrayList<>();
         for (IssueStatus status : IssueStatus.values()) {
             StatusDTO statusDTO = new StatusDTO();
-            statusDTO.setId(status.id);
             statusDTO.setName(status.name());
             categoryDTOs.add(statusDTO);
         }
@@ -90,7 +90,7 @@ public class DTOAssembler {
         issueDTO.setMapPointer(issueModel.getMapPointer());
         issueDTO.setCategoryId(issueModel.getCategory().getId());
         issueDTO.setPriorityId(issueModel.getPriorityId());
-        issueDTO.setStatusId(issueModel.getStatus().id);
+        issueDTO.setStatus(issueModel.getStatus().name());
         return issueDTO;
     }
 
@@ -113,9 +113,9 @@ public class DTOAssembler {
         IssueHistoryDTO issueHistoryDto = new IssueHistoryDTO();
         issueHistoryDto.setDate(historyModel.getDate());
         issueHistoryDto.setChangedByUser(userModel.getName());
-        issueHistoryDto.setStatus(historyModel.getStatus().id);
+        issueHistoryDto.setStatus(historyModel.getStatus().name());
         userIssuesHistoryDto.setIssueHistoryDto(issueHistoryDto);
-        userIssuesHistoryDto.setCurrentStatus(issueModel.getStatus().id);
+        userIssuesHistoryDto.setCurrentStatus(issueModel.getStatus().name());
 
         return userIssuesHistoryDto;
     }
@@ -136,7 +136,7 @@ public class DTOAssembler {
 
     public static UserHistoryDTO getUserHistoryDto(HistoryModel historyModel, IssueModel issueModel, UserService userService){
         UserHistoryDTO userHistoryDto = new UserHistoryDTO();
-        userHistoryDto.setStatusId(historyModel.getStatus().id);
+        userHistoryDto.setStatus(historyModel.getStatus().name());
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
         UserModel userModel = userService.getById(historyModel.getUserId());
@@ -146,4 +146,21 @@ public class DTOAssembler {
     }
 
 
+    public  static List<CommentDTO> getCommentsFrom(List<CommentModel> comments) {
+        List<CommentDTO> commentsDTO = new ArrayList<>();
+        comments.forEach(commentModel -> {
+            commentsDTO.add(getCommentFrom(commentModel));
+        });
+        return commentsDTO;
+    }
+
+    public static CommentDTO getCommentFrom(CommentModel commentModel) {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setId(commentModel.getId());
+        commentDTO.setIssueId(commentModel.getIssueId());
+        commentDTO.setComment(commentModel.getComment());
+        commentDTO.setUserName(commentModel.getUserName());
+        commentDTO.setEmail(commentModel.getEmail());
+        return commentDTO;
+    }
 }

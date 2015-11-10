@@ -115,18 +115,21 @@ public class UserController {
 		}
 	}
 
-	 /* This metod send notification to email from #admin panel */
+	/* This metod send notification to email from #admin panel */
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
-	public @ResponseBody ResponseDTO
-	submittedFromData(@RequestBody UserNotificationDTO userNotificationModel) {
-		ResponseDTO responseDTO = new ResponseDTO();
-		String message = userNotificationModel.getMessage();
-		String subject = userNotificationModel.getSubject();
-		UserModel userModel = new UserModel();
-		userModel.setName("User name");
-		userModel.setEmail(userNotificationModel.getEmail());
-		MandrillMailServiceImpl.getMandrillMail().sendMessageWithSubject(message, subject, userModel);
-		responseDTO.setMessage("Mail has been sent");
+	public @ResponseBody ResponseDTO submittedFromData(
+			@RequestBody UserNotificationDTO userNotificationDTO,
+						 ResponseDTO responseDTO ) {
+
+		String email = userNotificationDTO.getEmail();
+		String messagePattern = userNotificationDTO.getMessage();
+		String subject = userNotificationDTO.getSubject();
+		String name = "User name";
+
+		try { MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+			  responseDTO.setMessage("Mail has been sent");
+		} catch (Exception e){responseDTO.setMessage("Error");}
+
 		return responseDTO ;
 	}
 
@@ -160,15 +163,15 @@ public class UserController {
      * @param id user id
      * @return list of UserIssuesHistoryDto
      */
-    @RequestMapping(value = "/{id}/history", method = RequestMethod.GET)
+    @RequestMapping(value = "user/history", method = RequestMethod.GET)
     public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();
-        UserModel userModel = userService.getById(id);
+		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserModel userModel = userService.getByLogin(currentUserLoginName);
 
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
-
 }
 
 

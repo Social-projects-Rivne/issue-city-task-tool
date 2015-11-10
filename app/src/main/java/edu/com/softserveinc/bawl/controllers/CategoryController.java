@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Controller for issue categories
@@ -24,7 +23,6 @@ public class CategoryController {
 
     public static final Logger LOG = Logger.getLogger(CategoryController.class);
 
-    public static final String MESSAGE_TEXT = "message";
     public static final String SUCCESS = "Success. New category was added";
     public static final String FAILURE = "Failed. New category was not added";
 
@@ -44,19 +42,18 @@ public class CategoryController {
     /**
      * Creates new category
      * @param category new category
-     * @param message message
      * @return message
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addCategory(@RequestBody CategoryDTO category, Map<String, String> message) {
+    public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
         try {
              service.addCategory(new CategoryModel(category.getName()));
-             message.put(MESSAGE_TEXT, SUCCESS);
+             category.setMessage(SUCCESS);
         } catch (Exception e) {
-             message.put(MESSAGE_TEXT, FAILURE);
+             category.setMessage(FAILURE);
         }
-        return message;
+        return category;
     }
 
 

@@ -7,5 +7,5 @@ import scala.beans.BeanProperty
 class IssueHistoryDTO {
   @BeanProperty  var date: Date = null
   @BeanProperty  var changedByUser: String = null
-  @BeanProperty  var status: Int = 0
+  @BeanProperty  var status: String = ""
 }

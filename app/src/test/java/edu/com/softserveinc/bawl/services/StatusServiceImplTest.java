@@ -29,7 +29,7 @@ public class StatusServiceImplTest extends AbstractBawlTest {
     @Test
     public void loadStatusList_shouldReturnListOfAllStatuses() {
         final List<StatusDTO> issueStatuses = statusService.loadStatusList();
-        assertEquals(issueStatuses.get(0).getName(),IssueStatus.values()[0].name());
+        assertEquals(issueStatuses.get(0).getName(),IssueStatus.NEW.name());
     }
 
 }

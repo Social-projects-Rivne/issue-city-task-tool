@@ -1,11 +1,9 @@
 package edu.com.softserveinc.bawl.controllers;
 
+import edu.com.softserveinc.bawl.AbstractBawlTest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
 
@@ -13,15 +11,13 @@ import static org.springframework.test.web.server.request.MockMvcRequestBuilders
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-root-context.xml"})
-public class IssueControllerIntegrationTest {
+public class IssueControllerIntegrationTest extends AbstractBawlTest {
 
   public static final  String MEDIA_TYPE = "application/json;charset=UTF-8";
   public static final String EMPTY_COLLECTION = "[]";
   public static final int USER_ID = 1;
   public static final int ISSUE_ID = 1;
-  public static final String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "statusId"};
+  public static final String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "status"};
 
   private MockMvc mockMvc;
 

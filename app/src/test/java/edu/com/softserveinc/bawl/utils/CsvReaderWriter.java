@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.supercsv.cellprocessor.FmtDate;
 import org.supercsv.cellprocessor.ParseDate;
+import org.supercsv.cellprocessor.ParseEnum;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.UniqueHashCode;
@@ -34,7 +35,7 @@ public class CsvReaderWriter {
                 new UniqueHashCode(), // id (must be unique)
                 new NotNull(), // issue_id
                 new NotNull(), // user_id
-                new NotNull(), // status_id
+                new NotNull(), // status
                 new FmtDate("MM/dd/yy HH:mm:ss aaa"), // date
         };
     }
@@ -69,7 +70,7 @@ public class CsvReaderWriter {
                 new ParseInt(), // id (must be unique)
                 new ParseInt(), // issue_id
                 new ParseInt(), // user_id
-                new ParseInt(), // status_id
+                new ParseEnum(IssueStatus.class), // status
                 new ParseDate("MM/dd/yy HH:mm:ss aaa") // date
         };
     }
@@ -103,7 +104,7 @@ public class CsvReaderWriter {
                     CsvPreference.STANDARD_PREFERENCE);
 
             // the header elements are used to map the bean values to each column (names must match)
-            final String[] header = new String[] { "id", "issueId", "userId", "statusId","date"};
+            final String[] header = new String[] { "id", "issueId", "userId", "status","date"};
             final CellProcessor[] processors = getHistoryModelWriterProcessors();
 
             // write the header
