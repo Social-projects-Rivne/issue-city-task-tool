@@ -82,11 +82,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 											return;
 										}
 
-										else if(that.currentUser.get('roleId') == 1){
+										else if(that.currentUser.get('roleId') == ADMIN){
 											adminView = new AdminView( { el: "#container" } );
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('admin',{trigger:true});
-										} else if(that.currentUser.get('roleId') == 2){
+										} else if(that.currentUser.get('roleId') == MANAGER){
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('manager',{trigger:true});
 										} else {
@@ -149,11 +149,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						$('.navbar  #login').hide();
 						$('.navbar  #cry-out').show();
 						$('.navbar  #signUp').hide();
-						if(this.currentUser.get('roleId') == 1){
+						if(this.currentUser.get('roleId') == ADMIN){
 							$('.navbar  #admin').show();
 							$('.navbar  #manager').show();
 						} else{ 
-							if(this.currentUser.get('roleId') == 2 ){
+							if(this.currentUser.get('roleId') == MANAGER ){
 								$('.navbar  #admin').hide();
 								$('.navbar  #manager').show();
 							} 

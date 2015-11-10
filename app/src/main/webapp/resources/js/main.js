@@ -12,8 +12,11 @@ function ($, _, Backbone, Router, BackboneRouteControl,
         managerView = null;
         userRegView = null;
         historyView = null;
-        USER_NOT_CONFIRMED = -1;
-        USER = 0;
+        USER_NOT_CONFIRMED = 0;
+        USER = 1;
+        MANAGER = 2;
+        ADMIN = 3;
+
 
         jQuery(document).ready(function ($) {
             $.ajaxSetup({
