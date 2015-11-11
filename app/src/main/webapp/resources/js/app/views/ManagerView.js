@@ -145,6 +145,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				// filter (search)
 				issueFilter: function(){
+					this.issues = mapView.model;
 					//checking filters
 					console.log("Name is " + $('#issue-filter #name').prop("checked"));
 					console.log("Keyword is " + $('#issue-filter #keyword').prop("checked"));
@@ -235,7 +236,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				//reset filter
 				resetFilter: function(){
 					var that = this;
-					$('#issue-filter #keyword').prop("checked", "checked");
 					this.issues.fetch({ success: function(){
 							that.issueTableRender();
 						}
