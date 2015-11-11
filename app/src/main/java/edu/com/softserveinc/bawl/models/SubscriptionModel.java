@@ -26,6 +26,10 @@ public class SubscriptionModel {
 	@Column(name = "email")
 	private String email;
 
+	@Email
+	@Column(name = "userId")
+	private int userId;
+
 	@NotNull
 	@Column(name = "isValid")
 	private boolean isValid;
@@ -36,6 +40,25 @@ public class SubscriptionModel {
 		this.issueId = issueId;
 		this.email = email;
 		this.isValid = isValid;
+	}
+
+	public SubscriptionModel(int issueId, String email, int userId, boolean isValid) {
+		this.issueId = issueId;
+		this.email = email;
+		this.userId = userId;
+		this.isValid = isValid;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public boolean isValid() {
+		return isValid;
 	}
 
 	public static Logger getLOG() {
