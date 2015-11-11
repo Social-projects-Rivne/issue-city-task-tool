@@ -1,6 +1,10 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.*;
+import edu.com.softserveinc.bawl.dto.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.UserDTO;
+import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDTO;
+import edu.com.softserveinc.bawl.dto.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -8,16 +12,22 @@ import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
-import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
 import edu.com.softserveinc.bawl.utils.PassGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -47,7 +57,7 @@ public class UserController {
             UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
                     userDTO.getLogin(), userDTO.getRoleId(), userDTO.getPassword(), userDTO.getAvatar());
             userModel = userService.addUser(userModel);
-			MandrillMailServiceImpl.getMandrillMail().sendRegNotification(userModel);
+			getMandrillMail().sendRegNotification(userModel);
 			responseDTO.setMessage("Successfully registered. Please confirm your email");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occured! User was not added");
@@ -61,9 +71,7 @@ public class UserController {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
 			userService.editUser(userModel);
-			String role = userModel.getRole().get();
-			MandrillMailServiceImpl.getMandrillMail()
-					.sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), role);
+			getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), userModel.getRole().caption);
 			responseDTO.setMessage("User was successfully edited");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());
@@ -73,19 +81,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
-	public @ResponseBody UserModel validateUser (@RequestBody UserDTO user) {
-		UserModel dbModel = null;
+	public @ResponseBody UserModel validateUser (
+			@RequestBody UserDTO userDTO, UserModel userModel) {
 		try {
-			dbModel = userService.getById(user.getId());
-			if (dbModel.getPassword().equals(user.getPassword())){
-				dbModel.setRole(UserRole.USER);
-				userService.editUser(dbModel);
-				return dbModel;
+			userModel = userService.getById(userDTO.getId());
+			if (userModel.getPassword().equals(userDTO.getPassword())){
+				userModel.setRole(UserRole.USER);
+				userService.editUser(userModel);
+				return userModel;
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex);
 		}
-		return dbModel;
+		return userModel;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -96,7 +104,7 @@ public class UserController {
 		try {
 			userService.deleteUser(id);
 			UserModel userModel = userService.getById(id);
-			MandrillMailServiceImpl.getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
+			getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
 			responseDTO.setMessage("User was successfully deleted");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occured! User was not deleted");
@@ -126,7 +134,7 @@ public class UserController {
 		String subject = userNotificationDTO.getSubject();
 		String name = "User name";
 
-		try { MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+		try { getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
 			  responseDTO.setMessage("Mail has been sent");
 		} catch (Exception e){responseDTO.setMessage("Error");}
 
@@ -152,8 +160,7 @@ public class UserController {
 		String newPassword = PassGenerator.generate(1, 5);
 		userModel.setPassword(newPassword);
 		userService.editUserPass(userModel);
-		MandrillMailServiceImpl.getMandrillMail()
-				.sendSimpleMessage(MailPatterns.PASSWORD_RESET_PATTERN, userModel, userModel.getName());
+		getMandrillMail().sendSimpleMessage(MailPatterns.PASSWORD_RESET_PATTERN, userModel, userModel.getName());
 		responseDTO.setMessage("Your pass have been changed ! Watch about it on your mail ! ");
 		return responseDTO;
 	}
@@ -169,7 +176,6 @@ public class UserController {
         List<IssueModel> issues = issueService.loadIssuesList();
 		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
-
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
 }

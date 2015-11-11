@@ -10,8 +10,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
 					'change .category': 'quickChangeCategory',
 					'change .status': 'quickChangeStatus',
+					'click .glyphicon-thumbs-up' : "quickChangeStatusOnApproved",
+					'click .glyphicon-thumbs-down' : "quickChangeStatusOnDisapproved",
 					'click .table .btn.delete-issue': 'showRemoveConfirmation',
-					'click .confirm': 'confirm',
 					'click #add-category-link': 'showAddCategoryForm',
 					'click #add-category': 'addCategory',
 					'click .btn.view-on-map': 'viewOnMap',
@@ -252,6 +253,36 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issue.set( {status: e.currentTarget.value});
 					this.issue.save();
 				},
+
+				quickChangeStatusOnApproved: function(e) {
+					var currentStatus = $("#issue-table-body #" + e.currentTarget.id + ".status").val();
+					this.issue = this.issues.get( e.currentTarget.id);
+					switch (currentStatus){
+						case "NEW":
+							this.issue.set( {status: "APPROVED"});
+							break;
+						case "TO_RESOLVE":
+							this.issue.set( {status: "RESOLVED"});
+							break;
+					}
+					this.issue.save();
+					this.render();
+				},
+
+				quickChangeStatusOnDisapproved: function(e) {
+					var currentStatus = $("#issue-table-body #" + e.currentTarget.id + ".status").val();
+					this.issue = this.issues.get( e.currentTarget.id);
+					switch (currentStatus){
+						case "NEW":
+							this.issue.set( {status: "DELETED"});
+							break;
+						case "TO_RESOLVE":
+							this.issue.set( {status: "APPROVED"});
+							break;
+					}
+					this.issue.save();
+					this.render();
+				},
 				
 				addCategory: function() {
 					var newCategory = new CategoryModel( { 'name': $('#category-name').val() } );
@@ -358,10 +389,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					loginView.buttonsManage();
 				},
 				
-			editIssue: function(e) {
+				editIssue: function(e) {
 					var isValid = true;
-					
-				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
@@ -384,11 +414,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
 						$('#confirmationModal').modal();
-					
 					}
-						
-						
-					
 				}
 									
 			});

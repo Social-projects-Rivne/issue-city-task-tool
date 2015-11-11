@@ -9,23 +9,13 @@ import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
-import edu.com.softserveinc.bawl.services.CategoryService;
-import edu.com.softserveinc.bawl.services.HistoryService;
-import edu.com.softserveinc.bawl.services.IssueService;
-import edu.com.softserveinc.bawl.services.MailService;
-import edu.com.softserveinc.bawl.services.UserService;
+import edu.com.softserveinc.bawl.services.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -62,8 +52,6 @@ public class IssueController {
     @Autowired
     private HistoryService historyService;
 
-    //TODO do filter or {"",5}.contains(returnObject.getStatusId())
-    @PostAuthorize("hasRole('ROLE_MANAGER') ")
     @RequestMapping("issue/{id}")
     @ResponseBody
     public IssueDTO getIssue(@PathVariable("id") int issueId) {
@@ -142,7 +130,7 @@ public class IssueController {
                         request.getDescription(), request.getMapPointer(),
                         request.getAttachments(), category,
                         request.getPriorityId(), IssueStatus.valueOf(request.getStatus()));
-                issue.setStatus(getIssueStatusFromUserRole(userModel.getRole()));
+                issue.setStatus(getIssueStatusForAddIssue(userModel.getRole()));
                 issueService.addProblem(issue, userModel.getId());
                 responseDTO.setMessage(ISSUE_ADDED);
             } catch (Exception ex) {
@@ -203,16 +191,17 @@ public class IssueController {
     @ResponseBody
     public ResponseDTO toResolve(@PathVariable("id") int id) {
         ResponseDTO responseDTO = new ResponseDTO();
-        int userId = getCurrentUserId();
-        if (userId != 0) {
+        UserModel userModel = getCurrentUser();
+        if (userModel != null) {
             IssueModel issue = historyService.getLastIssueByIssueID(id);
-            issue.setStatus(IssueStatus.RESOLVED);
-            issueService.editProblem(issue, userId);
-            mailService.notifyForIssue(id, "Issue has been marked as possibly resolved.");
+            issue.setStatus(getIssueStatusForResolving(userModel.getRole()));
+            issueService.editProblem(issue, userModel.getId());
+            responseDTO.setMessage(SUCCESS_MARKED);
+        } else {
+            responseDTO.setMessage(NOT_AUTHORIZED);
         }
         return responseDTO;
     }
-
 
     private int getCurrentUserId() {
         UserModel userModel = getCurrentUser();
@@ -222,16 +211,21 @@ public class IssueController {
         return 0;
     }
 
-    private IssueStatus getIssueStatusFromUserRole(UserRole userRole){
-        IssueStatus issueStatus;
+    private IssueStatus getIssueStatusForAddIssue(UserRole userRole){
+        IssueStatus issueStatus = IssueStatus.NEW;
         if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
             issueStatus = IssueStatus.APPROVED;
-        } else{
-            issueStatus = IssueStatus.NEW;
         }
         return issueStatus;
     }
 
+    private IssueStatus getIssueStatusForResolving(UserRole userRole){
+        IssueStatus issueStatus = IssueStatus.TO_RESOLVE;
+        if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
+            issueStatus = IssueStatus.RESOLVED;
+        }
+        return issueStatus;
+    }
 
     private UserModel getCurrentUser(){
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -77,14 +77,7 @@ public class SubscriptionController {
 		return responseDTO ;
 		}
 
-/*
- //  id/valid/ хешсумма
 
- Хешсумма = Id + email
-
- Находит по id email хешует и сравнивает с хешем.
-
- */
 
 
 	@RequestMapping(value = "{id}/valid/{hash}", method = RequestMethod.POST)

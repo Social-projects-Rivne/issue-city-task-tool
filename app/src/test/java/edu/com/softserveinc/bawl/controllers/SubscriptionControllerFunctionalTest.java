@@ -35,7 +35,7 @@ public class SubscriptionControllerFunctionalTest  extends AbstractBawlTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("{\"id\" : \"1\",\"issueId\" : \"1\",\"email\" : \"foo@foo\"}".getBytes()))
                 .andExpect(status().isOk());
-        Mockito.verify(subscriptionService, Mockito.times(1)).create(Mockito.any(SubscriptionModel.class));
+        Mockito.verify(subscriptionService, Mockito.times(1)).create(1, "foo@foo");
     }
 
     @Test
