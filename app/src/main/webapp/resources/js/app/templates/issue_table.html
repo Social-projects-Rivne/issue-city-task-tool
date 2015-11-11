@@ -29,7 +29,7 @@
                         	<% }); %>
 	                        <select id="<%= data[0].issue.id %>" class="status form-control">
 								<% _.map(data[2].statuses, function(status) { %>
-									<option <% if(status.name == stat) { %>
+									<option value=<%=status.name%> <% if(status.name == stat) { %>
 										selected
 									<% } %>
 									><%= status.name %></option>
@@ -41,10 +41,10 @@
                             <div class="btn-toolbar" style="display: none;">
                                 <div class="btn-group">
                                     <button class="btn delete-issue" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-remove"></span></button>
-                                    <button class="btn view-on-map" id="<%= data[0].issue.id %>" title="Click here to view issue on the map"><span class="glyphicon glyphicon-flag"></span></button>
-                                    <button class="btn edit-issue" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-pencil"></span></button>
-                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-                                    <button class="btn" id="<%= data[0].issue.id %>"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                    <button class="btn view-on-map" title="Click here to view issue on the map"><span class="glyphicon glyphicon-flag"></span></button>
+                                    <button class="btn edit-issue" id="<%= data[0].issue.id %>"><span  class="glyphicon glyphicon-pencil"></span></button>
+                                    <button class="btn" ><span id="<%= data[0].issue.id %>" class="glyphicon glyphicon-thumbs-up"></span></button>
+                                    <button class="btn" ><span id="<%= data[0].issue.id %>" class="glyphicon glyphicon-thumbs-down"></span></button>
                                 </div>
                             </div>
                         </td>
