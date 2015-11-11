@@ -61,10 +61,6 @@ public class SubscriptionModel {
 		return isValid;
 	}
 
-	public static Logger getLOG() {
-		return LOG;
-	}
-
 	public int getId() {
 		return id;
 	}

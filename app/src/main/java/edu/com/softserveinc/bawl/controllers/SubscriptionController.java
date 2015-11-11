@@ -4,6 +4,7 @@ import edu.com.softserveinc.bawl.dto.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.SubscriptionDTO;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,23 @@ public class SubscriptionController {
 
 	// TODO	 NOTE ! : This class still refactored in near future
 
+
+
 	@RequestMapping(value="/add", method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addSubscriptionAction(
 			@RequestBody
 						 UserModel userModel,
 						 SubscriptionDTO subscriptionDTO,
-						 ResponseDTO responseDTO) {
+						 ResponseDTO responseDTO,
+							UserService userService) {
+
+		if ( userService.isExistingUser(subscriptionDTO.getEmail())== true){
+
+		System.out.print("Пользователя не существуют");
+
+		} else {
+
+		}
 
 		String name =  "User name";
 		String subject = "Sibscription email validation";
