@@ -2,35 +2,17 @@ package edu.com.softserveinc.bawl.models.enums;
 
 public enum UserRole {
 
-    USER_NOT_CONFIRMED(0),
-    USER(1),
-    MANAGER(2),
-    ADMIN(3);
+    USER_NOT_CONFIRMED(0, "User not confirmed"),
+    USER(1,"User"),
+    MANAGER(2, "Manager"),
+    ADMIN(3,"Admin");
 
     public int id;
+    public String caption;
 
-    UserRole(int id) {
+    UserRole(int id, String caption) {
         this.id = id;
-    }
-
-    public static String get(int roleId) {
-        switch (roleId) {
-            case 0: return "User not confirmed";
-            case 1: return "User";
-            case 2: return "Manager";
-            case 3: return "Admin";
-            default: return "Not confirmed";
-        }
-    }
-
-    public String get() {
-        switch (this.id) {
-            case 0: return "User not confirmed";
-            case 1: return "User";
-            case 2: return "Manager";
-            case 3: return "Admin";
-            default: return "Not confirmed";
-        }
+        this.caption = caption;
     }
 
    public static UserRole getById(int roleId) {

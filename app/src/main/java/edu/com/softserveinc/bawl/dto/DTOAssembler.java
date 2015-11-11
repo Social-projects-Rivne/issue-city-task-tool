@@ -140,7 +140,7 @@ public class DTOAssembler {
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
         UserModel userModel = userService.getById(historyModel.getUserId());
-        userHistoryDto.setRoleName(userModel.getRole().get());
+        userHistoryDto.setRoleName(userModel.getRole().caption);
         userHistoryDto.setUsername(userModel.getName());
         return userHistoryDto;
     }
