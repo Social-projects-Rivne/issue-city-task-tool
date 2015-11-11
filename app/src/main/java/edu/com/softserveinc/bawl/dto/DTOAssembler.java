@@ -172,6 +172,7 @@ public class DTOAssembler {
      */
     public static List<UserHistoryIssuesForUserDto> getUserIssueHistoryForUserDto(
             List<HistoryModel> listOfHistoriesByUserID, List<IssueModel> listIssueModel){
+
         List<UserHistoryIssuesForUserDto> userHistoryIssuesForUserDtos = new ArrayList<UserHistoryIssuesForUserDto>();
 
         for(IssueModel issueModel : listIssueModel) {
@@ -208,6 +209,7 @@ public class DTOAssembler {
             if (historyModel.getIssueId()==issueModel.getId())
                 listIssueHistoryDTO.add(getIssueHistoryDto(historyModel));
         }
+
         return listIssueHistoryDTO;
     }
 

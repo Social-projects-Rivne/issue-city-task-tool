@@ -14,7 +14,7 @@ public enum IssueStatus {
             case RESOLVED: return "RESOLVED";
             case DELETED: return "DELETED";
             case TO_RESOLVE: return "TO_RESOLVE";
+            default: return null;
         }
-        return "";
     }
 }

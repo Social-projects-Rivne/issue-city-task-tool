@@ -184,9 +184,7 @@ public class UserController {
         List<IssueModel> issueModels = issueService.loadIssuesList();
 
 
-        return
-                DTOAssembler.getUserIssueHistoryForUserDto(
-                        historyModels, issueModels);
+        return DTOAssembler.getUserIssueHistoryForUserDto(historyModels, issueModels);
     }
 
     private UserModel getCurrentUser(){
