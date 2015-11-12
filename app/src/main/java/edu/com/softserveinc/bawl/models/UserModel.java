@@ -95,7 +95,7 @@ public class UserModel {
     	this.name = name;
     	this.email = email;
     	this.login = login;
-    	this.role = UserRole.getById(role);
+    	this.role = UserRole.getByRoleId(role);
     	this.password = password;
     	this.avatar = avatar;
     }
@@ -188,7 +188,7 @@ public class UserModel {
      * @param role
      */
     public void setRole(int role){
-    	this.role = UserRole.getById(role);
+    	this.role = UserRole.getByRoleId(role);
     }
     /**
      * 

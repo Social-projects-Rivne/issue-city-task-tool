@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.services;
 
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface UserService {
 	public void deleteUser(int userId);
 	
 	public UserModel getById(int id);
+
+	public List<UserModel> getByRoleId (UserRole userRole);
 	
 	public UserModel getByLogin(String login);
 

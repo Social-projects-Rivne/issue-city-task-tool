@@ -15,7 +15,7 @@ public enum UserRole {
         this.caption = caption;
     }
 
-   public static UserRole getById(int roleId) {
+   public static UserRole getByRoleId(int roleId) {
         switch (roleId) {
             case 0: return USER_NOT_CONFIRMED;
             case 1: return USER;

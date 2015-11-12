@@ -102,11 +102,17 @@ public class UserController {
 			@PathVariable int id) {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
+			List<UserModel> userModelList = (List<UserModel>) userService.getByRoleId(UserRole.ADMIN);
+			if (userModelList.size() > 1){
 			userService.deleteUser(id);
 			UserModel userModel = userService.getById(id);
 			getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
 			responseDTO.setMessage("User was successfully deleted");
-		} catch (Exception ex) {
+			}
+			else
+			{responseDTO.setMessage("Fail. At least one Admin must be in system!");
+			}}
+		catch (Exception ex) {
 			responseDTO.setMessage("Some problem occured! User was not deleted");
 		}
 
@@ -178,6 +184,7 @@ public class UserController {
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
+
 }
 
 

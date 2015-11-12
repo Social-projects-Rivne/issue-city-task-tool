@@ -55,7 +55,13 @@ public class UserServiceImpl implements UserService {
 	public UserModel getById(int id) {
 		return userDao.findOne(id);
 	}
-	
+
+	@Override
+	public List<UserModel> getByRoleId(UserRole userRole) {
+		return userDao.findByRoleId(userRole.id);
+
+	}
+
 	@Override
 	public List<UserModel> loadUsersList() {
 		return userDao.findAll();
