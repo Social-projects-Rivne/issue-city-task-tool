@@ -60,7 +60,7 @@ public class DTOAssembler {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(categoryModel.getId());
         categoryDTO.setName(categoryModel.getName());
-        categoryDTO.setState(categoryModel.getState().ordinal());
+        categoryDTO.setState(categoryModel.getState().name());
         if (mapIssues) {
             categoryDTO.setIssueDtoList(getAllIssuesDto(categoryModel.getIssues()));
         }

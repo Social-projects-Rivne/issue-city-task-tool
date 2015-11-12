@@ -13,8 +13,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .glyphicon-thumbs-up' : "quickChangeStatusOnApproved",
 					'click .glyphicon-thumbs-down' : "quickChangeStatusOnDisapproved",
 					'click .table .btn.delete-issue': 'showRemoveConfirmation',
-					'click #add-category-link': 'showAddCategoryForm',
-					'click #add-category': 'addCategory',
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
@@ -284,21 +282,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.render();
 				},
 				
-				addCategory: function() {
-					var newCategory = new CategoryModel( { 'name': $('#category-name').val() } );
-					newCategory.save( {}, { 
-						success: function(model, response) {
-							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate({'data': response}));
-							that.$el.append(that.notificationTemplate({'data':{ 'message': 'Category succsesfully added!'}}));
-							$('#notificationModal').modal();
-						},
-					} );
-				},
-								
-				showAddCategoryForm: function(e) {
-					e.preventDefault();
-				},
+
+
 
 				allIssues: function (e) {
 					this.$("#issue-table-body").empty();
