@@ -1,10 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.UserDTO;
-import edu.com.softserveinc.bawl.dto.UserIssuesHistoryDTO;
-import edu.com.softserveinc.bawl.dto.UserNotificationDTO;
+import edu.com.softserveinc.bawl.dto.*;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -121,7 +117,7 @@ public class UserController {
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public @ResponseBody UserDTO getCurrentUserAction(){
-		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		String currentUserLoginName = getCurrentUser().getName();
 		if (currentUserLoginName.equals("anonymousUser")) {
 			return null;
 		} else {
@@ -150,7 +146,7 @@ public class UserController {
 	@RequestMapping(value="/changename/{newname}", method = RequestMethod.GET)
 	public @ResponseBody ResponseDTO changeUserName(@PathVariable int id,@PathVariable String newname){
 		ResponseDTO responseDTO = new ResponseDTO();
-		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		String currentUserLoginName = getCurrentUser().getName();
 		UserModel userModel=userService.getByLogin(currentUserLoginName);
 		userModel.setName(newname);
 		userService.editUser(userModel);
@@ -161,7 +157,7 @@ public class UserController {
 	@RequestMapping(value="/changepass", method = RequestMethod.GET)
 	public @ResponseBody ResponseDTO changeUserPassword(){
 		ResponseDTO responseDTO = new ResponseDTO();
-		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		String currentUserLoginName = getCurrentUser().getName();
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
 		String newPassword = PassGenerator.generate(1, 5);
 		userModel.setPassword(newPassword);
@@ -180,11 +176,29 @@ public class UserController {
     public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
         List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
         List<IssueModel> issues = issueService.loadIssuesList();
-		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+		String currentUserLoginName = getCurrentUser().getName();
 		UserModel userModel = userService.getByLogin(currentUserLoginName);
         return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
 
+    @RequestMapping(value = "user/history/issues", method = RequestMethod.GET)
+    public @ResponseBody List<UserHistoryIssuesForUserDto> getUserIssuesHistoriesForUser(){
+
+        UserModel curentUserModel = getCurrentUser();
+
+        List<HistoryModel> historyModels = historyService.getHistoriesByUserID(curentUserModel.getId());
+        List<IssueModel> issueModels = issueService.loadIssuesList();
+
+
+        return DTOAssembler.getUserIssueHistoryForUserDto(historyModels, issueModels);
+    }
+
+    private UserModel getCurrentUser(){
+        String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserModel curentUserModel = userService.getByLogin(currentUserLoginName);
+
+        return curentUserModel;
+    }
 }
 
 

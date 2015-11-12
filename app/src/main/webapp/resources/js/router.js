@@ -14,6 +14,7 @@ function (_, Backbone, BackboneRouteControl,
                 "admin":    "admins#admin",
                 "admin/search/:name": "admins#search",
                 "manager": "admins#manager",
+                "categories": "admins#categories",
 
                 "cry-out": "issues#cryOut",
                 "issue/:id": "issues#issue",

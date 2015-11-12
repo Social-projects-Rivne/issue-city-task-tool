@@ -117,6 +117,11 @@ td > input {
 #issue-table-body > tr:nth-child(2n) {
     background: rgba(253, 245, 246, 1);
 }
+
+.category-table thead {
+    color: #ffffff;
+    background-color: rgb(233, 84, 110);
+}
 /* manager page buttons on issue table */
 
 .btn-group>.btn,
@@ -194,7 +199,7 @@ ul>li.tabs {
 }
 
 input#issue-attachments.input-file.input-sm {
-	padding: 5 10 5 0px;
+	padding: 5px 10px 5px 0px;
 }
 
 div.tab-pane {
@@ -747,7 +752,7 @@ a.forgot {
 }
 .row {
     margin-left: 0 !important;
-    margin-right: 0 !importan
+    margin-right: 0 !important;
 }
 /*styles for login template*/
 

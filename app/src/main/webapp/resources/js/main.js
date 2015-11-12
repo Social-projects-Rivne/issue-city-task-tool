@@ -1,15 +1,16 @@
 require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
-        'view/MapView', 'view/AddIssueView', 'view/ManagerView', 'view/AdminView',
+        'view/MapView', 'view/AddIssueView', 'view/ManagerView', 'view/AdminView', 'view/CategoryManageView',
         'view/LoginView', 'view/IssueFilterView', 'view/StatisticView', 'view/ProfileView',
         'view/UserProfileView', 'view/ImageEditorView', 'view/UserRegistrationView', 'view/HistoryView'],
 function ($, _, Backbone, Router, BackboneRouteControl,
-                MapView, AddIssueView, ManagerView, AdminView,
+                MapView, AddIssueView, ManagerView, AdminView, CategoryManageView,
                 LoginView, IssueFilterView, StatisticView, ProfileView,
                 UserProfileView, ImageEditorView, UserRegistrationView, HistoryView) {
 
         router = null;
         adminView = null;
         managerView = null;
+        categoryManageView = null;
         userRegView = null;
         historyView = null;
         USER_NOT_CONFIRMED = 0;
@@ -43,7 +44,7 @@ function ($, _, Backbone, Router, BackboneRouteControl,
                     login: new AppController(mapView),
                     issues: new IssueController(),
                     users: new UserController(),
-                    admins: new AdminController(AdminView, ManagerView)
+                    admins: new AdminController(AdminView, ManagerView, CategoryManageView)
                 }
             });
 

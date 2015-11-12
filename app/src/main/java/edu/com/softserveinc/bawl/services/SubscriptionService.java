@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface SubscriptionService {
 	
-	public SubscriptionModel create(int issueId, String email);
+//	public SubscriptionModel create(int issueId, String email);
 	
 	public SubscriptionModel create(SubscriptionModel subscription);
 	

@@ -23,4 +23,5 @@ public interface UserService {
 
 	public List<UserModel> loadUsersList();
 
+	public boolean isExistingUser(String Email);
 }

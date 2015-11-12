@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
 
 		userDao.saveAndFlush(user);
 	}
+	@Override
+	public boolean isExistingUser(String email){
+		if( userDao.findByEmail(email).equals(email)){
+			return true;
+		} else return false;
+	}
 
 	@Override
 	public void editUser(UserModel user) {
