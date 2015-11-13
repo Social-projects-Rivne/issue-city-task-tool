@@ -248,27 +248,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						})
 					}
 
-					if (e.currentTarget.name == 'edit category') {
-						this.editCategory(e);
-					}
-				},
-
-				editCategory: function(e){
-					var category = this.categories.get(e.currentTarget.id);
-					category.set({
-						name: $('#edit-category-name').val()
-					}).save( {}, {
-						success: function(model, response) {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							that.$el.append(that.notificationTemplate( { 'data': response } ));
-							$('#notificationModal').modal();
-						},
-						error: function() {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-							$('#notificationModal').modal();
-						}
-					} );
 				}
 
 

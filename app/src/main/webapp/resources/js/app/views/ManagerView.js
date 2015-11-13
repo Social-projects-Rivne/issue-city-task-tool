@@ -12,7 +12,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'change .status': 'quickChangeStatus',
 					'click .glyphicon-thumbs-up' : "quickChangeStatusOnApproved",
 					'click .glyphicon-thumbs-down' : "quickChangeStatusOnDisapproved",
-					'click .table .btn.delete-issue': 'showRemoveConfirmation',
+					'click .issue-table .btn.delete-issue': 'showRemoveIssueConfirmation',
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
@@ -129,7 +129,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					//e.currentTarget.style.setProperty("font-weight","");
 				},
 
-				showRemoveConfirmation: function(e){
+				showRemoveIssueConfirmation: function(e){
 					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'delete issue' } ] } ));
 					$('#confirmationModal').modal();
