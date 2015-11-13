@@ -39,7 +39,6 @@ public class SubscriptionModel {
 	public SubscriptionModel(int issueId, String email) {
 		this.issueId = issueId;
 		this.email = email;
-		this.isValid = isValid;
 	}
 
 	public SubscriptionModel(int issueId, String email, int userId, boolean isValid) {

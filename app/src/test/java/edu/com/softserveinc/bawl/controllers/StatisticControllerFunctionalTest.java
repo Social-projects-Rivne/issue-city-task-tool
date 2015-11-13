@@ -1,25 +1,22 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import edu.com.softserveinc.bawl.services.CommentService;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-/**
- * Created by Vasj on 05.11.2015.
- */
-public class StatisticControllerTest extends AbstractBawlTest{
+
+public class StatisticControllerFunctionalTest extends AbstractBawlFunctionalTest {
     private MockMvc mockMvc;
 
     @InjectMocks

@@ -46,7 +46,7 @@ public class UserController {
 		return DTOAssembler.getAllUsersDtoFrom(userService.loadUsersList());
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
@@ -155,8 +155,7 @@ public class UserController {
 	@RequestMapping(value="/changepass", method = RequestMethod.GET)
 	public @ResponseBody ResponseDTO changeUserPassword(){
 		ResponseDTO responseDTO = new ResponseDTO();
-		String currentUserLoginName = getCurrentUser().getName();
-		UserModel userModel = userService.getByLogin(currentUserLoginName);
+		UserModel userModel = getCurrentUser();
 		String newPassword = PassGenerator.generate(1, 5);
 		userModel.setPassword(newPassword);
 		userService.editUserPass(userModel);
@@ -167,35 +166,26 @@ public class UserController {
 
     /**
      * Returns list of UserIssuesHistoryDto by user id
-     * @param id user id
      * @return list of UserIssuesHistoryDto
      */
     @RequestMapping(value = "user/history", method = RequestMethod.GET)
-    public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
-        List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
+    public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(){
         List<IssueModel> issues = issueService.loadIssuesList();
-		String currentUserLoginName = getCurrentUser().getName();
-		UserModel userModel = userService.getByLogin(currentUserLoginName);
-        return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
+		UserModel userModel = getCurrentUser();
+		List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(userModel.getId());
+		return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
 
     @RequestMapping(value = "user/history/issues", method = RequestMethod.GET)
     public @ResponseBody List<UserHistoryIssuesForUserDto> getUserIssuesHistoriesForUser(){
-
-        UserModel curentUserModel = getCurrentUser();
-
-        List<HistoryModel> historyModels = historyService.getHistoriesByUserID(curentUserModel.getId());
+        List<HistoryModel> historyModels = historyService.getHistoriesByUserID(getCurrentUser().getId());
         List<IssueModel> issueModels = issueService.loadIssuesList();
-
-
         return DTOAssembler.getUserIssueHistoryForUserDto(historyModels, issueModels);
     }
 
     private UserModel getCurrentUser(){
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserModel curentUserModel = userService.getByLogin(currentUserLoginName);
-
-        return curentUserModel;
+        return userService.getByLogin(currentUserLoginName);
     }
 }
 

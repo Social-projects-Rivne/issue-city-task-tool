@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,6 +45,7 @@ public class UserServiceImpl implements UserService {
 
 		userDao.saveAndFlush(user);
 	}
+
 	@Override
 	public boolean isExistingUser(String email){
 		if( userDao.findByEmail(email).equals(email)){
@@ -65,9 +65,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserModel> getByRoleId(UserRole userRole) {
-		return userDao.findAll().stream()
-				.filter(model -> model.getRole() == userRole)
-				.collect(Collectors.toList());
+		return userDao.findByRole(userRole);
+
 	}
 
 	@Override

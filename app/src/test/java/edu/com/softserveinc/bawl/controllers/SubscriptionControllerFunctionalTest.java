@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlIntegrationTest;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -16,7 +16,7 @@ import org.springframework.test.web.server.setup.MockMvcBuilders;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-public class SubscriptionControllerFunctionalTest  extends AbstractBawlTest {
+public class SubscriptionControllerFunctionalTest  extends AbstractBawlIntegrationTest {
 
     private MockMvc mockMvc;
 

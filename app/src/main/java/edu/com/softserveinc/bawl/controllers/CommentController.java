@@ -23,19 +23,19 @@ public class CommentController {
 	public static final Logger LOG=Logger.getLogger(CommentController.class);
 	
 	@Autowired
-	private CommentService service;
+	private CommentService commentService;
 
 	@RequestMapping("get")
 	@ResponseBody
 	public List<CommentDTO> getCommentsByIssueId(@RequestParam("issueId") int id) {
-		return DTOAssembler.getCommentsFrom(service.getCommentsByIssueId(id));
+		return DTOAssembler.getCommentsFrom(commentService.getCommentsByIssueId(id));
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@ResponseBody
 	public CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
 		final CommentModel commentModel = new CommentModel(comment.getComment(), comment.getUserName(), comment.getEmail(), comment.getIssueId());
-		service.addComment(commentModel);
+		commentService.addComment(commentModel);
 		return comment;
 	}
 		

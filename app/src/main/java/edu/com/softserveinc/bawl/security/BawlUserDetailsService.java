@@ -63,16 +63,23 @@ public class BawlUserDetailsService implements UserDetailsService {
 		switch (role) {
 			case 0 : {
 				roles.add("USER_NOT_CONFIRMED");
+                break;
 			}
 			case 1 : {
 				roles.add("ROLE_USER");
+                break;
 			}
 			case 2 : {
 				roles.add("ROLE_MANAGER");
 				roles.add("ROLE_ADMIN");
+                break;
 			}
 			case 3: {
 				roles.add("ROLE_MANAGER");
+                break;
+			}
+			default: {
+                break;
 			}
 		}
 		return roles;

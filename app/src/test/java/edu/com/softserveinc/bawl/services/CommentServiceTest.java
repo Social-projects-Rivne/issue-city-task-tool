@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.services;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.dao.CommentDao;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.impl.CommentServiceImpl;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CommentServiceTest extends AbstractBawlTest {
+public class CommentServiceTest extends AbstractBawlFunctionalTest {
 
     private CommentService commentService;
     private CommentDao commentDao;

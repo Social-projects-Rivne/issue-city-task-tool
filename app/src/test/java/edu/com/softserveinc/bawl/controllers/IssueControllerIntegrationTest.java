@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,11 @@ import static org.springframework.test.web.server.request.MockMvcRequestBuilders
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-public class IssueControllerIntegrationTest extends AbstractBawlTest {
+public class IssueControllerIntegrationTest extends AbstractBawlIntegrationTest {
 
   public static final  String MEDIA_TYPE = "application/json;charset=UTF-8";
   public static final String EMPTY_COLLECTION = "[]";
-  public static final int USER_ID = 1;
   public static final int ISSUE_ID = 1;
-  public static final String [] FIELDS_USERHISTORY_DTO = {"username", "issueName", "date", "roleName", "status"};
 
   private MockMvc mockMvc;
 
@@ -26,7 +24,7 @@ public class IssueControllerIntegrationTest extends AbstractBawlTest {
 
   @Before
   public void setup() {
-    this.mockMvc = MockMvcBuilders.standaloneSetup(this.issueController).build();
+    mockMvc = MockMvcBuilders.standaloneSetup(issueController).build();
   }
 
   @Test

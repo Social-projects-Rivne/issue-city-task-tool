@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.services;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.dao.UserDao;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.UserServiceImpl;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class UserServiceTest extends AbstractBawlTest {
+public class UserServiceTest extends AbstractBawlFunctionalTest {
 
     private UserService userService = null;
 
@@ -85,7 +85,6 @@ public class UserServiceTest extends AbstractBawlTest {
         sampleUserModel.setLogin(user1);
         when(userDao.findOne(userId)).thenReturn(sampleUserModel);
         UserModel userModel = userService.getById(userId);
-        assertNotNull(userModel);
         assertEquals(userId, userModel.getId());
         assertTrue(userModel.equals(sampleUserModel));
     }
@@ -106,7 +105,6 @@ public class UserServiceTest extends AbstractBawlTest {
         sampleUserModel.setLogin(user1);
         when(userDao.findByLogin(user1)).thenReturn(sampleUserModel);
         UserModel userModel = userService.getByLogin(user1);
-        assertNotNull(userModel);
         assertEquals("user1", userModel.getLogin());
         assertTrue(userModel.equals(sampleUserModel));
     }

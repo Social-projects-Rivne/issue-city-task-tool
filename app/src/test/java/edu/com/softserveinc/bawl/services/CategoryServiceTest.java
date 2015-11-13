@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.services;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.enums.CategoryState;
@@ -15,10 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"} )
-
-public class CategoryServiceTest extends AbstractBawlTest {
+public class CategoryServiceTest extends AbstractBawlFunctionalTest {
 
     private CategoryService categoryService = null;
     private CategoryDao categoryDao;

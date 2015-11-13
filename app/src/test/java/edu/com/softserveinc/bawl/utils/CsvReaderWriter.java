@@ -25,9 +25,10 @@ import java.util.List;
 
 public class CsvReaderWriter {
 
-    private static final String PATH_HISTORY_MODEL_CSV = "src/test/resources/HistoryModels.csv";
-    private static final String PATH_STATUS_MODEL_CSV = "src/test/resources/StatusModels.csv";
-    private static  final String PATH_USER_MODEL_CSV = "src/test/resources/UserModels.csv";
+    public static final String SRC_TEST_RESOURCES = "src/test/resources/dataset/";
+    private static final String PATH_HISTORY_MODEL_CSV = SRC_TEST_RESOURCES + "HistoryModels.csv";
+    private static final String PATH_STATUS_MODEL_CSV = SRC_TEST_RESOURCES + "StatusModels.csv";
+    private static  final String PATH_USER_MODEL_CSV = SRC_TEST_RESOURCES + "UserModels.csv";
 
     private static CellProcessor[] getHistoryModelWriterProcessors() {
 

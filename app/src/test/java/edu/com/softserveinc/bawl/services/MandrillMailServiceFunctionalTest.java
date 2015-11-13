@@ -6,7 +6,7 @@ import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
 import com.cribbstechnologies.clients.mandrill.model.response.message.MessageResponse;
 import com.cribbstechnologies.clients.mandrill.model.response.message.SendMessageResponse;
 import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.junit.Before;
@@ -16,9 +16,11 @@ import org.powermock.reflect.Whitebox;
 import java.util.Arrays;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class MandrillMailServiceFunctionalTest extends AbstractBawlTest {
+public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTest {
 
     private final String EMAIL = "bawl.java@gmail.com";
     private final String MESSAGE_PATTERN = "some text";

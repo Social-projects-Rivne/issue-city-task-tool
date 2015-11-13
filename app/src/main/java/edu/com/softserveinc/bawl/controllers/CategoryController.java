@@ -26,7 +26,7 @@ public class CategoryController {
     public static final String FAILURE_UPDATEDD = "Failed. New category hasn't been updated";
 
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
 
     /**
      * Returns list of the categories
@@ -35,7 +35,7 @@ public class CategoryController {
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ResponseBody
     public List<CategoryDTO> getCategories() {
-        return DTOAssembler.getCategoryDtoFrom(service.loadCategoriesList(), false);
+        return DTOAssembler.getCategoryDtoFrom(categoryService.loadCategoriesList(), false);
     }
 
     /**
@@ -47,7 +47,7 @@ public class CategoryController {
     @ResponseBody
     public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
         try {
-             service.addCategory(new CategoryModel(category.getName()));
+             categoryService.addCategory(new CategoryModel(category.getName()));
              category.setMessage(SUCCESS_ADDED);
         } catch (Exception e) {
              category.setMessage(FAILURE_ADDED);
@@ -59,10 +59,10 @@ public class CategoryController {
     public @ResponseBody
     CategoryDTO editCategory(@RequestBody CategoryDTO categoryDTO) {
         try {
-            CategoryModel categoryModel = service.getCategoryByID(categoryDTO.getId());
+            CategoryModel categoryModel = categoryService.getCategoryByID(categoryDTO.getId());
             categoryModel.setName(categoryDTO.getName());
             categoryModel.setState(CategoryState.getState(categoryDTO.getState()));
-            service.editCategory(categoryModel);
+            categoryService.editCategory(categoryModel);
             categoryDTO.setMessage(SUCCESS_UPDATED);
         } catch (Exception ex) {
             categoryDTO.setMessage(FAILURE_UPDATEDD);
