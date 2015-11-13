@@ -67,7 +67,7 @@ public class UserController {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
 			userService.editUser(userModel);
-			getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), userModel.getRole().caption);
+			getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), userModel.getRole().getCaption());
 			responseDTO.setMessage("User was successfully edited");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());

@@ -53,7 +53,7 @@ public class BawlUserDetailsService implements UserDetailsService {
 	}
 	
 	public static Collection<? extends GrantedAuthority> getAuthorities(UserRole role) {
-		final List<String> springGrantedAuthoritiesRoles = getSpringGrantedAuthoritiesRoles(role.id);
+		final List<String> springGrantedAuthoritiesRoles = getSpringGrantedAuthoritiesRoles(role.getId());
 		List<GrantedAuthority> authList = getGrantedAuthorities(springGrantedAuthoritiesRoles);
 		return authList;
 	}

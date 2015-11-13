@@ -4,8 +4,8 @@ public enum CategoryState {
     NEW(0, "New"),
     DELETED(1, "Deleted");
 
-    public int id;
-    public String caption;
+    private final int id;
+    private final String caption;
 
     CategoryState(int id, String caption){
         this.id = id;
@@ -21,5 +21,13 @@ public enum CategoryState {
             default:
                 return null;
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getCaption() {
+        return caption;
     }
 }

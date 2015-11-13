@@ -34,7 +34,7 @@ public class DTOAssembler {
         userDTO.setEmail(userModel.getEmail());
         userDTO.setLogin(userModel.getLogin());
         userDTO.setAvatar(userModel.getAvatar());
-        userDTO.setRoleId(userModel.getRole().id);
+        userDTO.setRoleId(userModel.getRole().getId());
         return userDTO;
     }
 
@@ -60,7 +60,7 @@ public class DTOAssembler {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(categoryModel.getId());
         categoryDTO.setName(categoryModel.getName());
-        categoryDTO.setState(categoryModel.getState().caption);
+        categoryDTO.setState(categoryModel.getState().getCaption());
         if (mapIssues) {
             categoryDTO.setIssueDtoList(getAllIssuesDto(categoryModel.getIssues()));
         }
@@ -141,7 +141,7 @@ public class DTOAssembler {
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
         UserModel userModel = userService.getById(historyModel.getUserId());
-        userHistoryDto.setRoleName(userModel.getRole().caption);
+        userHistoryDto.setRoleName(userModel.getRole().getCaption());
         userHistoryDto.setUsername(userModel.getName());
         return userHistoryDto;
     }

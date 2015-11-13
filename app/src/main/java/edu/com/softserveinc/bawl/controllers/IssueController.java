@@ -8,6 +8,7 @@ import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
+import edu.com.softserveinc.bawl.models.enums.IssueStatusHelper;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.*;
 import org.apache.log4j.Logger;
@@ -18,6 +19,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForAddIssue;
+import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForResolving;
 
 @RestController
 public class IssueController {
@@ -211,21 +215,7 @@ public class IssueController {
         return 0;
     }
 
-    private IssueStatus getIssueStatusForAddIssue(UserRole userRole){
-        IssueStatus issueStatus = IssueStatus.NEW;
-        if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
-            issueStatus = IssueStatus.APPROVED;
-        }
-        return issueStatus;
-    }
 
-    private IssueStatus getIssueStatusForResolving(UserRole userRole){
-        IssueStatus issueStatus = IssueStatus.TO_RESOLVE;
-        if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
-            issueStatus = IssueStatus.RESOLVED;
-        }
-        return issueStatus;
-    }
 
     private UserModel getCurrentUser(){
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();

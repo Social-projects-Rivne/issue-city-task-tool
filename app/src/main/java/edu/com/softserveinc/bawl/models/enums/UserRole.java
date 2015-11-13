@@ -7,8 +7,8 @@ public enum UserRole {
     MANAGER(2, "Manager"),
     ADMIN(3,"Admin");
 
-    public int id;
-    public String caption;
+    private final int id;
+    private final String caption;
 
     UserRole(int id, String caption) {
         this.id = id;
@@ -25,4 +25,11 @@ public enum UserRole {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
 }
