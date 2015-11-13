@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTemplate.html', 'collection/CategoryCollection',
-		'view/SingleCategoryView', 'model/CategoryModel',  'text!templates/NotificationTemplate.html' ],
+		'view/SingleCategoryView', 'model/CategoryModel', 'text!templates/CategoryEditTemplate.html',  'text!templates/NotificationTemplate.html' ],
 		function($, _, Backbone, CategoryManageTemplate, CategoryCollection, SingleCategoryView,
-				 CategoryModel, NotificationTemplate) {
+				 CategoryModel, CategoryEditTemplate, NotificationTemplate) {
 			
 			var that = null;
 	
@@ -11,10 +11,13 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 
 				events: {
 					'click #addCategory' : 'addCategory',
-					'click .editCategory': 'editCategory'
+					'click .deleteCategory': 'deleteCategory',
+					'click .editCategory': 'showEditCategoryTemplate',
+					'click .editCategoryConfirm' : 'editCategoryConfirm'
 				},
 				
 				categoryManageTemplate: _.template(CategoryManageTemplate),
+				categoryEditTemplate: _.template(CategoryEditTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				categories: null,
 
@@ -35,22 +38,23 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 					});
 				},
 
-				addCategory: function() {
-					var newCategory = new CategoryModel( { 'name': $('').val() } );
-					newCategory.save( {}, {
-						success: function(model, response) {
-							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate({'data': response}));
-							that.$el.append(that.notificationTemplate({'data':{ 'message': 'Category succsesfully added!'}}));
-							$('#notificationModal').modal();
-						}
-					} );
+				editCategoryConfirm: function(e) {
+					if($('#confirmationModal')) $('#confirmationModal').remove();
+					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this category?' }, { 'id': e.currentTarget.id }, { 'action': 'edit category' } ] } ));
+					$('#confirmationModal').modal();
 				},
 
-				editCategory: function(e){
+				showEditCategoryTemplate: function(e){
+					if($('#editCategoryModal')) $('#editCategoryModal').remove();
+					var category = this.categories.get(e.currentTarget.id);
+					$("#container").append(this.categoryEditTemplate(category.toJSON()));
+					$("#editCategoryModal").modal();
+				},
+
+				deleteCategory: function(e){
 					var category = this.categories.get(e.currentTarget.id);
 					category.set({
-						name: "new name"// $("")
+						state: CATEGORY_DELETED
 					}).save( {}, {
 						success: function(model, response) {
 							if($('#notificationModal')) $('#notificationModal').remove();

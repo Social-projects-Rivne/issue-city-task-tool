@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -64,8 +65,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserModel> getByRoleId(UserRole userRole) {
-		return userDao.findByRoleId(userRole.id);
-
+		return userDao.findAll().stream()
+				.filter(model -> model.getRole() == userRole)
+				.collect(Collectors.toList());
 	}
 
 	@Override

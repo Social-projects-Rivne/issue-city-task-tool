@@ -11,7 +11,6 @@ import java.util.Collection;
 public interface UserDao extends JpaRepository<UserModel, Integer>{
 
 	UserModel findByLogin(String login);
-	List<UserModel> findByRoleId(int role);
 
 	Collection <UserModel> findByEmail(String email);
 	

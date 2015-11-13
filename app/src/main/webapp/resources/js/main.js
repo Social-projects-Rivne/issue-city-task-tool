@@ -17,6 +17,8 @@ function ($, _, Backbone, Router, BackboneRouteControl,
         USER = 1;
         MANAGER = 2;
         ADMIN = 3;
+        CATEGORY_NEW = "New";
+        CATEGORY_DELETED = "Deleted"
 
 
         jQuery(document).ready(function ($) {

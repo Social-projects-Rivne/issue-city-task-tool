@@ -2,7 +2,14 @@
 <td><%= name %></td>
 <td><%= state %></td>
 <td >
-    <button class="btn editCategory" id="<%= id %>">
-        <span class="glyphicon glyphicon-pencil"  ></span>
-    </button>
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <button class="btn editCategory" id="<%= id %>">
+                <span class="glyphicon glyphicon-pencil"  ></span>
+            </button>
+            <button class="btn deleteCategory" id="<%= id %>">
+                <span class="glyphicon glyphicon-remove"  ></span>
+            </button>
+        </div>
+    </div>
 </td>

@@ -179,61 +179,61 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				confirm: function(e) {
 					$('#confirmationModal').modal('hide');
 					$('#editModal').modal('hide');
-					if(e.currentTarget.name == 'delete user') {
-						this.model.get(e.currentTarget.id).destroy( {
-							success: function(model, response) {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': response } ));
+					if (e.currentTarget.name == 'delete user') {
+						this.model.get(e.currentTarget.id).destroy({
+							success: function (model, response) {
+								if ($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate({'data': response}));
 								$('#notificationModal').modal();
 							},
-							error: function() {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							error: function () {
+								if ($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate({'data': {'message': 'Error!'}}));
 								$('#notificationModal').modal();
 							}
-						} );
+						});
 					}
-					if(e.currentTarget.name == 'edit user') {
-						this.model.get(e.currentTarget.id).set( {
+					if (e.currentTarget.name == 'edit user') {
+						this.model.get(e.currentTarget.id).set({
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
 							roleId: $('#userRole').val()
-						} ).save( {}, {
-							success: function(model, response) {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': response } ));
+						}).save({}, {
+							success: function (model, response) {
+								if ($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate({'data': response}));
 								$('#notificationModal').modal();
 							},
-							error: function() {
-								if($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							error: function () {
+								if ($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate({'data': {'message': 'Error!'}}));
 								$('#notificationModal').modal();
-							}
-						} );
-					}
-					if(e.currentTarget.name == 'delete issue') {
-						$.ajax({
-							url: 'delete-issue/' + e.currentTarget.id,
-							type: 'POST',
-							success: function(){
-									managerView.resetFilter();
 							}
 						});
 					}
-					
-					if(e.currentTarget.name == 'edit issue') {
-						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
+					if (e.currentTarget.name == 'delete issue') {
+						$.ajax({
+							url: 'delete-issue/' + e.currentTarget.id,
+							type: 'POST',
+							success: function () {
+								managerView.resetFilter();
+							}
+						});
+					}
+
+					if (e.currentTarget.name == 'edit issue') {
+						console.log("--- UserListView.js confirm if {name equal 'edit issue'}");
 						$('#editIssueModal').modal('hide');
-						mapView.model.get(e.currentTarget.id).set( {
-						name: $('#edit-issue-form-name').val(),
-						description: $('#edit-issue-form-description').val(),
-						attachments: $('#edit-issue-form-attachments').val(),
-						category: $('#edit-issue-form-category').val(),
-						status: $('#edit-issue-form-status').val(),
-						priorityId: $('#edit-issue-form-priority').val()
-						
-						} ).save( {}, {
+						mapView.model.get(e.currentTarget.id).set({
+							name: $('#edit-issue-form-name').val(),
+							description: $('#edit-issue-form-description').val(),
+							attachments: $('#edit-issue-form-attachments').val(),
+							category: $('#edit-issue-form-category').val(),
+							status: $('#edit-issue-form-status').val(),
+							priorityId: $('#edit-issue-form-priority').val()
+
+						}).save({}, {
 							success: function (model, response) {
 								if ($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate({'data': response}));
@@ -247,9 +247,33 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						})
 					}
-					
-					
+
+					if (e.currentTarget.name == 'edit category') {
+						this.editCategory(e);
+					}
+				},
+
+				editCategory: function(e){
+					var category = this.categories.get(e.currentTarget.id);
+					category.set({
+						name: $('#edit-category-name').val()
+					}).save( {}, {
+						success: function(model, response) {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							that.$el.append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+						},
+						error: function() {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					} );
 				}
+
+
+
+
 			});	
 
 		});
