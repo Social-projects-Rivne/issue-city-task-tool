@@ -20,6 +20,10 @@ import java.util.List;
  */
 public class DTOAssembler {
 
+    private DTOAssembler() {
+        new AssertionError("Not allowed");
+    }
+
     public static List<UserDTO> getAllUsersDtoFrom(List<UserModel> userModels) {
         List<UserDTO> userDTOs = new ArrayList<>();
         userModels.forEach(userModel -> {

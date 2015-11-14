@@ -66,7 +66,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 										//routing by user's role
 
 										//If user didn't validate his email
-										if(that.currentUser.get('roleId') == USER_NOT_CONFIRMED){
+										if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)){
 
 											//TODO must be beter way to do it
 											$.ajax('auth/logout');
@@ -82,17 +82,16 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 											return;
 										}
 
-										else if(that.currentUser.get('roleId') == ADMIN){
+										else if(_.isEqual(that.currentUser.get('roleId'),ADMIN)){
 											adminView = new AdminView( { el: "#container" } );
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('admin',{trigger:true});
-										} else if(that.currentUser.get('roleId') == MANAGER){
+										} else if(_.isEqual(that.currentUser.get('roleId'), MANAGER)){
 											managerView = new ManagerView({el:"#container"})
 											router.navigate('manager',{trigger:true});
-										} else {
-											// some notification for user
 										}
-										if(that.currentUser.get('avatar')==""){
+
+										if(_.isEmpty(that.currentUser.get('avatar'))){
 											that.currentUser.set({'avatar':'resources/img/avatar.png'});
 										}
 										that.hideLoginForm();
@@ -139,7 +138,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				},
 
 				buttonsManage: function(){
-					if(this.currentUser == null || this.currentUser.get('login') ==""){
+					if(_.isNull(this.currentUser) || _.isEmpty(this.currentUser.get('login'))){
 						$('.navbar  #login').show();
 						$('.navbar  #admin').hide();
 						$('.navbar  #manager').hide();
@@ -149,11 +148,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						$('.navbar  #login').hide();
 						$('.navbar  #cry-out').show();
 						$('.navbar  #signUp').hide();
-						if(this.currentUser.get('roleId') == ADMIN){
+						if(_.isEqual(this.currentUser.get('roleId'),ADMIN)){
 							$('.navbar  #admin').show();
 							$('.navbar  #manager').show();
 						} else{ 
-							if(this.currentUser.get('roleId') == MANAGER ){
+							if(_.isEqual(this.currentUser.get('roleId'),MANAGER)){
 								$('.navbar  #admin').hide();
 								$('.navbar  #manager').show();
 							} 

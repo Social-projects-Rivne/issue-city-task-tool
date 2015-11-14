@@ -122,10 +122,9 @@ public class UserController {
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public @ResponseBody UserDTO getCurrentUserAction(){
 		try {
-			String currentUserLoginName = getCurrentUser().getName();
-			return DTOAssembler.getUserDtoFrom(userService.getByLogin(currentUserLoginName));
+			return DTOAssembler.getUserDtoFrom(getCurrentUser());
 		} catch (Exception ex) {
-			return new UserDTO();
+			return null;
 		}
 	}
 

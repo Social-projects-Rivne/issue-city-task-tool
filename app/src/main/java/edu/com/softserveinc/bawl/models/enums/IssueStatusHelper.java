@@ -8,18 +8,16 @@ public class IssueStatusHelper {
     }
 
     public static IssueStatus getIssueStatusForAddIssue(UserRole userRole){
-        IssueStatus issueStatus = IssueStatus.NEW;
         if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
-            issueStatus = IssueStatus.APPROVED;
+            return IssueStatus.APPROVED;
         }
-        return issueStatus;
+        return IssueStatus.NEW;
     }
 
     public static IssueStatus getIssueStatusForResolving(UserRole userRole){
-        IssueStatus issueStatus = IssueStatus.TO_RESOLVE;
         if (userRole == UserRole.ADMIN || userRole == UserRole.MANAGER) {
-            issueStatus = IssueStatus.RESOLVED;
+            return IssueStatus.RESOLVED;
         }
-        return issueStatus;
+        return IssueStatus.TO_RESOLVE;
     }
 }
