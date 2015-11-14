@@ -8,8 +8,15 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 			}
 
 			return Backbone.View.extend({
+
+				template: _.template(AdminTemplate),
+				confirmationTemplate: _.template(ConfirmationTemplate),
+				notificationTemplate: _.template(NotificationTemplate),
+				editUserTemplate: _.template(EditUserTemplate),
+				SendingNottificationTemplate: _.template(SendingNotificationTemplate),
 				
 				initialize : function() {
+
 					this.model = new UserCollection();
 					this.SNmodel = new SendingNotificationModel();
 
@@ -18,6 +25,18 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					this.model.on('change', this.render, this);
 					that = this;
 			
+				},
+
+				render: function() {
+					//that = this;
+					//this.model.fetch();
+					//this.model.on('remove', this.render(), this);
+					//this.model.on('change', this.render(), this);
+					this.$el.html(this.template);
+					this.model.each(function(user) {
+						var userView = new UserView( { model: user } );
+						that.$el.find("table").append(userView.render().$el);
+					});
 				},
 				
 				events: {
@@ -28,12 +47,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					'click .btn.glyphicon-envelope': 'showSendingNottification',
 					'submit #submitForm': 'submitSendingNottification'
 				},
-				
-				template: _.template(AdminTemplate),
-				confirmationTemplate: _.template(ConfirmationTemplate),
-				notificationTemplate: _.template(NotificationTemplate),
-				editUserTemplate: _.template(EditUserTemplate),
-				SendingNottificationTemplate: _.template(SendingNotificationTemplate),
+
 
 				submitSendingNottification: function(e){
 					 var that = this;
@@ -42,49 +56,34 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 		             this.SNmodel = this.getModel();
 		             this.SNmodel.save( {}, {
 		                 success: function(SNmodel, response) {
-							 var notificationModal = $('#notificationModal');
-
-                             if(notificationModal) {
-		                         notificationModal.remove();
-		                     }
+                             if($('#notificationModal')) $('#notificationModal').remove();
 		                     $(".signUp.modal").modal("hide");
 		                     that.$el.append(that.notificationTemplate( { 'data': response } ));
-		                     notificationModal.modal();
+							 $('#notificationModal').modal();
 		                 },
 		                 error: function() {
-                             var notificationModal = $('#notificationModal');
-                             if(notificationModal) {
-		                         notificationModal.remove();
+                             if($('#notificationModal')) {
+								 $('#notificationModal').remove();
 		                     }
 		                     that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-		                     notificationModal.modal();
+							 $('#notificationModal').modal();
 		                 }
 		             } );
 		             return false;
 				},
 
  			getModel: function(){
-				var userId = $('#NottificationModal').data('userId');
-	    		var model = this.model.get(userId);
+	    		var model = this.model.get($('#NottificationModal').data('userId'));
 	    		var email = model.get('email');
 	    		l(email);
-	    		var sendAttrs = $.extend({email: email}, $("#submitForm").serializeJSON());
-	    		l(sendAttrs);
-             	return new SendingNotificationModel(sendAttrs);
-         },
-				render: function() {
-					this.$el.html(this.template);
-					this.model.each(function(user) {
-						var userView = new UserView( { model: user } );
-						that.$el.find("table").append(userView.render().$el);
-					});
-				},
+	    		l($.extend({email: email}, $("#submitForm").serializeJSON()));
+             	return new SendingNotificationModel($.extend({email: email}, $("#submitForm").serializeJSON()));
+         		},
 				
 				showEditForm: function(e) {
-                    var editModal = $('#editModal');
-                    if(editModal) editModal.remove();
+                    if($('#editModal')) $('#editModal').remove();
 					this.$el.append(this.editUserTemplate( { 'data': this.model.get(e.currentTarget.id) } ));
-					editModal.modal();
+					$('#editModal').modal();
 					//set user role on edit form
 					$("#userRole").val( this.model.get(e.currentTarget.id).attributes.role_id);
 
@@ -149,11 +148,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					}
 					
 					if(isValid) {
-                        var confirmationModal = $('#confirmationModal');
-
-                        if(confirmationModal) confirmationModal.remove();
+                        if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'id': e.currentTarget.id }, { 'action': 'edit user' } ] } ));
-						confirmationModal.modal();
+						$('#confirmationModal').modal();
 					}
 				},
 				
@@ -164,76 +161,73 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 				},
 
 				showSendingNottification: function(e) {
-					var userId = e.currentTarget.id;
-
 					$('#NottificationModal').remove();
-
 					this.$el.append(this.SendingNottificationTemplate( { 
 						'data': [] 
 					}));
-					var $NottificationModal = $('#NottificationModal');
-					$NottificationModal.data('userId', userId);
-					$NottificationModal.modal();
+
+					$('#NottificationModal').data('userId', e.currentTarget.id);
+					$('#NottificationModal').modal();
 				},
 
 				confirm: function(e) {
 					$('#confirmationModal').modal('hide');
 					$('#editModal').modal('hide');
-					if (e.currentTarget.name == 'delete user') {
-						this.model.get(e.currentTarget.id).destroy({
-							success: function (model, response) {
-								if ($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate({'data': response}));
+					if(e.currentTarget.name == 'delete user') {
+						this.model.get(e.currentTarget.id).destroy( {
+							success: function(model, response) {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							},
-							error: function () {
-								if ($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate({'data': {'message': 'Error!'}}));
+							error: function() {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
 								$('#notificationModal').modal();
 							}
-						});
+						} );
 					}
-					if (e.currentTarget.name == 'edit user') {
-						this.model.get(e.currentTarget.id).set({
+					if(e.currentTarget.name == 'edit user') {
+						this.model.get(e.currentTarget.id).set( {
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
 							roleId: $('#userRole').val()
-						}).save({}, {
-							success: function (model, response) {
-								if ($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate({'data': response}));
+						} ).save( {}, {
+							success: function(model, response) {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							},
-							error: function () {
-								if ($('#notificationModal')) $('#notificationModal').remove();
-								that.$el.append(that.notificationTemplate({'data': {'message': 'Error!'}}));
+							error: function() {
+								if($('#notificationModal')) $('#notificationModal').remove();
+								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
 								$('#notificationModal').modal();
 							}
-						});
+						} );
 					}
-					if (e.currentTarget.name == 'delete issue') {
+					if(e.currentTarget.name == 'delete issue') {
 						$.ajax({
 							url: 'delete-issue/' + e.currentTarget.id,
 							type: 'POST',
-							success: function () {
-								managerView.resetFilter();
+							success: function(){
+									managerView.resetFilter();
 							}
 						});
 					}
-
-					if (e.currentTarget.name == 'edit issue') {
-						console.log("--- UserListView.js confirm if {name equal 'edit issue'}");
+					
+					if(e.currentTarget.name == 'edit issue') {
+						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
 						$('#editIssueModal').modal('hide');
-						mapView.model.get(e.currentTarget.id).set({
-							name: $('#edit-issue-form-name').val(),
-							description: $('#edit-issue-form-description').val(),
-							attachments: $('#edit-issue-form-attachments').val(),
-							category: $('#edit-issue-form-category').val(),
-							status: $('#edit-issue-form-status').val(),
-							priorityId: $('#edit-issue-form-priority').val()
-
-						}).save({}, {
+						mapView.model.get(e.currentTarget.id).set( {
+						name: $('#edit-issue-form-name').val(),
+						description: $('#edit-issue-form-description').val(),
+						attachments: $('#edit-issue-form-attachments').val(),
+						category: $('#edit-issue-form-category').val(),
+						status: $('#edit-issue-form-status').val(),
+						priorityId: $('#edit-issue-form-priority').val()
+						
+						} ).save( {}, {
 							success: function (model, response) {
 								if ($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate({'data': response}));
@@ -247,12 +241,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						})
 					}
-
+					
+					
 				}
-
-
-
-
 			});	
 
 		});
