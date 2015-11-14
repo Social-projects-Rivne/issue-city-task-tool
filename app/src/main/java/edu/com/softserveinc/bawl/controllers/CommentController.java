@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.CommentDTO;
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.CommentDTO;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.CommentService;
 import org.apache.log4j.Logger;
@@ -25,7 +25,7 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 
-	@RequestMapping("get")
+	@RequestMapping(value = "get", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CommentDTO> getCommentsByIssueId(@RequestParam("issueId") int id) {
 		return DTOAssembler.getCommentsFrom(commentService.getCommentsByIssueId(id));

@@ -1,6 +1,11 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.*;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserHistoryIssuesForUserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserIssuesHistoryDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -47,7 +52,8 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
+	public @ResponseBody
+    ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
             UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
@@ -177,7 +183,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "user/history/issues", method = RequestMethod.GET)
-    public @ResponseBody List<UserHistoryIssuesForUserDto> getUserIssuesHistoriesForUser(){
+    public @ResponseBody List<UserHistoryIssuesForUserDTO> getUserIssuesHistoriesForUser(){
         List<HistoryModel> historyModels = historyService.getHistoriesByUserID(getCurrentUser().getId());
         List<IssueModel> issueModels = issueService.loadIssuesList();
         return DTOAssembler.getUserIssueHistoryForUserDto(historyModels, issueModels);

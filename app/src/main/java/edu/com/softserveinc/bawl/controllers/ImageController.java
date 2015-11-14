@@ -1,8 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import org.apache.log4j.Logger;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,16 +11,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/image")
+@RequestMapping(value = "image")
 public class ImageController {
 
 	public static final Logger LOG=Logger.getLogger(ImageController.class);
 	
-	@RequestMapping(value = "/crop", method = RequestMethod.POST)
+	@RequestMapping(value = "crop", method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO crop() {
 		ResponseDTO responseDTO = new ResponseDTO();
 		BufferedImage srcImg = null;

@@ -1,9 +1,9 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.IssueDTO;
-import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.UserHistoryDTO;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.IssueDTO;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserHistoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -63,7 +63,7 @@ public class IssueController {
     @Autowired
     private HistoryService historyService;
 
-    @RequestMapping("{id}")
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     @ResponseBody
     public IssueDTO getIssue(@PathVariable("id") int issueId) {
         final IssueModel lastIssueByIssueID = historyService.getLastIssueByIssueID(issueId);

@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.benchmarks;
 
-import edu.com.softserveinc.bawl.dto.UserHistoryDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserHistoryDTO;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;

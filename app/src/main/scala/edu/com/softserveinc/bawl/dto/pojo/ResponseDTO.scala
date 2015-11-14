@@ -1,4 +1,4 @@
-package edu.com.softserveinc.bawl.dto
+package edu.com.softserveinc.bawl.dto.pojo
 
 import scala.beans.BeanProperty
 

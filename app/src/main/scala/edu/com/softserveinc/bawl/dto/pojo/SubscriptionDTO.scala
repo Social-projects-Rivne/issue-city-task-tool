@@ -1,12 +1,11 @@
-package edu.com.softserveinc.bawl.dto
+package edu.com.softserveinc.bawl.dto.pojo
 
 import scala.beans.BeanProperty
 
+import scala.beans.BeanProperty
 
-class CommentDTO {
+class SubscriptionDTO {
   @BeanProperty  var id : Int = 0
   @BeanProperty  var issueId : Int = 0
-  @BeanProperty  var comment: String = null
-  @BeanProperty  var userName : String = null
   @BeanProperty  var email : String = null
 }

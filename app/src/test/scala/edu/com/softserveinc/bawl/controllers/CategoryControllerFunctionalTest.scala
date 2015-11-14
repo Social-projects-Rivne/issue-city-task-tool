@@ -2,7 +2,7 @@ package edu.com.softserveinc.bawl.controllers
 
 import java.util
 
-import edu.com.softserveinc.bawl.dto.{IssueDTO, CategoryDTO}
+import com.fasterxml.jackson.databind.ObjectMapper
 import edu.com.softserveinc.bawl.models.{IssueModel, CategoryModel}
 import edu.com.softserveinc.bawl.services.CategoryService
 import org.junit.{Before, Test}
@@ -36,6 +36,7 @@ class CategoryControllerFunctionalTest extends CategoryControllerTestData {
     model.setName(FOOBAR)
     categories.add(model)
     when(categoryService.loadCategoriesList).thenReturn(categories)
+    val objectMapper : ObjectMapper = new ObjectMapper
     mockMvc.perform(get(GET)).andExpect(status.isOk).andExpect(content.string(OBJECT_IN_COLLECTION))
   }
 

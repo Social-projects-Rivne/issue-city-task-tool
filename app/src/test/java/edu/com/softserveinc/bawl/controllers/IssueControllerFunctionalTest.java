@@ -108,7 +108,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlFunctionalTest {
     public void getIssue_ShouldBeResponseStatusOk_AndEmptyCollection() throws Exception {
         mockMvc.perform(get(String.format("/issue/%d", ISSUE_ID)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":1,\"name\":\"foo\",\"description\":null,\"mapPointer\":null,\"attachments\":null,\"categoryId\":1,\"priorityId\":0,\"category\":null,\"status\":\"APPROVED\"}"));
+                .andExpect(content().string("{\"message\":null,\"label\":null,\"value\":null,\"id\":1,\"name\":\"foo\",\"description\":null,\"mapPointer\":null,\"attachments\":null,\"categoryId\":1,\"priorityId\":0,\"category\":null,\"status\":\"APPROVED\"}"));
 
 
     }

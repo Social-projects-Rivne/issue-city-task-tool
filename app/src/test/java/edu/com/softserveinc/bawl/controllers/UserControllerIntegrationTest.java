@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.AbstractBawlIntegrationTest;
-import edu.com.softserveinc.bawl.dto.UserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserDTO;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;

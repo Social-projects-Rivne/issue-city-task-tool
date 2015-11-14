@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.services.impl;
 
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.StatusDTO;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.StatusDTO;
 import edu.com.softserveinc.bawl.services.StatusService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

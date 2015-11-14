@@ -1,7 +1,7 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.SubscriptionDTO;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import edu.com.softserveinc.bawl.services.UserService;
