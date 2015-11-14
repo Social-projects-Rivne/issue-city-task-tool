@@ -115,11 +115,11 @@ public class UserController {
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public @ResponseBody UserDTO getCurrentUserAction(){
-		String currentUserLoginName = getCurrentUser().getName();
-		if (currentUserLoginName.equals("anonymousUser")) {
-			return null;
-		} else {
+		try {
+			String currentUserLoginName = getCurrentUser().getName();
 			return DTOAssembler.getUserDtoFrom(userService.getByLogin(currentUserLoginName));
+		} catch (Exception ex) {
+			return new UserDTO();
 		}
 	}
 
@@ -134,7 +134,7 @@ public class UserController {
 		String subject = userNotificationDTO.getSubject();
 		String name = "User name";
 
-		try { getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+		try { getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
 			  responseDTO.setMessage("Mail has been sent");
 		} catch (Exception e){responseDTO.setMessage("Error");}
 

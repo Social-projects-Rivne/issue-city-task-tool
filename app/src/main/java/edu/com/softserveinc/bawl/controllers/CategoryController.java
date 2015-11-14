@@ -3,13 +3,18 @@ package edu.com.softserveinc.bawl.controllers;
 import edu.com.softserveinc.bawl.dto.CategoryDTO;
 import edu.com.softserveinc.bawl.dto.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static edu.com.softserveinc.bawl.models.enums.CategoryState.getState;
 
 /**
  * Controller for issue categories
@@ -59,10 +64,7 @@ public class CategoryController {
     public @ResponseBody
     CategoryDTO editCategory(@RequestBody CategoryDTO categoryDTO) {
         try {
-            CategoryModel categoryModel = categoryService.getCategoryByID(categoryDTO.getId());
-            categoryModel.setName(categoryDTO.getName());
-            categoryModel.setState(CategoryState.getState(categoryDTO.getState()));
-            categoryService.editCategory(categoryModel);
+            categoryService.updateCategory(categoryDTO.getId(), categoryDTO.getName(), getState(categoryDTO.getState()));
             categoryDTO.setMessage(SUCCESS_UPDATED);
         } catch (Exception ex) {
             categoryDTO.setMessage(FAILURE_UPDATEDD);

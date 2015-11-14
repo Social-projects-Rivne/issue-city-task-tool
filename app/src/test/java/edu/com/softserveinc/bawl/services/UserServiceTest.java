@@ -71,11 +71,6 @@ public class UserServiceTest extends AbstractBawlFunctionalTest {
     }
 
     @Test
-    public void deleteUser_shouldCallDeleteUserDao(){
-        assert ( 1 == 1);
-    }
-
-    @Test
     public void getById_shouldReturnUserModelByUserId(){
         int userId= 5;
         final String user1 = "user1";
@@ -91,7 +86,6 @@ public class UserServiceTest extends AbstractBawlFunctionalTest {
 
     @Test
     public void loadUsersList_shouldReturnListOfUserModel(){
-
         List<UserModel> listUserModels = userService.loadUsersList();
         assertNotNull(listUserModels);
     }

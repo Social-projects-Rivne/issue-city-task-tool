@@ -6,6 +6,7 @@ import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +18,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     public static final Logger LOG=Logger.getLogger(UserServiceImpl.class);
+    public static final String ANONYMOUS_USER = "anonymousUser";
 
-	@Autowired
+    @Autowired
     private UserDao userDao;
 	
 	@Override
@@ -79,6 +81,20 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByLogin(login);
 	}
 
+    @Override
+    public int getCurrentUserId() {
+        return getCurrentUser().getId();
+    }
+
+    @Override
+    public UserModel getCurrentUser() {
+        String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (ANONYMOUS_USER.equals(currentUserLoginName)) {
+            return null;
+        } else {
+            return getByLogin(currentUserLoginName);
+        }
+    }
 
 
 }

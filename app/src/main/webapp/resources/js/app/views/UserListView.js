@@ -208,7 +208,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 					}
 					if(e.currentTarget.name == 'delete issue') {
 						$.ajax({
-							url: 'delete-issue/' + e.currentTarget.id,
+							url: '/issue/delete/' + e.currentTarget.id,
 							type: 'POST',
 							success: function(){
 									managerView.resetFilter();

@@ -97,7 +97,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlFunctionalTest {
 
     @Test
     public void toResolve_ShouldChangeStatusIssueToResolve() throws Exception {
-        mockMvc.perform(post(String.format("/to-resolve/%d", ISSUE_ID))
+        mockMvc.perform(post(String.format("/issue/resolve/%d", ISSUE_ID))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 

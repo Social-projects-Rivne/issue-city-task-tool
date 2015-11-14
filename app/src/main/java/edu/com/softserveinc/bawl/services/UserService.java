@@ -7,21 +7,25 @@ import java.util.List;
 
 public interface UserService {
 
-	public UserModel addUser(UserModel user);
+	UserModel addUser(UserModel user);
 
-	public void editUser(UserModel user);
+	void editUser(UserModel user);
 
-	public void editUserPass(UserModel user);
+	void editUserPass(UserModel user);
 	
-	public void deleteUser(int userId);
+	void deleteUser(int userId);
 	
-	public UserModel getById(int id);
+	UserModel getById(int id);
 
-	public List<UserModel> getByRoleId (UserRole userRole);
+	List<UserModel> getByRoleId (UserRole userRole);
 	
-	public UserModel getByLogin(String login);
+	UserModel getByLogin(String login);
 
-	public List<UserModel> loadUsersList();
+	List<UserModel> loadUsersList();
 
-	public boolean isExistingUser(String Email);
+	boolean isExistingUser(String Email);
+
+	int getCurrentUserId();
+
+	UserModel getCurrentUser();
 }

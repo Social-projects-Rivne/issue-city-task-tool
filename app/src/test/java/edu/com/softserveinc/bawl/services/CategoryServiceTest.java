@@ -7,6 +7,7 @@ import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 
 import static org.junit.Assert.assertEquals;
@@ -45,7 +46,8 @@ public class CategoryServiceTest extends AbstractBawlFunctionalTest {
     @Test
     public void editCategory_shouldCallAddCategoryToDao() {
         CategoryModel mockCategoryModel = mock(CategoryModel.class);
-        categoryService.editCategory(mockCategoryModel);
+        Mockito.when(categoryService.getCategoryByID(1)).thenReturn(mockCategoryModel);
+        categoryService.updateCategory(1, "foo", CategoryState.NEW);
         verify(categoryDao, times(1)).saveAndFlush(mockCategoryModel);
     }
 
