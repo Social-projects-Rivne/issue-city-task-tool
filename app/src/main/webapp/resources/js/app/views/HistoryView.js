@@ -9,13 +9,13 @@ define(['jquery', 'underscore', 'backbone', 'model/HistoryIssueModel', 'collecti
             template: _.template(IssueDetails),
             initialize: function () {
                 this.issueHistoryCollection = new HistoryCollection();
-
             },
             render: function (issueId) {
                 var that = this;
                 this.issueHistoryCollection.url = "issue/" + issueId + "/history";
                 this.issueHistoryCollection.fetch({
                     success: function () {
+                        that.$el.html("");
                         that.issueHistoryCollection.each(function (issueHistory) {
                             var issueView = new SingleIssueView({model: issueHistory});
                             that.$el.append(issueView.render().el);
