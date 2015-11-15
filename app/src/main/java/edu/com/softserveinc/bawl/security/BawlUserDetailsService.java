@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.security;
 
+import com.google.common.collect.Maps;
 import edu.com.softserveinc.bawl.dao.UserDao;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
@@ -24,7 +25,7 @@ public class BawlUserDetailsService implements UserDetailsService {
 
     public static final Logger LOG=Logger.getLogger(BawlUserDetailsService.class);
 
-    private static final EnumMap<UserRole, List<SimpleGrantedAuthority>> AUTHORITIES_BY_ROLE = new EnumMap(UserRole.class);
+    private static final EnumMap<UserRole, List<SimpleGrantedAuthority>> AUTHORITIES_BY_ROLE = Maps.newEnumMap(UserRole.class);
 
     public static final SimpleGrantedAuthority USER_NOT_CONFIRMED = new SimpleGrantedAuthority("USER_NOT_CONFIRMED");
 

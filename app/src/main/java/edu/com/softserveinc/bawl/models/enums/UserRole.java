@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.models.enums;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
+
 import java.util.Map;
 
 public enum UserRole {
@@ -10,7 +11,7 @@ public enum UserRole {
     MANAGER("Manager"),
     ADMIN("Admin");
 
-    private static final Map<Integer, UserRole> USER_ROLE_MAP = new HashMap<>();
+    private static final Map<Integer, UserRole> USER_ROLE_MAP = Maps.newHashMap();
 
     static {
         for(UserRole userRole : values()) {

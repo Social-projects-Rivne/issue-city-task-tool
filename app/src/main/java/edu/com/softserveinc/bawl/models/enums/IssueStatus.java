@@ -1,5 +1,7 @@
 package edu.com.softserveinc.bawl.models.enums;
 
+import com.google.common.collect.Maps;
+
 import java.util.EnumMap;
 
 public enum IssueStatus {
@@ -10,7 +12,7 @@ public enum IssueStatus {
     DELETED("DELETED"),
     TO_RESOLVE("TO_RESOLVE");
 
-    private static final EnumMap<IssueStatus, String> ISSUE_STATUS_MAP = new EnumMap(IssueStatus.class);
+    private static final EnumMap<IssueStatus, String> ISSUE_STATUS_MAP = Maps.newEnumMap(IssueStatus.class);
 
     static {
         for(IssueStatus issueStatus : values()) {

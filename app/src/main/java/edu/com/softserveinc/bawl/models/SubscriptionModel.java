@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import com.google.common.base.Objects;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.Email;
 
@@ -7,31 +8,30 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "subscriptions", uniqueConstraints=@UniqueConstraint(columnNames={"issueId", "email"}))
-
+@Table(name = "SUBSCRIPTIONS", uniqueConstraints=@UniqueConstraint(columnNames={"ISSUEID", "EMAIL"}))
 public class SubscriptionModel {
 
     public static final Logger LOG = Logger.getLogger(SubscriptionModel.class);
 	
 	@Id
 	@GeneratedValue
-	@Column(unique=true, name = "id")
-	int id;
+	@Column(unique=true, name = "ID")
+	private int id;
 
 	@NotNull
-	@Column(name = "issueId")
+	@Column(name = "ISSUEID")
 	private int issueId;
 
 	@Email
-	@Column(name = "email")
+	@Column(name = "EMAIL")
 	private String email;
 
 	@Email
-	@Column(name = "userId")
+	@Column(name = "USERID")
 	private int userId;
 
 	@NotNull
-	@Column(name = "isValid")
+	@Column(name = "ISVALID")
 	private boolean isValid;
 
 	public SubscriptionModel() {}
@@ -93,39 +93,30 @@ public class SubscriptionModel {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + issueId;
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		SubscriptionModel that = (SubscriptionModel) o;
+		return Objects.equal(id, that.id) &&
+				Objects.equal(issueId, that.issueId) &&
+				Objects.equal(userId, that.userId) &&
+				Objects.equal(isValid, that.isValid) &&
+				Objects.equal(email, that.email);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SubscriptionModel other = (SubscriptionModel) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (issueId != other.issueId)
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hashCode(id, issueId, email, userId, isValid);
 	}
 
 	@Override
 	public String toString() {
-		return "SubscriptionModel [id=" + id + ", issueId=" + issueId + ", email=" + email + "]";
+		return Objects.toStringHelper(this)
+				.add("id", id)
+				.add("issueId", issueId)
+				.add("email", email)
+				.add("userId", userId)
+				.add("isValid", isValid)
+				.toString();
 	}
-
 }

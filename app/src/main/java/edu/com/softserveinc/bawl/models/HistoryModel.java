@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import com.google.common.base.Objects;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
@@ -88,46 +89,32 @@ public class HistoryModel {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + issue.getId();
-        result = prime * result + status.hashCode();
-        result = prime * result + userId;
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HistoryModel that = (HistoryModel) o;
+        return Objects.equal(id, that.id) &&
+                Objects.equal(userId, that.userId) &&
+                Objects.equal(issueId, that.issueId) &&
+                Objects.equal(status, that.status) &&
+                Objects.equal(date, that.date) &&
+                Objects.equal(issue, that.issue);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        HistoryModel other = (HistoryModel) obj;
-
-        if (id != other.id)
-            return false;
-        if (issue == null || (issue.getId() != other.issue.getId()))
-            return false;
-        if (userId != other.userId)
-            return false;
-        if (status.equals(other.status))
-            return false;
-
-        if (!date.equals(other.date))
-            return false;
-
-        return true;
+    public int hashCode() {
+        return Objects.hashCode(id, userId, status, date, issue, issueId);
     }
 
     @Override
     public String toString() {
-        return "HistoryModel [id=" + id + ", userId=" + userId
-                + ", issueId=" + issue.getId() + ", statusId=" + status +"]";
+        return Objects.toStringHelper(this)
+                .add("id", id)
+                .add("userId", userId)
+                .add("status", status)
+                .add("date", date)
+                .add("issue", issue)
+                .add("issueId", issueId)
+                .toString();
     }
-
-
 }

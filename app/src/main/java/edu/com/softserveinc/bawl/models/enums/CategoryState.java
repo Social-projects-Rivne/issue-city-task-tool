@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.models.enums;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
+
 import java.util.Map;
 
 public enum CategoryState {
@@ -8,7 +9,7 @@ public enum CategoryState {
     NEW("New"),
     DELETED("Deleted");
 
-    private static final Map<String, CategoryState> CATEGORY_STATE_MAP = new HashMap<>();
+    private static final Map<String, CategoryState> CATEGORY_STATE_MAP = Maps.newHashMap();
 
     static {
         for(CategoryState categoryState : values()) {
