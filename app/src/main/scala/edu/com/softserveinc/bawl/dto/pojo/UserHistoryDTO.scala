@@ -1,11 +1,11 @@
-package edu.com.softserveinc.bawl.dto
+package edu.com.softserveinc.bawl.dto.pojo
 
 import java.text.SimpleDateFormat
 import java.util.{Comparator, Date}
 
 import scala.beans.BeanProperty
 
-class UserHistoryDTO extends Comparable[UserHistoryDTO] with Comparator[UserHistoryDTO] {
+class UserHistoryDTO extends ResponseDTO with Comparable[UserHistoryDTO] with Comparator[UserHistoryDTO] {
    @BeanProperty  var username: String = null
    @BeanProperty  var issueName: String = null
    @BeanProperty  var roleName: String = null

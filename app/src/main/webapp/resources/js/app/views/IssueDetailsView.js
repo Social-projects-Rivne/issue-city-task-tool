@@ -1,6 +1,6 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentModel', 'view/CommentView', 'view/ShareInSocialsView','text!templates/IssueDetails.html', 'text!templates/NotificationTemplate.html', ],
 		function($, _, Backbone, IssueModel, CommentModel, CommentView, ShareInSocialsView, IssueDetailsTemplate, NotificationTemplate) {
-			var IssueDetaisView = Backbone.View.extend({
+			var IssueDetailsView = Backbone.View.extend({
 
 				notificationTemplate: _.template(NotificationTemplate),
 				template: _.template(IssueDetailsTemplate),
@@ -38,7 +38,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					var that = this;
 					id = e.currentTarget.id;
 					$.ajax({
-							url: 'to-resolve/'+id,
+							url: '/issue/resolve/'+id,
 							type: 'POST',
 							success: function(response) {
 								if($('#notificationModal')) {
@@ -110,5 +110,5 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 			}
 			});
 
-			return IssueDetaisView;
+			return IssueDetailsView;
 		})

@@ -1,8 +1,8 @@
-package edu.com.softserveinc.bawl.dto
+package edu.com.softserveinc.bawl.dto.pojo
 
 import scala.beans.BeanProperty
 
-class IssueDTO {
+class IssueDTO extends ResponseDTO {
   @BeanProperty var id: Int = 0
   @BeanProperty var name: String = null
   @BeanProperty var description: String = null

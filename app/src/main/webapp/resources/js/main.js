@@ -1,21 +1,24 @@
 require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
-        'view/MapView', 'view/AddIssueView', 'view/ManagerView', 'view/AdminView',
+        'view/MapView', 'view/AddIssueView', 'view/ManagerView', 'view/AdminView', 'view/CategoryManageView',
         'view/LoginView', 'view/IssueFilterView', 'view/StatisticView', 'view/ProfileView',
-        'view/ViewUserProfile', 'view/ImageEditorView', 'view/UserRegistrationView', 'view/HistoryView'],
+        'view/UserProfileView', 'view/ImageEditorView', 'view/UserRegistrationView', 'view/HistoryView'],
 function ($, _, Backbone, Router, BackboneRouteControl,
-                MapView, AddIssueView, ManagerView, AdminView,
+                MapView, AddIssueView, ManagerView, AdminView, CategoryManageView,
                 LoginView, IssueFilterView, StatisticView, ProfileView,
-                ViewUserProfile, ImageEditorView, UserRegistrationView, HistoryView) {
+                UserProfileView, ImageEditorView, UserRegistrationView, HistoryView) {
 
         router = null;
         adminView = null;
         managerView = null;
+        categoryManageView = null;
         userRegView = null;
         historyView = null;
         USER_NOT_CONFIRMED = 0;
         USER = 1;
         MANAGER = 2;
         ADMIN = 3;
+        CATEGORY_NEW = "New";
+        CATEGORY_DELETED = "Deleted"
 
 
         jQuery(document).ready(function ($) {
@@ -34,7 +37,7 @@ function ($, _, Backbone, Router, BackboneRouteControl,
             issueFilterView = new IssueFilterView({el: "#container"});
             statisticView = new StatisticView({el: 'body'});
             profileView = new ProfileView({el: "#container"});
-            viewUserProfile = new ViewUserProfile({el: "#container"});
+            viewUserProfile = new UserProfileView({el: "#container"});
             imageEditorView = new ImageEditorView({el: 'body'});
             historyView = new HistoryView();
 
@@ -43,7 +46,7 @@ function ($, _, Backbone, Router, BackboneRouteControl,
                     login: new AppController(mapView),
                     issues: new IssueController(),
                     users: new UserController(),
-                    admins: new AdminController(AdminView, ManagerView)
+                    admins: new AdminController(AdminView, ManagerView, CategoryManageView)
                 }
             });
 

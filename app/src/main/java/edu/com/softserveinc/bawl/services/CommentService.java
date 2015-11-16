@@ -1,16 +1,16 @@
 package edu.com.softserveinc.bawl.services;
 
-import java.util.List;
-
 import edu.com.softserveinc.bawl.models.CommentModel;
+
+import java.util.List;
 
 public interface CommentService {
 
-	public void addComment(CommentModel comment);
+	void addComment(CommentModel comment);
 
-	public void deleteComment(CommentModel comment);
+	void deleteComment(CommentModel comment);
 
-	public void editComment(CommentModel comment);
+	void editComment(CommentModel comment);
 
-	public List<CommentModel> getCommentsByIssueId(int issueId);
+	List<CommentModel> getCommentsByIssueId(int issueId);
 }

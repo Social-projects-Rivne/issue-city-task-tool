@@ -19,14 +19,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Autowired
 	private SubscriptionDao subscriptionDao;
 	
-	@Override
-	public SubscriptionModel create(int issueId, String email) {
-		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndEmail(issueId, email);
-		if (existantSubscription != null) {
-			return existantSubscription;
-		}
-		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, email));
-	}
+//	@Override
+//	public SubscriptionModel create(int issueId, String email) {
+//		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndEmail(issueId, email);
+//		if (existantSubscription != null) {
+//			return existantSubscription;
+//		}
+//		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, email));
+//	}
 	
 	@Override
 	public SubscriptionModel create(SubscriptionModel sub) {

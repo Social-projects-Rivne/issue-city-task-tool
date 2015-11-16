@@ -1,10 +1,11 @@
 define([ 'underscore', 'backbone' ], function(_, Backbone) {
 
 	return Backbone.Model.extend({
-		urlRoot: 'categories/add',
+		urlRoot: 'category',
 		defaults: {
 			id: null,
-			name: ""
+			name: "",
+			state: "New"
 		}
 	});
 	

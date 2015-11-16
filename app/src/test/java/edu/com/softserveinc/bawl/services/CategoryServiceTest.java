@@ -1,12 +1,13 @@
 package edu.com.softserveinc.bawl.services;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 
 import static org.junit.Assert.assertEquals;
@@ -15,10 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"} )
-
-public class CategoryServiceTest extends AbstractBawlTest {
+public class CategoryServiceTest extends AbstractBawlFunctionalTest {
 
     private CategoryService categoryService = null;
     private CategoryDao categoryDao;
@@ -48,7 +46,8 @@ public class CategoryServiceTest extends AbstractBawlTest {
     @Test
     public void editCategory_shouldCallAddCategoryToDao() {
         CategoryModel mockCategoryModel = mock(CategoryModel.class);
-        categoryService.editCategory(mockCategoryModel);
+        Mockito.when(categoryService.getCategoryByID(1)).thenReturn(mockCategoryModel);
+        categoryService.updateCategory(1, "foo", CategoryState.NEW);
         verify(categoryDao, times(1)).saveAndFlush(mockCategoryModel);
     }
 

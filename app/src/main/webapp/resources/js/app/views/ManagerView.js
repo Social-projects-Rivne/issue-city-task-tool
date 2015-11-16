@@ -10,10 +10,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
 					'change .category': 'quickChangeCategory',
 					'change .status': 'quickChangeStatus',
-					'click .table .btn.delete-issue': 'showRemoveConfirmation',
-					'click .confirm': 'confirm',
-					'click #add-category-link': 'showAddCategoryForm',
-					'click #add-category': 'addCategory',
+					'click .glyphicon-thumbs-up' : "quickChangeStatusOnApproved",
+					'click .glyphicon-thumbs-down' : "quickChangeStatusOnDisapproved",
+					'click .issue-table .btn.delete-issue': 'showRemoveIssueConfirmation',
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
@@ -130,7 +129,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					//e.currentTarget.style.setProperty("font-weight","");
 				},
 
-				showRemoveConfirmation: function(e){
+				showRemoveIssueConfirmation: function(e){
 					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'delete issue' } ] } ));
 					$('#confirmationModal').modal();
@@ -144,6 +143,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				// filter (search)
 				issueFilter: function(){
+					this.issues = mapView.model;
 					//checking filters
 					console.log("Name is " + $('#issue-filter #name').prop("checked"));
 					console.log("Keyword is " + $('#issue-filter #keyword').prop("checked"));
@@ -234,7 +234,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				//reset filter
 				resetFilter: function(){
 					var that = this;
-					$('#issue-filter #keyword').prop("checked", "checked");
 					this.issues.fetch({ success: function(){
 							that.issueTableRender();
 						}
@@ -252,22 +251,39 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issue.set( {status: e.currentTarget.value});
 					this.issue.save();
 				},
+
+				quickChangeStatusOnApproved: function(e) {
+					var currentStatus = $("#issue-table-body #" + e.currentTarget.id + ".status").val();
+					this.issue = this.issues.get( e.currentTarget.id);
+					switch (currentStatus){
+						case "NEW":
+							this.issue.set( {status: "APPROVED"});
+							break;
+						case "TO_RESOLVE":
+							this.issue.set( {status: "RESOLVED"});
+							break;
+					}
+					this.issue.save();
+					this.render();
+				},
+
+				quickChangeStatusOnDisapproved: function(e) {
+					var currentStatus = $("#issue-table-body #" + e.currentTarget.id + ".status").val();
+					this.issue = this.issues.get( e.currentTarget.id);
+					switch (currentStatus){
+						case "NEW":
+							this.issue.set( {status: "DELETED"});
+							break;
+						case "TO_RESOLVE":
+							this.issue.set( {status: "APPROVED"});
+							break;
+					}
+					this.issue.save();
+					this.render();
+				},
 				
-				addCategory: function() {
-					var newCategory = new CategoryModel( { 'name': $('#category-name').val() } );
-					newCategory.save( {}, { 
-						success: function(model, response) {
-							$('#add-category-link').popover('hide');
-							that.$el.append(that.notificationTemplate({'data': response}));
-							that.$el.append(that.notificationTemplate({'data':{ 'message': 'Category succsesfully added!'}}));
-							$('#notificationModal').modal();
-						},
-					} );
-				},
-								
-				showAddCategoryForm: function(e) {
-					e.preventDefault();
-				},
+
+
 
 				allIssues: function (e) {
 					this.$("#issue-table-body").empty();
@@ -358,10 +374,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					loginView.buttonsManage();
 				},
 				
-			editIssue: function(e) {
+				editIssue: function(e) {
 					var isValid = true;
-					
-				if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
+					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
 						issueDescription.val('Wrong value!').css('color', 'red');
 						isValid = false;
 					}
@@ -384,11 +399,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
 						$('#confirmationModal').modal();
-					
 					}
-						
-						
-					
 				}
 									
 			});

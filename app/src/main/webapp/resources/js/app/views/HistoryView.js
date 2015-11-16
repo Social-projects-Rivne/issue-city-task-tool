@@ -9,7 +9,6 @@ define(['jquery', 'underscore', 'backbone', 'model/HistoryIssueModel', 'collecti
             template: _.template(IssueDetails),
             initialize: function () {
                 this.issueHistoryCollection = new HistoryCollection();
-
             },
             render: function (issueId) {
                 var that = this;

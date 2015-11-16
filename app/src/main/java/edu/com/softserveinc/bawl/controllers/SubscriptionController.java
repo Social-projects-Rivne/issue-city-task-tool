@@ -1,8 +1,10 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.SubscriptionDTO;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,53 +33,38 @@ public class SubscriptionController {
 	// TODO: Return some nice UI, and correct statuses.
 	// TODO: Maybe confirmation
 
-    // addSubscription
-//	@RequestMapping(value = "/add", method = RequestMethod.POST)
-//	public  @ResponseBody ResponseDTO addSubscriptionAction(
-//			@RequestBody SubscriptionModel subscriptionModel, ResponseDTO responseDTO) {
-//		try {
-//			subscriptionModel.setIsValid(false);
-//			subscriptionService.create(subscriptionModel);
-//
-//
-//			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ SUCCESS_ADD);
-//
-//		} catch (Exception e) {
-//			responseDTO.setMessage(MESSAGE_TEXT_ADD +" "+ FAILURE_ADD);
-//		} return responseDTO;
-//	}
+	// TODO	 NOTE ! : This class still refactored in near future
 
 
-		/* This metod send notification to email from #admin panel */
+
 	@RequestMapping(value="/add", method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO addSubscriptionAction(
-			@RequestBody // SubscriptionModel subscriptionModel,
+			@RequestBody
+						 UserModel userModel,
 						 SubscriptionDTO subscriptionDTO,
-						 ResponseDTO responseDTO) {
+						 ResponseDTO responseDTO,
+							UserService userService) {
 
-	//	subscriptionModel.setIsValid(false);
-	//	subscriptionService.create(subscriptionModel);
+		if ( userService.isExistingUser(subscriptionDTO.getEmail())== true){
 
-		//System.out.println(subscriptionDTO.getIssueId() + " "+ subscriptionDTO.getEmail());
-		subscriptionService.create(subscriptionDTO.getIssueId(),subscriptionDTO.getEmail());
+		System.out.print("Пользователя не существуют");
 
+		} else {
 
-//		MandrillMailServiceImpl.getMandrillMail().validationSubscription();
+		}
 
-		String email = subscriptionDTO.getEmail();
-		String name =  subscriptionDTO.getEmail().toString();
-
+		String name =  "User name";
 		String subject = "Sibscription email validation";
-		String messagePattern = "";
-//		String messagePattern = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
-//				userModel.getPassword() + "&id=" + userModel.getId();
+		int id = 10;
+		int hash = (subscriptionDTO.getEmail()+subscriptionDTO.getId()).hashCode();
+		String messagePattern = "http://localhost:8085/"+"#subscriptions"+id+"/valid/"+hash;
+		String email ="";
+
 		MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
 
 		responseDTO.setMessage("Mail has been sent");
 		return responseDTO ;
 		}
-
-
 
 
 	@RequestMapping(value = "{id}/valid/{hash}", method = RequestMethod.POST)
@@ -94,31 +81,6 @@ public class SubscriptionController {
 		return responseDTO;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
 	public  @ResponseBody ResponseDTO unSubscription(
 			@PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
@@ -131,19 +93,5 @@ public class SubscriptionController {
 		}
 		return responseDTO;
 	}
-
-//
-//    @RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
-//    public  @ResponseBody ResponseDTO cancelSubscription(
-//            @PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
-//			ResponseDTO responseDTO ) {
-//        try {
-//            subscriptionService.delete(id);
-//			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
-//        } catch (Exception e) {
-//			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
-//		}
-//        return responseDTO;
-//    }
 
 }

@@ -1,7 +1,7 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/ViewUserProfile.html', 'text!templates/NotificationTemplate.html' ],
 		function($, _, Backbone,  UserModel, ViewUserProfileTemplate, NotificationTemplate) {
 			
-			var ViewUserProfile = Backbone.View.extend({
+			return Backbone.View.extend({
 				
 				events: {
 					'click #profile' : 'editProfile',
@@ -38,6 +38,4 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
 
 			});
-			
-			return ViewUserProfile;
-		})
+})

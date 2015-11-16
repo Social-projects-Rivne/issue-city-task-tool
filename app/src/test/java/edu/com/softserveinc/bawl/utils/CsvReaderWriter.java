@@ -25,9 +25,10 @@ import java.util.List;
 
 public class CsvReaderWriter {
 
-    private static final String PATH_HISTORY_MODEL_CSV = "src/test/resources/HistoryModels.csv";
-    private static final String PATH_STATUS_MODEL_CSV = "src/test/resources/StatusModels.csv";
-    private static  final String PATH_USER_MODEL_CSV = "src/test/resources/UserModels.csv";
+    public static final String SRC_TEST_RESOURCES = "src/test/resources/dataset/";
+    private static final String PATH_HISTORY_MODEL_CSV = SRC_TEST_RESOURCES + "HistoryModels.csv";
+    private static final String PATH_STATUS_MODEL_CSV = SRC_TEST_RESOURCES + "StatusModels.csv";
+    private static  final String PATH_USER_MODEL_CSV = SRC_TEST_RESOURCES + "UserModels.csv";
 
     private static CellProcessor[] getHistoryModelWriterProcessors() {
 
@@ -104,7 +105,7 @@ public class CsvReaderWriter {
                     CsvPreference.STANDARD_PREFERENCE);
 
             // the header elements are used to map the bean values to each column (names must match)
-            final String[] header = new String[] { "id", "issueId", "userId", "status","date"};
+            final String[] header = { "id", "issueId", "userId", "status","date"};
             final CellProcessor[] processors = getHistoryModelWriterProcessors();
 
             // write the header
@@ -128,7 +129,7 @@ public class CsvReaderWriter {
                     CsvPreference.STANDARD_PREFERENCE);
 
             // the header elements are used to map the bean values to each column (names must match)
-            final String[] header = new String[] { "id", "name"};
+            final String[] header = { "id", "name"};
             final CellProcessor[] processors = getStatusModelWriterProcessors();
 
             // write the header

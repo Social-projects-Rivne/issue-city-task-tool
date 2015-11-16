@@ -1,46 +1,38 @@
 package edu.com.softserveinc.bawl.models.enums;
 
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 public enum UserRole {
 
-    USER_NOT_CONFIRMED(0),
-    USER(1),
-    MANAGER(2),
-    ADMIN(3);
+    USER_NOT_CONFIRMED("User not confirmed"),
+    USER("User"),
+    MANAGER("Manager"),
+    ADMIN("Admin");
 
-    public int id;
+    private static final Map<Integer, UserRole> USER_ROLE_MAP = Maps.newHashMap();
 
-    UserRole(int id) {
-        this.id = id;
-    }
-
-    public static String get(int roleId) {
-        switch (roleId) {
-            case 0: return "User not confirmed";
-            case 1: return "User";
-            case 2: return "Manager";
-            case 3: return "Admin";
-            default: return "Not confirmed";
+    static {
+        for(UserRole userRole : values()) {
+            USER_ROLE_MAP.put(userRole.ordinal(), userRole);
         }
     }
+    private final String caption;
 
-    public String get() {
-        switch (this.id) {
-            case 0: return "User not confirmed";
-            case 1: return "User";
-            case 2: return "Manager";
-            case 3: return "Admin";
-            default: return "Not confirmed";
-        }
+    UserRole(String caption) {
+        this.caption = caption;
     }
 
-   public static UserRole getById(int roleId) {
-        switch (roleId) {
-            case 0: return USER_NOT_CONFIRMED;
-            case 1: return USER;
-            case 2: return MANAGER;
-            case 3: return ADMIN;
-            default: return null;
-        }
+   public static UserRole getByRoleId(int roleId) {
+       return USER_ROLE_MAP.get(roleId);
     }
 
+    public int getId() {
+        return ordinal();
+    }
+
+    public String getCaption() {
+        return caption;
+    }
 }

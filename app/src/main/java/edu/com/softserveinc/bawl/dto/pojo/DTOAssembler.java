@@ -1,4 +1,4 @@
-package edu.com.softserveinc.bawl.dto;
+package edu.com.softserveinc.bawl.dto.pojo;
 
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.CommentModel;
@@ -6,6 +6,8 @@ import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.services.CommentService;
+import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.UserService;
 
 import java.util.ArrayList;
@@ -17,6 +19,10 @@ import java.util.List;
  * @see 'http://martinfowler.com/eaaCatalog/dataTransferObject.html'
  */
 public class DTOAssembler {
+
+    private DTOAssembler() {
+        new AssertionError("Not allowed");
+    }
 
     public static List<UserDTO> getAllUsersDtoFrom(List<UserModel> userModels) {
         List<UserDTO> userDTOs = new ArrayList<>();
@@ -33,7 +39,7 @@ public class DTOAssembler {
         userDTO.setEmail(userModel.getEmail());
         userDTO.setLogin(userModel.getLogin());
         userDTO.setAvatar(userModel.getAvatar());
-        userDTO.setRoleId(userModel.getRole().id);
+        userDTO.setRoleId(userModel.getRole().getId());
         return userDTO;
     }
 
@@ -59,7 +65,7 @@ public class DTOAssembler {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(categoryModel.getId());
         categoryDTO.setName(categoryModel.getName());
-        categoryDTO.setState(categoryModel.getState().ordinal());
+        categoryDTO.setState(categoryModel.getState().getCaption());
         if (mapIssues) {
             categoryDTO.setIssueDtoList(getAllIssuesDto(categoryModel.getIssues()));
         }
@@ -140,7 +146,7 @@ public class DTOAssembler {
         userHistoryDto.setDate(historyModel.getDate());
         userHistoryDto.setIssueName(issueModel.getName());
         UserModel userModel = userService.getById(historyModel.getUserId());
-        userHistoryDto.setRoleName(userModel.getRole().get());
+        userHistoryDto.setRoleName(userModel.getRole().getCaption());
         userHistoryDto.setUsername(userModel.getName());
         return userHistoryDto;
     }
@@ -162,5 +168,78 @@ public class DTOAssembler {
         commentDTO.setUserName(commentModel.getUserName());
         commentDTO.setEmail(commentModel.getEmail());
         return commentDTO;
+    }
+
+    /**
+     * Returns all history of issues by user
+     *
+     * @return
+     */
+    public static List<UserHistoryIssuesForUserDTO> getUserIssueHistoryForUserDto(
+            List<HistoryModel> listOfHistoriesByUserID, List<IssueModel> listIssueModel){
+
+        List<UserHistoryIssuesForUserDTO> userHistoryIssuesForUserDTOs = new ArrayList<UserHistoryIssuesForUserDTO>();
+
+        for(IssueModel issueModel : listIssueModel) {
+            for (HistoryModel historyModel : listOfHistoriesByUserID) {
+                if (issueModel.getId() == historyModel.getIssueId())
+                    userHistoryIssuesForUserDTOs.add(getUserHistoryIssuesForUserDto(issueModel));
+            }
+        }
+
+        return userHistoryIssuesForUserDTOs;
+    }
+
+    public static UserHistoryIssuesForUserDTO getUserHistoryIssuesForUserDto( IssueModel issueModel){
+        UserHistoryIssuesForUserDTO userHistoryIssuesForUserDTO = new UserHistoryIssuesForUserDTO();
+
+        userHistoryIssuesForUserDTO.setNameIssue(issueModel.getName());
+
+        List<IssueHistoryDTO> listIssueHistoryDto = new ArrayList<IssueHistoryDTO>();
+
+        HistoryService historyService = null;
+
+        listIssueHistoryDto.addAll(
+                getListIssueHistoryDtos(
+                        historyService.getHistoriesByIssueID(issueModel.getId()) ,issueModel));
+
+        return userHistoryIssuesForUserDTO;
+    }
+
+    public static List<IssueHistoryDTO> getListIssueHistoryDtos(List<HistoryModel> listHistoryModel,IssueModel issueModel){
+
+        List<IssueHistoryDTO> listIssueHistoryDTO = new ArrayList<IssueHistoryDTO>();
+
+        for(HistoryModel historyModel : listHistoryModel) {
+            if (historyModel.getIssueId()==issueModel.getId())
+                listIssueHistoryDTO.add(getIssueHistoryDto(historyModel));
+        }
+
+        return listIssueHistoryDTO;
+    }
+
+    public static IssueHistoryDTO getIssueHistoryDto(HistoryModel historyModel ){
+        IssueHistoryDTO issueHistoryDTO= new IssueHistoryDTO();
+
+        UserService userService=null;
+        UserModel userModel = userService.getById(historyModel.getUserId());
+
+        issueHistoryDTO.setChangedByUser(userModel.getName());
+        issueHistoryDTO.setDate(historyModel.getDate());
+        issueHistoryDTO.setStatus(IssueStatus.get(historyModel.getStatus()));
+
+        return issueHistoryDTO;
+    }
+
+    public static List<ResponseDTO> getResponseDTOs(List<IssueModel> issues, CommentService commentService) {
+        List<ResponseDTO> responseDTOs = new ArrayList<>();
+        for (IssueModel issue : issues) {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setLabel(issue.getName());
+            responseDTO.setValue(String.valueOf(commentService.getCommentsByIssueId(issue.getId()).size()));
+            responseDTOs.add(responseDTO);
+
+        }
+        return responseDTOs;
     }
 }

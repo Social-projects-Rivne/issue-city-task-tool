@@ -15,8 +15,8 @@
 
 	<tx:annotation-driven />
 	
-	<import resource="test-data-context.xml" />
-	<import resource="test-web-context.xml" />
-	<import resource="test-sec-context.xml" />
+	<import resource="classpath:test-data-context.xml" />
+	<import resource="classpath:test-web-context.xml" />
+	<import resource="classpath:test-sec-context.xml" />
 
 </beans>

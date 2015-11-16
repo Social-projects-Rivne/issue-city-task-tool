@@ -1,7 +1,7 @@
-var AdminController = function(AdminView, ManagerView) {
+var AdminController = function(AdminView, ManagerView, CategoryManageView) {
     return {
         admin: function () {
-            if (!_.isNull(loginView.currentUser) && _.isNull(adminView)) {
+            if (!_.isNull(loginView.currentUser) && !_.isNull(adminView)) {
                 adminView.render();
             } else {
                 if (_.isNull(adminView)) {
@@ -21,6 +21,11 @@ var AdminController = function(AdminView, ManagerView) {
                     managerView.render();
                 }
             }
+        },
+
+        categories: function(){
+            categoryManageView = new CategoryManageView();
+            categoryManageView.render();
         },
 
         search: function (name) {
