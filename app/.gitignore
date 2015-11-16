@@ -1,5 +1,6 @@
 *.class
 .project
+.iml
 .springBeans
 .classpath
 .settings/
@@ -7,3 +8,4 @@
 target/
 servers
 *~
+persistence.properties

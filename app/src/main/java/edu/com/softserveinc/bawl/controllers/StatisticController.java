@@ -1,39 +1,34 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import edu.com.softserveinc.bawl.services.*;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
+import edu.com.softserveinc.bawl.services.CategoryService;
+import edu.com.softserveinc.bawl.services.CommentService;
+import edu.com.softserveinc.bawl.services.HistoryService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.StatusModel;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.apache.log4j.Logger;
+import static edu.com.softserveinc.bawl.dto.pojo.DTOAssembler.getResponseDTOs;
 
-@Controller
+@RestController
+@RequestMapping(value = "statistics")
 public class StatisticController {
 
-	/**
-	 * Logger field
-	 */
 	public static final Logger LOG=Logger.getLogger(StatisticController.class);
 	
 	@Autowired
-	private IssueService issueService;
-	
-	@Autowired
 	private CategoryService categoryService;
-	
-	@Autowired
-	private StatusService statusService;
+
 	
 	@Autowired
 	private CommentService commentService;
@@ -41,67 +36,56 @@ public class StatisticController {
 	@Autowired
 	private HistoryService historyService;
 	
-	@RequestMapping(value = "statistic-by-categories", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String, String>> statisticByCategory() {
-		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
-		List<IssueModel> issues = historyService.getLastUniqueIssues();
+	@RequestMapping(value = "categories", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ResponseDTO> statisticByCategory() {
 		List<CategoryModel> categories = categoryService.loadCategoriesList();
-		
-		for (int i = 0, tmp; i < categories.size(); i++) {
-			tmp = 0;
-			
-			for (int j = 0; j < issues.size(); j++) {
-				if (issues.get(j).getCategoryId() == categories.get(i).getId()) {
-					tmp++;
-				}	
-			}
-			
-			statistic.add(new HashMap<String, String>());
-			statistic.get(i).put("label", categories.get(i).getName());
-			statistic.get(i).put("value", "" + tmp);
+		List<ResponseDTO> responseDTOs = new ArrayList<>();
+
+		for (CategoryModel categoryModel : categories) {
+			ResponseDTO responseDTO = new ResponseDTO();
+			responseDTO.setLabel(categoryModel.getName());
+			responseDTO.setValue(String.valueOf(categoryModel.getIssues().size()));
+			responseDTOs.add(responseDTO);
 		}
-		
-		return statistic;
+
+		return responseDTOs;
 	}
 	
-	@RequestMapping(value = "statistic-by-statuses", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String, String>> statisticByStatus() {
-		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
+	@RequestMapping(value = "statuses", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ResponseDTO> statisticByStatus() {
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
-		List<StatusModel> statuses = statusService.loadStatusList();
-		
+		List<IssueStatus> statuses = Arrays.asList(IssueStatus.values());
+		List<ResponseDTO> responseDTOs = new ArrayList<>();
+		// TODO rewrite this
 		for (int i = 0, tmp; i < statuses.size(); i++) {
 			tmp = 0;
-			
+
 			for (int j = 0; j < issues.size(); j++) {
-				if (issues.get(j).getStatusId() == statuses.get(i).getId()) {
+				if (issues.get(j).getStatus().equals(statuses.get(i))) {
 					tmp++;
-				}	
+				}
 			}
-			
-			statistic.add(new HashMap<String, String>());
-			statistic.get(i).put("label", statuses.get(i).getName());
-			statistic.get(i).put("value", "" + tmp);
+			ResponseDTO responseDTO = new ResponseDTO();
+			responseDTO.setLabel(statuses.get(i).name());
+			responseDTO.setValue(String.valueOf(tmp));
+			responseDTOs.add(responseDTO);
 		}
 		
-		return statistic;
+		return responseDTOs;
 	}
 	
-	@RequestMapping(value = "statistic-by-comments", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String, String>> statisticByComments() {
-		List<Map<String, String>> statistic = new ArrayList<Map<String, String>>();
+	@RequestMapping(value = "comments", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ResponseDTO> statisticByComments() {
 		List<IssueModel> issues = historyService.getLastUniqueIssues();
+		List<ResponseDTO> responseDTOs = getResponseDTOs(issues, commentService);
 		
-		for (int i = 0; i < issues.size(); i++) {
-			
-			statistic.add(new HashMap<String, String>());
-			statistic.get(i).put("label", issues.get(i).getName());
-			statistic.get(i).put("value", "" + commentService.getCommentsByIssueId(issues.get(i).getId()).size());
-			
-		}
-		
-		return statistic;
+		return responseDTOs;
 	}
-	
+
+
+
 }
 

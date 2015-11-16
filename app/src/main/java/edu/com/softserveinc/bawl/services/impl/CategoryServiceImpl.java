@@ -1,42 +1,49 @@
 package edu.com.softserveinc.bawl.services.impl;
 
-import java.util.List;
-
+import edu.com.softserveinc.bawl.dao.CategoryDao;
+import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
+import edu.com.softserveinc.bawl.services.CategoryService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.com.softserveinc.bawl.dao.CategoryDao;
-import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.services.CategoryService;
+import java.util.List;
 
-import org.apache.log4j.Logger;
+import static edu.com.softserveinc.bawl.models.enums.CategoryState.DELETED;
 
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(CategoryServiceImpl.class);
 	
 	@Autowired
     private CategoryDao categoryDao;
 	
 	@Override
-	public void addCategory(CategoryModel category) {
-		categoryDao.saveAndFlush(category);
-	}
+	public CategoryModel addCategory(CategoryModel category) {
+        return categoryDao.saveAndFlush(category);
+    }
+
+	@Override
+	public CategoryModel addCategory(String category) {
+        return categoryDao.saveAndFlush(new CategoryModel(category));
+    }
 
 	@Override
 	public void deleteCategory(CategoryModel category) {
-		categoryDao.delete(category);
+		category.setState(DELETED);
+		categoryDao.saveAndFlush(category);
 	}
 
 	@Override
-	public void editCategory(CategoryModel category) {
-		categoryDao.saveAndFlush(category);
+	public void updateCategory(int id, String name, CategoryState state) {
+		CategoryModel categoryModel = getCategoryByID(id);
+		categoryModel.setName(name);
+		categoryModel.setState(state);
+		categoryDao.saveAndFlush(categoryModel);
 	}
 
 	@Override
@@ -53,4 +60,15 @@ public class CategoryServiceImpl implements CategoryService {
 	public CategoryModel getCategoryByName(String name){
 		return categoryDao.findByName(name);
 	}
+
+    @Override
+    public CategoryModel getCategoryByNameOrAddNew(String name){
+        final String lowerCaseName = name.toLowerCase();
+        CategoryModel categoryByName = getCategoryByName(lowerCaseName);
+        if (null == categoryByName) {
+            categoryByName = addCategory(name);
+        }
+        return categoryByName;
+    }
+
 }

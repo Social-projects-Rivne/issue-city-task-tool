@@ -12,14 +12,5 @@ app/Bawl.iml
 desktop.ini
 /target
 app/src/main/resources/persistence.properties
-*~
-<<<<<<< HEAD
-Servers/Tomcat v8.0 Server at localhost-config/catalina.policy
-Servers/Tomcat v8.0 Server at localhost-config/catalina.properties
-Servers/Tomcat v8.0 Server at localhost-config/context.xml
-Servers/Tomcat v8.0 Server at localhost-config/server.xml
-Servers/Tomcat v8.0 Server at localhost-config/tomcat-users.xml
-Servers/Tomcat v8.0 Server at localhost-config/web.xml
-=======
-app/src/main/resources/persistence.properties
->>>>>>> 5b718178a6e6db9b41486a53f6337b5bdced9b92
+
+*

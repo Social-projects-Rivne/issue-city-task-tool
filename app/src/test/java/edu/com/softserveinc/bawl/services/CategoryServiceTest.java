@@ -1,29 +1,74 @@
 package edu.com.softserveinc.bawl.services;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
+import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.services.CategoryService;
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
+import edu.com.softserveinc.bawl.services.impl.CategoryServiceImpl;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.powermock.reflect.Whitebox;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-root-context.xml", "classpath:test-data-context.xml","classpath:test-mail-context.xml"
-		,"classpath:test-root-context.xml"})
-public class CategoryServiceTest {
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-@Autowired
-private CategoryService service; 
-	
-	@Test(expected = DataAccessException.class)
-	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
-	   String name = "Random category name";
-	   service.addCategory(new CategoryModel(name));
-	   service.addCategory(new CategoryModel(name));
-	}
+public class CategoryServiceTest extends AbstractBawlFunctionalTest {
 
-	
+    private CategoryService categoryService = null;
+    private CategoryDao categoryDao;
+
+    @Before
+    public void setup() {
+        categoryService = new CategoryServiceImpl();
+        categoryDao = mock(CategoryDao.class);
+        Whitebox.setInternalState(categoryService, "categoryDao", categoryDao);
+    }
+
+    @Test
+    public void addCategory_shouldCallAddCategoryToDao() {
+        CategoryModel mockCategoryModel = mock(CategoryModel.class);
+        categoryService.addCategory(mockCategoryModel);
+        verify(categoryDao, times(1)).saveAndFlush(any(CategoryModel.class));
+    }
+
+    @Test
+    public void deleteCategory_shouldChangeIsdeletedTo1AndSaveToDao() {
+        CategoryModel testModel = new CategoryModel();
+        categoryService.deleteCategory(testModel);
+        verify(categoryDao, times(1)).saveAndFlush(testModel);
+        assertEquals(CategoryState.DELETED, testModel.getState());
+    }
+
+    @Test
+    public void editCategory_shouldCallAddCategoryToDao() {
+        CategoryModel mockCategoryModel = mock(CategoryModel.class);
+        Mockito.when(categoryService.getCategoryByID(1)).thenReturn(mockCategoryModel);
+        categoryService.updateCategory(1, "foo", CategoryState.NEW);
+        verify(categoryDao, times(1)).saveAndFlush(mockCategoryModel);
+    }
+
+    @Test
+    public void getCategoryByID_shouldReturnCategoryByConcreteID() {
+        int categoryID = 2;
+        CategoryModel testModel = new CategoryModel();
+        testModel.setId(categoryID);
+        assertEquals(categoryID, testModel.getId());
+    }
+
+    @Test
+    public void getCategoryByName_shouldReturnCategoryByConcreteName() {
+        String categoryName = "Test name";
+        CategoryModel testModel = new CategoryModel("Test name");
+        assertEquals(categoryName, testModel.getName());
+    }
+
+    @Test
+    public void loadCategoryList_shouldReturnListOfAllCategories() {
+        categoryService.loadCategoriesList();
+        verify(categoryDao, times(1)).findAll();
+    }
 }

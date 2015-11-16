@@ -1,189 +1,197 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.UserNotificationDto;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserHistoryIssuesForUserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserIssuesHistoryDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
+import edu.com.softserveinc.bawl.models.HistoryModel;
+import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
+import edu.com.softserveinc.bawl.services.HistoryService;
+import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
-import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
+import edu.com.softserveinc.bawl.utils.MailPatterns;
+import edu.com.softserveinc.bawl.utils.PassGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Random;
+import java.util.List;
 
-//import java.util.logging.Logger;
+import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 
-@Controller
+@RestController
+@RequestMapping(value = "/users")
 public class UserController {
 
-	/**
-	 * Logger field
-	 */
 	public static final Logger LOG=Logger.getLogger(UserController.class);
-	
-	private final static int USER_NOT_CONFIRMED = -1;
-	private final static int USER = 0;
 
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping("get-users")
+    @Autowired
+    private HistoryService historyService;
+
+    @Autowired
+    private IssueService issueService;
+
+	@RequestMapping("/all")
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody Collection<UserModel> getUsersAction() {
-		
-		Collection<UserModel> users = userService.loadUsersList();
-		for (UserModel user: users){
-			user.setPassword("_");
-		}
-		return users;
+	public @ResponseBody List<UserDTO> getUsersAction() {
+		return DTOAssembler.getAllUsersDtoFrom(userService.loadUsersList());
 	}
 
-	private String getRoleName(int role_id) {
-		switch (role_id) {
-			case 1: return "Admin";
-			case 2: return "Manager";
-			case 3: return "User";
-			default: return "Not confirmed";
-		}
-	}
-	@RequestMapping(value = "user", method = RequestMethod.POST)
-
-	public @ResponseBody Map<String, String> addUserAction(
-			@RequestBody UserModel user, Map<String, String> message) {
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody
+    ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		try {
+            UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
+                    userDTO.getLogin(), userDTO.getRoleId(), userDTO.getPassword(), userDTO.getAvatar());
+            userModel = userService.addUser(userModel);
+			getMandrillMail().sendRegNotification(userModel);
+			responseDTO.setMessage("Successfully registered. Please confirm your email");
+		} catch (Exception ex) {
+			responseDTO.setMessage("Some problem occured! User was not added");
+		}
+		return responseDTO;
+	}
 
-			userService.addUser(user);
-			UserModel dbModel = userService.getByLogin(user.getLogin());
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public @ResponseBody ResponseDTO editUserAction(
+			@RequestBody UserModel userModel) {
+		ResponseDTO responseDTO = new ResponseDTO();
+		try {
+			userService.editUser(userModel);
+			getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), userModel.getRole().getCaption());
+			responseDTO.setMessage("User was successfully edited");
+		} catch (Exception ex) {
+			responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());
+		}
 
-			message.put("message", "Successfully registered. Please confirm your email");
-			try {
-				MandrillMailServiceImpl.getMandrillMail().sendRegNotification(dbModel);
-			} catch(Exception ex){
-				message.put("message", "Something wrong with sending email");
+		return responseDTO;
+	}
+
+	@RequestMapping(value = "/validate", method = RequestMethod.POST)
+	public @ResponseBody UserModel validateUser (
+			@RequestBody UserDTO userDTO, UserModel userModel) {
+		try {
+			userModel = userService.getById(userDTO.getId());
+			if (userModel.getPassword().equals(userDTO.getPassword())){
+				userModel.setRole(UserRole.USER);
+				userService.editUser(userModel);
+				return userModel;
 			}
 		} catch (Exception ex) {
-			message.put("message", "Some problem occured! User was not added");
+			LOG.warn(ex);
 		}
-		return message;
+		return userModel;
 	}
 
-	@RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
-	//@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_ADMIN'")
-	public @ResponseBody Map<String, String> editUserAction(
-			@RequestBody UserModel user, Map<String, String> message) {
-
-		try {
-			userService.editUser(user);
-			String role = getRoleName (user.getRole_id());
-			MandrillMailServiceImpl.getMandrillMail().notifyUser(user.getId(),
-					"Your account has been updated.\n\nCurrent login: "
-							+ user.getLogin() + "\nCurrent role: " + role);
-			message.put("message", "User was successfully edited");
-		} catch (Exception ex) {
-			message.put("message", "Some problem occurred! User was not updated" + ex.toString());
-		}
-
-		return message;
-	}
-
-	@RequestMapping(value = "validate-user", method = RequestMethod.POST)
-	public @ResponseBody UserModel validateUser(
-			@RequestBody UserModel user) {
-		try {
-
-			UserModel dbModel = userService.getById(user.getId());
-			if (dbModel.getPassword().equals(user.getPassword())){
-				dbModel.setRole_id(USER);
-				userService.editUser(dbModel);
-				return dbModel;
-			}
-			//message.put("message", "User was successfully validated");
-		} catch (Exception ex) {
-			//message.put("message", "Some problem occurred! User was not validated" + ex.toString());
-		}
-		return null;
-	}
-
-	@RequestMapping(value = "user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public @ResponseBody Map<String, String> removeUserAction(
-			@PathVariable int id, Map<String, String> message) {
-
+	public @ResponseBody ResponseDTO removeUserAction(
+			@PathVariable int id) {
+		ResponseDTO responseDTO = new ResponseDTO();
 		try {
-			userService.deleteUser(id);
-			MandrillMailServiceImpl.getMandrillMail().notifyUser(id, "Your account has been terminated.");
-			message.put("message", "User was successfully deleted");
+			List<UserModel> adminModelList = userService.getByRoleId(UserRole.ADMIN);
+			if (adminModelList.size() > 1){
+				userService.deleteUser(id);
+				UserModel userModel = userService.getById(id);
+				getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
+				responseDTO.setMessage("User was successfully deleted");
+			} else {
+				responseDTO.setMessage("Fail. At least one Admin must be in system!");
+			}
 		} catch (Exception ex) {
-			message.put("message", "Some problem occured! User was not deleted");
+			responseDTO.setMessage("Some problem occured! User was not deleted");
 		}
-
-		return message;
+		return responseDTO;
 	}
-		
-	@RequestMapping(value = "currentuser", method = RequestMethod.GET)
-	public @ResponseBody UserModel getCurrentUserAction(){
-		String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
-		if (currentUserLoginName.equals("anonymousUser")) {
+
+	@RequestMapping(value = "/current", method = RequestMethod.GET)
+	public @ResponseBody UserDTO getCurrentUserAction(){
+		try {
+			return DTOAssembler.getUserDtoFrom(getCurrentUser());
+		} catch (Exception ex) {
 			return null;
 		}
-		else {
-			return userService.getByLogin(currentUserLoginName);
-		}
 	}
 
-	 /* This metod send notification to email from #admin panel */
+	/* This metod send notification to email from #admin panel */
 	@RequestMapping(value="send-notification", method = RequestMethod.POST)
-	public @ResponseBody
-	Map<String, String> submittedFromData(@RequestBody UserNotificationDto userNotificationModel, Map<String, String> message) {
-		try { MandrillMailServiceImpl.getMandrillMail().notifyByAdmin(userNotificationModel.getEmail(),
-				userNotificationModel.getSubject(),userNotificationModel.getMessage() );
-			  message.put("message", "Message was successfully sended");
-		}catch (Exception ex) { message.put("message", "Some problem occured! Message was not sended");
-			}
-		return message ;
+	public @ResponseBody ResponseDTO submittedFromData(
+			@RequestBody UserNotificationDTO userNotificationDTO,
+						 ResponseDTO responseDTO ) {
+
+		String email = userNotificationDTO.getEmail();
+		String messagePattern = userNotificationDTO.getMessage();
+		String subject = userNotificationDTO.getSubject();
+		String name = "User name";
+
+		try { getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
+			  responseDTO.setMessage("Mail has been sent");
+		} catch (Exception e){responseDTO.setMessage("Error");}
+
+		return responseDTO ;
 	}
 
-	@RequestMapping(value="user/{id}/changepass", method = RequestMethod.GET)
-	public @ResponseBody String changeUserPassword(@PathVariable int id){
-		UserModel userModel=userService.getById(id);
-
-		String newPassword = generatePassword(1, 5);
-		userModel.setPassword(newPassword);
-
-		MandrillMailServiceImpl.getMandrillMail().sendPasswordToUser(userModel, newPassword);
-
-		String massege="Your pass have been changed ! Watch about it on your mail ! 'pass'="+newPassword;//later it will be whithout password
-
+	@RequestMapping(value="/changename/{newname}", method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO changeUserName(@PathVariable int id,@PathVariable String newname){
+		ResponseDTO responseDTO = new ResponseDTO();
+		String currentUserLoginName = getCurrentUser().getName();
+		UserModel userModel=userService.getByLogin(currentUserLoginName);
+		userModel.setName(newname);
 		userService.editUser(userModel);
-
-		return massege;
+		responseDTO.setMessage("Name has been succesfully edited");
+		return  responseDTO ;
 	}
 
-	private String generatePassword (int from, int to){
-
-		String pass  = "";
-		Random r     = new Random();
-		int cntchars = from + r.nextInt(to - from + 1);
-
-		for (int i = 0; i < cntchars; ++i) {
-			char next = 0;
-			int range = 10;
-
-			switch(r.nextInt(3)) {
-				case 0: {next = '0'; range = 10;} break;
-				case 1: {next = 'a'; range = 26;} break;
-				case 2: {next = 'A'; range = 26;} break;
-			}
-
-			pass += (char)((r.nextInt(range)) + next);
-		}
-
-		return pass;
+	@RequestMapping(value="/changepass", method = RequestMethod.GET)
+	public @ResponseBody ResponseDTO changeUserPassword(){
+		ResponseDTO responseDTO = new ResponseDTO();
+		UserModel userModel = getCurrentUser();
+		String newPassword = PassGenerator.generate(1, 5);
+		userModel.setPassword(newPassword);
+		userService.editUserPass(userModel);
+		getMandrillMail().sendSimpleMessage(MailPatterns.PASSWORD_RESET_PATTERN, userModel, userModel.getName());
+		responseDTO.setMessage("Your pass have been changed ! Watch about it on your mail ! ");
+		return responseDTO;
 	}
+
+    /**
+     * Returns list of UserIssuesHistoryDto by user id
+     * @return list of UserIssuesHistoryDto
+     */
+    @RequestMapping(value = "user/history", method = RequestMethod.GET)
+    public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(){
+        List<IssueModel> issues = issueService.loadIssuesList();
+		UserModel userModel = getCurrentUser();
+		List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(userModel.getId());
+		return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
+    }
+
+    @RequestMapping(value = "user/history/issues", method = RequestMethod.GET)
+    public @ResponseBody List<UserHistoryIssuesForUserDTO> getUserIssuesHistoriesForUser(){
+        List<HistoryModel> historyModels = historyService.getHistoriesByUserID(getCurrentUser().getId());
+        List<IssueModel> issueModels = issueService.loadIssuesList();
+        return DTOAssembler.getUserIssueHistoryForUserDto(historyModels, issueModels);
+    }
+
+    private UserModel getCurrentUser(){
+        String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.getByLogin(currentUserLoginName);
+    }
 }
 
 

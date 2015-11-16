@@ -1,53 +1,43 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import com.google.common.base.Objects;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
 @Entity
-@Table(name="history")
+@Table(name="HISTORY")
 public class HistoryModel {
 
-    /**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(HistoryModel.class);
 
     @Id
     @GeneratedValue
-    @Column(unique=true, name="id")
+    @Column(unique=true, name="ID")
     private int id;
 
-    @Column(name="issue_id")
-    private int issueId;
-
-    @Column(name="user_id")
+    @Column(name="USER_ID")
     private int userId;
 
-    @Column(name="status_id")
-    private int statusId;
+    @Column(name="STATUS")
+    @Enumerated(EnumType.STRING)
+    private IssueStatus status;
 
-    @Column(name="date")
+    @Column(name="DATE", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date date;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "ISSUE_ID")
+    private IssueModel issue;
 
+    private int issueId;
 
-
-    public HistoryModel(){};
-
-    public HistoryModel(int issueId, int userId, int statusId) {
-        this.issueId = issueId;
-        this.userId = userId;
-        this.statusId = statusId;
-    }
-
+    public HistoryModel(){}
 
 
     public int getId() {
@@ -66,20 +56,12 @@ public class HistoryModel {
         this.userId = userId;
     }
 
-    public int getIssueId() {
-        return issueId;
+    public IssueStatus getStatus() {
+        return status;
     }
 
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
-    }
-
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(IssueStatus status) {
+        this.status = status;
     }
 
     public Date getDate() {
@@ -90,49 +72,49 @@ public class HistoryModel {
         this.date = date;
     }
 
+    public IssueModel getIssue() {
+        return issue;
+    }
 
+    public void setIssue(IssueModel issue) {
+        this.issue = issue;
+    }
 
+    public int getIssueId() {
+        return issueId;
+    }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + issueId;
-        result = prime * result + statusId;
-        result = prime * result + userId;
-        return result;
+    public void setIssueId(int issueId) {
+        this.issueId = issueId;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        HistoryModel other = (HistoryModel) obj;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HistoryModel that = (HistoryModel) o;
+        return Objects.equal(id, that.id) &&
+                Objects.equal(userId, that.userId) &&
+                Objects.equal(issueId, that.issueId) &&
+                Objects.equal(status, that.status) &&
+                Objects.equal(date, that.date) &&
+                Objects.equal(issue, that.issue);
+    }
 
-        if (id != other.id)
-            return false;
-        if (issueId != other.issueId)
-            return false;
-        if (userId != other.userId)
-            return false;
-        if (statusId != other.statusId)
-            return false;
-
-        if (!date.equals(other.date))
-            return false;
-
-        return true;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, userId, status, date, issue, issueId);
     }
 
     @Override
     public String toString() {
-        return "HistoryModel [id=" + id + ", userId=" + userId
-                + ", issueId=" + issueId + ", statusId=" + statusId +"]";
+        return Objects.toStringHelper(this)
+                .add("id", id)
+                .add("userId", userId)
+                .add("status", status)
+                .add("date", date)
+                .add("issue", issue)
+                .add("issueId", issueId)
+                .toString();
     }
-
 }

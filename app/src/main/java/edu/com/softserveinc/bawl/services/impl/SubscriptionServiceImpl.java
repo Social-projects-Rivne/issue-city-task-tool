@@ -1,57 +1,71 @@
 package edu.com.softserveinc.bawl.services.impl;
 
-import java.util.Collection;
-
+import edu.com.softserveinc.bawl.dao.SubscriptionDao;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
+import edu.com.softserveinc.bawl.models.SubscriptionModel;
+import edu.com.softserveinc.bawl.services.SubscriptionService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.com.softserveinc.bawl.dao.SubscriptionDao;
-import edu.com.softserveinc.bawl.models.SubscriptionModel;
-import edu.com.softserveinc.bawl.services.SubscriptionService;
-
-import org.apache.log4j.Logger;
+import java.util.Collection;
 
 @Service
 @Transactional
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-	/**
-     *  Logger field
-     */
-    public static final Logger LOG=Logger.getLogger(SubscriptionServiceImpl.class);
+    public static final Logger LOG = Logger.getLogger(SubscriptionServiceImpl.class);
 
 	@Autowired
-	private SubscriptionDao dao;
-	
+	private SubscriptionDao subscriptionDao;
+
 	@Override
-	public SubscriptionModel create(int issueId, String email) {
-		SubscriptionModel existantSubscription = dao.findByIssueIdAndEmail(issueId, email);
+	public SubscriptionModel createSubscription(int issueId, int userId) {
+		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndUserId(issueId,userId);
 		if (existantSubscription != null) {
 			return existantSubscription;
 		}
-		return dao.saveAndFlush(new SubscriptionModel(issueId, email));
+		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, userId));
 	}
-	
+
 	@Override
-	public SubscriptionModel create(SubscriptionModel sub) {
-		return dao.saveAndFlush(sub);
+	public ResponseDTO SendApproved (int userId, int issueId) {
+
+		SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+		UserServiceImpl userService = new UserServiceImpl();
+		ResponseDTO responseDTO = new ResponseDTO();
+
+		String name =  "User name";
+		String subject = "Sibscription email validation";
+
+		int hash = (subscriptionDTO.getEmail()+subscriptionDTO.getId()).hashCode();
+		String messagePattern = "http://localhost:8085/"+"#subscriptions"+issueId+"/valid/"+hash;
+
+		String email = userService.getById(issueId).getEmail();
+
+		MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+
+		responseDTO.setMessage("Mail has been sent");
+
+		return responseDTO;
 	}
+
+
 
 	@Override
 	public SubscriptionModel read(int id) {
-		return dao.findOne(id);
+		return subscriptionDao.findOne(id);
 	}
-	
+
 	@Override
 	public void delete(int id) {
-		dao.delete(id);
-
+		subscriptionDao.delete(id);
 	}
 
 	@Override
-	public Collection<SubscriptionModel> listByIssueId(int issueId) {
-		return dao.findByIssueId(issueId);
+	public Collection <SubscriptionModel> listByIssueId(int issueId) {
+		return subscriptionDao.findByIssueId(issueId);
 	}
-
 }

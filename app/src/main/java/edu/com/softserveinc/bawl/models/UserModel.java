@@ -1,85 +1,58 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull; 
-import javax.validation.constraints.Size;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-
+import com.google.common.base.Objects;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
+import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import org.apache.log4j.Logger;
-
-//TODO:Add comments for annotation
-//TODO:Add more constructors
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="users")
+@Table(name="USERS")
 public class UserModel {
-    
-    /**
-     *  Logger field
-     */
+
     public static final Logger LOG=Logger.getLogger(UserModel.class);
 
-	/**
-	 * User ID
-	 */
 	@Id
-    @GeneratedValue //it will be auto incremented value in table 
+    @GeneratedValue
     @Column(unique=true, name="id")
-	protected int id;
+	private int id;
 	
-	/**
-	 * Name max length = 30
-	 */
-    @Size(max=30) 
-    @Column(name="name") //name of column in table
-    @NotNull(message="It can't be empty") // it needed for validation 
-    @NotEmpty  //annotation for hibernate, it is needed for that in DB this field couldn't be empty
-    protected String name;
+    @Size(max=30)
+    @Column(name="NAME")
+    @NotNull
+    @NotEmpty
+	private String name;
     
-	/**
-	 * E-mail
-	 */
     @Email
-    @NotEmpty(message="It can't be empty")
-    @Column(unique=true, name="email") //name of column in table
-    protected String email;
+    @NotEmpty
+    @Column(unique=true, name="EMAIL")
+	private String email;
         
-    /**
-	 * Login max length = 30
-	 */
     @Size(max = 30)
-    @NotEmpty(message="It can't be empty")
-    @Column(unique=true, name="login") //name of column in table
-    protected String login;
+    @NotEmpty
+    @Column(unique=true, name="LOGIN")
+	private String login;
     
-    /**
-     * Reole id min = 0 max = 3
-	 */ 
-//	@Size(min = 0, max = 3) 
-    @NotNull(message="It can't be empty")
-    @Column(name="role_id") //name of column in table
-    //TODO: Add hibernate annotation for relation between tables
-    protected int role_id;
+    @Column(name="ROLE_ID")
+	@Enumerated(EnumType.ORDINAL)
+	private UserRole role;
     
-     /**
-	 * Passvord min length = 6, max length = 32
-	 */
-    //@Size(min = 6, max = 32) 
-    @NotEmpty(message="It can't be empty")
-    @Column(name="password") //name of column in table
-    protected String password;
+    @NotEmpty
+    @Column(name="PASSWORD")
+	private String password;
     
-    /**
-     * Avatar url
-	 */
-    @Column(name="avatar_url") //name of column in table
-    protected String avatar;
+    @Column(name="AVATAR_URL")
+	private String avatar;
     
     
     /**
@@ -88,17 +61,17 @@ public class UserModel {
      * @param name
      * @param email
      * @param login
-     * @param role_id
+     * @param role
      * @param password
      * @param avatar
      */
     public UserModel(String name, String email, String login,
-    		int role_id, String password, String avatar ){
+    		int role, String password, String avatar ){
     	
     	this.name = name;
     	this.email = email;
     	this.login = login;
-    	this.role_id = role_id;
+    	this.role = UserRole.getByRoleId(role);
     	this.password = password;
     	this.avatar = avatar;
     }
@@ -109,7 +82,6 @@ public class UserModel {
     	
     }
     
-    //id get set
     /**
      * Method for setup user's id
      * 
@@ -125,7 +97,6 @@ public class UserModel {
     	return this.id;
     }
     
-    //Email get set
     /**
      * Method for setup user's name
      * 
@@ -142,7 +113,6 @@ public class UserModel {
 		return this.name;
 	}
     
-  //Email get set
     /**
      * Method for setup user's email
      * 
@@ -159,7 +129,6 @@ public class UserModel {
 		return this.email;
 	}
     
-    //Login get set
     /**
      * Method for setup user's login
      * 
@@ -176,24 +145,31 @@ public class UserModel {
 		return this.login;
 	}
     
-  //Role_id get set
     /**
      * Method for setup user's Role_id
      * 
-     * @param role_id
+     * @param role
      */
-    public void setRole_id(int role_id){
-    	this.role_id = role_id;
+    public void setRole(UserRole role){
+    	this.role = role;
+    }
+
+    /**
+     * Method for setup user's Role_id
+     *
+     * @param role
+     */
+    public void setRole(int role){
+    	this.role = UserRole.getByRoleId(role);
     }
     /**
      * 
-     * @return user's role_id
+     * @return user's role
      */
-    public int getRole_id(){
-		return this.role_id;
+    public UserRole getRole(){
+		return this.role;
 	}
     
-    //Password get set
     /**
      * Method for setup user's password
      * 
@@ -210,7 +186,6 @@ public class UserModel {
 		return this.password;
 	}
     
-    //Avatar get set
     /**
      * Method for setup user's password
      * 
@@ -226,65 +201,36 @@ public class UserModel {
     public String getAvatar(){
 		return this.avatar;
 	}
-    
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserModel userModel = (UserModel) o;
+		return Objects.equal(id, userModel.id) &&
+				Objects.equal(name, userModel.name) &&
+				Objects.equal(email, userModel.email) &&
+				Objects.equal(login, userModel.login) &&
+				Objects.equal(role, userModel.role) &&
+				Objects.equal(password, userModel.password) &&
+				Objects.equal(avatar, userModel.avatar);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + role_id;
-		return result;
+		return Objects.hashCode(id, name, email, login, role, password, avatar);
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserModel other = (UserModel) obj;
-		if (avatar == null) {
-			if (other.avatar != null)
-				return false;
-		} else if (!avatar.equals(other.avatar))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (role_id != other.role_id)
-			return false;
-		return true;
-	}
+
 	@Override
 	public String toString() {
-		return "UserModel [id=" + id + ", name=" + name + ", email=" + email
-				+ ", login=" + login + ", role_id=" + role_id + "]";
+		return Objects.toStringHelper(this)
+				.add("id", id)
+				.add("name", name)
+				.add("email", email)
+				.add("login", login)
+				.add("role", role)
+				.add("password", password)
+				.add("avatar", avatar)
+				.toString();
 	}
-    
 }

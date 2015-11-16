@@ -1,9 +1,10 @@
 package edu.com.softserveinc.bawl.security;
- 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
+import com.google.common.collect.Maps;
+import edu.com.softserveinc.bawl.dao.UserDao;
+import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.UserRole;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,79 +15,46 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.com.softserveinc.bawl.dao.UserDao;
-import edu.com.softserveinc.bawl.models.UserModel;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
 
-import org.apache.log4j.Logger;
- 
 @Transactional(readOnly = true)
 @Service
 public class BawlUserDetailsService implements UserDetailsService {
 
-	/**
-     *  Logger field
-     */
     public static final Logger LOG=Logger.getLogger(BawlUserDetailsService.class);
-	
-	@Autowired
+
+    private static final EnumMap<UserRole, List<SimpleGrantedAuthority>> AUTHORITIES_BY_ROLE = Maps.newEnumMap(UserRole.class);
+
+    public static final SimpleGrantedAuthority USER_NOT_CONFIRMED = new SimpleGrantedAuthority("USER_NOT_CONFIRMED");
+
+    public static final SimpleGrantedAuthority ROLE_USER = new SimpleGrantedAuthority("ROLE_USER");
+
+    public static final SimpleGrantedAuthority ROLE_MANAGER = new SimpleGrantedAuthority("ROLE_MANAGER");
+
+    public static final SimpleGrantedAuthority ROLE_ADMIN = new SimpleGrantedAuthority("ROLE_ADMIN");
+
+    static {
+            AUTHORITIES_BY_ROLE.put(UserRole.USER_NOT_CONFIRMED, Arrays.asList(USER_NOT_CONFIRMED));
+            AUTHORITIES_BY_ROLE.put(UserRole.USER, Arrays.asList(ROLE_USER));
+            AUTHORITIES_BY_ROLE.put(UserRole.MANAGER, Arrays.asList(ROLE_MANAGER, ROLE_USER));
+            AUTHORITIES_BY_ROLE.put(UserRole.ADMIN, Arrays.asList(ROLE_MANAGER, ROLE_ADMIN, ROLE_USER));
+    }
+
+    @Autowired
 	private UserDao userDao;
  
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
+
 			UserModel domainUser = userDao.findByLogin(username);
-			
-			boolean enabled = true;
-			boolean accountNonExpired = true;
-			boolean credentialsNonExpired = true;
-			boolean accountNonLocked = true;
-			
-			return new User(
-					domainUser.getLogin(), 
-					domainUser.getPassword(),
-					enabled,
-					accountNonExpired,
-					credentialsNonExpired,
-					accountNonLocked,
-					getAuthorities(domainUser.getRole_id()));
-			
+			final List<? extends GrantedAuthority> authorities = AUTHORITIES_BY_ROLE.get(domainUser.getRole());
+			return new User(domainUser.getLogin(), domainUser.getPassword(), true, true, true, true, authorities);
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public Collection<? extends GrantedAuthority> getAuthorities(Integer role) {
-		List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(role));
-		return authList;
-	}
-	
-	public List<String> getRoles(Integer role) {
-		List<String> roles = new ArrayList<String>();
-		
-		if (role.intValue() == 1) {
-			roles.add("ROLE_MANAGER");
-			roles.add("ROLE_ADMIN");
 
-			
-		} else if (role.intValue() == 2) {
-			roles.add("ROLE_MANAGER");
-		}
-
-		else if (role.intValue() == 0) {
-			roles.add("ROLE_USER");
-		}
-
-		else if (role.intValue() == -1) {
-			roles.add("USER_NOT_CONFIRMED");
-		}
-		
-		return roles;
-	}
-	
-	public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		for (String role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role));
-		}
-		return authorities;
-	}
 }

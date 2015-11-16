@@ -1,45 +1,57 @@
 package edu.com.softserveinc.bawl.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Email;
-
+import com.google.common.base.Objects;
 import org.apache.log4j.Logger;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 @Entity
-@Table(name = "subscriptions", uniqueConstraints=@UniqueConstraint(columnNames={"issueId", "email"}))
+@Table(name = "SUBSCRIPTIONS", uniqueConstraints=@UniqueConstraint(columnNames={"ISSUEID"/*, "EMAIL"*/}))
 public class SubscriptionModel {
 
-	/**
-     *  Logger field
-     */
-    public static final Logger LOG=Logger.getLogger(SubscriptionModel.class);
+    public static final Logger LOG = Logger.getLogger(SubscriptionModel.class);
 	
 	@Id
 	@GeneratedValue
-	@Column(unique=true, name = "id")
-	int id;
+	@Column(unique=true, name = "ID")
+	private int id;
 
 	@NotNull
-	@Column(name = "issueId")
+	@Column(name = "ISSUEID")
 	private int issueId;
 
-	@Email
-	@Column(name = "email")
-	private String email;
+	@NotNull
+	@Column(name = "USERID")
+	private int userId;
 
-	public SubscriptionModel() {
+	@Column(name = "ISVALID")
+	private boolean isValid;
+
+	public SubscriptionModel() {}
+	
+
+	public SubscriptionModel(int issueId, String email, int userId, boolean isValid) {
+		this.issueId = issueId;
+		this.userId = userId;
+		this.isValid = isValid;
 	}
 
-	public SubscriptionModel(int issueId, String email) {
+	public SubscriptionModel(int issueId, int userId) {
 		this.issueId = issueId;
-		this.email = email;
+		this.userId = userId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public boolean isValid() {
+		return isValid;
 	}
 
 	public int getId() {
@@ -58,49 +70,37 @@ public class SubscriptionModel {
 		this.issueId = issueId;
 	}
 
-	public String getEmail() {
-		return email;
+	public boolean getIsValid() {
+		return isValid;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setIsValid(boolean isValid) {
+		this.isValid = isValid;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		SubscriptionModel that = (SubscriptionModel) o;
+		return Objects.equal(id, that.id) &&
+				Objects.equal(issueId, that.issueId) &&
+				Objects.equal(userId, that.userId) &&
+				Objects.equal(isValid, that.isValid);
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + issueId;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SubscriptionModel other = (SubscriptionModel) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (issueId != other.issueId)
-			return false;
-		return true;
+		return Objects.hashCode(id, issueId, userId, isValid);
 	}
 
 	@Override
 	public String toString() {
-		return "SubscriptionModel [id=" + id + ", issueId=" + issueId
-				+ ", email=" + email + "]";
+		return Objects.toStringHelper(this)
+				.add("id", id)
+				.add("issueId", issueId)
+				.add("userId", userId)
+				.add("isValid", isValid)
+				.toString();
 	}
-
 }
