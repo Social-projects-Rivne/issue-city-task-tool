@@ -8,6 +8,7 @@ import com.cribbstechnologies.clients.mandrill.model.response.message.SendMessag
 import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,8 +74,9 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
     @Test
     public void notifyForIssue_WithValidCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
+        UserModel userModel = mock(UserModel.class);
         when(subscriptionModel.getIssueId()).thenReturn(ISSUE_ID);
-        when(subscriptionModel.getEmail()).thenReturn(EMAIL);
+        when(userModel.getEmail()).thenReturn(EMAIL);
         when(messageResponse.getStatus()).thenReturn(VALID_SENT_STATUS);
         when(sendMessageResponse.getList()).thenReturn(Arrays.asList(messageResponse));
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
@@ -88,8 +90,9 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
     @Test
     public void notifyForIssue_WithWrongCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
+        UserModel userModel = mock(UserModel.class);
         when(subscriptionModel.getIssueId()).thenReturn(ISSUE_ID);
-        when(subscriptionModel.getEmail()).thenReturn(EMAIL);
+        when(userModel.getEmail()).thenReturn(EMAIL);
         when(messageResponse.getStatus()).thenReturn(INVALID_SENT_STATUS);
         when(sendMessageResponse.getList()).thenReturn(Arrays.asList(messageResponse));
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);

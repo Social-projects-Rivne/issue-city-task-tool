@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "SUBSCRIPTIONS", uniqueConstraints=@UniqueConstraint(columnNames={"ISSUEID", "EMAIL"}))
+@Table(name = "SUBSCRIPTIONS", uniqueConstraints=@UniqueConstraint(columnNames={"ISSUEID"/*, "EMAIL"*/}))
 public class SubscriptionModel {
 
     public static final Logger LOG = Logger.getLogger(SubscriptionModel.class);
@@ -21,15 +21,10 @@ public class SubscriptionModel {
 	@Column(name = "ISSUEID")
 	private int issueId;
 
-
-	@Column(name = "EMAIL")
-	private String email;
-
-
+	@NotNull
 	@Column(name = "USERID")
 	private int userId;
 
-	@NotNull
 	@Column(name = "ISVALID")
 	private boolean isValid;
 
@@ -38,7 +33,6 @@ public class SubscriptionModel {
 
 	public SubscriptionModel(int issueId, String email, int userId, boolean isValid) {
 		this.issueId = issueId;
-		this.email = email;
 		this.userId = userId;
 		this.isValid = isValid;
 	}
@@ -76,14 +70,6 @@ public class SubscriptionModel {
 		this.issueId = issueId;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public boolean getIsValid() {
 		return isValid;
 	}
@@ -100,13 +86,12 @@ public class SubscriptionModel {
 		return Objects.equal(id, that.id) &&
 				Objects.equal(issueId, that.issueId) &&
 				Objects.equal(userId, that.userId) &&
-				Objects.equal(isValid, that.isValid) &&
-				Objects.equal(email, that.email);
+				Objects.equal(isValid, that.isValid);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(id, issueId, email, userId, isValid);
+		return Objects.hashCode(id, issueId, userId, isValid);
 	}
 
 	@Override
@@ -114,7 +99,6 @@ public class SubscriptionModel {
 		return Objects.toStringHelper(this)
 				.add("id", id)
 				.add("issueId", issueId)
-				.add("email", email)
 				.add("userId", userId)
 				.add("isValid", isValid)
 				.toString();
