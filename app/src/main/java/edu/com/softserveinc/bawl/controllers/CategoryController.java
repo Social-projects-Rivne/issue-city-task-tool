@@ -1,21 +1,26 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.CategoryDTO;
-import edu.com.softserveinc.bawl.dto.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.CategoryDTO;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static edu.com.softserveinc.bawl.models.enums.CategoryState.getState;
 
 /**
  * Controller for issue categories
  */
 @RestController
-@RequestMapping(value = "/category")
+@RequestMapping(value = "category")
 public class CategoryController {
 
     public static final Logger LOG = Logger.getLogger(CategoryController.class);
@@ -26,16 +31,16 @@ public class CategoryController {
     public static final String FAILURE_UPDATEDD = "Failed. New category hasn't been updated";
 
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
 
     /**
      * Returns list of the categories
      * @return list of the categories
      */
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @RequestMapping(value = "all",method = RequestMethod.GET)
     @ResponseBody
     public List<CategoryDTO> getCategories() {
-        return DTOAssembler.getCategoryDtoFrom(service.loadCategoriesList(), false);
+        return DTOAssembler.getCategoryDtoFrom(categoryService.loadCategoriesList(), false);
     }
 
     /**
@@ -47,7 +52,7 @@ public class CategoryController {
     @ResponseBody
     public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
         try {
-             service.addCategory(new CategoryModel(category.getName()));
+             categoryService.addCategory(new CategoryModel(category.getName()));
              category.setMessage(SUCCESS_ADDED);
         } catch (Exception e) {
              category.setMessage(FAILURE_ADDED);
@@ -55,14 +60,11 @@ public class CategoryController {
         return category;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public @ResponseBody
     CategoryDTO editCategory(@RequestBody CategoryDTO categoryDTO) {
         try {
-            CategoryModel categoryModel = service.getCategoryByID(categoryDTO.getId());
-            categoryModel.setName(categoryDTO.getName());
-            categoryModel.setState(CategoryState.getState(categoryDTO.getState()));
-            service.editCategory(categoryModel);
+            categoryService.updateCategory(categoryDTO.getId(), categoryDTO.getName(), getState(categoryDTO.getState()));
             categoryDTO.setMessage(SUCCESS_UPDATED);
         } catch (Exception ex) {
             categoryDTO.setMessage(FAILURE_UPDATEDD);

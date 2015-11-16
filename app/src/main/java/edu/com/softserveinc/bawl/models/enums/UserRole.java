@@ -1,28 +1,39 @@
 package edu.com.softserveinc.bawl.models.enums;
 
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 public enum UserRole {
 
-    USER_NOT_CONFIRMED(0, "User not confirmed"),
-    USER(1,"User"),
-    MANAGER(2, "Manager"),
-    ADMIN(3,"Admin");
+    USER_NOT_CONFIRMED("User not confirmed"),
+    USER("User"),
+    MANAGER("Manager"),
+    ADMIN("Admin"),
+    SUBSCRIBER("Subscriber");
 
-    public int id;
-    public String caption;
+    private static final Map<Integer, UserRole> USER_ROLE_MAP = Maps.newHashMap();
 
-    UserRole(int id, String caption) {
-        this.id = id;
+    static {
+        for(UserRole userRole : values()) {
+            USER_ROLE_MAP.put(userRole.ordinal(), userRole);
+        }
+    }
+    private final String caption;
+
+    UserRole(String caption) {
         this.caption = caption;
     }
 
    public static UserRole getByRoleId(int roleId) {
-        switch (roleId) {
-            case 0: return USER_NOT_CONFIRMED;
-            case 1: return USER;
-            case 2: return MANAGER;
-            case 3: return ADMIN;
-            default: return null;
-        }
+       return USER_ROLE_MAP.get(roleId);
     }
 
+    public int getId() {
+        return ordinal();
+    }
+
+    public String getCaption() {
+        return caption;
+    }
 }

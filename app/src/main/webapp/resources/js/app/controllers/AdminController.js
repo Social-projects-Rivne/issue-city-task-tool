@@ -1,7 +1,7 @@
 var AdminController = function(AdminView, ManagerView, CategoryManageView) {
     return {
         admin: function () {
-            if (!_.isNull(loginView.currentUser) && _.isNull(adminView)) {
+            if (!_.isNull(loginView.currentUser) && !_.isNull(adminView)) {
                 adminView.render();
             } else {
                 if (_.isNull(adminView)) {

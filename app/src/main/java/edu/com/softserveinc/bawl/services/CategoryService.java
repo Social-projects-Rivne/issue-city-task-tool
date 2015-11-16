@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.services;
 
 import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface CategoryService {
 
 	 void deleteCategory(CategoryModel category);
 
-	 void editCategory(CategoryModel category);
+	 void updateCategory(int id, String name, CategoryState state);
 
 	 CategoryModel getCategoryByID(int id);
 	

@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -11,10 +11,8 @@ import org.springframework.test.web.server.setup.MockMvcBuilders;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-/**
- * Created by Dominus on 28.10.2015.
- */
-public class ImageControllerTest extends AbstractBawlTest {
+
+public class ImageControllerFunctionalTest extends AbstractBawlFunctionalTest {
     private MockMvc mockMvc;
 
     @InjectMocks ImageController imageController;

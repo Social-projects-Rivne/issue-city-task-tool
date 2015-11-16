@@ -1,9 +1,8 @@
 package edu.com.softserveinc.bawl.services;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
-import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.impl.IssueServiceImpl;
@@ -11,11 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class IssueServiceImplTest extends AbstractBawlTest {
+public class IssueServiceImplTest extends AbstractBawlFunctionalTest {
 
     private IssueService issueService;
     private IssueDao issueDao;

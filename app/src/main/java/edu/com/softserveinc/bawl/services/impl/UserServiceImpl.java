@@ -6,20 +6,21 @@ import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     public static final Logger LOG=Logger.getLogger(UserServiceImpl.class);
+    public static final String ANONYMOUS_USER = "anonymousUser";
 
-	@Autowired
+    @Autowired
     private UserDao userDao;
 	
 	@Override
@@ -46,11 +47,26 @@ public class UserServiceImpl implements UserService {
 
 		userDao.saveAndFlush(user);
 	}
+
 	@Override
 	public boolean isExistingUser(String email){
 		if( userDao.findByEmail(email).equals(email)){
 			return true;
 		} else return false;
+	}
+
+	@Override
+	public int getRole(String email){
+		UserServiceImpl userService = new UserServiceImpl();
+		int role = userService.getUserIdByEmail(email).getRole().getId();
+		return role;
+	}
+
+	@Override
+	public UserModel getUserIdByEmail(String email){
+		//UserModel userModel;
+		return userDao.findIDByEmail(email);
+
 	}
 
 	@Override
@@ -65,9 +81,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserModel> getByRoleId(UserRole userRole) {
-		return userDao.findAll().stream()
-				.filter(model -> model.getRole() == userRole)
-				.collect(Collectors.toList());
+		return userDao.findByRole(userRole);
+
 	}
 
 	@Override
@@ -80,6 +95,25 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByLogin(login);
 	}
 
+	@Override
+	public  boolean isValidUser(String email) {
+		boolean role =  userDao.findIDByEmail(email).equals(email);
+		return role;
+	}
 
+    @Override
+    public int getCurrentUserId() {
+        return getCurrentUser().getId();
+    }
+
+    @Override
+    public UserModel getCurrentUser() {
+        String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (ANONYMOUS_USER.equals(currentUserLoginName)) {
+            return null;
+        } else {
+            return getByLogin(currentUserLoginName);
+        }
+    }
 
 }

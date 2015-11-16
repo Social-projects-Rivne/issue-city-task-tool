@@ -2,6 +2,7 @@ package edu.com.softserveinc.bawl.services.impl;
 
 import edu.com.softserveinc.bawl.dao.CategoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
+import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import edu.com.softserveinc.bawl.services.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void editCategory(CategoryModel category) {
-		categoryDao.saveAndFlush(category);
+	public void updateCategory(int id, String name, CategoryState state) {
+		CategoryModel categoryModel = getCategoryByID(id);
+		categoryModel.setName(name);
+		categoryModel.setState(state);
+		categoryDao.saveAndFlush(categoryModel);
 	}
 
 	@Override

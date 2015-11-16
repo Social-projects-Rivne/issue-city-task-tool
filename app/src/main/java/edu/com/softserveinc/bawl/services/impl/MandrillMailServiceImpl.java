@@ -100,13 +100,14 @@ public class MandrillMailServiceImpl implements MailService {
 
     @Override
     public void notifyForIssue(int issueId, String msg){
+        UserModel userModel = new UserModel();
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
         for (SubscriptionModel sub: subs){
             String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
             String link = properties.getProperty("mail.base_url") + "subscriptions/" + sub.getId() + "/delete/" + digest;
             MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                     .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
-                    .setRecipients(new MandrillRecipient("User", sub.getEmail()))
+                    .setRecipients(new MandrillRecipient("User", userModel.getEmail()))
                     .build();
             sendMessage(mandrillMessage);
         }

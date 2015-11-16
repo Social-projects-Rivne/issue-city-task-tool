@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import com.google.common.base.Objects;
 import edu.com.softserveinc.bawl.models.enums.CategoryState;
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,7 @@ public class CategoryModel {
     @Id
 	@GeneratedValue
 	@Column(unique=true, name = "ID")
-	int id;
+	private int id;
 
     @NotNull
 	@Column(unique=true, name = "NAME")
@@ -80,4 +81,20 @@ public class CategoryModel {
     public void setIssues(List<IssueModel> issues) {
         this.issues = issues;
     }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CategoryModel that = (CategoryModel) o;
+		return Objects.equal(id, that.id) &&
+				Objects.equal(name, that.name) &&
+				Objects.equal(state, that.state) &&
+				Objects.equal(issues, that.issues);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(id, name, state, issues);
+	}
 }

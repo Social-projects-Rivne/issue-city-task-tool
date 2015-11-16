@@ -7,12 +7,9 @@ import java.util.Collection;
  
 public interface SubscriptionDao extends JpaRepository<SubscriptionModel, Integer> {
 	
-	Collection<SubscriptionModel> findByIssueId(int issueId);
-	
-	// Collection<SubscriptionModel> findByEmail(String email);
-	
-	//	SubscriptionModel findByIssueIdAndEmail(int issueId, String email);
+	Collection <SubscriptionModel> findByIssueId(int issueId);
 
 	SubscriptionModel findByIssueIdAndUserId(int issueId, int userId);
+
 	
 }

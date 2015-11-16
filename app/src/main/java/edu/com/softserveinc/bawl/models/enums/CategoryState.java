@@ -1,25 +1,40 @@
 package edu.com.softserveinc.bawl.models.enums;
 
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 public enum CategoryState {
-    NEW(0, "New"),
-    DELETED(1, "Deleted");
 
-    public int id;
-    public String caption;
+    NEW("New"),
+    DELETED("Deleted");
 
-    CategoryState(int id, String caption){
-        this.id = id;
+    private static final Map<String, CategoryState> CATEGORY_STATE_MAP = Maps.newHashMap();
+
+    static {
+        for(CategoryState categoryState : values()) {
+            CATEGORY_STATE_MAP.put(categoryState.caption, categoryState);
+
+        }
+    }
+
+    private final String caption;
+
+    CategoryState(String caption){
         this.caption = caption;
     }
 
-    public static CategoryState getState(String state){
-        switch (state){
-            case "New":
-                return CategoryState.NEW;
-            case "Deleted":
-                return CategoryState.DELETED;
-            default:
-                return null;
-        }
+    public int getId() {
+        return ordinal();
     }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public static CategoryState getState(String state){
+        return CATEGORY_STATE_MAP.get(state);
+    }
+
+
 }

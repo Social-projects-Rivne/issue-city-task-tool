@@ -1,6 +1,11 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.*;
+import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserHistoryIssuesForUserDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserIssuesHistoryDTO;
+import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -46,8 +51,9 @@ public class UserController {
 		return DTOAssembler.getAllUsersDtoFrom(userService.loadUsersList());
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody
+    ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
             UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
@@ -67,7 +73,7 @@ public class UserController {
 		ResponseDTO responseDTO = new ResponseDTO();
 		try {
 			userService.editUser(userModel);
-			getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), userModel.getRole().caption);
+			getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(), userModel.getRole().getCaption());
 			responseDTO.setMessage("User was successfully edited");
 		} catch (Exception ex) {
 			responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());
@@ -115,11 +121,10 @@ public class UserController {
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public @ResponseBody UserDTO getCurrentUserAction(){
-		String currentUserLoginName = getCurrentUser().getName();
-		if (currentUserLoginName.equals("anonymousUser")) {
+		try {
+			return DTOAssembler.getUserDtoFrom(getCurrentUser());
+		} catch (Exception ex) {
 			return null;
-		} else {
-			return DTOAssembler.getUserDtoFrom(userService.getByLogin(currentUserLoginName));
 		}
 	}
 
@@ -134,7 +139,7 @@ public class UserController {
 		String subject = userNotificationDTO.getSubject();
 		String name = "User name";
 
-		try { getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+		try { getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
 			  responseDTO.setMessage("Mail has been sent");
 		} catch (Exception e){responseDTO.setMessage("Error");}
 
@@ -155,8 +160,7 @@ public class UserController {
 	@RequestMapping(value="/changepass", method = RequestMethod.GET)
 	public @ResponseBody ResponseDTO changeUserPassword(){
 		ResponseDTO responseDTO = new ResponseDTO();
-		String currentUserLoginName = getCurrentUser().getName();
-		UserModel userModel = userService.getByLogin(currentUserLoginName);
+		UserModel userModel = getCurrentUser();
 		String newPassword = PassGenerator.generate(1, 5);
 		userModel.setPassword(newPassword);
 		userService.editUserPass(userModel);
@@ -167,35 +171,26 @@ public class UserController {
 
     /**
      * Returns list of UserIssuesHistoryDto by user id
-     * @param id user id
      * @return list of UserIssuesHistoryDto
      */
     @RequestMapping(value = "user/history", method = RequestMethod.GET)
-    public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(@PathVariable int id){
-        List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(id);
+    public @ResponseBody List<UserIssuesHistoryDTO> getUserIssuesHistories(){
         List<IssueModel> issues = issueService.loadIssuesList();
-		String currentUserLoginName = getCurrentUser().getName();
-		UserModel userModel = userService.getByLogin(currentUserLoginName);
-        return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
+		UserModel userModel = getCurrentUser();
+		List<HistoryModel> listOfHistoriesByUserID = historyService.getHistoriesByUserID(userModel.getId());
+		return DTOAssembler.getAllUserIssuesHistoryDTO(listOfHistoriesByUserID, issues, userModel);
     }
 
     @RequestMapping(value = "user/history/issues", method = RequestMethod.GET)
-    public @ResponseBody List<UserHistoryIssuesForUserDto> getUserIssuesHistoriesForUser(){
-
-        UserModel curentUserModel = getCurrentUser();
-
-        List<HistoryModel> historyModels = historyService.getHistoriesByUserID(curentUserModel.getId());
+    public @ResponseBody List<UserHistoryIssuesForUserDTO> getUserIssuesHistoriesForUser(){
+        List<HistoryModel> historyModels = historyService.getHistoriesByUserID(getCurrentUser().getId());
         List<IssueModel> issueModels = issueService.loadIssuesList();
-
-
         return DTOAssembler.getUserIssueHistoryForUserDto(historyModels, issueModels);
     }
 
     private UserModel getCurrentUser(){
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserModel curentUserModel = userService.getByLogin(currentUserLoginName);
-
-        return curentUserModel;
+        return userService.getByLogin(currentUserLoginName);
     }
 }
 

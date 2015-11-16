@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
@@ -14,18 +14,11 @@ import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
 
@@ -34,10 +27,7 @@ import static org.springframework.test.web.server.request.MockMvcRequestBuilders
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(
-        { SecurityContextHolder.class})
-public class IssueControllerFunctionalTest extends AbstractBawlTest {
+public class IssueControllerFunctionalTest extends AbstractBawlFunctionalTest {
 
     public static final String MEDIA_TYPE = "application/json;charset=UTF-8";
     public static final String EMPTY_COLLECTION = "[]";
@@ -70,6 +60,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlTest {
 
     @Before
     public void setup() {
+        setupMockSecurityContext();
         MockitoAnnotations.initMocks(this);
         IssueModel issue = new IssueModel();
         issue.setId(1);
@@ -78,11 +69,6 @@ public class IssueControllerFunctionalTest extends AbstractBawlTest {
         categoryModel.setId(1);
         issue.setCategory(categoryModel);
         issue.setStatus(IssueStatus.APPROVED);
-        PowerMockito.mockStatic(SecurityContextHolder.class);
-        final SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-        TestingAuthenticationToken testingAuthenticationToken = new TestingAuthenticationToken("admin", "admin", "ROLE_ADMIN");
-        Mockito.when(securityContext.getAuthentication()).thenReturn(testingAuthenticationToken);
-        PowerMockito.when(SecurityContextHolder.getContext()).thenReturn(securityContext);
         UserModel userModel = new UserModel();
         userModel.setId(1);
         userModel.setLogin("admin");
@@ -111,7 +97,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlTest {
 
     @Test
     public void toResolve_ShouldChangeStatusIssueToResolve() throws Exception {
-        mockMvc.perform(post(String.format("/to-resolve/%d", ISSUE_ID))
+        mockMvc.perform(post(String.format("/issue/resolve/%d", ISSUE_ID))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
@@ -122,7 +108,7 @@ public class IssueControllerFunctionalTest extends AbstractBawlTest {
     public void getIssue_ShouldBeResponseStatusOk_AndEmptyCollection() throws Exception {
         mockMvc.perform(get(String.format("/issue/%d", ISSUE_ID)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":1,\"name\":\"foo\",\"description\":null,\"mapPointer\":null,\"attachments\":null,\"categoryId\":1,\"priorityId\":0,\"category\":null,\"status\":\"APPROVED\"}"));
+                .andExpect(content().string("{\"message\":null,\"label\":null,\"value\":null,\"id\":1,\"name\":\"foo\",\"description\":null,\"mapPointer\":null,\"attachments\":null,\"categoryId\":1,\"priorityId\":0,\"category\":null,\"status\":\"APPROVED\"}"));
 
 
     }

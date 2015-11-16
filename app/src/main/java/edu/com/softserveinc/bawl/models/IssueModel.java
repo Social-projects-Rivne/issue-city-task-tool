@@ -1,5 +1,6 @@
 package edu.com.softserveinc.bawl.models;
 
+import com.google.common.base.Objects;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import org.apache.log4j.Logger;
 
@@ -207,72 +208,39 @@ public class IssueModel {
         this.status = status;
     }
 
-    @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((attachments == null) ? 0 : attachments.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + id;
-		result = prime * result
-				+ ((mapPointer == null) ? 0 : mapPointer.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + priorityId;
-		result = prime * result + status.hashCode();
-		return result;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		IssueModel that = (IssueModel) o;
+		return Objects.equal(id, that.id) &&
+				Objects.equal(priorityId, that.priorityId) &&
+				Objects.equal(name, that.name) &&
+				Objects.equal(description, that.description) &&
+				Objects.equal(mapPointer, that.mapPointer) &&
+				Objects.equal(attachments, that.attachments) &&
+				Objects.equal(category, that.category) &&
+				Objects.equal(histories, that.histories) &&
+				Objects.equal(status, that.status);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		IssueModel other = (IssueModel) obj;
-		if (attachments == null) {
-			if (other.attachments != null)
-				return false;
-		} else if (!attachments.equals(other.attachments))
-			return false;
-		if (category!= null && !category.equals(other.category))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (id != other.id)
-			return false;
-		if (mapPointer == null) {
-			if (other.mapPointer != null)
-				return false;
-		} else if (!mapPointer.equals(other.mapPointer))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (priorityId != other.priorityId)
-			return false;
-		if (status == null ) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hashCode(id, name, description, mapPointer, attachments, priorityId, category, histories, status);
 	}
 
 	@Override
 	public String toString() {
-		return "IssueModel [id=" + id + ", name=" + name + ", description="
-				+ description + ", mapPointer=" + mapPointer + ", category="
-				+ category + ", priorityId=" + priorityId + ", status="
-				+ status + "]";
+		return Objects.toStringHelper(this)
+				.add("id", id)
+				.add("name", name)
+				.add("description", description)
+				.add("mapPointer", mapPointer)
+				.add("attachments", attachments)
+				.add("priorityId", priorityId)
+				.add("category", category)
+				.add("histories", histories)
+				.add("status", status)
+				.toString();
 	}
-
 }

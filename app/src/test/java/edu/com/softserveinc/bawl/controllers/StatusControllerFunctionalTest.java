@@ -1,6 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.AbstractBawlTest;
+import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.services.StatusService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.server.request.MockMvcRequestBuilders
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
-public class StatusControllerTest extends AbstractBawlTest {
+public class StatusControllerFunctionalTest extends AbstractBawlFunctionalTest {
 
     public static final String EMPTY_COLLECTION = "[]";
     private MockMvc mockMvc;
