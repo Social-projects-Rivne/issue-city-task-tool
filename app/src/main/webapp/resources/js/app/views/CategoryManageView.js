@@ -1,6 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTemplate.html', 'collection/CategoryCollection',
+define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTemplate.html', 'collection/CategoryCollection', 'text!templates/CategoryAddTemplate.html',
 		'view/SingleCategoryView', 'model/CategoryModel', 'text!templates/CategoryEditTemplate.html', 'text!templates/ConfirmationTemplate.html',  'text!templates/NotificationTemplate.html' ],
-		function($, _, Backbone, CategoryManageTemplate, CategoryCollection, SingleCategoryView,
+		function($, _, Backbone, CategoryManageTemplate, CategoryCollection, CategoryAddTemplate, SingleCategoryView,
 				 CategoryModel, CategoryEditTemplate, ConfirmationTemplate, NotificationTemplate) {
 			
 			var that = null;
@@ -10,17 +10,19 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 				el: '.right_admin_panel',
 
 				events: {
-					'click #addCategory' : 'addCategory',
 					'click .category-table .editCategory': 'showEditCategoryTemplate',
 					'click .editCategoryConfirm' : 'editCategoryConfirm',
 					'click .category-table .deleteCategory' : 'showRemoveCategoryConfirmation',
-					'click .confirm': 'confirmAction'
+					'click .confirm': 'confirmAction',
+					'click #addCategory': 'showAddCategoryTemplate',
+					'click .addCategoryConfirm' : 'addNewCategory'
 				},
 				
 				categoryManageTemplate: _.template(CategoryManageTemplate),
 				categoryEditTemplate: _.template(CategoryEditTemplate),
 				notificationTemplate: _.template(NotificationTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
+				categoryAddTemplate: _.template(CategoryAddTemplate),
 
 				categories: null,
 
@@ -97,6 +99,32 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 					var category = this.categories.get(e.currentTarget.id);
 					category.set({
 						state: CATEGORY_DELETED
+					}).save( {}, {
+						success: function(model, response) {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+							that.render();
+						},
+						error: function() {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					} );
+				},
+
+				showAddCategoryTemplate: function(e){
+					if($('#addCategoryModal')) $('#addCategoryModal').remove();
+					$("#container").append(this.categoryAddTemplate());
+					$("#addCategoryModal").modal();
+				},
+
+				addNewCategory: function(e){
+					if($('#addCategoryModal')) $('#addCategoryModal').remove();
+					var newCategory = new CategoryModel();
+					newCategory.set({
+						name: $("add-category-name").val()
 					}).save( {}, {
 						success: function(model, response) {
 							if($('#notificationModal')) $('#notificationModal').remove();

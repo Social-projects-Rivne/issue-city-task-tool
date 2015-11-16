@@ -107,8 +107,8 @@ define([
                         return true;
                     }
 
-					
-					if(testField(issueName, error) && testField(issueCategory, error) && testField(issueDescription, error)) {
+
+					if(testField( $('#issue-name'), $('#error')) && testField($('#issue-category'), $('#error')) && testField($('#issue-description'), $('#error'))) {
 						this.model.set( {
                             mapPointer: $('#map-pointer').val(),
 							name: $('#issue-name').val(),
