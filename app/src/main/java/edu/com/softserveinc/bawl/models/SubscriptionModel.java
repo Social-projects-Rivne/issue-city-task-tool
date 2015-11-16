@@ -2,7 +2,6 @@ package edu.com.softserveinc.bawl.models;
 
 import com.google.common.base.Objects;
 import org.apache.log4j.Logger;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,11 +21,11 @@ public class SubscriptionModel {
 	@Column(name = "ISSUEID")
 	private int issueId;
 
-	@Email
+
 	@Column(name = "EMAIL")
 	private String email;
 
-	@Email
+
 	@Column(name = "USERID")
 	private int userId;
 
@@ -35,17 +34,18 @@ public class SubscriptionModel {
 	private boolean isValid;
 
 	public SubscriptionModel() {}
-
-	public SubscriptionModel(int issueId, String email) {
-		this.issueId = issueId;
-		this.email = email;
-	}
+	
 
 	public SubscriptionModel(int issueId, String email, int userId, boolean isValid) {
 		this.issueId = issueId;
 		this.email = email;
 		this.userId = userId;
 		this.isValid = isValid;
+	}
+
+	public SubscriptionModel(int issueId, int userId) {
+		this.issueId = issueId;
+		this.userId = userId;
 	}
 
 	public int getUserId() {

@@ -56,6 +56,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public int getRole(String email){
+		UserServiceImpl userService = new UserServiceImpl();
+		int role = userService.getUserIdByEmail(email).getRole().getId();
+		return role;
+	}
+
+	@Override
+	public UserModel getUserIdByEmail(String email){
+		//UserModel userModel;
+		return userDao.findIDByEmail(email);
+
+	}
+
+	@Override
 	public void editUser(UserModel user) {
 		userDao.saveAndFlush(user);
 	}
@@ -81,6 +95,12 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByLogin(login);
 	}
 
+	@Override
+	public  boolean isValidUser(String email) {
+		boolean role =  userDao.findIDByEmail(email).equals(email);
+		return role;
+	}
+
     @Override
     public int getCurrentUserId() {
         return getCurrentUser().getId();
@@ -95,6 +115,5 @@ public class UserServiceImpl implements UserService {
             return getByLogin(currentUserLoginName);
         }
     }
-
 
 }

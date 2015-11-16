@@ -28,4 +28,10 @@ public interface UserService {
 	int getCurrentUserId();
 
 	UserModel getCurrentUser();
+
+	int getRole(String email);
+
+	public UserModel getUserIdByEmail(String email);
+
+	public  boolean isValidUser(String email);
 }
