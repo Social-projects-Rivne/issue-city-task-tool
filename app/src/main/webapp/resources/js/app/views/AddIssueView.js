@@ -1,7 +1,15 @@
-define(     ['jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templates/AddIssue.html',
-            'model/CategoryModel', 'collection/CategoryCollection', 'text!templates/NotificationTemplate.html' ],
-		    function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection, NotificationTemplate
-      ) {
+define([
+		'jquery',
+		'underscore',
+		'backbone',
+		'model/IssueModel',
+		'text!templates/AddIssue.html',
+        'model/CategoryModel',
+		'collection/CategoryCollection',
+		'text!templates/NotificationTemplate.html'
+], function($, _, Backbone, IssueModel, AddIssueTemplate, CategoryModel, CategoryCollection, NotificationTemplate ) {
+
+                'use strict';
 
                 var FILL_FORM_MESSAGE = "Please fill the form correctly!";
                 var ERROR_FILL_FORM_CSS = "{'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}";
@@ -39,10 +47,10 @@ define(     ['jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templ
 
 						that.$el.html(that.template( { "categories": categoryCollection.toJSON() } ));
 
-						issueName = $('#issue-name');
-						issueCategory = $('#issue-category');
-						issueDescription = $('#issue-description');
-						error = $('#error');
+						var issueName = $('#issue-name');
+						var issueCategory = $('#issue-category');
+						var issueDescription = $('#issue-description');
+						var error = $('#error');
 						
                         issueName.on({
                             blur : function() {
@@ -101,7 +109,8 @@ define(     ['jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templ
 
 					
 					if(testField(issueName, error) && testField(issueCategory, error) && testField(issueDescription, error)) {
-						this.model.set( { mapPointer: $('#map-pointer').val(),
+						this.model.set( {
+                            mapPointer: $('#map-pointer').val(),
 							name: $('#issue-name').val(),
 							description: $('#issue-description').val(),
 							category: $('#issue-category').val(),
@@ -110,12 +119,16 @@ define(     ['jquery', 'underscore', 'backbone', 'model/IssueModel', 'text!templ
 						this.model.save( {}, { 
 							success: function(model, response) {
 								mapView.render();
-								if($('#notificationModal')) $('#notificationModal').remove();
+								if($('#notificationModal')) {
+                                    $('#notificationModal').remove();
+                                }
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							},
 							error: function() {
-								if($('#notificationModal')) $('#notificationModal').remove();
+								if($('#notificationModal')) {
+                                    $('#notificationModal').remove();
+                                }
 								that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
 								$('#notificationModal').modal();
 							}
