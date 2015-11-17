@@ -20,7 +20,7 @@ class UserHistoryDTO extends ResponseDTO with Comparable[UserHistoryDTO] with Co
 
   def setDate(date : Date) {
     this.date = date
-    val simpleDateFormat: SimpleDateFormat = new SimpleDateFormat("dd.mm.yyyy")
+    val simpleDateFormat: SimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy")
     dateStr = simpleDateFormat.format(date)
   }
 
