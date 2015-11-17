@@ -20,8 +20,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click .editIssueConfirm' : 'editIssue',
 					'click #left_admin_panel #manager_log_out':'logOut',
 					'click #all_issues': 'allIssues',
-					'click #new_issues': 'newIssues',// New
-					'click #resolved_issues': 'resolvedIssues'// New
+					'click #newest_issues': 'newestIssues',
+					'click #resolved_issues': 'resolvedIssues'
 				},
 
 				managerTemplate: _.template(ManagerTemplate),
@@ -297,18 +297,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issues = issuesFilterList;
 					console.log(this.issues);
 					this.issueTableRender();
-					//this.$("#issue-table-body").empty();
-					//that = this;
-					//this.issues.each( function(issue){
-					//	that.$("#issue-table-body").append(that.$("#issue-table-body").
-					//			append(that.issueTableTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }))
-					//	);
-					//});
-					//this.$("#issue-table-body").find('select').hide();
-
 				},
 
-				newIssues: function (e) {
+				newestIssues: function (e) {
 					this.issues = mapView.model;
 					var issuesFilterList = new IssueCollection();
 					this.issues.each(function (issue) {
@@ -323,20 +314,36 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issueTableRender();
 				},
 
-				resolvedIssues: function (e) {//Dosen't worck!!!
-					this.issues = mapView.model;
-					var issuesFilterList = new IssueCollection();
-					this.issues.each(function (issue) {
-						if (issue.get('status') == "RESOLVED") {
-							console.log(issue);
-							issuesFilterList.add(issue);
-						}
-					});
-					console.log(issuesFilterList);
-					this.issues = issuesFilterList;
-					console.log(this.issues);
-					this.issueTableRender();
+				resolvedIssues: function (e) {
+					//var that = this;
+					//id = e.currentTarget.id;
+					var issues = mapView.model;
+					var issuesFilterList = $.ajax({
+						url: '/issue/get_Resolved',
+						type: 'GET',
+						success: function(response) {
+							console.log(issuesFilterList);
+							this.issues = issuesFilterList;
+							console.log(this.issues);
+							this.issueTableRender();
+						},
+						error: function(){
+						}});
 				},
+				//resolvedIssues: function (e) {//Dosen't worck!!!
+				//	this.issues = mapView.model;
+				//	var issuesFilterList = new IssueCollection({url : "issue/get"});
+				//	this.issues.each(function (issue) {
+				//		if (issue.get('status') == "RESOLVED") {
+				//			console.log(issue);
+				//			issuesFilterList.add(issue);
+				//		}
+				//	});
+				//	console.log(issuesFilterList);
+				//	this.issues = issuesFilterList;
+				//	console.log(this.issues);
+				//	this.issueTableRender();
+				//},
 
 				showEditIssueForm: function(e){
 					// remove existing modal

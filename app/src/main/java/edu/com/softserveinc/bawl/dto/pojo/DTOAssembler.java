@@ -87,6 +87,17 @@ public class DTOAssembler {
         return listIssueDTO;
     }
 
+    public static List<IssueDTO> getAllResolvedIssuesDto(List<IssueModel> allIssues){
+        List<IssueDTO> listIssueDTO = new ArrayList<>(allIssues.size());
+        allIssues.forEach(issueModel -> {
+                    if (issueModel.getStatus() == IssueStatus.RESOLVED) {
+                        listIssueDTO.add(getIssueDto(issueModel));
+                    }
+                }
+        );
+        return listIssueDTO;
+    }
+
     public static IssueDTO getIssueDto(IssueModel issueModel) {
         IssueDTO issueDTO = new IssueDTO();
         issueDTO.setId(issueModel.getId());

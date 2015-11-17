@@ -122,6 +122,17 @@ public class IssueController {
     }
 
     /**
+     * Returns all issues with status RESOLVED
+     *
+     * @return list of all issues with status RESOLVED
+     */
+    @RequestMapping(value = "get_Resolved", method = RequestMethod.GET)
+    @ResponseBody
+    public List<IssueDTO> getResolvedIssues(){
+        return DTOAssembler.getAllResolvedIssuesDto(historyService.getLastUniqueIssues());
+    }
+
+    /**
      * Adds new issue
      *
      * @param request
