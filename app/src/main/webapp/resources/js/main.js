@@ -17,6 +17,7 @@ function ($, _, Backbone, Router, BackboneRouteControl,
         USER = 1;
         MANAGER = 2;
         ADMIN = 3;
+        SUBSCRIBER = 4;
         CATEGORY_NEW = "New";
         CATEGORY_DELETED = "Deleted"
 
@@ -51,6 +52,4 @@ function ($, _, Backbone, Router, BackboneRouteControl,
             });
 
         });
-
-
-    });
+});
