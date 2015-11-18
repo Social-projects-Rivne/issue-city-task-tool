@@ -5,15 +5,13 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 			
 			var that = null;
 	
-			var CategoryManageView = Backbone.View.extend({
-
+			return Backbone.View.extend({
 				el: '.right_admin_panel',
-
 				events: {
 					'click .category-table .editCategory': 'showEditCategoryTemplate',
-					'click .editCategoryConfirm' : 'editCategoryConfirm',
+					'click .editCategoryConfirm' : 'showEditCategoryConfirmation',
 					'click .category-table .deleteCategory' : 'showRemoveCategoryConfirmation',
-					'click .confirm': 'confirmAction',
+					//'click .confirm': 'confirmAction',
 					'click #addCategory': 'showAddCategoryTemplate',
 					'click .addCategoryConfirm' : 'addNewCategory'
 				},
@@ -23,7 +21,6 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 				notificationTemplate: _.template(NotificationTemplate),
 				confirmationTemplate: _.template(ConfirmationTemplate),
 				categoryAddTemplate: _.template(CategoryAddTemplate),
-
 				categories: null,
 
 				initialize: function() {
@@ -35,19 +32,14 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 					that.$el.html(that.categoryManageTemplate());
 					this.categories.fetch({
 						success: function () {
+							$("#category-table-body").empty();
 							that.categories.each(function (category) {
 								var categoryView = new SingleCategoryView({model: category});
 								$("#category-table-body").append(categoryView.render().el);
 							}, this);
 						}
 					});
-				},
-
-				//TODO Why this function didn't call when clicked on button ok?
-				editCategoryConfirm: function(e) {
-					if($('#confirmationModal')) $('#confirmationModal').remove();
-					$("#container").append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this category?' }, { 'id': e.currentTarget.id }, { 'action': 'edit category' } ] } ));
-					$('#confirmationModal').modal();
+					return this;
 				},
 
 				showEditCategoryTemplate: function(e){
@@ -55,92 +47,36 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 					var category = this.categories.get(e.currentTarget.id);
 					$("#container").append(this.categoryEditTemplate(category.toJSON()));
 					$("#editCategoryModal").modal();
+					$('.editCategoryConfirm').click(this.showEditCategoryConfirmation);
+				},
+
+				showEditCategoryConfirmation: function(e) {
+					$("#container").append(that.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this category?' }, { 'id': e.currentTarget.id }, { 'action': 'edit category' } ] } ));
+					$('#confirmationModal').modal();
+					return e;
 				},
 
 				showRemoveCategoryConfirmation: function(e){
 					if($('#confirmationModal')) $('#confirmationModal').remove();
 					this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to delete this category?' }, { 'id': e.currentTarget.id }, { 'action': 'delete category' } ] } ));
 					$('#confirmationModal').modal();
-				},
-
-				confirmAction: function(e){
-					$('#confirmationModal').modal('hide');
-					$('#editModal').modal('hide');
-					if (e.currentTarget.name == 'edit category') {
-						this.editCategory(e);
-					}
-
-					if (e.currentTarget.name == 'delete category') {
-						this.deleteCategory(e);
-					}
-				},
-
-				editCategory: function(e){
-					var category = this.categories.get(e.currentTarget.id);
-					category.set({
-						name: $('#edit-category-name').val()
-					}).save( {}, {
-						success: function(model, response) {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate( { 'data': response } ));
-							$('#notificationModal').modal();
-							that.render();
-						},
-						error: function() {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-							$('#notificationModal').modal();
-						}
-					} );
-
-				},
-
-				deleteCategory: function(e){
-					var category = this.categories.get(e.currentTarget.id);
-					category.set({
-						state: CATEGORY_DELETED
-					}).save( {}, {
-						success: function(model, response) {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate( { 'data': response } ));
-							$('#notificationModal').modal();
-							that.render();
-						},
-						error: function() {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-							$('#notificationModal').modal();
-						}
-					} );
+					return e;
 				},
 
 				showAddCategoryTemplate: function(e){
 					if($('#addCategoryModal')) $('#addCategoryModal').remove();
 					$("#container").append(this.categoryAddTemplate());
 					$("#addCategoryModal").modal();
+					$('.addCategoryConfirm').click(this.showAddCategoryConfirmation);
 				},
 
-				addNewCategory: function(e){
-					if($('#addCategoryModal')) $('#addCategoryModal').remove();
-					var newCategory = new CategoryModel();
-					newCategory.set({
-						name: $("add-category-name").val()
-					}).save( {}, {
-						success: function(model, response) {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate( { 'data': response } ));
-							$('#notificationModal').modal();
-							that.render();
-						},
-						error: function() {
-							if($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
-							$('#notificationModal').modal();
-						}
-					} );
+				showAddCategoryConfirmation: function(e){
+					if($('#confirmationModal')) $('#confirmationModal').remove();
+					$("#container").append(that.confirmationTemplate( { 'data': [ { 'message': 'Do you really want add new category?' }, { 'id': e.currentTarget.id }, { 'action': 'add category' } ] } ));
+					$('#confirmationModal').modal();
+					return e;
 				}
 
 			});
-			
-			return CategoryManageView;
+
 		})
