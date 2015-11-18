@@ -288,7 +288,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issues = mapView.model;
 					var issuesFilterList = new IssueCollection();
 					this.issues.each(function(issue){
-						if(issue.get('status') == "NEW" || issue.get('status') == "APPROVED" || issue.get('status') == "TO_RESOLVE"){
+						if(issue.get('status') == "NEW" || issue.get('status') == "APPROVED" || issue.get('status') == "TO_RESOLVE" || issue.get('status') == "DELETED"){
 							console.log(issue);
 							issuesFilterList.add(issue);
 						}
@@ -315,35 +315,19 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				},
 
 				resolvedIssues: function (e) {
-					//var that = this;
-					//id = e.currentTarget.id;
-					var issues = mapView.model;
-					var issuesFilterList = $.ajax({
-						url: '/issue/get_Resolved',
-						type: 'GET',
-						success: function(response) {
-							console.log(issuesFilterList);
-							this.issues = issuesFilterList;
-							console.log(this.issues);
-							this.issueTableRender();
-						},
-						error: function(){
-						}});
+					this.issues = mapView.model;
+					var issuesFilterList = new IssueCollection({url : "issue/get_Resolved"});
+					this.issues.each(function (issue) {
+						if (issue.get('status') == "RESOLVED") {
+							console.log(issue);
+							issuesFilterList.add(issue);
+						}
+					});
+					console.log(issuesFilterList);
+					this.issues = issuesFilterList;
+					console.log(this.issues);
+					this.issueTableRender();
 				},
-				//resolvedIssues: function (e) {//Dosen't worck!!!
-				//	this.issues = mapView.model;
-				//	var issuesFilterList = new IssueCollection({url : "issue/get"});
-				//	this.issues.each(function (issue) {
-				//		if (issue.get('status') == "RESOLVED") {
-				//			console.log(issue);
-				//			issuesFilterList.add(issue);
-				//		}
-				//	});
-				//	console.log(issuesFilterList);
-				//	this.issues = issuesFilterList;
-				//	console.log(this.issues);
-				//	this.issueTableRender();
-				//},
 
 				showEditIssueForm: function(e){
 					// remove existing modal
