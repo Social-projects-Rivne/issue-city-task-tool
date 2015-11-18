@@ -17,9 +17,7 @@ import org.powermock.reflect.Whitebox;
 import java.util.Arrays;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTest {
 
@@ -82,7 +80,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
         when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
 
-        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN);
+        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, mock(String.class));
 
         verify(messagesRequest).sendMessage(any(MandrillMessageRequest.class));
     }
@@ -98,7 +96,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
         when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
 
-        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN);
+        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, mock(String.class));
 
         verify(messagesRequest).sendMessage(any(MandrillMessageRequest.class));
     }

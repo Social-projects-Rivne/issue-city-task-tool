@@ -1,11 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserHistoryIssuesForUserDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserIssuesHistoryDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
+import edu.com.softserveinc.bawl.dto.pojo.*;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -19,16 +14,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
+import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -53,15 +45,16 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody
-    ResponseDTO addUserAction(@RequestBody UserDTO userDTO) {
+    ResponseDTO addUserAction(@RequestBody UserDTO userDTO, HttpServletRequest request) {
 		ResponseDTO responseDTO = new ResponseDTO();
+		UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
+				userDTO.getLogin(), userDTO.getRoleId(), userDTO.getPassword(), userDTO.getAvatar());
 		try {
-            UserModel userModel = new UserModel(userDTO.getName(), userDTO.getEmail(),
-                    userDTO.getLogin(), userDTO.getRoleId(), userDTO.getPassword(), userDTO.getAvatar());
             userModel = userService.addUser(userModel);
-			getMandrillMail().sendRegNotification(userModel);
+			getMandrillMail().sendRegNotification(userModel, getBaseURL(request));
 			responseDTO.setMessage("Successfully registered. Please confirm your email");
 		} catch (Exception ex) {
+			userService.deleteUser(userModel.getId());
 			responseDTO.setMessage("Some problem occured! User was not added");
 		}
 		return responseDTO;
@@ -192,6 +185,8 @@ public class UserController {
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.getByLogin(currentUserLoginName);
     }
+
+
 }
 
 

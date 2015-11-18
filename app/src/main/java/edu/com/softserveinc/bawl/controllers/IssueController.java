@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForAddIssue;
 import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForResolving;
+import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
 
 @RestController
 @RequestMapping("issue")
@@ -96,11 +98,11 @@ public class IssueController {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseDTO deleteIssue(@PathVariable("id") int issueId) {
+    public ResponseDTO deleteIssue(@PathVariable("id") int issueId, HttpServletRequest request) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             issueService.deleteProblem(issueId, userService.getCurrentUserId());
-            mailService.notifyForIssue(issueId, "Issue has been deleted.");
+            mailService.notifyForIssue(issueId, "Issue has been deleted.", getBaseURL(request));
         } catch (Exception ex) {
             responseDTO.setMessage(FAILURE_DELETE);
         }
@@ -162,7 +164,7 @@ public class IssueController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseDTO editIssue(@RequestBody IssueDTO issueDTO) {
+    public ResponseDTO editIssue(@RequestBody IssueDTO issueDTO, HttpServletRequest request) {
         ResponseDTO responseDTO = new ResponseDTO();
         try {
             int userId = userService.getCurrentUserId();
@@ -195,7 +197,7 @@ public class IssueController {
                 editedIssue.setName(name);
             }
 
-            mailService.notifyForIssue(issueId, "Issue has been updated.");
+            mailService.notifyForIssue(issueId, "Issue has been updated.", getBaseURL(request));
             issueService.editProblem(editedIssue, userId);
             responseDTO.setMessage(SUCCESS_UPDATE);
         } catch (Exception ex) {

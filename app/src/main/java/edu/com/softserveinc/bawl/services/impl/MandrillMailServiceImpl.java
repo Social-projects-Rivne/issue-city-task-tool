@@ -70,8 +70,9 @@ public class MandrillMailServiceImpl implements MailService {
         return mailService;
     }
 
-    public void sendRegNotification(UserModel userModel){
-        String link = properties.getProperty("mail.root_url") + properties.getProperty("mail.confirmation_url") +
+    @Override
+    public void sendRegNotification(UserModel userModel, String rootURL){
+        String link = rootURL + properties.getProperty("mail.confirmation_url") +
                 userModel.getPassword() + "&id=" + userModel.getId();
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                 .setPattern(MailPatterns.REGISTRATION_PATTERN, userModel.getName(), link)
@@ -88,6 +89,7 @@ public class MandrillMailServiceImpl implements MailService {
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
+    @Override
     public void sendMessage(MandrillHtmlMessage mandrillMessage) {
         messageRequest = new MandrillMessageRequest();
         messageRequest.setMessage(mandrillMessage);
@@ -99,12 +101,12 @@ public class MandrillMailServiceImpl implements MailService {
     }
 
     @Override
-    public void notifyForIssue(int issueId, String msg){
+    public void notifyForIssue(int issueId, String msg, String rootURL){
         UserModel userModel = new UserModel();
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
         for (SubscriptionModel sub: subs){
             String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
-            String link = properties.getProperty("mail.base_url") + "subscriptions/" + sub.getId() + "/delete/" + digest;
+            String link = rootURL + "subscriptions/" + sub.getId() + "/delete/" + digest;
             MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                     .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
                     .setRecipients(new MandrillRecipient("User", userModel.getEmail()))

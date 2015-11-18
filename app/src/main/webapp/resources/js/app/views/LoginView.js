@@ -45,68 +45,68 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					var password = $(" #j_password").val();
 					if(login != "" && password != ""){
 						//send user's login and password
-						$.ajax({
-							url: 'auth/login',
-							type: 'POST',
-							data: $("#loginForm").serialize(),
-							//if request done
-							success: function(){
-								//get logined user model
-								$.ajax({ 
-									contentType:'applicetaion/json',
-									url: 'users/current',
-									//when request done we create admin or manager view and rout user on his page
-									success: function(data){
-										that.currentUser = new UserModel(data);
-										$('.navbar  #cry-out').show();
-										$('.navbar  #logout').show();
-										$('.navbar  #filter').show();
-										$('.navbar  #stat').show();
-										$('.navbar  #signUp').hide();
-										//routing by user's role
-
-										//If user didn't validate his email
-										if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)){
-
-											//TODO must be beter way to do it
-											$.ajax('auth/logout');
-											loginView.currentUser = null;
-											router.navigate('', {trigger:true});
-
-											if($('#notificationModal'))
-												$('#notificationModal').remove();
-											that.$el.append(that.notificationTemplate( { 'data': { 'message': "You should validate your email " }} ));
-											$('#notificationModal').modal();
-
-
-											return;
-										}
-
-										else if(_.isEqual(that.currentUser.get('roleId'),ADMIN)){
-											adminView = new AdminView( { el: "#container" } );
-											managerView = new ManagerView({el:"#container"})
-											router.navigate('admin',{trigger:true});
-										} else if(_.isEqual(that.currentUser.get('roleId'), MANAGER)){
-											managerView = new ManagerView({el:"#container"})
-											router.navigate('manager',{trigger:true});
-										}
-
-										if(_.isEmpty(that.currentUser.get('avatar'))){
-											that.currentUser.set({'avatar':'resources/img/avatar.png'});
-										}
-										that.hideLoginForm();
-										that.buttonsManage();
-									}
-								});
-							},
-                            error : function(data) {
-                                $("#loginMessage")[0].textContent = "Incorrect name or password";
-                            }
-						});	
+						this.sendRegistrationRequest($("#loginForm").serialize())
 
 					} else{
 						console.log('Fields is empty');
 					};
+				},
+
+				sendRegistrationRequest: function(userModel){
+					$.ajax({
+						url: 'auth/login',
+						type: 'POST',
+						data: userModel,
+						//if request done
+						success: function(){
+							//get logined user model
+							$.ajax({
+								contentType:'applicetaion/json',
+								url: 'users/current',
+								//when request done we create admin or manager view and rout user on his page
+								success: function(data){
+									that.currentUser = new UserModel(data);
+									$('.navbar  #cry-out').show();
+									$('.navbar  #logout').show();
+									$('.navbar  #filter').show();
+									$('.navbar  #stat').show();
+									$('.navbar  #signUp').hide();
+									//routing by user's role
+
+									//If user didn't validate his email
+									if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)){
+										$.ajax('auth/logout');
+										loginView.currentUser = null;
+										router.navigate('', {trigger:true});
+
+										if($('#notificationModal'))
+											$('#notificationModal').remove();
+										that.$el.append(that.notificationTemplate( { 'data': { 'message': "You should validate your email " }} ));
+										$('#notificationModal').modal();
+										return;
+									}
+
+									else if(_.isEqual(that.currentUser.get('roleId'),ADMIN)){
+										adminView = new AdminView( { el: "#container" } );
+										managerView = new ManagerView({el:"#container"})
+										router.navigate('admin',{trigger:true});
+									} else if(_.isEqual(that.currentUser.get('roleId'), MANAGER)){
+										managerView = new ManagerView({el:"#container"})
+										router.navigate('manager',{trigger:true});
+									}
+
+									if(_.isEmpty(that.currentUser.get('avatar'))){
+										that.currentUser.set({'avatar':'resources/img/avatar.png'});
+									}
+									that.hideLoginForm();
+									that.buttonsManage();
+								}
+							});
+						},
+						error : function(data) {
+							$("#loginMessage")[0].textContent = "Incorrect name or password";
+						}
+					});
 				},
 
 				passwordToggle: function(){
@@ -182,6 +182,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						contentType: "application/json; charset=utf-8",
 
 						success: function(data) {
+							router.navigate('', {trigger:true});
 							if($('#notificationModal')) {
 								$('#notificationModal').remove();
 							}
