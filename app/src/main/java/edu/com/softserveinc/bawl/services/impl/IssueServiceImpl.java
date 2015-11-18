@@ -60,6 +60,7 @@ public class IssueServiceImpl implements IssueService {
 	 */
 	@Override
 	public void onCategoryDelete(int categoryId, CategoryModel otherCategory) {
+		//TODO do this by single batch db update
 		List<IssueModel> issueModels = issueDao.findByCategoryId(categoryId);
 		for(IssueModel issueModel : issueModels){
 				issueModel.setCategory(otherCategory);

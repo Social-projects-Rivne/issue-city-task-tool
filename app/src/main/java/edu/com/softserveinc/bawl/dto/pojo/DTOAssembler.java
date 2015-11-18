@@ -4,8 +4,8 @@ import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.CommentService;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.UserService;
@@ -20,6 +20,10 @@ import java.util.List;
  */
 public class DTOAssembler {
 
+    public enum DoMapIssues {
+        YES,
+        NO
+    }
     private DTOAssembler() {
         new AssertionError("Not allowed");
     }
@@ -53,7 +57,7 @@ public class DTOAssembler {
         return categoryDTOs;
     }
 
-    public static List<CategoryDTO> getCategoryDtoFrom(List<CategoryModel> categoryModels, boolean mapIssues) {
+    public static List<CategoryDTO> getCategoryDtoFrom(List<CategoryModel> categoryModels, DoMapIssues mapIssues) {
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         categoryModels.forEach(categoryModel -> {
             categoryDTOs.add(getCategoryDtoFrom(categoryModel, mapIssues));
@@ -61,12 +65,12 @@ public class DTOAssembler {
         return categoryDTOs;
     }
 
-    public static CategoryDTO getCategoryDtoFrom(CategoryModel categoryModel, boolean mapIssues) {
+    public static CategoryDTO getCategoryDtoFrom(CategoryModel categoryModel, DoMapIssues mapIssues) {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(categoryModel.getId());
         categoryDTO.setName(categoryModel.getName());
         categoryDTO.setState(categoryModel.getState().getCaption());
-        if (mapIssues) {
+        if (DoMapIssues.YES == mapIssues) {
             categoryDTO.setIssueDtoList(getAllIssuesDto(categoryModel.getIssues()));
         }
         return  categoryDTO;

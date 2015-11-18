@@ -20,23 +20,23 @@ import java.util.List;
 @RequestMapping(value = "comments")
 public class CommentController {
 
-	public static final Logger LOG=Logger.getLogger(CommentController.class);
-	
-	@Autowired
-	private CommentService commentService;
+    public static final Logger LOG = Logger.getLogger(CommentController.class);
 
-	@RequestMapping(value = "get", method = RequestMethod.GET)
-	@ResponseBody
-	public List<CommentDTO> getCommentsByIssueId(@RequestParam("issueId") int id) {
-		return DTOAssembler.getCommentsFrom(commentService.getCommentsByIssueId(id));
-	}
+    @Autowired
+    private CommentService commentService;
 
-	@RequestMapping(value = "add", method = RequestMethod.POST)
-	@ResponseBody
-	public CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
-		final CommentModel commentModel = new CommentModel(comment.getComment(), comment.getUserName(), comment.getEmail(), comment.getIssueId());
-		commentService.addComment(commentModel);
-		return comment;
-	}
-		
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    @ResponseBody
+    public List<CommentDTO> getCommentsByIssueId(@RequestParam("issueId") int id) {
+        return DTOAssembler.getCommentsFrom(commentService.getCommentsByIssueId(id));
+    }
+
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @ResponseBody
+    public CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
+        final CommentModel commentModel = new CommentModel(comment.getComment(), comment.getUserName(), comment.getEmail(), comment.getIssueId());
+        commentService.addComment(commentModel);
+        return comment;
+    }
+
 }

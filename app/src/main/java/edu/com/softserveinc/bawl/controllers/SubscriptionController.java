@@ -48,10 +48,10 @@ public class SubscriptionController {
 
 		String email = subscriptionDTO.getEmail();
 
-		if (userService.isExistingUser(email) == true) {
+		if (userService.isExistingUser(email) == true) { // ????? LOL
 			// Если есть в базе
 
-			if (userService.getRole(email) == 4) {
+			if (userService.getRole(email) == 4) { //
 				// Если подписчикю. Создаю подписку
 
 				try {
