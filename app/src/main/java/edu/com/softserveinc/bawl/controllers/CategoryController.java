@@ -2,15 +2,13 @@ package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.dto.pojo.CategoryDTO;
 import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
+import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.services.CategoryService;
+import edu.com.softserveinc.bawl.services.IssueService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +27,14 @@ public class CategoryController {
     public static final String FAILURE_ADDED = "Failed. New category hasn't been added";
     public static final String SUCCESS_UPDATED = "Success. Category has been updated";
     public static final String FAILURE_UPDATEDD = "Failed. New category hasn't been updated";
+    public static final String SUCCESS_DELETE = "Category has been deleted.";
+    public static final String FAILURE_DELETE = "Failed. Category hasn't been deleted.";
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private IssueService issueService;
 
     /**
      * Returns list of the categories
@@ -71,6 +74,20 @@ public class CategoryController {
         }
 
         return categoryDTO;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseDTO removeCategory(@PathVariable int id) {
+        ResponseDTO responseDTO = new ResponseDTO();
+        try{
+            categoryService.deleteCategory(id);
+            issueService.onCategoryDelete(id, categoryService.getOtherCategory());
+            responseDTO.setMessage(SUCCESS_DELETE);
+        } catch (Exception ex) {
+            responseDTO.setMessage(FAILURE_DELETE);
+        }
+        return responseDTO;
     }
 
 

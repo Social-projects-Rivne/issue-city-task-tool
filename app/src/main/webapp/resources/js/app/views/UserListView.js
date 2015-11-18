@@ -262,6 +262,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							$("#container").append(that.notificationTemplate( { 'data': response } ));
 							$('#notificationModal').modal();
 							categoryManageView.render();
+							managerView.render();
 						},
 						error: function() {
 							if($('#notificationModal')) $('#notificationModal').remove();
@@ -274,9 +275,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 
 				deleteCategory: function(e){
 					var category = categoryManageView.categories.get(e.currentTarget.id);
-					category.set({
-						state: CATEGORY_DELETED
-					}).save( {}, {
+					category.destroy({
 						success: function(model, response) {
 							if($('#notificationModal')) $('#notificationModal').remove();
 							if($('#confirmationModal')) $('#confirmationModal').remove();

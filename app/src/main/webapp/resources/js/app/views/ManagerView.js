@@ -75,6 +75,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				// render all components of manager page
 				render: function() {
 					that = this;
+					this.categories.fetch();
 					setTimeout(function(){
 						that.$el.html(that.managerTemplate);
 						that.issueTableRender();
@@ -244,7 +245,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				quickChangeCategory: function(e) {
 					this.issue = this.issues.get( e.currentTarget.id);
-					this.issue.set( {category: e.currentTarget.value});
+					this.issue.set( {
+						category: e.currentTarget.value,
+						categoryId :e.currentTarget.id});
 					this.issue.save();
 				},
 

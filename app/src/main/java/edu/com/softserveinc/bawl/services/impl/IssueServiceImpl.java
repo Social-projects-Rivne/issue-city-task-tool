@@ -2,6 +2,7 @@ package edu.com.softserveinc.bawl.services.impl;
 
 import edu.com.softserveinc.bawl.dao.HistoryDao;
 import edu.com.softserveinc.bawl.dao.IssueDao;
+import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +50,22 @@ public class IssueServiceImpl implements IssueService {
 		IssueModel issueModel = issueDao.findOne(issueId);
 		issueModel.setStatus(IssueStatus.DELETED);
 		saveToHistory(issueModel, userId);
+	}
+
+	/**
+	 * Change category in Issues, which has has been removed.
+	 * Sets categort in Issues to otherCategory (garbage category)
+	 * @param categoryId category Id
+	 * @param otherCategory
+	 */
+	@Override
+	public void onCategoryDelete(int categoryId, CategoryModel otherCategory) {
+		List<IssueModel> issueModels = issueDao.findByCategoryId(categoryId);
+		for(IssueModel issueModel : issueModels){
+				issueModel.setCategory(otherCategory);
+		}
+		issueDao.save(issueModels);
+		issueDao.flush();
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import static edu.com.softserveinc.bawl.models.enums.CategoryState.DELETED;
 public class CategoryServiceImpl implements CategoryService {
 
     public static final Logger LOG=Logger.getLogger(CategoryServiceImpl.class);
+	public static final String OTHER_CATEGORY = "other";
 	
 	@Autowired
     private CategoryDao categoryDao;
@@ -31,6 +32,13 @@ public class CategoryServiceImpl implements CategoryService {
 	public CategoryModel addCategory(String category) {
         return categoryDao.saveAndFlush(new CategoryModel(category));
     }
+
+	@Override
+	public void deleteCategory(int id) {
+		CategoryModel categoryModel = getCategoryByID(id);
+		categoryModel.setState(DELETED);
+		categoryDao.saveAndFlush(categoryModel);
+	}
 
 	@Override
 	public void deleteCategory(CategoryModel category) {
@@ -70,5 +78,14 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryByName;
     }
+
+	@Override
+	public CategoryModel getOtherCategory() {
+		CategoryModel category = categoryDao.findByName(OTHER_CATEGORY);
+		if (category == null){
+			category = addCategory(OTHER_CATEGORY);
+		}
+		return category;
+	}
 
 }

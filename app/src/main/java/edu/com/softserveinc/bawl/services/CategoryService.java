@@ -11,6 +11,8 @@ public interface CategoryService {
 
 	 CategoryModel addCategory(String category);
 
+	 void deleteCategory(int id);
+
 	 void deleteCategory(CategoryModel category);
 
 	 void updateCategory(int id, String name, CategoryState state);
@@ -22,4 +24,6 @@ public interface CategoryService {
 	 CategoryModel getCategoryByName(String name);
 
 	 CategoryModel getCategoryByNameOrAddNew(String name);
+
+	 CategoryModel getOtherCategory();
 }
