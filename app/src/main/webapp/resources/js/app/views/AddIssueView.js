@@ -29,7 +29,7 @@ define([
 				initialize: function() {
 					that = this;
 					this.model = new IssueModel();
-					categoryCollection = new CategoryCollection();
+					this.categoryCollection = new CategoryCollection();
 				},
 				
 				events: {
@@ -43,9 +43,9 @@ define([
 				
 				render: function() {
 
-					categoryCollection.fetch( { success: function() {
-
-						that.$el.html(that.template( { "categories": categoryCollection.toJSON() } ));
+					this.categoryCollection.fetch( { success: function() {
+						that.categoryCollection = new CategoryCollection(that.categoryCollection.where( {state : CATEGORY_NEW}));
+						that.$el.html(that.template( { "categories": that.categoryCollection.toJSON() } ));
 
 						var issueName = $('#issue-name');
 						var issueCategory = $('#issue-category');

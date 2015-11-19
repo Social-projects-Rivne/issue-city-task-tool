@@ -12,6 +12,7 @@ import edu.com.softserveinc.bawl.services.UserService;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -151,7 +152,7 @@ public class DTOAssembler {
               UserHistoryDTO userHistoryDto = getUserHistoryDto(historyModel, issue, userService);
               historyDtoList.add(userHistoryDto);
         }
-        Collections.sort(historyDtoList);
+        Collections.sort(historyDtoList, Comparator.<UserHistoryDTO>reverseOrder());
         return historyDtoList;
     }
 

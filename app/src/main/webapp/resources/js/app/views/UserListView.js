@@ -262,7 +262,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							$("#container").append(that.notificationTemplate( { 'data': response } ));
 							$('#notificationModal').modal();
 							categoryManageView.render();
-							managerView.render();
 						},
 						error: function() {
 							if($('#notificationModal')) $('#notificationModal').remove();

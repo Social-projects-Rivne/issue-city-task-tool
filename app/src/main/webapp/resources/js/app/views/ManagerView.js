@@ -43,7 +43,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					this.issues = mapView.model;
 					this.issuesFilterList = new IssueCollection(this.issues);
 					this.categories = new CategoryCollection();
-					this.categories.fetch();
+					this.categories.fetch( { success: function() {
+						that.categories = new CategoryCollection(that.categories.where({state: CATEGORY_NEW}));
+					}})
 					this.statuses = new StatusCollection();
 					this.statuses.fetch();
 					this.issue = new IssueModel();
@@ -67,6 +69,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				searchRender: function(){
  					console.log('search rendered');
  					this.categoriesCollection.fetch({success: function(){
+						that.categoriesCollection = new CategoryCollection(that.categoriesCollection.where( {state : CATEGORY_NEW}));
 						that.$('#issue-filter').append(that.searchTemplate({"categories":that.categoriesCollection.toJSON()}));
 						}
 					});
@@ -75,7 +78,9 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				// render all components of manager page
 				render: function() {
 					that = this;
-					this.categories.fetch();
+					this.categories.fetch( { success: function() {
+						that.categories = new CategoryCollection(that.categories.where({state: CATEGORY_NEW}));
+					}})
 					setTimeout(function(){
 						that.$el.html(that.managerTemplate);
 						that.issueTableRender();
