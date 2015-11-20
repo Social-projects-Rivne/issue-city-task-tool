@@ -20,6 +20,7 @@ public class ImageController {
 	
 	@RequestMapping(value = "crop", method = RequestMethod.POST)
 	public @ResponseBody ResponseDTO crop() {
+		//TODO Create Image service
 		ResponseDTO responseDTO = new ResponseDTO();
 		BufferedImage srcImg = null;
 		File srcFile = new File("src/main/webapp/resources/img/avatar.png");

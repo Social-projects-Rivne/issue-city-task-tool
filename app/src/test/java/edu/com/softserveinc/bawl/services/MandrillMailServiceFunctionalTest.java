@@ -11,6 +11,7 @@ import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 
@@ -70,6 +71,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
     }
 
     @Test
+    @Ignore
     public void notifyForIssue_WithValidCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
         UserModel userModel = mock(UserModel.class);
@@ -86,6 +88,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
     }
 
     @Test
+    @Ignore
     public void notifyForIssue_WithWrongCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
         UserModel userModel = mock(UserModel.class);
