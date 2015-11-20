@@ -74,6 +74,11 @@ public class CategoryController {
     }
   }
 
+  /**
+   * Updates current category
+   * @param category category to update
+   * @return updated category
+   */
   @RequestMapping(value = "{id}", method = RequestMethod.PUT)
   @ResponseBody
   public ResponseEntity<CategoryDTO> editCategory(@RequestBody CategoryDTO category) {
@@ -87,16 +92,21 @@ public class CategoryController {
   }
 
 
+  /**
+   * Revomes category
+   * @param id of category to be removed
+   * @return operation status response
+   */
   @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
   @ResponseBody
-  public ResponseEntity<CategoryDTO> removeCategory(@PathVariable int id) {
-    CategoryDTO responseDTO = new CategoryDTO();
+  public ResponseEntity<ResponseDTO> removeCategory(@PathVariable int id) {
+    ResponseDTO responseDTO = new ResponseDTO();
     try {
       categoryService.deleteCategory(id);
       issueService.onCategoryDelete(id, categoryService.getOtherCategory());
-      return new ResponseEntity<>(responseDTO.withMessage(SUCCESS_DELETE), HttpStatus.OK);
+      return new ResponseEntity(responseDTO.withMessage(SUCCESS_DELETE), HttpStatus.OK);
     } catch (Exception ex) {
-      return new ResponseEntity<>(responseDTO.withMessage(FAILURE_DELETE), HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity(responseDTO.withMessage(FAILURE_DELETE), HttpStatus.NOT_ACCEPTABLE);
     }
   }
 
