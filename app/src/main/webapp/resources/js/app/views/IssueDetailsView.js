@@ -1,6 +1,8 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentModel', 'view/CommentView', 'view/ShareInSocialsView','text!templates/IssueDetails.html', 'text!templates/NotificationTemplate.html', ],
+define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentModel', 'view/CommentView', 'view/ShareInSocialsView','text!templates/IssueDetails.html', 'text!templates/NotificationTemplate.html'],
 		function($, _, Backbone, IssueModel, CommentModel, CommentView, ShareInSocialsView, IssueDetailsTemplate, NotificationTemplate) {
-			var IssueDetailsView = Backbone.View.extend({
+
+			var that = null;
+			return Backbone.View.extend({
 
 				notificationTemplate: _.template(NotificationTemplate),
 				template: _.template(IssueDetailsTemplate),
@@ -11,19 +13,21 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				},
 
 				render: function(id) {
-					var that = this;
-
+					that = this;
 					this.model.set("id", id);
 					this.model.fetch( { success: function() {
 						that.$el.hide();
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
+						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){
+							$("#comment-input-form").hide()
+						}
+						else {
+							$("#comment-input-form").show()
+						}
 						that.$el.fadeIn();
 						$('[name*="subscribe"]').popover();
 					} } );
-
-
-
 					return this;
 				},
 
@@ -35,7 +39,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				},
 				//event for btn Resolve
 				changeStatus: function(e){
-					var that = this;
+					that = this;
 					id = e.currentTarget.id;
 					$.ajax({
 							url: '/issue/resolve/'+id,
@@ -57,7 +61,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 							}});
 				},
 
-				//Subscribition method
+				//Subscribe method
 				subscribe: function(e){
 					var folowerEmail = $('[id="folower-email"]').val();
 					console.log(folowerEmail);
@@ -71,44 +75,55 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 
 
 				addComment : function() {
-				if(($('#add-comment  [name*="userName"]').val() !='') && ($('#add-comment  [name*="email"]').val() !='')){
-					 comment = new CommentModel({
-						 "email": $(document.getElementsByName('email')[0]).val(),
-						 "userName": $(document.getElementsByName('userName')[0]).val(),
-						 "comment":  $(document.getElementsByName('comment-text')[0]).val(),
-						 "issueId":  this.model.id });
-					 try{
-						 comment.save();
-						 console.log('comment add function');
-
-
-						 var commentView = new CommentView({
-								model : comment
-						 });
-						 commentView.render();
-						//notification
-						if($('#notificationModal')) $('#notificationModal').remove();
-						$('body').append(this.notificationTemplate( { 'data': { 'message': comment.get('userName') + ", thanks you for yours comment!" } } ));
+					var comment = new CommentModel;
+					if (!_.isNull(loginView.currentUser) && !_.isNull(loginView.currentUser.get("id"))) { //logined user
+						comment.set({
+							"email": loginView.currentUser.get('email'),
+							"userName": loginView.currentUser.get('name')
+						})
+					}
+					else if (($('.comment-email').val() != '') && ($('.comment-username').val() != '')) {
+						comment.set({
+							"email": $('.comment-email').val(),
+							"userName": $('.comment-username').val()
+						})
+					}
+					if (comment.get('userName') != "" && comment.get('email') != "" && $('.comment-text').val() != "") {
+						comment.set({
+							"comment": $('.comment-text').val(),
+							"issueId": this.model.id
+						})
+						comment.save({}, {
+							success: function (model, response) {
+								if ($('#notificationModal')) {	$('#notificationModal').remove();}
+								that.$el.append(that.notificationTemplate({'data': response}));
+								$('#notificationModal').modal();
+								var commentView = new CommentView({
+									model: comment
+								});
+								commentView.render();
+								that.cleanFields();
+							},
+							error: function () {
+								if ($('#notificationModal')) {$('#notificationModal').remove();	}
+								that.$el.append(that.notificationTemplate({'data': {'message': 'Error!'}}));
+								$('#notificationModal').modal();
+							}
+						});
+					}
+					else {	//if no username in field or no loged in user
+						if ($('#notificationModal')) $('#notificationModal').remove();
+						$('body').append(this.notificationTemplate({'data': {'message': "Error! Fill correct all fields!"}}));
 						$('#notificationModal').modal();
-						//clean fields
-						document.getElementsByName('email')[0].value = "";
-						document.getElementsByName('userName')[0].value = "";
-						document.getElementsByName('comment-text')[0].value = "";
+					}
+				},
 
-					 }catch(error){
-						if($('#notificationModal')) $('#notificationModal').remove();
-						$('body').append(this.notificationTemplate( { 'data': { 'message': error } } ));
-						$('#notificationModal').modal();
-					 }
-
-
-					}else{
-						if($('#notificationModal')) $('#notificationModal').remove();
-						$('body').append(this.notificationTemplate( { 'data': { 'message': "Error! Input your name!" } } ));
-						$('#notificationModal').modal();
+				cleanFields : function () {
+					document.getElementsByName('email')[0].value = "";
+					document.getElementsByName('userName')[0].value = "";
+					document.getElementsByName('comment-text')[0].value = "";
 				}
-			}
 			});
-
-			return IssueDetailsView;
 		})
+
+

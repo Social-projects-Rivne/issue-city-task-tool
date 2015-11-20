@@ -19,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "comments")
 public class CommentController {
+    public static final String COMMENT_ADDED = "Success. Comment has been added";
+    public static final String COMMENT_NOT_ADDED = "Failed. Comment hasn't been added";
 
     public static final Logger LOG = Logger.getLogger(CommentController.class);
 
@@ -35,7 +37,13 @@ public class CommentController {
     @ResponseBody
     public CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
         final CommentModel commentModel = new CommentModel(comment.getComment(), comment.getUserName(), comment.getEmail(), comment.getIssueId());
-        commentService.addComment(commentModel);
+        try{
+            commentService.addComment(commentModel);
+            comment.setMessage(COMMENT_ADDED);
+        }
+        catch (Exception ex){
+            comment.setMessage(COMMENT_NOT_ADDED);
+        }
         return comment;
     }
 
