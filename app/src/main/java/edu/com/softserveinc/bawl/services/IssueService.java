@@ -4,6 +4,7 @@ import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IssueService {
 	
@@ -19,7 +20,7 @@ public interface IssueService {
 
 	List<IssueModel> loadIssuesList() ;
 
-	IssueModel getById(int issueId) ;
+	Optional<IssueModel> getById(int issueId) ;
 
 
 }
