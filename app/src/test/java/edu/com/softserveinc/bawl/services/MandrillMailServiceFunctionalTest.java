@@ -10,8 +10,8 @@ import edu.com.softserveinc.bawl.AbstractBawlFunctionalTest;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
 
@@ -71,7 +71,6 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
     }
 
     @Test
-    @Ignore
     public void notifyForIssue_WithValidCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
         UserModel userModel = mock(UserModel.class);
@@ -82,13 +81,12 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
         when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
 
-        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, mock(String.class));
+        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, StringUtils.EMPTY);
 
         verify(messagesRequest).sendMessage(any(MandrillMessageRequest.class));
     }
 
     @Test
-    @Ignore
     public void notifyForIssue_WithWrongCredentials_shouldSendNotificationToUsers() throws RequestFailedException {
         SubscriptionModel subscriptionModel = mock(SubscriptionModel.class);
         UserModel userModel = mock(UserModel.class);
@@ -99,7 +97,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
         when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
 
-        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, mock(String.class));
+        mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, StringUtils.EMPTY);
 
         verify(messagesRequest).sendMessage(any(MandrillMessageRequest.class));
     }
