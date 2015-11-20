@@ -36,9 +36,13 @@ public class CommentController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
     public CommentDTO addCommentAction(@RequestBody final CommentDTO comment) {
-        final CommentModel commentModel = new CommentModel(comment.getComment(), comment.getUserName(), comment.getEmail(), comment.getIssueId());
+        CommentModel commentModel = new CommentModel()
+                .withComment(comment.getComment())
+                .withUserName(comment.getUserName())
+                .withEmail(comment.getEmail())
+                .withIssueId(comment.getIssueId());
         try{
-            commentService.addComment(commentModel);
+            commentService.saveComment(commentModel);
             comment.setMessage(COMMENT_ADDED);
         }
         catch (Exception ex){
