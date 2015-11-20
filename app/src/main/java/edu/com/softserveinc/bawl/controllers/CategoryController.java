@@ -65,7 +65,7 @@ public class CategoryController {
    */
   @RequestMapping(method = RequestMethod.POST)
   @ResponseBody
-  public ResponseEntity<ResponseDTO> addCategory(@RequestBody CategoryDTO category) {
+  public ResponseEntity<CategoryDTO> addCategory(@RequestBody CategoryDTO category) {
     try {
       categoryService.addCategory(new CategoryModel(category.getName()));
       return new ResponseEntity<>(category.withMessage(SUCCESS_ADDED), HttpStatus.OK);
@@ -76,7 +76,7 @@ public class CategoryController {
 
   @RequestMapping(value = "{id}", method = RequestMethod.PUT)
   @ResponseBody
-  public ResponseEntity<ResponseDTO> editCategory(@RequestBody CategoryDTO category) {
+  public ResponseEntity<CategoryDTO> editCategory(@RequestBody CategoryDTO category) {
     try {
       categoryService.updateCategory(category.getId(), category.getName(), getState(category.getState()));
       return new ResponseEntity<>(category.withMessage(SUCCESS_UPDATED), HttpStatus.OK);
@@ -89,8 +89,8 @@ public class CategoryController {
 
   @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
   @ResponseBody
-  public ResponseEntity<ResponseDTO> removeCategory(@PathVariable int id) {
-    ResponseDTO responseDTO = new ResponseDTO();
+  public ResponseEntity<CategoryDTO> removeCategory(@PathVariable int id) {
+    CategoryDTO responseDTO = new CategoryDTO();
     try {
       categoryService.deleteCategory(id);
       issueService.onCategoryDelete(id, categoryService.getOtherCategory());
