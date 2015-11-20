@@ -9,4 +9,5 @@ class CommentDTO extends ResponseDTO {
   @BeanProperty  var comment: String = null
   @BeanProperty  var userName : String = null
   @BeanProperty  var email : String = null
+
 }
