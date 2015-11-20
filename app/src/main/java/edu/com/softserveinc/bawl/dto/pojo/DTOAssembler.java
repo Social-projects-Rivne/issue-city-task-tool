@@ -152,7 +152,7 @@ public class DTOAssembler {
               UserHistoryDTO userHistoryDto = getUserHistoryDto(historyModel, issue, userService);
               historyDtoList.add(userHistoryDto);
         }
-        Collections.sort(historyDtoList, Comparator.<UserHistoryDTO>reverseOrder());
+        historyDtoList.sort(Comparator.<UserHistoryDTO>reverseOrder());
         return historyDtoList;
     }
 
