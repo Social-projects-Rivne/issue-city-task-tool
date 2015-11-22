@@ -150,13 +150,8 @@ public class IssueController {
   public ResponseDTO addIssue(@RequestBody IssueDTO request) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      UserModel userModel = userService.getCurrentUser();
-      Optional<CategoryModel> category = categoryService.getCategoryByNameOrAddNew(request.getCategory());
-      IssueModel issue =
-          new IssueModel(request.getName(), request.getDescription(), request.getMapPointer(), request.getAttachments(),
-              category.get(), request.getPriorityId(), IssueStatus.valueOf(request.getStatus()));
-      issue.setStatus(getIssueStatusForAddIssue(userModel.getRole()));
-      issueService.addProblem(issue, userModel.getId());
+      issueService.addIssue(request.getName(), request.getDescription(), request.getMapPointer(),
+          request.getAttachments(), request.getCategory(), request.getPriorityId());
       responseDTO.setMessage(ISSUE_ADDED);
     } catch (Exception ex) {
       responseDTO.setMessage(ISSUE_NOT_ADDED);

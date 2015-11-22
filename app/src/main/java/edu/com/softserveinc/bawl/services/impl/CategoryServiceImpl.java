@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public Optional<CategoryModel> getCategoryByName(String name) {
-    return Optional.of(categoryDao.findByName(name));
+    return Optional.ofNullable(categoryDao.findByName(name));
   }
 
   @Override

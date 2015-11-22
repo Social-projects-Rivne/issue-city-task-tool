@@ -5,8 +5,11 @@ import edu.com.softserveinc.bawl.dao.IssueDao;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
+import edu.com.softserveinc.bawl.services.CategoryService;
 import edu.com.softserveinc.bawl.services.IssueService;
+import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForAddIssue;
 
 @Service
 @Transactional
@@ -28,10 +33,27 @@ public class IssueServiceImpl implements IssueService {
   @Autowired
   private HistoryDao historyDao;
 
+  @Autowired
+  private CategoryService categoryService;
+
+  @Autowired
+  private UserService userService;
+
   @Override
-  public void addProblem(IssueModel problem, int userId) {
-    issueDao.saveAndFlush(problem);
+  public IssueModel addIssue(String name, String description, String mapPointer, String attachments, String category,
+      int priorityId) {
+    Optional<CategoryModel> categoryModel = categoryService.getCategoryByNameOrAddNew(category);
+    IssueModel issue =
+        new IssueModel(name, description, mapPointer, attachments, categoryModel.get(), priorityId, IssueStatus.NEW);
+    UserModel userModel = userService.getCurrentUser();
+    issue.setStatus(getIssueStatusForAddIssue(userModel.getRole()));
+    return addProblem(issue, userModel.getId());
+  }
+  @Override
+  public IssueModel addProblem(IssueModel problem, int userId) {
+    IssueModel issueModel = issueDao.saveAndFlush(problem);
     saveToHistory(problem, userId);
+    return issueModel;
   }
 
   @Override

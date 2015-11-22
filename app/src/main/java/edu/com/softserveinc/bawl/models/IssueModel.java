@@ -250,6 +250,17 @@ public class IssueModel {
     return this;
   }
 
+  public IssueModel withMapPointer(String mapPointer) {
+    this.mapPointer = mapPointer;
+    return this;
+  }
+
+  public IssueModel withCategory(CategoryModel category) {
+    this.category = category;
+    return this;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o)

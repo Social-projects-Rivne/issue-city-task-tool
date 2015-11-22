@@ -25,9 +25,6 @@ public class HistoryServiceImpl implements HistoryService {
     @Autowired
     private HistoryDao historyDao;
 
-    @Autowired
-    private IssueDao issueDao;
-
     @Override
     public void addHistory(HistoryModel history) {
         historyDao.saveAndFlush(history);

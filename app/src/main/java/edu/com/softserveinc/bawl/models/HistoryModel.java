@@ -88,6 +88,26 @@ public class HistoryModel {
         this.issueId = issueId;
     }
 
+    public HistoryModel withUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public HistoryModel withStatus(IssueStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public HistoryModel withDate(Date date) {
+        this.date = date;
+        return this;
+    }
+
+    public HistoryModel withIssue(IssueModel issue) {
+        this.issue = issue;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
