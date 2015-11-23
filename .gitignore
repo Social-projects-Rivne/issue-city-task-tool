@@ -11,3 +11,5 @@ app/.idea/
 app/Bawl.iml
 desktop.ini
 /target
+workspace.xml
+dataSources.local.xml
