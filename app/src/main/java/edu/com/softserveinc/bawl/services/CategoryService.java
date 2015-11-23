@@ -18,7 +18,7 @@ public interface CategoryService {
 
   void updateCategory(int id, String name, CategoryState state);
 
-  CategoryModel getCategoryByID(int id);
+  Optional<CategoryModel> getCategoryByID(int id);
 
   List<CategoryModel> loadCategoriesList();
 

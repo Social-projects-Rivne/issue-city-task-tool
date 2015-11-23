@@ -31,7 +31,7 @@ requirejs.config({
     },
 
     'view/MapView': {
-      deps: ['map', 'leaflet']
+      deps: ['leaflet']
     }
   },
 
@@ -55,11 +55,8 @@ requirejs.config({
 
     /* Googl Server key*/
     googlkey: 'AIzaSyAa1n57LZd7gFR7cNc_YQD0sAaLZe6NDpc',
-    gmaps: 'https://maps.googleapis.com/maps/api/js?key = googlkey',
+    gmaps: 'https://maps.googleapis.com/maps/api/js?key = googlkey'
 
-    map: [
-      'http://maps.googleapis.com/maps/api/js?sensor=true'
-    ]
   }
 });
 

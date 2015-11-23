@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public void deleteCategory(int id) {
-    CategoryModel categoryModel = getCategoryByID(id);
+    CategoryModel categoryModel = getCategoryByID(id).get();
     categoryModel.setState(DELETED);
     categoryDao.saveAndFlush(categoryModel);
   }
@@ -50,15 +50,15 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public void updateCategory(int id, String name, CategoryState state) {
-    CategoryModel categoryModel = getCategoryByID(id);
+    CategoryModel categoryModel = getCategoryByID(id).get();
     categoryModel.setName(name);
     categoryModel.setState(state);
     categoryDao.saveAndFlush(categoryModel);
   }
 
   @Override
-  public CategoryModel getCategoryByID(int id) {
-    return categoryDao.findOne(id);
+  public Optional<CategoryModel> getCategoryByID(int id) {
+    return Optional.ofNullable(categoryDao.findOne(id));
   }
 
   @Override

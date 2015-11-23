@@ -46,7 +46,7 @@ public class CategoryServiceTest extends AbstractBawlFunctionalTest {
     @Test
     public void editCategory_shouldCallAddCategoryToDao() {
         CategoryModel mockCategoryModel = mock(CategoryModel.class);
-        Mockito.when(categoryService.getCategoryByID(1)).thenReturn(mockCategoryModel);
+        Mockito.when(categoryService.getCategoryByID(1).get()).thenReturn(mockCategoryModel);
         categoryService.updateCategory(1, "foo", CategoryState.NEW);
         verify(categoryDao, times(1)).saveAndFlush(mockCategoryModel);
     }

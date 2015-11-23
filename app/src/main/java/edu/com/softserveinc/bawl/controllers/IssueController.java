@@ -7,31 +7,17 @@ import edu.com.softserveinc.bawl.dto.pojo.UserHistoryDTO;
 import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
-import edu.com.softserveinc.bawl.models.enums.IssueStatus;
-import edu.com.softserveinc.bawl.services.CategoryService;
-import edu.com.softserveinc.bawl.services.HistoryService;
-import edu.com.softserveinc.bawl.services.IssueService;
-import edu.com.softserveinc.bawl.services.MailService;
-import edu.com.softserveinc.bawl.services.UserService;
+import edu.com.softserveinc.bawl.services.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import static edu.com.softserveinc.bawl.dto.pojo.DTOAssembler.getAllIssuesDto;
-import static edu.com.softserveinc.bawl.dto.pojo.DTOAssembler.getIssueDto;
-import static edu.com.softserveinc.bawl.dto.pojo.DTOAssembler.getUserHistoryDtos;
-import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForAddIssue;
+import static edu.com.softserveinc.bawl.dto.pojo.DTOAssembler.*;
 import static edu.com.softserveinc.bawl.models.enums.IssueStatusHelper.getIssueStatusForResolving;
 import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
 
@@ -120,8 +106,6 @@ public class IssueController {
    * @return list of all issues
    */
 
-  //TODO add filter or {2,5}.contains(filterObject.getStatusId())
-  //@PostFilter("hasRole('ROLE_MANAGER')")
   @RequestMapping(value = "get", method = RequestMethod.GET)
   @ResponseBody
   public List<IssueDTO> getIssues() {
@@ -166,14 +150,12 @@ public class IssueController {
   public ResponseDTO editIssue(@RequestBody IssueDTO issueDTO, HttpServletRequest request) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      issueService.getById(issueDTO.getId()).ifPresent(editedIssue -> {
+      IssueModel editedIssue = historyService.getLastIssueByIssueID(issueDTO.getId());
+      CategoryModel category = categoryService.getCategoryByName(issueDTO.getCategory()).get();
+      editedIssue = editedIssue.withStatus(issueDTO.getStatus()).withAttachments(issueDTO.getAttachments())
+              .withDescription(issueDTO.getDescription()).withName(issueDTO.getName()).withCategory(category);
 
-        editedIssue = editedIssue.withStatus(issueDTO.getStatus()).withAttachments(issueDTO.getAttachments())
-            .withDescription(issueDTO.getDescription()).withName(issueDTO.getName());
-
-        categoryService.getCategoryByNameOrAddNew(issueDTO.getCategory());
-        issueService.editProblem(editedIssue, userService.getCurrentUserId());
-      });
+      issueService.editProblem(editedIssue, userService.getCurrentUserId());
       mailService.notifyForIssue(issueDTO.getId(), "Issue has been updated.", getBaseURL(request));
       responseDTO.setMessage(SUCCESS_UPDATE);
     } catch (Exception ex) {
@@ -188,10 +170,10 @@ public class IssueController {
   public ResponseDTO toResolve(@PathVariable("id") int id) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
+      IssueModel editedIssue = historyService.getLastIssueByIssueID(id);
       UserModel userModel = userService.getCurrentUser();
-      IssueModel issue = historyService.getLastIssueByIssueID(id);
-      issue.setStatus(getIssueStatusForResolving(userModel.getRole()));
-      issueService.editProblem(issue, userModel.getId());
+      editedIssue = editedIssue.withStatus(getIssueStatusForResolving(userModel.getRole()));
+      issueService.editProblem(editedIssue, userModel.getId());
       responseDTO.setMessage(SUCCESS_MARKED);
     } catch (Exception ex) {
       responseDTO.setMessage(NOT_AUTHORIZED);

@@ -1,17 +1,12 @@
 package edu.com.softserveinc.bawl.dto.pojo;
 
-import edu.com.softserveinc.bawl.models.CategoryModel;
-import edu.com.softserveinc.bawl.models.CommentModel;
-import edu.com.softserveinc.bawl.models.HistoryModel;
-import edu.com.softserveinc.bawl.models.IssueModel;
-import edu.com.softserveinc.bawl.models.UserModel;
+import edu.com.softserveinc.bawl.models.*;
 import edu.com.softserveinc.bawl.models.enums.IssueStatus;
 import edu.com.softserveinc.bawl.services.CommentService;
 import edu.com.softserveinc.bawl.services.HistoryService;
 import edu.com.softserveinc.bawl.services.UserService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -110,6 +105,7 @@ public class DTOAssembler {
         issueDTO.setDescription(issueModel.getDescription());
         issueDTO.setAttachments(issueModel.getAttachments());
         issueDTO.setMapPointer(issueModel.getMapPointer());
+        issueDTO.setCategory(issueModel.getCategory().getName());
         issueDTO.setCategoryId(issueModel.getCategory().getId());
         issueDTO.setPriorityId(issueModel.getPriorityId());
         issueDTO.setStatus(issueModel.getStatus().name());
