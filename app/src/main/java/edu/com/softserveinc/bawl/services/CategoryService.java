@@ -10,7 +10,7 @@ public interface CategoryService {
 
   CategoryModel addCategory(CategoryModel category);
 
-  CategoryModel addCategory(String category);
+  Optional<CategoryModel> addCategory(String category);
 
   void deleteCategory(int id);
 

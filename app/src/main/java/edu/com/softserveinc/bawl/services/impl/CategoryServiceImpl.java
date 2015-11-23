@@ -31,8 +31,8 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public CategoryModel addCategory(String category) {
-    return categoryDao.saveAndFlush(new CategoryModel(category));
+  public Optional<CategoryModel> addCategory(String category) {
+    return Optional.of(categoryDao.saveAndFlush(new CategoryModel(category)));
   }
 
   @Override
@@ -76,7 +76,8 @@ public class CategoryServiceImpl implements CategoryService {
     if (StringUtils.isEmpty(name)) {
       return Optional.empty();
     }
-    return Optional.ofNullable(getCategoryByName(name.toLowerCase()).orElse(addCategory(name)));
+    final Optional<CategoryModel> categoryByName = getCategoryByName(name.toLowerCase());
+    return categoryByName.isPresent() ? categoryByName : addCategory(name);
 
   }
 
@@ -84,7 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
   public CategoryModel getOtherCategory() {
     CategoryModel category = categoryDao.findByName(OTHER_CATEGORY);
     if (category == null) {
-      category = addCategory(OTHER_CATEGORY);
+      category = addCategory(OTHER_CATEGORY).get();
     }
     return category;
   }
