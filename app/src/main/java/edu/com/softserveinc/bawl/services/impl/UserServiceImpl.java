@@ -17,16 +17,23 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    public static final Logger LOG=Logger.getLogger(UserServiceImpl.class);
+    public static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
     public static final String ANONYMOUS_USER = "anonymousUser";
 
     @Autowired
     private UserDao userDao;
-	
+
 	@Override
 	public UserModel addUser(UserModel user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		user.setRole(UserRole.USER_NOT_CONFIRMED);
+		return userDao.saveAndFlush(user);
+	}
+
+	@Override
+	public UserModel addSubscriber(UserModel user) {
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		user.setRole(UserRole.SUBSCRIBER);
 		return userDao.saveAndFlush(user);
 	}
 
@@ -41,27 +48,6 @@ public class UserServiceImpl implements UserService {
 	public void editUserPass(UserModel user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		userDao.saveAndFlush(user);
-	}
-
-	@Override
-	public boolean isExistingUser(String email){
-		if( userDao.findByEmail(email).equals(email)){
-			return true;
-		} else return false;
-	}
-
-	@Override
-	public int getRole(String email){
-		UserServiceImpl userService = new UserServiceImpl();
-		int role = userService.getUserIdByEmail(email).getRole().getId();
-		return role;
-	}
-
-	@Override
-	public UserModel getUserIdByEmail(String email){
-		//UserModel userModel;
-		return userDao.findIDByEmail(email);
-
 	}
 
 	@Override
@@ -92,7 +78,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public  boolean isValidUser(String email) {
-		boolean role =  userDao.findIDByEmail(email).equals(email);
+		boolean role;
+		try {
+			if (userDao.findByEmail(email) == null){
+			role = false;
+			}else role = true;
+		}catch (Exception ex){
+			LOG.warn(ex);
+			role = false;
+		}
 		return role;
 	}
 
@@ -101,7 +95,11 @@ public class UserServiceImpl implements UserService {
         return getCurrentUser().getId();
     }
 
-    @Override
+	public int getUserIdByEmail(String email){
+		return userDao.findByEmail(email).getId();
+	}
+
+	@Override
     public UserModel getCurrentUser() {
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (ANONYMOUS_USER.equals(currentUserLoginName)) {
@@ -110,5 +108,4 @@ public class UserServiceImpl implements UserService {
             return getByLogin(currentUserLoginName);
         }
     }
-
 }

@@ -23,15 +23,14 @@ public interface UserService {
 
 	List<UserModel> loadUsersList();
 
-	boolean isExistingUser(String Email);
-
 	int getCurrentUserId();
 
 	UserModel getCurrentUser();
 
-	int getRole(String email);
-
-	public UserModel getUserIdByEmail(String email);
-
 	public  boolean isValidUser(String email);
+
+	public int getUserIdByEmail(String email);
+
+	public UserModel addSubscriber(UserModel user);
+
 }

@@ -11,6 +11,16 @@ public class MailPatterns {
             "</body>" +
             "</html>";
 
+    public final static String SUBSCRIPTION_PATTERN =
+                    "<html>" +
+                    "<body>" +
+                    "<h3>Thank you for subscription %s on bawl</h3>" +
+                    "Click on link below for confirm subscription" +
+                    " <a href=%s>Bawl</a>" +
+                    "</body>" +
+                    "</html>";
+
+
     public final static String PASSWORD_RESET_PATTERN =
             "<html>" +
             "<body>" +

@@ -11,7 +11,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
+
+import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
+import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
+
 
 @RestController
 @RequestMapping("/subscriptions")
@@ -26,7 +31,7 @@ public class SubscriptionController {
 	public static final String MESSAGE_TEXT_DELL = "The subscription";
 	public static final String SUCCESS_DELL = "was successfully delited";
 	public static final String FAILURE_DELL = "Some problem occured! was NOT added";
-	public int userId;
+	 public int existuserId;
 
 	@Autowired
 	private SubscriptionService subscriptionService;
@@ -44,52 +49,55 @@ public class SubscriptionController {
 			@RequestBody	SubscriptionDTO subscriptionDTO,
 			 				ResponseDTO responseDTO,
 							SubscriptionModel subscriptionModel,
-							UserRole userRole ) {
+							UserRole userRole ,
+			HttpServletRequest request
+	) {
 
 		String email = subscriptionDTO.getEmail();
 
-		if (userService.isExistingUser(email) == true) { // ????? LOL
-			// Если есть в базе
+		if (userService.isValidUser(email) == true) { // true if user is exist
+			System.out.println("## User is Exist");
 
-			if (userService.getRole(email) == 4) { //
-				// Если подписчикю. Создаю подписку
+				int issueId = subscriptionDTO.getIssueId();
+				existuserId = userService.getUserIdByEmail(email);
 
-				try {
-					int issueId = subscriptionDTO.getIssueId();
-					subscriptionService.createSubscription(issueId, userId);
-					subscriptionService.SendApproved(userId,issueId);
-					responseDTO.setMessage("Подписка создана. Пожалуйста активируйте.");
+				subscriptionService.createSubscription(issueId, existuserId);
+				System.out.println("## Subscrip" + subscriptionService.createSubscription(issueId, existuserId));
+
+			// Отослать письмо на подписку3
 
 
-				} catch (Exception ex) {
-					responseDTO.setMessage("Mail has been sent");
-				}
-			} else {
-				System.out.println(" Пользователь зарегистрирован в системе. Пожалуйста авторизируйтесь.");
-				responseDTO.setMessage("Mail has been sent");
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request));
+
+
+
+//			String name ="nsme";
+//			String subject = "subject";
+//			String messagePattern = "mes";
+//
+//
+//			System.out.println(email +  name + subject + messagePattern);
+//			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//			getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
+//
+
+
+
+
+
+		} else { // false if user is not exist
+			System.out.println("## User is not exist");
+
+			UserModel userModel = new UserModel("Name1", subscriptionDTO.getEmail(), new Random().toString(), 4, "Pass", "Ava");
+			userModel = userService.addSubscriber(userModel);
+			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
+			responseDTO.setMessage("This subscription was alredy exist");
+
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request));
 			}
 
-		} else {
-			// Если нет в базе. Создаю пользователя
-
-			try {
-				UserModel userModel = new UserModel("Name1", subscriptionDTO.getEmail(), new Random().toString(), 0, "Pass", "Ava");
-				userModel = userService.addUser(userModel);
-				//subscriptionService.createSubscription(subscriptionDTO.getIssueId(),userModel.getId());
-				userId = userModel.getId();
-			} catch (Exception ex) {
-				//responseDTO.setMessage("Mail has been sent");}
-
-				try {
-					subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userId);
-				} catch (Exception ex1) {
-					//responseDTO.setMessage("Mail has been sent"); }
-
-				}
-			}
-		}return responseDTO;
+		return responseDTO;
 	}
-
 
 	@RequestMapping(value = "{id}/valid/{hash}", method = RequestMethod.POST)
 	public  @ResponseBody ResponseDTO validation(

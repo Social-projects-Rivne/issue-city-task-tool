@@ -5,17 +5,13 @@ import edu.com.softserveinc.bawl.dao.UserDao;
 import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
-import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
-import edu.com.softserveinc.bawl.utils.MessageBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-
-import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 
 @Service
 @Transactional
@@ -29,6 +25,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Autowired
 	private UserDao userDao;
 
+
 	@Override
 	public SubscriptionModel createSubscription(int issueId, int userId) {
 		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndUserId(issueId,userId);
@@ -38,25 +35,52 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, userId));
 	}
 
+	public boolean isValidSubscription(int userId, int issueId){
+			if (subscriptionDao.findByIssueIdAndUserId(issueId,userId) == null){
+				return false;
+			}else{
+				return true;
+			}
+	}
+
 	@Override
 	public ResponseDTO SendApproved (int userId, int issueId) {
+
 		SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+		UserServiceImpl userService = new UserServiceImpl();
 		ResponseDTO responseDTO = new ResponseDTO();
-		String subject = "Subscription email validation";
+
+		String name =  "User name";
+		String subject = "Sibscription email validation";
 
 		int hash = (subscriptionDTO.getEmail()+subscriptionDTO.getId()).hashCode();
-		//TODO that's not a pattern, that's only a link. Use getBaseURL(request) instead of localhost:8085
 		String messagePattern = "http://localhost:8085/"+"#subscriptions"+issueId+"/valid/"+hash;
-		try {
-			UserModel userModel = userDao.findOne(userId);
-			getMandrillMail().sendMessage(new MessageBuilder().setPattern(messagePattern)
-					.setRecipient(userModel).setSubject(subject).build());
-		} catch (Exception ex){
-			responseDTO.setMessage("Mail hasn't been sent");
-		}
+
+		String email = userService.getById(issueId).getEmail();
+
+		MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
+
 		responseDTO.setMessage("Mail has been sent");
+
 		return responseDTO;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -74,4 +98,33 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public Collection <SubscriptionModel> listByIssueId(int issueId) {
 		return subscriptionDao.findByIssueId(issueId);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+

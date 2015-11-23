@@ -9,6 +9,7 @@ import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -77,7 +78,7 @@ public class MandrillMailServiceImpl implements MailService {
                 userModel.getPassword() + "&id=" + userModel.getId();
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                 .setPattern(MailPatterns.REGISTRATION_PATTERN, userModel.getName(), link)
-                .setRecipient(userModel)
+                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
                 .build();
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
@@ -85,7 +86,7 @@ public class MandrillMailServiceImpl implements MailService {
     public void sendSimpleMessage(String pattern, UserModel userModel, String ... params){
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                 .setPattern(pattern, params)
-                .setRecipient(userModel)
+                .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
                 .build();
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
@@ -116,19 +117,49 @@ public class MandrillMailServiceImpl implements MailService {
         }
     }
 
-    public void notifyForIssue( UserNotificationDTO notificationDTO) {
-        String email = notificationDTO.getEmail();
-        String messagePattern = notificationDTO.getMessage();
-        String subject = notificationDTO.getSubject();
-        String name = "Admin";
+    @Override
+    public void notifyForIssue( UserNotificationDTO notificationDTO){};
+
+    /**
+     * Seample Email Sender
+     *
+     * @param   email,
+     * @param   name,
+     * @param   subject,
+     * @param   messagePattern
+     */
+    @Override
+    public void  simpleEmailSender (String email, String name, String subject, String messagePattern){
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+            .setRecipients(new MandrillRecipient(name, email))
+            .setSubject(subject)
+            .setPattern(messagePattern)
+            .build();
+            MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
+        }
+
+
+   // @Override
+
+    public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL){
+
+        String email = subscriptionDTO.getEmail();
+        String name = "name";
+
+        String link =   rootURL
+                        + properties.getProperty("mail.confirmation_url")
+                        + subscriptionDTO
+                        + "&id="
+                        + subscriptionDTO.getId();
+
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+
+                .setPattern(MailPatterns.REGISTRATION_PATTERN, name, link)
                 .setRecipients(new MandrillRecipient(name, email))
-                .setSubject(subject)
-                .setPattern(messagePattern)
                 .build();
+
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
-
 
 }
 
