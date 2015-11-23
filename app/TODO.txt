@@ -1,9 +1,8 @@
 - move Business logic from controllers to services
 - clarify why all these classes needed UserHistoryDTO
-                                       UserHistoryIssuesForUserDTO
-                                       UserIssuesHistoryDTO
-                                       IssueHistoryDTO
-
+  UserHistoryIssuesForUserDTO
+  UserIssuesHistoryDTO
+  IssueHistoryDTO
 
 Backbone patterns && anti-patterns
 
