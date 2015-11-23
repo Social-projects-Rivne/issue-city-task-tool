@@ -1,16 +1,21 @@
 package edu.com.softserveinc.bawl.services.impl;
 
 import edu.com.softserveinc.bawl.dao.SubscriptionDao;
+import edu.com.softserveinc.bawl.dao.UserDao;
 import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
+import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.utils.MessageBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+
+import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 
 @Service
 @Transactional
@@ -20,6 +25,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Autowired
 	private SubscriptionDao subscriptionDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public SubscriptionModel createSubscription(int issueId, int userId) {
@@ -32,23 +40,21 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public ResponseDTO SendApproved (int userId, int issueId) {
-
 		SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
-		UserServiceImpl userService = new UserServiceImpl();
 		ResponseDTO responseDTO = new ResponseDTO();
-
-		String name =  "User name";
-		String subject = "Sibscription email validation";
+		String subject = "Subscription email validation";
 
 		int hash = (subscriptionDTO.getEmail()+subscriptionDTO.getId()).hashCode();
+		//TODO that's not a pattern, that's only a link. Use getBaseURL(request) instead of localhost:8085
 		String messagePattern = "http://localhost:8085/"+"#subscriptions"+issueId+"/valid/"+hash;
-
-		String email = userService.getById(issueId).getEmail();
-
-		MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
-
+		try {
+			UserModel userModel = userDao.findOne(userId);
+			getMandrillMail().sendMessage(new MessageBuilder().setPattern(messagePattern)
+					.setRecipient(userModel).setSubject(subject).build());
+		} catch (Exception ex){
+			responseDTO.setMessage("Mail hasn't been sent");
+		}
 		responseDTO.setMessage("Mail has been sent");
-
 		return responseDTO;
 	}
 

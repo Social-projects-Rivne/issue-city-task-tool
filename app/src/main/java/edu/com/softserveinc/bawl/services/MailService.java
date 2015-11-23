@@ -1,6 +1,7 @@
 package edu.com.softserveinc.bawl.services;
 
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
+import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.UserModel;
 
 public interface MailService {
@@ -9,8 +10,8 @@ public interface MailService {
 
 	void notifyForIssue(int issueId, String msg, String rootURL);
 
-	void sendRegNotification(UserModel userModel, String rootURL);
+	void notifyForIssue( UserNotificationDTO notificationDTO);
 
-	void  simpleEmailSender (String email,String name, String subject, String  messagePattern);
+	void sendRegNotification(UserModel userModel, String rootURL);
 
 }

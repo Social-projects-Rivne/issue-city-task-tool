@@ -15,7 +15,7 @@ requirejs.config({
     },
 
     gmaps: {
-      deps: ['jquery']
+      deps: ['jquery', 'markers']
     },
 
     jquery_serialize: {
@@ -24,10 +24,6 @@ requirejs.config({
 
     main: {
       deps: ['bootstrap', 'leaflet', 'markers', 'router']
-    },
-
-    map: {
-      deps: ['markers']
     },
 
     'view/MapView': {

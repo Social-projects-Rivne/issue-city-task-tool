@@ -78,14 +78,6 @@ public class IssueController {
         .orElse(Collections.<UserHistoryDTO>emptyList());
   }
 
-
-  @PreAuthorize("hasRole('ROLE_MANAGER')")
-  @RequestMapping(method = RequestMethod.GET)
-  @ResponseBody
-  public List<IssueDTO> getAllIssues() {
-    return getAllIssuesDto(issueService.loadIssuesList());
-  }
-
   @PreAuthorize("hasRole('ROLE_MANAGER')")
   @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
   @ResponseBody
@@ -101,12 +93,11 @@ public class IssueController {
   }
 
   /**
-   * Returns all issues with statuses 2=approved, 5=toresolve
+   * Returns all issues except 'resolved' issue
    *
    * @return list of all issues
    */
-
-  @RequestMapping(value = "get", method = RequestMethod.GET)
+  @RequestMapping(value = "all", method = RequestMethod.GET)
   @ResponseBody
   public List<IssueDTO> getIssues() {
     return getAllIssuesDto(historyService.getLastUniqueIssues());
@@ -117,7 +108,7 @@ public class IssueController {
    *
    * @return list of all issues with status RESOLVED
    */
-  @RequestMapping(value = "get_Resolved", method = RequestMethod.GET)
+  @RequestMapping(value = "resolved", method = RequestMethod.GET)
   @ResponseBody
   public List<IssueDTO> getResolvedIssues() {
     return DTOAssembler.getAllResolvedIssuesDto(historyService.getLastUniqueIssues());
@@ -126,16 +117,16 @@ public class IssueController {
   /**
    * Adds new issue
    *
-   * @param request
+   * @param issueDTO
    * @return
    */
   @RequestMapping(method = RequestMethod.POST)
   @ResponseBody
-  public ResponseDTO addIssue(@RequestBody IssueDTO request) {
+  public ResponseDTO addIssue(@RequestBody IssueDTO issueDTO) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      issueService.addIssue(request.getName(), request.getDescription(), request.getMapPointer(),
-          request.getAttachments(), request.getCategory(), request.getPriorityId());
+      issueService.addIssue(issueDTO.getName(), issueDTO.getDescription(), issueDTO.getMapPointer(),
+              issueDTO.getAttachments(), issueDTO.getCategory(), issueDTO.getPriorityId());
       responseDTO.setMessage(ISSUE_ADDED);
     } catch (Exception ex) {
       responseDTO.setMessage(ISSUE_NOT_ADDED);

@@ -74,12 +74,6 @@ public class IssueServiceImplTest extends AbstractBawlFunctionalTest {
     }
 
     @Test
-    public void testLoadIssuesList_shouldReturnListOfAllIssueModels() throws Exception {
-        issueService.loadIssuesList();
-        verify(issueDao, times(1)).findAll();
-    }
-
-    @Test
     public void testGetById_shouldReturnIssueModelByIssueID() throws Exception {
         IssueModel testIssueModel = new IssueModel();
         final int issueId = 2;

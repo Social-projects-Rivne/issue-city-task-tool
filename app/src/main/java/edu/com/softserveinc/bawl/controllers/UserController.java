@@ -1,11 +1,6 @@
 package edu.com.softserveinc.bawl.controllers;
 
-import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
-import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserHistoryIssuesForUserDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserIssuesHistoryDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
+import edu.com.softserveinc.bawl.dto.pojo.*;
 import edu.com.softserveinc.bawl.models.HistoryModel;
 import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
@@ -19,12 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -139,11 +129,7 @@ public class UserController {
   @ResponseBody
   public UserDTO submittedFromData(@RequestBody UserNotificationDTO userNotificationDTO, UserDTO userDTO) {
     try {
-      String email = userNotificationDTO.getEmail();
-      String messagePattern = userNotificationDTO.getMessage();
-      String subject = userNotificationDTO.getSubject();
-      String name = "User name";
-      getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
+      getMandrillMail().notifyForIssue(userNotificationDTO);
       return userDTO.withMessage("Mail has been sent");
     } catch (Exception e) {
       return userDTO.withMessage("Error");

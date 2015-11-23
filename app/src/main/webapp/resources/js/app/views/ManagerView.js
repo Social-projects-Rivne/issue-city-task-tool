@@ -324,7 +324,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				resolvedIssues: function (e) {
 					this.issues = mapView.model;
-					var issuesFilterList = new IssueCollection({url : "issue/get_Resolved"});
+					var issuesFilterList = new IssueCollection({urlRoot : "issue/resolved"});
 					this.issues.each(function (issue) {
 						if (issue.get('status') == "RESOLVED") {
 							console.log(issue);
