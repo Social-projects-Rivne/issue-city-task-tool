@@ -299,7 +299,7 @@ button.btn.btn-mini.resolve-subscribe {
 .comments {
 	width: 290px;
     height: 150px;
-	overflow: scroll;
+	overflow: auto;
 	align: center;
 }
 

@@ -11,102 +11,110 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="COMMENTS")
+@Table(name = "COMMENTS")
 public class CommentModel {
 
-    public static final Logger LOG = Logger.getLogger(CommentModel.class);
+  public static final Logger LOG = Logger.getLogger(CommentModel.class);
 
-	@Id
-	@GeneratedValue
-	@Column(unique=true, name="ID")
-	private int id;
-	
-	@Column(name="COMMENT")
-	private String comment;
-	
-	@Column(name="USER_NAME")
-	private String userName;
-	
-	@Column(name="EMAIL")
-	private String email;
-	
-	@Column(name="ISSUE_ID")
-	private int issueId;
+  @Id
+  @GeneratedValue
+  @Column(unique = true, name = "ID")
+  private int id;
 
-	public CommentModel(){};
-	
-	public CommentModel(String comment, String userName, String email, int issueId) {
-		this.comment = comment;
-		this.userName = userName;
-		this.email = email;
-		this.issueId = issueId;
-	}
+  @Column(name = "COMMENT")
+  private String comment;
 
-	public int getId() {
-		return id;
-	}
+  @Column(name = "USER_NAME")
+  private String userName;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  @Column(name = "EMAIL")
+  private String email;
 
-	public int getIssueId() {
-		return issueId;
-	}
-	
-	public void setIssueId(int issueId) {
-		this.issueId = issueId;
-	}
+  @Column(name = "ISSUE_ID")
+  private int issueId;
 
-	public String getComment() {
-		return comment;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	
-	public String getUserName() {
-		return userName;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
+  public int getIssueId() {
+    return issueId;
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  public void setIssueId(int issueId) {
+    this.issueId = issueId;
+  }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		CommentModel that = (CommentModel) o;
-		return Objects.equal(id, that.id) &&
-				Objects.equal(issueId, that.issueId) &&
-				Objects.equal(comment, that.comment) &&
-				Objects.equal(userName, that.userName) &&
-				Objects.equal(email, that.email);
-	}
+  public String getComment() {
+    return comment;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(id, comment, userName, email, issueId);
-	}
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
-	@Override
-	public String toString() {
-		return Objects.toStringHelper(this)
-				.add("id", id)
-				.add("comment", comment)
-				.add("userName", userName)
-				.add("email", email)
-				.add("issueId", issueId)
-				.toString();
-	}
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public CommentModel withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public CommentModel withIssueId(int issueId) {
+    this.issueId = issueId;
+    return this;
+  }
+
+  public CommentModel withComment(String comment) {
+    this.comment = comment;
+    return this;
+  }
+
+  public CommentModel withUserName(String userName) {
+    this.userName = userName;
+    return this;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    CommentModel that = (CommentModel) o;
+    return Objects.equal(id, that.id) &&
+        Objects.equal(issueId, that.issueId) &&
+        Objects.equal(comment, that.comment) &&
+        Objects.equal(userName, that.userName) &&
+        Objects.equal(email, that.email);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id, comment, userName, email, issueId);
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this).add("id", id).add("comment", comment).add("userName", userName)
+        .add("email", email).add("issueId", issueId).toString();
+  }
 }

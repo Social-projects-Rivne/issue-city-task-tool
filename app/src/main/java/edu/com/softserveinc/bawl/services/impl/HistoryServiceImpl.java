@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Transactional
@@ -23,9 +24,6 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Autowired
     private HistoryDao historyDao;
-
-    @Autowired
-    private IssueDao issueDao;
 
     @Override
     public void addHistory(HistoryModel history) {
@@ -61,9 +59,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     private  List<IssueModel> getIssueModelsFromHistoryModels (List<HistoryModel> histories) {
         List<IssueModel> issues = new ArrayList<>();
-        histories.forEach(historyModel -> {
-            issues.add(historyModel.getIssue());
-        });
+        histories.forEach(historyModel -> issues.add(historyModel.getIssue()));
         return issues;
     }
 

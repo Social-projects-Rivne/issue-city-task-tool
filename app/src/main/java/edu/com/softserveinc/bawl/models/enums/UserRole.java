@@ -9,7 +9,8 @@ public enum UserRole {
     USER_NOT_CONFIRMED("User not confirmed"),
     USER("User"),
     MANAGER("Manager"),
-    ADMIN("Admin");
+    ADMIN("Admin"),
+    SUBSCRIBER("Subscriber");
 
     private static final Map<Integer, UserRole> USER_ROLE_MAP = Maps.newHashMap();
 

@@ -1,6 +1,8 @@
 define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/CategoryModel', 'collection/CategoryCollection', 'collection/IssueCollection',  'text!templates/issue_filter.html', ],
 		function($, _, Backbone, IssueModel, CategoryModel, CategoryCollection, IssueCollection, IssueFilterTemplate ) {
-			var IssueFilterView = Backbone.View.extend({
+
+			var that = null;
+			return Backbone.View.extend({
 				
 				template: _.template(IssueFilterTemplate),
 				categoryCollection: new CategoryCollection(),
@@ -16,12 +18,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 
 				initialize: function() {
 					this.issueColection = mapView.model;
+					that = this;
 				},
 				
 				render: function() {
-					that = this;
 					this.categoryCollection.fetch({success: function(){
-
+							that.categoryCollection = new CategoryCollection(that.categoryCollection.where( {state : CATEGORY_NEW}));
 							$('#form-container').html(that.template({"categories":that.categoryCollection.toJSON()}));
 							console.log(that.categoryCollection.toJSON());
 						},
@@ -29,7 +31,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 							console.log("smth wrong");
 						}
 					});
-
 				},
 				
 				renderMarkers: function(){
@@ -80,5 +81,5 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel', 'model/Category
 				//TODO:replace comment list in issue details view
 				Backbone.history.navigate("issue/"+this.title,true)
 			}
-			return IssueFilterView;
+
 		})

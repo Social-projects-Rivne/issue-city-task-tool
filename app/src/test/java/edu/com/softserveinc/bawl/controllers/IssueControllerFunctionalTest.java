@@ -22,6 +22,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.server.MockMvc;
 import org.springframework.test.web.server.setup.MockMvcBuilders;
 
+import java.util.Collections;
+import java.util.Optional;
+
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
@@ -69,11 +72,13 @@ public class IssueControllerFunctionalTest extends AbstractBawlFunctionalTest {
         categoryModel.setId(1);
         issue.setCategory(categoryModel);
         issue.setStatus(IssueStatus.APPROVED);
+        issue.setHistories(Collections.emptyList());
         UserModel userModel = new UserModel();
         userModel.setId(1);
         userModel.setLogin("admin");
         userModel.setRole(UserRole.ADMIN);
         Mockito.when(userService.getByLogin(Mockito.anyString())).thenReturn(userModel);
+        Mockito.when(issueService.getById(Mockito.anyInt())).thenReturn(Optional.of(issue));
         Mockito.when(this.historyService.getLastIssueByIssueID(Mockito.anyInt())).thenReturn(issue);
         mockMvc = MockMvcBuilders.standaloneSetup(this.issueController).build();
     }

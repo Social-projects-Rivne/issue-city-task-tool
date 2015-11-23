@@ -2,6 +2,8 @@ package edu.com.softserveinc.bawl.utils;
 
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -63,6 +65,10 @@ public class MessageBuilder {
             e.printStackTrace();
         }
         return props;
+    }
+
+    public static String getBaseURL(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
     }
 
 

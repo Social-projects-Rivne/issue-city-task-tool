@@ -4,7 +4,7 @@ import java.util.List
 
 import scala.beans.BeanProperty
 
-class CategoryDTO extends ResponseDTO {
+class CategoryDTO extends ResponseDTO[CategoryDTO] {
   @BeanProperty var id: Int = 0
   @BeanProperty var name: String = null
   @BeanProperty var state: String = null

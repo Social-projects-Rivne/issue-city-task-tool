@@ -11,6 +11,6 @@ app/.idea/
 app/Bawl.iml
 desktop.ini
 /target
-app/src/main/resources/persistence.properties
-
-*
+.idea/*
+dataSources.local.xml
+AndroidApp/*

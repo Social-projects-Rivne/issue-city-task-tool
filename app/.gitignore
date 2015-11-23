@@ -9,3 +9,4 @@ target/
 servers
 *~
 persistence.properties
+src/main/resources/persistence.properties

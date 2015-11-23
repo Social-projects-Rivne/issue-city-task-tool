@@ -1,53 +1,40 @@
-define([ 'jquery', 'underscore', 'backbone'],
-    function($, _, Backbone) {
+define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
 
+      return Backbone.View.extend({
 
-        var SingleIssueView = Backbone.View.extend({
-            tagName: 'li',
-            className: 'class_history',
-            id: 'tab2',
+        tagName: 'li',
+        className: 'class_history',
+        id: 'tab2',
 
-            template: _.template('<strong><%= date %>:</strong> <%= userTitle%><span><%= username%></span><%= message%>'),
+        template: _.template('<strong><%= date %>: </strong> <%= userTitle%> <span><%= username%> </span><%= message%>'),
 
-            initialize: function() {
-            },
+        initialize: function () {},
 
-            render: function() {
+        render: function () {
 
-                if (this.model.get("roleName") == "User"){
-                    this.model.set("userTitle", "User");
-                    this.model.set("message", " send notification about resolving this issue");
-                }
-                else if(this.model.get("roleName") == "Manager" || this.model.get("roleName") == "Admin"){
-                    this.model.set("userTitle", this.model.get("roleName") + " ");
-                    if (this.model.get("status") == "NEW"){
-                        this.model.set("message", " created this issue");
-                    }
-                    else if (this.model.get("status") == "APPROVED"){
-                        this.model.set("message", " approved this issue");
-                    }
-                    else if (this.model.get("status") == "RESOLVED"){
-                        this.model.set("message", " resolved this issue");
-                    }
-                    else if (this.model.get("status") == "DELETED"){
-                        this.model.set("message", " deleted this issue");
-                    }
-                    else if (this.model.get("status") == "TO_RESOLVE"){
-                        this.model.set("message", " decided to resolve this issue");
-                    }
-                }
-                else {
-                    this.model.set("userTitle", "Unknown ");
-                    this.model.set("message", " user created this issue");
-                }
+          var userTitle = this.model.get("roleName");
+          var status = this.model.get("status");
+          const elem = "message";
 
-                this.$el.html(this.template(this.model.toJSON()));
-                console.log(this.$el);
+          if (!_.isEmpty(userTitle)) {
+            this.model.set("userTitle", userTitle);
+          }
 
-                return this;
-            }
-        });
-        return SingleIssueView;
+          switch (status) {
+            case "NEW" : this.model.set(elem, " created this issue"); break;
+            case "APPROVED" : this.model.set(elem, " approved this issue"); break;
+            case "RESOLVED" : this.model.set(elem, " resolved this issue"); break;
+            case "DELETED" : this.model.set(elem, " deleted this issue"); break;
+            case "TO_RESOLVE" : this.model.set(elem, " decided to resolve this issue"); break;
+            default : this.model.set(elem, " user created this issue");
+          }
+
+          this.$el.html(this.template(this.model.toJSON()));
+          console.log(this.$el);
+          return this;
+
+        }
+      });
     });
 
 		

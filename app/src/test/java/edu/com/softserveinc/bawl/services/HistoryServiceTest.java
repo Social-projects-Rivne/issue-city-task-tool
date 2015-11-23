@@ -37,7 +37,6 @@ public class HistoryServiceTest extends AbstractBawlFunctionalTest {
         historyDao = mock(HistoryDao.class);
         Whitebox.setInternalState(historyService, "historyDao", historyDao);
         issueDao = mock(IssueDao.class);
-        Whitebox.setInternalState(historyService, "issueDao", issueDao);
         when(historyDao.findAll()).thenReturn(getTestHistoryModels());
     }
 
