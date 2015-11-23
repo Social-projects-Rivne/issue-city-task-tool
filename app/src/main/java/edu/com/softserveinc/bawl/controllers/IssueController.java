@@ -30,18 +30,14 @@ public class IssueController {
 
   public static final Logger LOG = Logger.getLogger(IssueController.class);
 
-  public static final String ISSUE_ADDED = "Issue was successfully added";
-  public static final String ISSUE_NOT_ADDED = "Some problem occured! Issue was not added";
+  public static final String SUCCESS_ADDED = "Success. Issue was successfully added";
+  public static final String FAILURE_ADDED  = "Failure. Some problem occured! Issue was not added";
   public static final String NOT_AUTHORIZED = "You are not authorized for this action";
-  public static final String SUCCESS_SEND = "Issue has been deleted.";
-  public static final String FAILURE_SEND = "Some problem with sending email. Try again and check your email";
-  public static final String SUCCESS_DELETE = "Issue has been deleted.";
-  public static final String FAILURE_DELETE = "";
+  public static final String SUCCESS_UPDATE = "Success.Issue has been updated.";
+  public static final String FAILURE_UPDATE = "Failure. Some problem with sending email. Try again and check your email";
+  public static final String SUCCESS_MARKED = "Success. Issue has been marked as possibly resolved.";
+  public static final String FAILURE_MARKED = "Failure. Issue hasn't been marked as possibly resolved.";
 
-  public static final String SUCCESS_UPDATE = "Issue has been updated.";
-  public static final String FAILURE_UPDATE = "Some problem with sending email. Try again and check your email";
-  public static final String SUCCESS_MARKED = "Issue has been marked as possibly resolved.";
-  public static final String FAILURE_MARKED = "Some problem with sending email. Try again and check your email";
 
   @Autowired
   private IssueService issueService;
@@ -86,8 +82,9 @@ public class IssueController {
     try {
       issueService.deleteProblem(issueId, userService.getCurrentUserId());
       mailService.notifyForIssue(issueId, "Issue has been deleted.", getBaseURL(request));
+      responseDTO.setMessage(SUCCESS_UPDATE);
     } catch (Exception ex) {
-      responseDTO.setMessage(FAILURE_DELETE);
+      responseDTO.setMessage(FAILURE_UPDATE);
     }
     return responseDTO;
   }
@@ -127,9 +124,9 @@ public class IssueController {
     try {
       issueService.addIssue(issueDTO.getName(), issueDTO.getDescription(), issueDTO.getMapPointer(),
               issueDTO.getAttachments(), issueDTO.getCategory(), issueDTO.getPriorityId());
-      responseDTO.setMessage(ISSUE_ADDED);
+      responseDTO.setMessage(SUCCESS_ADDED);
     } catch (Exception ex) {
-      responseDTO.setMessage(ISSUE_NOT_ADDED);
+      responseDTO.setMessage(FAILURE_ADDED);
     }
     return responseDTO;
 
@@ -150,7 +147,7 @@ public class IssueController {
       mailService.notifyForIssue(issueDTO.getId(), "Issue has been updated.", getBaseURL(request));
       responseDTO.setMessage(SUCCESS_UPDATE);
     } catch (Exception ex) {
-      responseDTO.setMessage(NOT_AUTHORIZED);
+      responseDTO.setMessage(FAILURE_UPDATE);
     }
     return responseDTO;
   }
@@ -167,7 +164,7 @@ public class IssueController {
       issueService.editProblem(editedIssue, userModel.getId());
       responseDTO.setMessage(SUCCESS_MARKED);
     } catch (Exception ex) {
-      responseDTO.setMessage(NOT_AUTHORIZED);
+      responseDTO.setMessage(FAILURE_MARKED);
     }
     return responseDTO;
   }
