@@ -25,7 +25,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Autowired
 	private UserDao userDao;
 
-
 	@Override
 	public SubscriptionModel createSubscription(int issueId, int userId) {
 		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndUserId(issueId,userId);
@@ -65,25 +64,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		return responseDTO;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public SubscriptionModel read(int id) {
 		return subscriptionDao.findOne(id);
@@ -98,33 +78,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public Collection <SubscriptionModel> listByIssueId(int issueId) {
 		return subscriptionDao.findByIssueId(issueId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 
