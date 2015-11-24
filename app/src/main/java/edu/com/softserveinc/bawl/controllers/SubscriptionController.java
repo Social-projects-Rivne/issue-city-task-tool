@@ -31,7 +31,8 @@ public class SubscriptionController {
 	public static final String MESSAGE_TEXT_DELL = "The subscription";
 	public static final String SUCCESS_DELL = "was successfully delited";
 	public static final String FAILURE_DELL = "Some problem occured! was NOT added";
-	 public int existuserId;
+	public int existuserId;
+	public int subId;
 
 	@Autowired
 	private SubscriptionService subscriptionService;
@@ -60,30 +61,12 @@ public class SubscriptionController {
 
 				int issueId = subscriptionDTO.getIssueId();
 				existuserId = userService.getUserIdByEmail(email);
-
 				subscriptionService.createSubscription(issueId, existuserId);
+			//	subId = subscriptionModel.getId();	System.out.println("## SubId = "+subId);
+
 				System.out.println("## Subscrip" + subscriptionService.createSubscription(issueId, existuserId));
 
-			// Отослать письмо на подписку3
-
-
-			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request));
-
-
-
-//			String name ="nsme";
-//			String subject = "subject";
-//			String messagePattern = "mes";
-//
-//
-//			System.out.println(email +  name + subject + messagePattern);
-//			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//			getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
-//
-
-
-
-
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),subId);
 
 		} else { // false if user is not exist
 			System.out.println("## User is not exist");
@@ -92,18 +75,21 @@ public class SubscriptionController {
 			userModel = userService.addSubscriber(userModel);
 			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
 			responseDTO.setMessage("This subscription was alredy exist");
+			// subId = subscriptionModel.getId();	System.out.println("## SubId = "+subId);
 
-			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request));
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),subId);
 			}
 
 		return responseDTO;
 	}
 
-	@RequestMapping(value = "{id}/valid/{hash}", method = RequestMethod.POST)
+	@RequestMapping(value = "{id}/validsub/{hash}", method = RequestMethod.POST)
 	public  @ResponseBody ResponseDTO validation(
 				@PathVariable(value = "id") Integer id,
 				@PathVariable(value = "hash") Integer hash,
 			ResponseDTO responseDTO ) {
+
+
 		try {
 			subscriptionService.delete(id);
 			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);

@@ -19,4 +19,6 @@ public interface SubscriptionService {
 
 	public boolean isValidSubscription(int userId, int issueId);
 
+	public int getIssueIdFromSubId(int id);
+
 }

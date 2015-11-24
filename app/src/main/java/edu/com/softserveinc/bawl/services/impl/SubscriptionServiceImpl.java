@@ -6,6 +6,7 @@ import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.utils.MD5Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			}
 	}
 
+
 	@Override
 	public ResponseDTO SendApproved (int userId, int issueId) {
 
@@ -64,6 +66,15 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		return responseDTO;
 	}
 
+	public String getHashSubscription(int subId){
+
+		String email = ""; // ѕќиск емейла по id ---> userId --> email
+		int issueId = getIssueIdFromSubId(subId);
+
+		String Newhash = MD5Util.md5Apache(email + subId + issueId);
+		return Newhash;
+	}
+
 	@Override
 	public SubscriptionModel read(int id) {
 		return subscriptionDao.findOne(id);
@@ -77,6 +88,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Override
 	public Collection <SubscriptionModel> listByIssueId(int issueId) {
 		return subscriptionDao.findByIssueId(issueId);
+	}
+
+	@Override
+	public int getIssueIdFromSubId(int id){
+//		return subscriptionDao.findBySubId(id).getIssueId();
+		return 0;
 	}
 
 }

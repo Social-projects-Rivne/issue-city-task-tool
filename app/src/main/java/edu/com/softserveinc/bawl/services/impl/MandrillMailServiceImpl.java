@@ -15,6 +15,7 @@ import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.utils.MD5Util;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
 import edu.com.softserveinc.bawl.utils.MessageBuilder;
 import org.apache.http.client.HttpClient;
@@ -140,17 +141,22 @@ public class MandrillMailServiceImpl implements MailService {
 
 
    // @Override
+    public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId){
 
-    public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL){
+        String email = subscriptionDTO.getEmail();              System.out.println("## email = "+email);
+        String name = "name";                                   System.out.println("## name = "+name);
+        int issueId = subscriptionDTO.getIssueId();             System.out.println("## issueId = "+ issueId);
+        int id = subscriptionDTO.getId();                       System.out.println("## id = "+ id);
+        // Need to get id from database;
+        String hash = MD5Util.md5Apache(email + subId + issueId);  System.out.println("## hash= "+ hash);
 
-        String email = subscriptionDTO.getEmail();
-        String name = "name";
+        String link = "http://localhost:8080/#"+subId+"/validsub/"+ hash;
 
-        String link =   rootURL
-                        + properties.getProperty("mail.confirmation_url")
-                        + subscriptionDTO
-                        + "&id="
-                        + subscriptionDTO.getId();
+//        String link =   rootURL
+//                        + properties.getProperty("mail.confirmation_url")
+//                        + subscriptionDTO
+//                        + "&id="
+//                        + subscriptionDTO.getId();
 
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
 

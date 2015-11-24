@@ -11,5 +11,4 @@ public interface SubscriptionDao extends JpaRepository<SubscriptionModel, Intege
 
 	SubscriptionModel findByIssueIdAndUserId(int issueId, int userId);
 
-	
 }
