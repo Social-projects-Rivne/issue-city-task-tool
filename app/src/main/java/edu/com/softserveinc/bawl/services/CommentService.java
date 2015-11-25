@@ -6,11 +6,9 @@ import java.util.List;
 
 public interface CommentService {
 
-	void addComment(CommentModel comment);
-
 	void deleteComment(CommentModel comment);
 
-	void editComment(CommentModel comment);
+	CommentModel saveComment(CommentModel comment);
 
 	List<CommentModel> getCommentsByIssueId(int issueId);
 }

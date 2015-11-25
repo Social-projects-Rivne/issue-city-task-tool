@@ -5,7 +5,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
             events: {
                 'click #profile' : 'editProfile',
-                'click #admin_log_out'	: 'logOut',
+                'click #admin_log_out'	: 'AppController.logout'
             },
 
             viewUserProfileTemplate: _.template(ViewUserHistoryTemplate),
@@ -23,18 +23,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
             editProfile: function() {
                 router.navigate('#profile', {trigger: true});
-            },
-            logOut: function(){
-                $.ajax('auth/logout');
-                loginView.currentUser = null;
-                router.navigate('', {trigger:true});
-                if($('#notificationModal'))
-                    $('#notificationModal').remove();
-                this.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
-                $('#notificationModal').modal();
-                loginView.buttonsManage();
             }
-
 
 
         });

@@ -1,6 +1,6 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueModel', 
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueModel', 'model/CategoryModel',
         'collection/UserCollection','model/SendingNotificationModel','view/UserView', 'text!templates/Admin.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html', 'text!templates/EditUserTemplate.html','text!templates/SendingNotification.html' ],
-		function($, _, Backbone, UserModel, IssueModel, UserCollection, SendingNotificationModel, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate, SendingNotificationTemplate) {
+		function($, _, Backbone, UserModel, IssueModel, CategoryModel, UserCollection, SendingNotificationModel, UserView, AdminTemplate, ConfirmationTemplate, NotificationTemplate, EditUserTemplate, SendingNotificationTemplate) {
 			
 			var that = null;
 			function l (x) {
@@ -206,7 +206,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						} );
 					}
-					if(e.currentTarget.name == 'delete issue') {
+					else if(e.currentTarget.name == 'delete issue') {
 						$.ajax({
 							url: '/issue/delete/' + e.currentTarget.id,
 							type: 'POST',
@@ -215,8 +215,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						});
 					}
-					
-					if(e.currentTarget.name == 'edit issue') {
+					else if(e.currentTarget.name == 'edit issue') {
 						console.log ("--- UserListView.js confirm if {name equal 'edit issue'}");
 						$('#editIssueModal').modal('hide');
 						mapView.model.get(e.currentTarget.id).set( {
@@ -241,8 +240,74 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						})
 					}
-					
-					
+					else if (e.currentTarget.name == 'edit category') {
+						this.editCategory(e);
+					}
+					else if (e.currentTarget.name == 'delete category') {
+						this.deleteCategory(e);
+					}
+					else if (e.currentTarget.name == 'add category') {
+						this.addNewCategory(e);
+					}
+				},
+
+				editCategory: function(e){
+					var category = categoryManageView.categories.get(e.currentTarget.id);
+					category.set({
+						name: $('#edit-category-name').val()
+					}).save( {}, {
+						success: function(model, response) {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							if($('#confirmationModal')) $('#confirmationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+							categoryManageView.render();
+						},
+						error: function() {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					} );
+					if($('#editCategoryModal')) $('#editCategoryModal').remove();
+				},
+
+				deleteCategory: function(e){
+					var category = categoryManageView.categories.get(e.currentTarget.id);
+					category.destroy({
+						success: function(model, response) {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							if($('#confirmationModal')) $('#confirmationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+							categoryManageView.render();
+						},
+						error: function() {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					} );
+				},
+
+				addNewCategory: function(e){
+					var newCategory = new CategoryModel();
+					newCategory.set({
+						name: $("#add-category-name").val()
+					}).save( {}, {
+						success: function(model, response) {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+							categoryManageView.render();
+						},
+						error: function() {
+							if($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					} );
+					if($('#addCategoryModal')) $('#addCategoryModal').remove();
 				}
 			});	
 

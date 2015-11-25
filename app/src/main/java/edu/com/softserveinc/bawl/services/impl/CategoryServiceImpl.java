@@ -8,8 +8,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static edu.com.softserveinc.bawl.models.enums.CategoryState.DELETED;
 
@@ -17,58 +19,75 @@ import static edu.com.softserveinc.bawl.models.enums.CategoryState.DELETED;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
-    public static final Logger LOG=Logger.getLogger(CategoryServiceImpl.class);
-	
-	@Autowired
-    private CategoryDao categoryDao;
-	
-	@Override
-	public CategoryModel addCategory(CategoryModel category) {
-        return categoryDao.saveAndFlush(category);
+  public static final Logger LOG = Logger.getLogger(CategoryServiceImpl.class);
+  public static final String OTHER_CATEGORY = "other";
+
+  @Autowired
+  private CategoryDao categoryDao;
+
+  @Override
+  public CategoryModel addCategory(CategoryModel category) {
+    return categoryDao.saveAndFlush(category);
+  }
+
+  @Override
+  public Optional<CategoryModel> addCategory(String category) {
+    return Optional.of(categoryDao.saveAndFlush(new CategoryModel(category)));
+  }
+
+  @Override
+  public void deleteCategory(int id) {
+    CategoryModel categoryModel = getCategoryByID(id).get();
+    categoryModel.setState(DELETED);
+    categoryDao.saveAndFlush(categoryModel);
+  }
+
+  @Override
+  public void deleteCategory(CategoryModel category) {
+    category.setState(DELETED);
+    categoryDao.saveAndFlush(category);
+  }
+
+  @Override
+  public void updateCategory(int id, String name, CategoryState state) {
+    CategoryModel categoryModel = getCategoryByID(id).get();
+    categoryModel.setName(name);
+    categoryModel.setState(state);
+    categoryDao.saveAndFlush(categoryModel);
+  }
+
+  @Override
+  public Optional<CategoryModel> getCategoryByID(int id) {
+    return Optional.ofNullable(categoryDao.findOne(id));
+  }
+
+  @Override
+  public List<CategoryModel> loadCategoriesList() {
+    return categoryDao.findAll();
+  }
+
+  @Override
+  public Optional<CategoryModel> getCategoryByName(String name) {
+    return Optional.ofNullable(categoryDao.findByName(name));
+  }
+
+  @Override
+  public Optional<CategoryModel> getCategoryByNameOrAddNew(String name) {
+    if (StringUtils.isEmpty(name)) {
+      return Optional.empty();
     }
+    final Optional<CategoryModel> categoryByName = getCategoryByName(name.toLowerCase());
+    return categoryByName.isPresent() ? categoryByName : addCategory(name);
 
-	@Override
-	public CategoryModel addCategory(String category) {
-        return categoryDao.saveAndFlush(new CategoryModel(category));
+  }
+
+  @Override
+  public CategoryModel getOtherCategory() {
+    CategoryModel category = categoryDao.findByName(OTHER_CATEGORY);
+    if (category == null) {
+      category = addCategory(OTHER_CATEGORY).get();
     }
-
-	@Override
-	public void deleteCategory(CategoryModel category) {
-		category.setState(DELETED);
-		categoryDao.saveAndFlush(category);
-	}
-
-	@Override
-	public void updateCategory(int id, String name, CategoryState state) {
-		CategoryModel categoryModel = getCategoryByID(id);
-		categoryModel.setName(name);
-		categoryModel.setState(state);
-		categoryDao.saveAndFlush(categoryModel);
-	}
-
-	@Override
-	public CategoryModel getCategoryByID(int id) {
-		return categoryDao.findOne(id);
-	}
-
-	@Override
-	public List<CategoryModel> loadCategoriesList() {
-		return categoryDao.findAll();
-	}
-
-	@Override
-	public CategoryModel getCategoryByName(String name){
-		return categoryDao.findByName(name);
-	}
-
-    @Override
-    public CategoryModel getCategoryByNameOrAddNew(String name){
-        final String lowerCaseName = name.toLowerCase();
-        CategoryModel categoryByName = getCategoryByName(lowerCaseName);
-        if (null == categoryByName) {
-            categoryByName = addCategory(name);
-        }
-        return categoryByName;
-    }
+    return category;
+  }
 
 }

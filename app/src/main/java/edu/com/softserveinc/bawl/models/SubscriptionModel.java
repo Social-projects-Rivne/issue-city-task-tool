@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "SUBSCRIPTIONS", uniqueConstraints=@UniqueConstraint(columnNames={"ISSUEID"/*, "EMAIL"*/}))
+@Table(name = "SUBSCRIPTIONS", uniqueConstraints=@UniqueConstraint(columnNames={"ISSUEID","USERID","ISVALID"}))
 public class SubscriptionModel {
 
     public static final Logger LOG = Logger.getLogger(SubscriptionModel.class);

@@ -4,7 +4,7 @@ define(['underscore', 'backbone', 'backbone_route_control',
 function (_, Backbone, BackboneRouteControl,
           AppController, IssueController, UserController, AdminController) {
 
-    var Router = BackboneRouteControl.extend({
+    return BackboneRouteControl.extend({
 
             routes: {
                 "":         "login#home",
@@ -31,5 +31,5 @@ function (_, Backbone, BackboneRouteControl,
             }
 
         });
-        return Router;
+
     });

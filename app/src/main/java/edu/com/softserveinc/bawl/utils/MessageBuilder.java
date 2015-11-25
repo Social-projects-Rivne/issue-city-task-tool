@@ -2,6 +2,9 @@ package edu.com.softserveinc.bawl.utils;
 
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillRecipient;
+import edu.com.softserveinc.bawl.models.UserModel;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -10,12 +13,10 @@ import java.util.Properties;
 
 public class MessageBuilder {
 
-    private String pattern = "";
     private String subject= "";
     private String message= "";
     private Properties properties;
     MandrillRecipient [] recipients;
-    MandrillRecipient recipient;
     private Map<String, String> headers = new HashMap<String, String>();
 
     public MessageBuilder setPattern(String pattern, String ...params){
@@ -38,6 +39,12 @@ public class MessageBuilder {
         this.recipients = recipients;
         return this;
     }
+
+    public MessageBuilder setRecipient(UserModel user){
+        this.recipients = new MandrillRecipient [] {new MandrillRecipient(user.getName(), user.getEmail())};
+        return this;
+    }
+
 
     public MandrillHtmlMessage build(){
         properties = getProperties();
@@ -63,6 +70,10 @@ public class MessageBuilder {
             e.printStackTrace();
         }
         return props;
+    }
+
+    public static String getBaseURL(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
     }
 
 

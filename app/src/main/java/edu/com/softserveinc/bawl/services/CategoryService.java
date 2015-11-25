@@ -4,22 +4,27 @@ import edu.com.softserveinc.bawl.models.CategoryModel;
 import edu.com.softserveinc.bawl.models.enums.CategoryState;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryService {
 
-	 CategoryModel addCategory(CategoryModel category);
+  CategoryModel addCategory(CategoryModel category);
 
-	 CategoryModel addCategory(String category);
+  Optional<CategoryModel> addCategory(String category);
 
-	 void deleteCategory(CategoryModel category);
+  void deleteCategory(int id);
 
-	 void updateCategory(int id, String name, CategoryState state);
+  void deleteCategory(CategoryModel category);
 
-	 CategoryModel getCategoryByID(int id);
-	
-	 List<CategoryModel> loadCategoriesList();
-		
-	 CategoryModel getCategoryByName(String name);
+  void updateCategory(int id, String name, CategoryState state);
 
-	 CategoryModel getCategoryByNameOrAddNew(String name);
+  Optional<CategoryModel> getCategoryByID(int id);
+
+  List<CategoryModel> loadCategoriesList();
+
+  Optional<CategoryModel> getCategoryByName(String name);
+
+  Optional<CategoryModel> getCategoryByNameOrAddNew(String name);
+
+  CategoryModel getOtherCategory();
 }

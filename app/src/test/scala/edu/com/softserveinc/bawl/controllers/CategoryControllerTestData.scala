@@ -14,6 +14,10 @@ abstract class CategoryControllerTestData {
   val EMPTY_COLLECTION : String = "[]"
   val POST : String = "/category"
   val GET : String = "/category/all"
+  val DELETE: String = "/category/{id}"
+  val PUT : String = "/category/{id}"
+  val ID: Integer = 1;
+
 
 
 }

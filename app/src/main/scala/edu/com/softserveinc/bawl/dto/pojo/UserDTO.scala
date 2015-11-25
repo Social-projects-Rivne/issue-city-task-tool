@@ -2,7 +2,7 @@ package edu.com.softserveinc.bawl.dto.pojo
 
 import scala.beans.BeanProperty
 
-class UserDTO extends ResponseDTO {
+class UserDTO extends ResponseDTO[UserDTO] {
   @BeanProperty  var id: Int = 0
   @BeanProperty  var name: String = null
   @BeanProperty  var email: String = null

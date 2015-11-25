@@ -21,6 +21,7 @@ var AppController = function(app) {
                 url: 'auth/logout',
                 type: 'POST',
                 success: function () {
+                    loginView.currentUser = null;
                     $('.navbar  #admin').hide();
                     $('.navbar  #manager').hide();
                     $('.navbar  #cry-out').hide();

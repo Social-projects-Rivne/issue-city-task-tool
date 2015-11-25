@@ -32,7 +32,7 @@ public class CommentServiceTest extends AbstractBawlFunctionalTest {
     @Test
     public void testAddComment() throws Exception {
         CommentModel mockCommentModel = mock(CommentModel.class);
-        commentService.addComment(mockCommentModel);
+        commentService.saveComment(mockCommentModel);
         verify(commentDao, times(1)).saveAndFlush(mockCommentModel);
     }
 
@@ -46,7 +46,7 @@ public class CommentServiceTest extends AbstractBawlFunctionalTest {
     @Test
     public void testEditComment() throws Exception {
         CommentModel mockCommentModel = mock(CommentModel.class);
-        commentService.editComment(mockCommentModel);
+        commentService.saveComment(mockCommentModel);
         verify(commentDao, times(1)).saveAndFlush(mockCommentModel);
     }
 
