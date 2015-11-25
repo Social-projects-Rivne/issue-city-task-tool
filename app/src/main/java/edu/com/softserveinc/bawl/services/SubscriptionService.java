@@ -21,4 +21,10 @@ public interface SubscriptionService {
 
 	public int getIssueIdFromSubId(int id);
 
+	public String getHashSubscription(int subId);
+
+	public String getEmailFromSubId(int id);
+
+	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel);
+
 }

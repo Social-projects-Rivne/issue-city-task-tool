@@ -6,7 +6,7 @@ import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
-import edu.com.softserveinc.bawl.utils.MD5Util;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,14 +65,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 		return responseDTO;
 	}
-
+	@Override
 	public String getHashSubscription(int subId){
 
-		String email = ""; // ѕќиск емейла по id ---> userId --> email
-		int issueId = getIssueIdFromSubId(subId);
+		String email = getEmailFromSubId(subId); 	System.out.println("## email" + email);	// id ---> userId --> email
+		int issueId = getIssueIdFromSubId(subId);	System.out.println("## issueID" + issueId);
 
-		String Newhash = MD5Util.md5Apache(email + subId + issueId);
-		return Newhash;
+		return DigestUtils.md5Hex(email + subId + issueId);
 	}
 
 	@Override
@@ -92,8 +91,18 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public int getIssueIdFromSubId(int id){
-//		return subscriptionDao.findBySubId(id).getIssueId();
-		return 0;
+		return subscriptionDao.findOne(id).getIssueId();
+	}
+
+	@Override
+	public String getEmailFromSubId(int id){
+		return userDao.findOne(subscriptionDao.findOne(id).getUserId()).getEmail();
+	}
+
+	@Override
+	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel) {
+		subscriptionDao.findOne(subscriptionModel.getId()).setIsValid(true);
+		return  subscriptionDao.saveAndFlush(subscriptionModel);
 	}
 
 }
