@@ -17,6 +17,6 @@ public interface MailService {
 
 	public void  simpleEmailSender (String email, String name, String subject, String messagePattern);
 
-	public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL);
+	public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId);
 
 }

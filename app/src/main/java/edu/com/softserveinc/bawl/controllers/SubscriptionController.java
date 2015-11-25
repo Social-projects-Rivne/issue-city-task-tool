@@ -31,11 +31,11 @@ public class SubscriptionController {
 	public static final String MESSAGE_TEXT_DELL = "The subscription";
 	public static final String SUCCESS_DELL = "was successfully delited";
 	public static final String FAILURE_DELL = "Some problem occured! was NOT added";
-	 public int existuserId;
+	public int existuserId;
 
 	@Autowired
 	private SubscriptionService subscriptionService;
-//
+
 	@Autowired
 	private UserService userService;
 
@@ -60,30 +60,13 @@ public class SubscriptionController {
 
 				int issueId = subscriptionDTO.getIssueId();
 				existuserId = userService.getUserIdByEmail(email);
-
 				subscriptionService.createSubscription(issueId, existuserId);
+			//	subId = subscriptionModel.getId();	System.out.println("## SubId = "+subId);
+
 				System.out.println("## Subscrip" + subscriptionService.createSubscription(issueId, existuserId));
-
-			// Отослать письмо на подписку3
-
-
-			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request));
-
-
-
-//			String name ="nsme";
-//			String subject = "subject";
-//			String messagePattern = "mes";
-//
-//
-//			System.out.println(email +  name + subject + messagePattern);
-//			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//			getMandrillMail().simpleEmailSender(email, name, subject, messagePattern);
-//
-
-
-
-
+			// TODO
+			int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
 
 		} else { // false if user is not exist
 			System.out.println("## User is not exist");
@@ -93,17 +76,35 @@ public class SubscriptionController {
 			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
 			responseDTO.setMessage("This subscription was alredy exist");
 
-			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request));
+			// TODO
+			int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
 			}
 
 		return responseDTO;
 	}
 
-	@RequestMapping(value = "{id}/valid/{hash}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}/validSub/{hash}", method = RequestMethod.GET)
 	public  @ResponseBody ResponseDTO validation(
 				@PathVariable(value = "id") Integer id,
 				@PathVariable(value = "hash") Integer hash,
-			ResponseDTO responseDTO ) {
+			ResponseDTO responseDTO,SubscriptionModel subscriptionModel ) {
+
+		System.out.println("#####################################################################################");
+		System.out.println("Hallo from Spring");
+		System.out.println("#####################################################################################");
+		System.out.println("id = "+id+" hash = "+hash);
+;
+		System.out.println("## hasH"+subscriptionService.getHashSubscription(id));
+
+			if(hash.equals(subscriptionService.getHashSubscription(id))){
+				subscriptionService.validateSubscription(subscriptionModel);
+		}else{
+			 System.out.println("Something wrong");
+				return responseDTO;
+		}
+
+
 		try {
 			subscriptionService.delete(id);
 			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);

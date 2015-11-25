@@ -19,4 +19,12 @@ public interface SubscriptionService {
 
 	public boolean isValidSubscription(int userId, int issueId);
 
+	public int getIssueIdFromSubId(int id);
+
+	public String getHashSubscription(int subId);
+
+	public String getEmailFromSubId(int id);
+
+	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel);
+
 }
