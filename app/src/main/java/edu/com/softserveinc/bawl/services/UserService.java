@@ -13,7 +13,7 @@ public interface UserService {
 
 	void editUserPass(UserModel user);
 	
-	void deleteUser(int userId);
+	void deleteUser(int id);
 	
 	UserModel getById(int id);
 
