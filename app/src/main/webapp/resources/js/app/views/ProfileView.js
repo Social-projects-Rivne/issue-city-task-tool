@@ -1,23 +1,26 @@
 define(['jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/UserProfile.html', 'text!templates/NotificationTemplate.html'],
     function ($, _, Backbone, UserModel, UserProfileTemplate, NotificationTemplate) {
 
-        var ProfileView = Backbone.View.extend({
+        var that = null;
+        return Backbone.View.extend({
 
             events: {},
 
             userProfileTemplate: _.template(UserProfileTemplate),
 
-
             initialize: function () {
-
+                that = this;
             },
 
             render: function (id) {
-                this.model = loginView.currentUser;
-                this.$el.html(this.userProfileTemplate(this.model.toJSON()));
-            },
-
+                $.ajax({ contentType:'application/json',
+                    url: 'users/current',
+                    success: function(data){
+                        that.model = new UserModel(data);
+                        that.$el.html(that.userProfileTemplate(that.model.toJSON()));
+                    }
+                });
+            }
         });
 
-        return ProfileView;
     })
