@@ -142,14 +142,22 @@ public class MandrillMailServiceImpl implements MailService {
     // This metod need for sending ssubsciptions
     /// / @Override
     public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId){
-        System.out.println("##subId "+subId);
-        String email = subscriptionDTO.getEmail();              System.out.println("## email = "+email);
-        String name = "name";                                   System.out.println("## name = "+name);
-        int issueId = subscriptionDTO.getIssueId();             System.out.println("## issueId = "+ issueId);
-        int id = subscriptionDTO.getId();                       System.out.println("## id = "+ id);
-        //TODO // Need to get id from database;
 
-        String hash =   DigestUtils.md5Hex(email + subId + issueId); System.out.println("## hash= "+ hash);
+
+        String email = subscriptionDTO.getEmail();
+        String name = "name";
+        int issueId = subscriptionDTO.getIssueId();
+//        int id = subscriptionDTO.getId();
+
+
+        String hash =   DigestUtils.md5Hex(email + subId + issueId);
+
+        System.out.println("## sendSubNotificationid = "+ subId);
+        System.out.println("## sendSubNotification issueId = "+ issueId);
+        System.out.println("## sendSubNotification name = "+name);
+        System.out.println("## sendSubNotification email = "+email);
+        System.out.println("## sendSubNotification email hash= "+ hash);
+
 
         String link = "http://localhost:8080/#"+subId+"/validsub/"+ hash;
 

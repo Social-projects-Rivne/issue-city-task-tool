@@ -60,7 +60,6 @@ public class SubscriptionController {
 			existuserId = userService.getUserIdByEmail(email);
 			subscriptionService.createSubscription(issueId, existuserId);
 
-			//int id =  subscriptionModel.getId(); System.out.println("## Su#bId = "+id);
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),existuserId);
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request), id);
 
@@ -70,9 +69,7 @@ public class SubscriptionController {
 			userModel = userService.addSubscriber(userModel);
 			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
 
-			//int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),userModel.getId());
-		//	System.out.println("#id1 = "+id+" id2 = "+id2);
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
 			}
 

@@ -1,6 +1,5 @@
 package edu.com.softserveinc.bawl.services;
 
-import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 
 import java.util.Collection;
@@ -15,7 +14,7 @@ public interface SubscriptionService {
 	
 	public Collection<SubscriptionModel> listByIssueId(int issueId);
 
-	public ResponseDTO SendApproved (int userId, int issueId);
+//	public ResponseDTO SendApproved (int userId, int issueId);
 
 	public boolean isValidSubscription(int userId, int issueId);
 
