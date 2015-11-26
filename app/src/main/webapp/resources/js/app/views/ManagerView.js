@@ -324,17 +324,12 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				resolvedIssues: function (e) {
 					this.issues = mapView.model;
-					var issuesFilterList = new IssueCollection({urlRoot : "issue/resolved"});
-					this.issues.each(function (issue) {
-						if (issue.get('status') == "RESOLVED") {
-							console.log(issue);
-							issuesFilterList.add(issue);
-						}
+					var issuesResolvedList = new IssueCollection({urlRoot : "issue/resolved"});
+					issuesResolvedList.fetch({success: function(){
+						that.issues = issuesResolvedList;
+						that.issueTableRender();
+					}
 					});
-					console.log(issuesFilterList);
-					this.issues = issuesFilterList;
-					console.log(this.issues);
-					this.issueTableRender();
 				},
 
 				showEditIssueForm: function(e){

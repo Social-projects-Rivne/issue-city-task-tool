@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(int id) {
-		if (id != 0) {
-			userDao.delete(id);
+		UserModel userModel = getById(id);
+		userModel.setRole(UserRole.DELETED);
+		userDao.saveAndFlush(userModel);
 		}
-	}
 
 	@Override
 	public void editUserPass(UserModel user) {
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserModel> loadUsersList() {
-		return userDao.findAll();
+				return userDao.findAll();
 	}
 
 	@Override

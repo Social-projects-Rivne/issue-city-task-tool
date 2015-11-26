@@ -26,7 +26,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 
 				getCurrentUser: function(){
 					that = this;
-					$.ajax({ contentType:'applicetaion/json',
+					$.ajax({ contentType:'application/json',
 							 url: 'users/current',
 							 //when request done we create admin or manager view and rout user on his page
 							 success: function(data){

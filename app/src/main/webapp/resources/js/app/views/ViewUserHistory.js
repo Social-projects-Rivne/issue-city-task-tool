@@ -17,12 +17,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
             render: function(id) {
                 this.model = loginView.currentUser;
-                this.$el.html(this.viewUserHistoryTemplate(this.model.toJSON()));
+                this.$el.html(this.viewUserProfileTemplate(this.model.toJSON()));
                 console.log(this.model);
             },
 
             editProfile: function() {
-                router.navigate('#profile', {trigger: true});
+                router.navigate('#profile');
             }
 
 
