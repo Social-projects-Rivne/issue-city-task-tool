@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -28,6 +29,8 @@ public class ImageServiceImpl implements ImageService{
   public static final  String PATH_LOCAL_AVATAR = "resources/img/avatar/";
   public static final  String GET_AVATAR_URL = "image/avatar/";
   public static final String BASE_URL = System.getProperty("catalina.home") + "/";
+  public static final String NO_AVATAR_PNG = "no_avatar.png";
+  public static final String PATH_WEB_APP = "webapps/ROOT/";
 
   @Override
   public void cropImage() {
@@ -55,7 +58,6 @@ public class ImageServiceImpl implements ImageService{
 
   @Override
   public ResponseDTO loadAvatar(MultipartFile imgFile, UserModel user) {
-    //TODO crop avatar to 100*100 for saving on server side
     String fileName = DigestUtils.md5Hex(user.getEmail()) + "." + getExtension(imgFile.getOriginalFilename());
     File serverFile = createUserAvatarFile(fileName);
     ResponseDTO responseDTO = writeFile(serverFile, imgFile);
@@ -64,8 +66,13 @@ public class ImageServiceImpl implements ImageService{
   }
 
   @Override
-  public byte[] getAvatar(String filePath) throws IOException {
-    String path = BASE_URL + PATH_LOCAL_AVATAR + filePath;
+  public byte[] getUserAvatarOrDefault(String filePath) throws IOException {
+    String path = null;
+    if ( !StringUtils.isEmpty(filePath)){
+      path = BASE_URL + PATH_LOCAL_AVATAR + filePath;
+    } else {
+      path = BASE_URL + PATH_WEB_APP + PATH_LOCAL_AVATAR + NO_AVATAR_PNG;
+    }
     return FileUtils.readFileToByteArray(FileUtils.getFile(path));
   }
 

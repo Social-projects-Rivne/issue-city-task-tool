@@ -61,7 +61,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						success: function(){
 							//get logined user model
 							$.ajax({
-								contentType:'applicetaion/json',
+								contentType:'application/json',
 								url: 'users/current',
 								//when request done we create admin or manager view and rout user on his page
 								success: function(data){
@@ -70,8 +70,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 									$('.navbar  #logout').show();
 									$('.navbar  #filter').show();
 									$('.navbar  #stat').show();
-									$('.navbar  #signUp').hide();
-									//routing by user's role
+                                    $('.navbar  #signUp').hide();
+                                    //routing by user's role
 
 									//If user didn't validate his email
 									if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)){
