@@ -112,7 +112,20 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public int getSubscriptionId(int issueId, int userId){
 		return (subscriptionDao.findByIssueIdAndUserId(issueId,userId)).getId();
 	}
-
+//
+////	@Override
+//	public String getHashSubscription(int subId){
+//
+//		String email = getEmailFromSubId(subId);
+//		int issueId = getIssueIdFromSubId(subId);
+//
+//		String hash =   DigestUtils.md5Hex(email + subId + issueId);
+//
+//
+//
+//		return hash;
+//	}
+//
 
 }
 

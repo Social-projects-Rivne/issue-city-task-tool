@@ -76,33 +76,34 @@ public class SubscriptionController {
 		return responseDTO;
 	}
 
-	@RequestMapping(value = "/{id}/validSub/{hash}", method = RequestMethod.GET)
-	public  @ResponseBody ResponseDTO validation(
-				@PathVariable(value = "id") Integer id,
+	@RequestMapping(value = "/{subId}/valid/{hash}", method = RequestMethod.GET)
+	public  @ResponseBody ResponseDTO validation (
+				@PathVariable(value = "subId") Integer subId,
 				@PathVariable(value = "hash") String hash,
 			ResponseDTO responseDTO,SubscriptionModel subscriptionModel ) {
 
 		System.out.println("#####################################################################################");
 		System.out.println("Hallo from Spring");
 		System.out.println("#####################################################################################");
-		System.out.println("id = "+id+" hash = "+hash);
-		System.out.println("## hasH"+subscriptionService.getHashSubscription(id));
+		System.out.println("id = "+subId+" hash = "+hash);
+		System.out.println("## hasH"+subscriptionService.getHashSubscription(subId));
 
+		String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
 
-			if(hash.equals(subscriptionService.getHashSubscription(id))){
-				subscriptionService.validateSubscription(subscriptionModel);
+		System.out.println("##Hash = "+hash);
+		System.out.println("##compareHash = "+compareHash);
+
+			if(compareHash.equals(hash)){
+				///subscriptionService.validateSubscription(subscriptionModel);
+				System.out.println("## Hash is OK");
+				responseDTO.setMessage("Hash is OK");
+
 		}else{
-			 System.out.println("Something wrong");
-				return responseDTO;
+			 System.out.println("## Something wrong");
+				responseDTO.setMessage("Hash is not OK");
+//				return responseDTO;
 		}
 
-
-		try {
-			subscriptionService.delete(id);
-			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
-		} catch (Exception e) {
-			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
-		}
 		return responseDTO;
 	}
 

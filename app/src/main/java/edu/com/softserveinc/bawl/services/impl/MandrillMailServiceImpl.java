@@ -159,8 +159,8 @@ public class MandrillMailServiceImpl implements MailService {
         System.out.println("## sendSubNotification email hash= "+ hash);
 
 
-        String link = "http://localhost:8080/#"+subId+"/validsub/"+ hash;
-
+        String link = "http://localhost:8080/subscriptions/"+subId+"/valid/"+ hash;
+    //  http://localhost:8080/subscriptions/17/valid/58e0a8ef552f89fcb98bb6c624296ac6
 //        String link =   rootURL
 //                        + properties.getProperty("mail.confirmation_url")
 //                        + subscriptionDTO
