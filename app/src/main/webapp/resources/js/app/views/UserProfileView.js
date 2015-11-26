@@ -4,9 +4,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 			return Backbone.View.extend({
 				
 				events: {
-					'click #admin_log_out'	: 'logOut',
+					'click #admin_log_out'	: 'AppController.logout',
 					'change #input-avatar-load' : 'loadAvatar',
-					'click #profile' : 'editProfile',
+					'click #show-edit-profile' : 'editProfile',
 					'click #remove-avatar': 'removeAvatar'
 				},
 
@@ -29,18 +29,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 				},
 
 				editProfile: function() {
-					router.navigate('#profile', {trigger: true});
-				},
-
-				logOut: function(){
-					$.ajax('auth/logout');
-					loginView.currentUser = null;
-					router.navigate('', {trigger:true});
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
-					this.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
-					$('#notificationModal').modal();
-					loginView.buttonsManage();
+					router.navigate('profile', {trigger : true})
 				},
 
 				loadAvatar: function() {
@@ -57,10 +46,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 							processData: false,
 							contentType: false,
 							success: function (response) {
+								that.render();
 								if ($('#notificationModal')) $('#notificationModal').remove();
 								$("#container").append(that.notificationTemplate({'data': response}));
 								$('#notificationModal').modal();
-								that.render();
 							},
 							error: function () {
 								if ($('#notificationModal')) $('#notificationModal').remove();
@@ -80,14 +69,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 						url: "image/avatar",
 						type: "DELETE",
 						success: function (response) {
+							that.render();
 							if ($('#notificationModal')) $('#notificationModal').remove();
 							$("#container").append(that.notificationTemplate({'data': response}));
 							$('#notificationModal').modal();
-							that.render();
 						},
 						error: function () {
 							if ($('#notificationModal')) $('#notificationModal').remove();
-							$("#container").append(that.notificationTemplate({'data': {'message': 'Error uploading!'}}));
+							$("#container").append(that.notificationTemplate({'data': {'message': 'Error removing!'}}));
 							$('#notificationModal').modal();
 						}
 					});

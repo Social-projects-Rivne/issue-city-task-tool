@@ -58,7 +58,7 @@ public class ImageController {
   @ResponseBody
   public ResponseDTO uploadAvatar(@RequestParam("file") MultipartFile file) {
     ResponseDTO responseDTO;
-    if (!file.isEmpty() && (file.getContentType().contains("image")))  {
+    if (!file.isEmpty() && imageService.hasCorrectType(file.getContentType()))  {
       UserModel user = getCurrentUser();
       System.out.println(file.getContentType());
       responseDTO =  imageService.loadAvatar(file, user);
@@ -84,15 +84,17 @@ public class ImageController {
 
   @RequestMapping(value="avatar", method = RequestMethod.DELETE)
   @ResponseBody
-  public ResponseEntity<String> deleteOwnAvatar() {
+  public ResponseDTO deleteOwnAvatar() {
     UserModel user = getCurrentUser();
+    ResponseDTO responseDTO = new ResponseDTO();
     try {
       user.setAvatar("");
       userService.editUser(user);
-      return new ResponseEntity<>(SUCCESS_DELETE, HttpStatus.OK);
+      responseDTO.setMessage(SUCCESS_DELETE);
     } catch (Exception ex){
-      return new ResponseEntity<>(FAILURE_DELETE, HttpStatus.CONFLICT);
+      responseDTO.setMessage(FAILURE_DELETE);
     }
+    return responseDTO;
   }
 
   @RequestMapping(value="avatar/{fileName}", method = RequestMethod.GET)

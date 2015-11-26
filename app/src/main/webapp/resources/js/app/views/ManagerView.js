@@ -18,7 +18,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
-					'click #left_admin_panel #manager_log_out':'logOut',
+					'click #manager_log_out':'AppController.logout',
 					'click #all_issues': 'allIssues',
 					'click #newest_issues': 'newestIssues',
 					'click #resolved_issues': 'resolvedIssues'
@@ -396,17 +396,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						this.style.color = 'black';
 					});
 
-				},
-
-				logOut: function(){
-					$.ajax('auth/logout');
-					loginView.currentUser = null;
-					router.navigate('', {trigger:true});
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
-					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
-					$('#notificationModal').modal();
-					loginView.buttonsManage();
 				},
 
 				editIssue: function(e) {

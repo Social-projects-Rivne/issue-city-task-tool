@@ -13,4 +13,6 @@ public interface ImageService {
   ResponseDTO loadAvatar(MultipartFile file, UserModel currentUser);
 
   byte[] getUserAvatarOrDefault(String filePath) throws IOException;
+
+  boolean hasCorrectType(String contentType);
 }

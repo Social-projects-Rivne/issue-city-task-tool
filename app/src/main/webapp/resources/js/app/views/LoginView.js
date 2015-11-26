@@ -31,9 +31,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 							 //when request done we create admin or manager view and rout user on his page
 							 success: function(data){
 								that.currentUser = new UserModel(data);
-								if(that.currentUser.get('avatar')==""){
-									that.currentUser.set({'avatar':'resources/img/avatar.png'});
-								}
 								that.buttonsManage();
 							}
 						});
@@ -93,10 +90,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 									} else if(_.isEqual(that.currentUser.get('roleId'), MANAGER)){
 										managerView = new ManagerView({el:"#container"})
 										router.navigate('manager',{trigger:true});
-									}
-
-									if(_.isEmpty(that.currentUser.get('avatar'))){
-										that.currentUser.set({'avatar':'resources/img/avatar.png'});
 									}
 									that.hideLoginForm();
 									that.buttonsManage();
@@ -165,7 +158,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					encryptPass = arrLink[0];
 					user_id = arrLink[1];
 					var that = this;
-
 
 					this.currentUser = new UserModel({
 						id : user_id,
