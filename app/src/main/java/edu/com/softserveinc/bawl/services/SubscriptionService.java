@@ -27,4 +27,6 @@ public interface SubscriptionService {
 
 	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel);
 
+	public int getSubscriptionId(int issueId, int userId);
+
 }

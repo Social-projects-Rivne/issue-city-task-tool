@@ -41,6 +41,11 @@ public class SubscriptionModel {
 		this.issueId = issueId;
 		this.userId = userId;
 	}
+	public SubscriptionModel(int id,int issueId, int userId) {
+		this.issueId = issueId;
+		this.userId = userId;
+		this.id = id;
+	}
 
 	public int getUserId() {
 		return userId;

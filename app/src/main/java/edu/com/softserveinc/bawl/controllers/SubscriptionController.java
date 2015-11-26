@@ -50,34 +50,29 @@ public class SubscriptionController {
 			 				ResponseDTO responseDTO,
 							SubscriptionModel subscriptionModel,
 							UserRole userRole ,
-			HttpServletRequest request
-	) {
+							HttpServletRequest request) {
 
 		String email = subscriptionDTO.getEmail();
 
-		if (userService.isValidUser(email) == true) { // true if user is exist
-			System.out.println("## User is Exist");
+		if (userService.isValidUser(email) == true) { System.out.println("## User Exist");
 
-				int issueId = subscriptionDTO.getIssueId();
-				existuserId = userService.getUserIdByEmail(email);
-				subscriptionService.createSubscription(issueId, existuserId);
-			//	subId = subscriptionModel.getId();	System.out.println("## SubId = "+subId);
+			int issueId = subscriptionDTO.getIssueId();
+			existuserId = userService.getUserIdByEmail(email);
+			subscriptionService.createSubscription(issueId, existuserId);
 
-				System.out.println("## Subscrip" + subscriptionService.createSubscription(issueId, existuserId));
-			// TODO
-			int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
-			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
+			//int id =  subscriptionModel.getId(); System.out.println("## Su#bId = "+id);
+			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),existuserId);
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request), id);
 
-		} else { // false if user is not exist
-			System.out.println("## User is not exist");
+		} else { System.out.println("## User is not exist");
 
 			UserModel userModel = new UserModel("Name1", subscriptionDTO.getEmail(), new Random().toString(), 4, "Pass", "Ava");
 			userModel = userService.addSubscriber(userModel);
 			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
-			responseDTO.setMessage("This subscription was alredy exist");
 
-			// TODO
-			int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
+			//int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
+			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),userModel.getId());
+		//	System.out.println("#id1 = "+id+" id2 = "+id2);
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
 			}
 
@@ -87,15 +82,15 @@ public class SubscriptionController {
 	@RequestMapping(value = "/{id}/validSub/{hash}", method = RequestMethod.GET)
 	public  @ResponseBody ResponseDTO validation(
 				@PathVariable(value = "id") Integer id,
-				@PathVariable(value = "hash") Integer hash,
+				@PathVariable(value = "hash") String hash,
 			ResponseDTO responseDTO,SubscriptionModel subscriptionModel ) {
 
 		System.out.println("#####################################################################################");
 		System.out.println("Hallo from Spring");
 		System.out.println("#####################################################################################");
 		System.out.println("id = "+id+" hash = "+hash);
-;
 		System.out.println("## hasH"+subscriptionService.getHashSubscription(id));
+
 
 			if(hash.equals(subscriptionService.getHashSubscription(id))){
 				subscriptionService.validateSubscription(subscriptionModel);

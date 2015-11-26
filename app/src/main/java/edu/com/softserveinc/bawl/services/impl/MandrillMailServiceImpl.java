@@ -142,7 +142,7 @@ public class MandrillMailServiceImpl implements MailService {
     // This metod need for sending ssubsciptions
     /// / @Override
     public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId){
-
+        System.out.println("##subId "+subId);
         String email = subscriptionDTO.getEmail();              System.out.println("## email = "+email);
         String name = "name";                                   System.out.println("## name = "+name);
         int issueId = subscriptionDTO.getIssueId();             System.out.println("## issueId = "+ issueId);

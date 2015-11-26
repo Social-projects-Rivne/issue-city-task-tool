@@ -32,7 +32,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		if (existantSubscription != null) {
 			return existantSubscription;
 		}
-		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, userId));
+		int id = 10;
+		return subscriptionDao.saveAndFlush(new SubscriptionModel(id, issueId, userId));
 	}
 
 	public boolean isValidSubscription(int userId, int issueId){
@@ -68,8 +69,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Override
 	public String getHashSubscription(int subId){
 
-		String email = getEmailFromSubId(subId); 	System.out.println("## email" + email);	// id ---> userId --> email
-		int issueId = getIssueIdFromSubId(subId);	System.out.println("## issueID" + issueId);
+		String email = getEmailFromSubId(subId); 		// id ---> userId --> email
+		int issueId = getIssueIdFromSubId(subId);
+
+
+		System.out.println("## ID" + subId);
+		System.out.println("## from hash email" + email);
+		System.out.println("## from hash  issueID" + issueId);
 
 		return DigestUtils.md5Hex(email + subId + issueId);
 	}
@@ -104,6 +110,16 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		subscriptionDao.findOne(subscriptionModel.getId()).setIsValid(true);
 		return  subscriptionDao.saveAndFlush(subscriptionModel);
 	}
+
+	@Override
+	public int getSubscriptionId(int issueId, int userId){
+
+
+		return (subscriptionDao.findByIssueIdAndUserId(issueId,userId)).getId();
+
+	}
+
+
 
 }
 
