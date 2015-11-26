@@ -7,6 +7,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 					'click #admin_log_out'	: 'logOut',
 					'change #input-avatar-load' : 'loadAvatar',
 					'click #profile' : 'editProfile',
+					'click #remove-avatar': 'removeAvatar'
 				},
 
 				viewUserProfileTemplate : _.template(ViewUserProfileTemplate),
@@ -72,6 +73,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 						$("#container").append(that.notificationTemplate({'data': {'message': 'File is too large :-( Max image size 5 MB'}}));
 						$('#notificationModal').modal();
 					}
+				},
+
+				removeAvatar: function() {
+					$.ajax({
+						url: "image/avatar",
+						type: "DELETE",
+						success: function (response) {
+							if ($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate({'data': response}));
+							$('#notificationModal').modal();
+							that.render();
+						},
+						error: function () {
+							if ($('#notificationModal')) $('#notificationModal').remove();
+							$("#container").append(that.notificationTemplate({'data': {'message': 'Error uploading!'}}));
+							$('#notificationModal').modal();
+						}
+					});
 				}
 
 

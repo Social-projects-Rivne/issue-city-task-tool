@@ -75,7 +75,7 @@ public class ImageController {
   public ResponseEntity<byte[]> getOwnAvatar() {
     byte [] bytes = null;
     try {
-      bytes = imageService.getAvatar(getCurrentUser().getAvatar());
+      bytes = imageService.getUserAvatarOrDefault(getCurrentUser().getAvatar());
     } catch (IOException e) {
       return new ResponseEntity<>(bytes, HttpStatus.CONFLICT);
     }
@@ -84,16 +84,15 @@ public class ImageController {
 
   @RequestMapping(value="avatar", method = RequestMethod.DELETE)
   @ResponseBody
-  public ResponseDTO deleteOwnAvatar(@RequestBody ResponseDTO responseDTO) {
+  public ResponseEntity<String> deleteOwnAvatar() {
     UserModel user = getCurrentUser();
-    user.setAvatar("");
     try {
+      user.setAvatar("");
       userService.editUser(user);
-      responseDTO.setMessage(SUCCESS_DELETE);
+      return new ResponseEntity<>(SUCCESS_DELETE, HttpStatus.OK);
     } catch (Exception ex){
-      responseDTO.setMessage(FAILURE_DELETE);
+      return new ResponseEntity<>(FAILURE_DELETE, HttpStatus.CONFLICT);
     }
-    return responseDTO;
   }
 
   @RequestMapping(value="avatar/{fileName}", method = RequestMethod.GET)
@@ -101,7 +100,7 @@ public class ImageController {
   public ResponseEntity<byte[]> getUserAvatar(@PathVariable String fileName) {
     byte [] bytes = null;
     try {
-      bytes = imageService.getAvatar(fileName);
+      bytes = imageService.getUserAvatarOrDefault(fileName);
     } catch (IOException e) {
       return new ResponseEntity<>(bytes, HttpStatus.CONFLICT);
     }
