@@ -12,6 +12,8 @@ import edu.com.softserveinc.bawl.utils.MailPatterns;
 import edu.com.softserveinc.bawl.utils.PassGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,9 @@ import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
 public class UserController {
 
   public static final Logger LOG = Logger.getLogger(UserController.class);
+
+  public static final String SUCCESS_DELETE = "User has been deleted";
+  public static final String FAILURE_DELETE = "Failed. User hasn't been deleted.";
 
   @Autowired
   private UserService userService;
@@ -71,7 +76,7 @@ public class UserController {
     try {
       userService.editUser(userModel);
       getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(),
-          userModel.getRole().getCaption());
+              userModel.getRole().getCaption());
       responseDTO.setMessage("User was successfully edited");
     } catch (Exception ex) {
       responseDTO.setMessage("Some problem occurred! User was not updated" + ex.toString());
@@ -96,21 +101,17 @@ public class UserController {
     return userModel;
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @ResponseBody
-  public UserDTO removeUserAction(@PathVariable int id) {
-    try {
-      if (userService.getByRoleId(UserRole.ADMIN).isEmpty()) {
-        return new UserDTO().withMessage("Fail. At least one Admin must be in system!");
-      } else {
-        userService.deleteUser(id);
-        UserModel userModel = userService.getById(id);
-        getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
-        return new UserDTO().withMessage("User was successfully deleted");
-      }
+  public ResponseEntity removeUserAction(@PathVariable int id) {
+    ResponseDTO responseDTO = new ResponseDTO();
+    try{
+      userService.deleteUser(id);
+      return new ResponseEntity(responseDTO.withMessage(SUCCESS_DELETE), HttpStatus.OK);
     } catch (Exception ex) {
-      return new UserDTO().withMessage("Some problem occured! User was not deleted");
+      return new ResponseEntity(responseDTO.withMessage(FAILURE_DELETE), HttpStatus.NOT_ACCEPTABLE);
+
     }
   }
 
