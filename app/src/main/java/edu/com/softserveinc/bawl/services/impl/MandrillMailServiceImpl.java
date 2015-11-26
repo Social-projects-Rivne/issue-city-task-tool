@@ -1,5 +1,5 @@
 package edu.com.softserveinc.bawl.services.impl;
-
+import org.apache.commons.codec.digest.DigestUtils;
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
@@ -22,7 +22,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import java.util.Collection;
 import java.util.Properties;
@@ -107,7 +106,7 @@ public class MandrillMailServiceImpl implements MailService {
         UserModel userModel = new UserModel();
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
         for (SubscriptionModel sub: subs){
-            String digest = DigestUtils.md5DigestAsHex(sub.toString().getBytes());
+            String digest = org.springframework.util.DigestUtils.md5DigestAsHex(sub.toString().getBytes());
             String link = rootURL + "subscriptions/" + sub.getId() + "/delete/" + digest;
             MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                     .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
@@ -139,18 +138,26 @@ public class MandrillMailServiceImpl implements MailService {
         }
 
 
-   // @Override
 
-    public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL){
+    // This metod need for sending ssubsciptions
+    /// / @Override
+    public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId){
 
-        String email = subscriptionDTO.getEmail();
-        String name = "name";
+        String email = subscriptionDTO.getEmail();              System.out.println("## email = "+email);
+        String name = "name";                                   System.out.println("## name = "+name);
+        int issueId = subscriptionDTO.getIssueId();             System.out.println("## issueId = "+ issueId);
+        int id = subscriptionDTO.getId();                       System.out.println("## id = "+ id);
+        //TODO // Need to get id from database;
 
-        String link =   rootURL
-                        + properties.getProperty("mail.confirmation_url")
-                        + subscriptionDTO
-                        + "&id="
-                        + subscriptionDTO.getId();
+        String hash =   DigestUtils.md5Hex(email + subId + issueId); System.out.println("## hash= "+ hash);
+
+        String link = "http://localhost:8080/#"+subId+"/validsub/"+ hash;
+
+//        String link =   rootURL
+//                        + properties.getProperty("mail.confirmation_url")
+//                        + subscriptionDTO
+//                        + "&id="
+//                        + subscriptionDTO.getId();
 
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
 

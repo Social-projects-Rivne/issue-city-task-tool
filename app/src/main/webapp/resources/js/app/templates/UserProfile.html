@@ -4,7 +4,7 @@
 
 	    <div class="col-lg-6 admin-attachment">
 	    <!-- <div class="admin-avatar"> -->
-            <img src="<%= loginView.currentUser.get('avatar')%>" class="img-thumbnail admin-attachment" alt="attachment_1">
+            <img src="image/avatar" class="img-thumbnail admin-attachment" alt="attachment_1">
         </div>
         
         <div class="col-lg-6 admin-name">
@@ -29,7 +29,7 @@
        </div>
 
 <div>
- <div class="row"> 
+ <div class="row">
  	<!-- users avatar -->
  	
 	<!-- view form column -->
@@ -41,10 +41,8 @@
         <!-- left column -->
         <div class="col-md-3 edit-profile">
             <div class="text-center">
-                <img src="<%= avatar %>" class="avatar img-thumbnail edit-profile" alt="avatar">
-                 <h6 class="edit-profile">Upload a different photo...</h6>
-
-                <input class="form-control" type="file">
+                <img src="image/avatar" class="avatar img-thumbnail edit-profile" alt="avatar">
+                <input type="file" name="file" id="input-avatar-load" >
             </div>
         </div>
         <!-- edit form column -->
