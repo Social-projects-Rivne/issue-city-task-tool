@@ -31,6 +31,7 @@ public class ImageServiceImpl implements ImageService{
   public static final String BASE_URL = System.getProperty("catalina.home") + "/";
   public static final String NO_AVATAR_PNG = "no_avatar.png";
   public static final String PATH_WEB_APP = "webapps/ROOT/";
+  public static final String [] arrTypes = {"img", "png", "jpg", "jpeg"};
 
   @Override
   public void cropImage() {
@@ -74,6 +75,16 @@ public class ImageServiceImpl implements ImageService{
       path = BASE_URL + PATH_WEB_APP + PATH_LOCAL_AVATAR + NO_AVATAR_PNG;
     }
     return FileUtils.readFileToByteArray(FileUtils.getFile(path));
+  }
+
+  @Override
+  public boolean hasCorrectType(String contentType) {
+    for(String type : arrTypes){
+      if(contentType.contains(type)){
+        return true;
+      }
+    }
+    return false;
   }
 
   private File createUserAvatarFile(String fileName){

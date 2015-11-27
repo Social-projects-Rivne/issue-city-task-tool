@@ -35,8 +35,6 @@ public class HistoryModel {
     @JoinColumn(name = "ISSUE_ID")
     private IssueModel issue;
 
-    private int issueId;
-
     public HistoryModel(){}
 
 
@@ -80,14 +78,6 @@ public class HistoryModel {
         this.issue = issue;
     }
 
-    public int getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
-    }
-
     public HistoryModel withUserId(int userId) {
         this.userId = userId;
         return this;
@@ -115,7 +105,6 @@ public class HistoryModel {
         HistoryModel that = (HistoryModel) o;
         return Objects.equal(id, that.id) &&
                 Objects.equal(userId, that.userId) &&
-                Objects.equal(issueId, that.issueId) &&
                 Objects.equal(status, that.status) &&
                 Objects.equal(date, that.date) &&
                 Objects.equal(issue, that.issue);
@@ -123,7 +112,7 @@ public class HistoryModel {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, userId, status, date, issue, issueId);
+        return Objects.hashCode(id, userId, status, date, issue);
     }
 
     @Override
@@ -134,7 +123,6 @@ public class HistoryModel {
                 .add("status", status)
                 .add("date", date)
                 .add("issue", issue)
-                .add("issueId", issueId)
                 .toString();
     }
 }

@@ -194,7 +194,7 @@ public class DTOAssembler {
 
         for(IssueModel issueModel : listIssueModel) {
             for (HistoryModel historyModel : listOfHistoriesByUserID) {
-                if (issueModel.getId() == historyModel.getIssueId())
+                if (issueModel.getId() == historyModel.getIssue().getId())
                     userHistoryIssuesForUserDTOs.add(getUserHistoryIssuesForUserDto(issueModel));
             }
         }
@@ -225,7 +225,7 @@ public class DTOAssembler {
         List<IssueHistoryDTO> listIssueHistoryDTO = new ArrayList<IssueHistoryDTO>();
 
         for(HistoryModel historyModel : listHistoryModel) {
-            if (historyModel.getIssueId()==issueModel.getId())
+            if (historyModel.getIssue().getId()==issueModel.getId())
                 listIssueHistoryDTO.add(getIssueHistoryDto(historyModel));
         }
 
