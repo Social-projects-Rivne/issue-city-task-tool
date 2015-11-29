@@ -14,8 +14,6 @@ public interface SubscriptionService {
 	
 	public Collection<SubscriptionModel> listByIssueId(int issueId);
 
-//	public ResponseDTO SendApproved (int userId, int issueId);
-
 	public boolean isValidSubscription(int userId, int issueId);
 
 	public int getIssueIdFromSubId(int id);
@@ -27,5 +25,9 @@ public interface SubscriptionService {
 	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel);
 
 	public int getSubscriptionId(int issueId, int userId);
+
+	public void editSubscription(SubscriptionModel subscriptionModel);
+
+	public SubscriptionModel getById(int id);
 
 }

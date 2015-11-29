@@ -18,7 +18,7 @@ public class UserModel {
 
 	@Id
     @GeneratedValue
-    @Column(unique=true, name="id")
+    @Column(unique=true, name="ID")
 	private int id;
 	
     @Size(max=30)

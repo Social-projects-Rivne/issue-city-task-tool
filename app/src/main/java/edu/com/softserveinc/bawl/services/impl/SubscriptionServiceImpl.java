@@ -30,7 +30,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		if (existantSubscription != null) {
 			return existantSubscription;
 		}
-		//int id = 10;
 		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, userId));
 	}
 
@@ -42,28 +41,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			}
 	}
 
-
-//	@Override
-//	public ResponseDTO SendApproved (int userId, int issueId) {
-//
-//		SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
-//		UserServiceImpl userService = new UserServiceImpl();
-//		ResponseDTO responseDTO = new ResponseDTO();
-//
-//		String name =  "User name";
-//		String subject = "Sibscription email validation";
-//
-//		int hash = (subscriptionDTO.getEmail()+subscriptionDTO.getId()).hashCode();
-//
-//		String messagePattern = "http://localhost:8085/"+"#subscriptions"+issueId+"/valid/"+hash;
-//
-//		String email = userService.getById(issueId).getEmail();
-//		MandrillMailServiceImpl.getMandrillMail().simpleEmailSender(email,name,subject,messagePattern);
-//
-//		responseDTO.setMessage("Mail has been sent");
-//		return responseDTO;
-//	}
-//
 	@Override
 	public String getHashSubscription(int subId){
 
@@ -104,20 +81,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel) {
-	SubscriptionService subscriptionService= new SubscriptionServiceImpl();
 
-		subscriptionModel.setIsValid(true);
-		// userModel.setRole(UserRole.USER);
-
-		//userService.editUser(userModel);
-		editSubscription(subscriptionModel);
-		return subscriptionModel;
-
-
-
-//
-//		subscriptionDao.findOne(subscriptionModel.getId()).setIsValid(true);
-//		return  subscriptionDao.saveAndFlush(subscriptionModel);
+		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndUserId(subscriptionModel.getIssueId(),subscriptionModel.getUserId());
+		existantSubscription.setIsValid(true);
+		return subscriptionDao.saveAndFlush(existantSubscription);
 	}
 
 	@Override
@@ -126,25 +93,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 
-	//@Override
+	@Override
 	public void editSubscription(SubscriptionModel subscriptionModel) {
 		subscriptionDao.saveAndFlush(subscriptionModel);
-
 	}
-//
-////	@Override
-//	public String getHashSubscription(int subId){
-//
-//		String email = getEmailFromSubId(subId);
-//		int issueId = getIssueIdFromSubId(subId);
-//
-//		String hash =   DigestUtils.md5Hex(email + subId + issueId);
-//
-//
-//
-//		return hash;
-//	}
-//
 
+	@Override
+	public SubscriptionModel getById(int id){
+		return subscriptionDao.findOne(id);
+	}
 }
 
