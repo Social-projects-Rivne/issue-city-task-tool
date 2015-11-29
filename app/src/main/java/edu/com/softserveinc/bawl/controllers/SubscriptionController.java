@@ -138,17 +138,15 @@ public class SubscriptionController {
 		System.out.println("## "+iddd);
 		System.out.println("## "+haswww);
 
-
-			String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
 		try {
+			String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
+			System.out.println("## compareHash = " + compareHash);
 
 
-
-			if(compareHash.equals(hash)){
-				//
-				//subscriptionService.validateSubscription(subscriptionModel);
-				System.out.println("## Hash is OK");
-				responseDTO.setMessage("Hash is OK");
+			if (compareHash.equals(hash)) {
+//				userModel.setRole(UserRole.USER);
+//				userService.editUser(userModel);
+//				return userModel;
 
 			}else{
 				System.out.println("## Something wrong");
