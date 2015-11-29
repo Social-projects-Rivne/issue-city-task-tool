@@ -1,9 +1,9 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView', 
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView','model/SubscriptionsValidModel',
         'view/ManagerView','text!templates/login.html', 'text!templates/NotificationTemplate.html'],
-		function($, _, Backbone, UserModel, AdminView, ManagerView, LoginTemplate, NotificationTemplate) {
+		function($, _, Backbone, UserModel, AdminView,SubscriptionsValidModel, ManagerView, LoginTemplate, NotificationTemplate) {
 			var that = null;
 			var LoginView = Backbone.View.extend({
-				
+
 				loginTemplate: _.template(LoginTemplate),
 				currentUser: null,
 				notificationTemplate: _.template(NotificationTemplate),
@@ -16,12 +16,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					'click .input-group-addon' : 'passwordToggle'
 
 				},
-				
+
 				initialize: function() {
 					this.getCurrentUser();
 					$('.login.modal').empty();
 					$('.login.modal').append(this.loginTemplate);
-					
+
 				},
 
 				getCurrentUser: function(){
@@ -165,8 +165,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					encryptPass = arrLink[0];
 					user_id = arrLink[1];
 					var that = this;
-
-
 					this.currentUser = new UserModel({
 						id : user_id,
 						password : encryptPass
@@ -176,6 +174,52 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 
 					$.ajax({
 						url: "users/validate",
+						type: "POST",
+						data: JSON.stringify(this.currentUser),
+						dataType: "json",
+						contentType: "application/json; charset=utf-8",
+
+						success: function(data) {
+							router.navigate('', {trigger:true});
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate({'data': {'message': "Your email has validated. Have a nice day "}}));
+							$('#notificationModal').modal();
+						},
+						error: function(data) {
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+							$('#notificationModal').modal();
+						}
+					});
+				},
+///////////
+
+				confirmSubscription: function(link) {
+					console.log("hallo from subs");
+					arrLink = link.split("&id=");
+					encryptHash = arrLink[0];
+					subscription_id = arrLink[1];
+					var that = this;
+
+					console.log(encryptHash);
+					console.log(subscription_id);
+
+
+
+					this.currentUser = new SubscriptionsValidModel({
+						hash : encryptHash,
+						id: subscription_id
+					});
+
+					that = this;
+
+
+					$.ajax({
+						url: "/subscriptions/valid",
 						type: "POST",
 						data: JSON.stringify(this.currentUser),
 						dataType: "json",

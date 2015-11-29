@@ -30,8 +30,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		if (existantSubscription != null) {
 			return existantSubscription;
 		}
-		int id = 10;
-		return subscriptionDao.saveAndFlush(new SubscriptionModel(id, issueId, userId));
+		//int id = 10;
+		return subscriptionDao.saveAndFlush(new SubscriptionModel(issueId, userId));
 	}
 
 	public boolean isValidSubscription(int userId, int issueId){
@@ -104,13 +104,32 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public SubscriptionModel validateSubscription (SubscriptionModel subscriptionModel) {
-		subscriptionDao.findOne(subscriptionModel.getId()).setIsValid(true);
-		return  subscriptionDao.saveAndFlush(subscriptionModel);
+	SubscriptionService subscriptionService= new SubscriptionServiceImpl();
+
+		subscriptionModel.setIsValid(true);
+		// userModel.setRole(UserRole.USER);
+
+		//userService.editUser(userModel);
+		editSubscription(subscriptionModel);
+		return subscriptionModel;
+
+
+
+//
+//		subscriptionDao.findOne(subscriptionModel.getId()).setIsValid(true);
+//		return  subscriptionDao.saveAndFlush(subscriptionModel);
 	}
 
 	@Override
 	public int getSubscriptionId(int issueId, int userId){
 		return (subscriptionDao.findByIssueIdAndUserId(issueId,userId)).getId();
+	}
+
+
+	//@Override
+	public void editSubscription(SubscriptionModel subscriptionModel) {
+		subscriptionDao.saveAndFlush(subscriptionModel);
+
 	}
 //
 ////	@Override

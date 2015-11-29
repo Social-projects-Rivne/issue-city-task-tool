@@ -2,6 +2,7 @@ package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
+import edu.com.softserveinc.bawl.dto.pojo.ValidationDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
@@ -77,7 +78,7 @@ public class SubscriptionController {
 	}
 
 	@RequestMapping(value = "/{subId}/valid/{hash}", method = RequestMethod.GET)
-	public  @ResponseBody ResponseDTO validation (
+	public  @ResponseBody ResponseDTO validation  (
 				@PathVariable(value = "subId") Integer subId,
 				@PathVariable(value = "hash") String hash,
 			ResponseDTO responseDTO,SubscriptionModel subscriptionModel ) {
@@ -94,7 +95,7 @@ public class SubscriptionController {
 		System.out.println("##compareHash = "+compareHash);
 
 			if(compareHash.equals(hash)){
-				///subscriptionService.validateSubscription(subscriptionModel);
+				subscriptionService.validateSubscription(subscriptionModel);
 				System.out.println("## Hash is OK");
 				responseDTO.setMessage("Hash is OK");
 
@@ -106,6 +107,100 @@ public class SubscriptionController {
 
 		return responseDTO;
 	}
+
+//	@RequestMapping(value = "/valid", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseDTO validation(
+//			@RequestBody
+//			@PathVariable(value = "id") Integer subId,
+//			@PathVariable(value = "hash") String hash,
+////						 SubscriptionDTO subscriptionDTO,
+//						 SubscriptionModel subscriptionModel,
+//						 ValidationDTO validationDTO,
+//
+//						 ResponseDTO responseDTO) {
+
+		@RequestMapping(value = "/valid", method = RequestMethod.POST)
+		@ResponseBody
+		public ResponseDTO validation (
+				@RequestBody ValidationDTO validationDTO,
+							 UserModel userModel,
+							 SubscriptionModel subscriptionModel,
+							 ResponseDTO responseDTO) {
+
+
+		int iddd = validationDTO.getId();
+		String haswww = validationDTO.getHash();
+
+			int subId = iddd;
+			String hash = haswww;
+
+		System.out.println("## "+iddd);
+		System.out.println("## "+haswww);
+
+
+			String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
+		try {
+
+
+
+			if(compareHash.equals(hash)){
+				//
+				//subscriptionService.validateSubscription(subscriptionModel);
+				System.out.println("## Hash is OK");
+				responseDTO.setMessage("Hash is OK");
+
+			}else{
+				System.out.println("## Something wrong");
+				responseDTO.setMessage("Hash is not OK");
+			}
+
+		} catch (Exception ex) {
+			LOG.warn(ex);
+		}
+		return responseDTO;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	@RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
 	public  @ResponseBody ResponseDTO unSubscription(
