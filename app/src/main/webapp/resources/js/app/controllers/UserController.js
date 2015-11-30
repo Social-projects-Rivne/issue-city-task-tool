@@ -20,6 +20,9 @@ var UserController = function(app) {
         subConfirm: function (link) {
             loginView.confirmSubscription(link);
         },
+        subDelete: function (link) {
+            loginView.deleteSubscription(link);
+        },
 
     }
 }

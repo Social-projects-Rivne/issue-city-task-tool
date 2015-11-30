@@ -4,7 +4,7 @@ import scala.beans.BeanProperty
 
 import scala.beans.BeanProperty
 
-class SubscriptionDTO {
+class SubscriptionDTO extends ResponseDTO[UserDTO] {
   @BeanProperty  var id : Int = 0
   @BeanProperty  var issueId : Int = 0
   @BeanProperty  var email : String = null

@@ -93,13 +93,13 @@ public class SubscriptionController {
 
 		try {
 			if (compareHash.equals(hash)) {
-				subscriptionService.validateSubscription(subscriptionModel);
+				subscriptionService.validateSubscription ( subId );
 				responseDTO.setMessage("OK");
 				System.out.println("## OK");
-
 			}else{
 				System.out.println("## Something wrong");
 				responseDTO.setMessage("Hash is not OK");
+
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex);
@@ -132,20 +132,8 @@ public class SubscriptionController {
 //				UserModel userModel = userService.getByLogin(currentUserLoginName);
 				SubscriptionModel subscriptionModel1 = subscriptionService.getById(subId);
 				System.out.println("## subscriptionModel1 = "+subscriptionModel1);
-				subscriptionModel1.setIsValid(true);
+				subscriptionModel1.setIsValid(1);
 				subscriptionService.editSubscription(subscriptionModel1);
-
-
-
-
-
-
-
-
-
-
-
-
 
 			}else{
 				System.out.println("## Something wrong");

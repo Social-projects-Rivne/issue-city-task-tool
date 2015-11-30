@@ -24,7 +24,8 @@ function (_, Backbone, BackboneRouteControl,
                 "email-confirm/*link": "users#emailConfirm",
                 "profile": "users#profile",
                 "viewprofile": "users#viewprofile",
-                "subscriptions/valid/*link": "users#subConfirm"
+                "subscriptions/valid/*link": "users#subConfirm",
+                "subscriptions/delete/*link": "users#subDelete",
             },
 
             initialize: function() {
