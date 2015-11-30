@@ -10,7 +10,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					'click #reset-filter'	: 'resetFilter',
 					'click #add-user'		: 'showAddUserForm',
 					'click .addFormConfirm'	: 'addUser',
-					'click #left_admin_panel #admin_log_out'	: 'logOut',
+					'click #admin_log_out'	: 'AppController.logout',
 				},
 				
 				template: _.template(SearchTemplate),
@@ -120,17 +120,7 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 						}
 					});
 				},
-				
-				logOut: function(){
-					$.ajax('auth/logout');
-					loginView.currentUser = null;
-					router.navigate('', {trigger:true});
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
-					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
-					$('#notificationModal').modal();
-					loginView.buttonsManage();
-				},
+
 
 				addUser: function(e) {
 					var isValid = true;

@@ -14,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 
 import static edu.com.softserveinc.bawl.dto.pojo.DTOAssembler.*;
@@ -33,8 +32,8 @@ public class IssueController {
   public static final String SUCCESS_ADDED = "Success. Issue was successfully added";
   public static final String FAILURE_ADDED  = "Failure. Some problem occured! Issue was not added";
   public static final String NOT_AUTHORIZED = "You are not authorized for this action";
-  public static final String SUCCESS_UPDATE = "Success.Issue has been updated.";
-  public static final String FAILURE_UPDATE = "Failure. Some problem with sending email. Try again and check your email";
+  public static final String SUCCESS_UPDATE = "Success. Issue has been updated.";
+  public static final String FAILURE_UPDATE = "Failure. Issue hasn't been updated.";
   public static final String SUCCESS_MARKED = "Success. Issue has been marked as possibly resolved.";
   public static final String FAILURE_MARKED = "Failure. Issue hasn't been marked as possibly resolved.";
 
@@ -70,8 +69,7 @@ public class IssueController {
   @RequestMapping(value = "{id}/history", method = RequestMethod.GET)
   @ResponseBody
   public List<UserHistoryDTO> getUserHistoryAction(@PathVariable int id) {
-    return issueService.getById(id).map(issue -> getUserHistoryDtos(issue, userService))
-        .orElse(Collections.<UserHistoryDTO>emptyList());
+    return issueService.getById(id).map(issue -> getUserHistoryDtos(issue, userService)).get();
   }
 
   @PreAuthorize("hasRole('ROLE_MANAGER')")

@@ -20,10 +20,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
 						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){
-							$("#comment-input-form").hide()
+							$("#comment-input-form").hide();
+                            $(".resolve-btn").show();
 						}
 						else {
-							$("#comment-input-form").show()
+							$("#comment-input-form").show();
+                            $(".resolve-btn").hide();
 						}
 						that.$el.fadeIn();
 						$('[name*="subscribe"]').popover();
@@ -35,6 +37,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					'click #add_comment_button': 'addComment',
 					'click [name="resolve"]': 'changeStatus',
 					'click [name*="send-folower-email"]': 'subscribe'
+
 
 				},
 				//event for btn Resolve
@@ -56,7 +59,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 								if($('#notificationModal')) {
 									$('#notificationModal').remove();
 								}
-								$('body').append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('body').append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							}});
 				},
@@ -69,7 +72,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					//notitfication
 					if($('#notificationModal'))
 						$('#notificationModal').remove();
-					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thank you for your email subscription. You have now been added to the mailing list!" } } ));
+					$('body').append(this.notificationTemplate( { 'data': response }));
 					$('#notificationModal').modal();
 				},
 

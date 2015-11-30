@@ -155,6 +155,11 @@ div#login.input-group {
     padding-top: 0px;
     padding: 5px;
 }
+.input-group.form-control {
+    padding-left: 5px;
+    border-color: #d5445c;
+    height: 30px;
+}
 
 div.col-sm-12.controls.btnCenter {
     text-align: center;
@@ -297,10 +302,27 @@ button.btn.btn-mini.resolve-subscribe {
 }
 
 .comments {
-	width: 290px;
-    height: 150px;
+	height: 200px;
 	overflow: auto;
 	align: center;
+    margin: 0px;
+}
+
+.comments table {
+    border: 0px;
+    width: 300px;
+}
+.comments table td{
+    text-align: left;
+}
+.comments table td.for-avatar {
+    width: 40px;
+    text-align: center;
+    vertical-align: top;
+}
+.comments img {
+    width: 35px;
+    height: 35px;
 }
 
 hr {
@@ -314,16 +336,18 @@ hr {
 
 h4.media-heading {
 	margin: 0px;
-	padding: 0px;
-	font-size: 1.1em;
+	padding-left: 5px;
+	font-size: 1.0em;
+    text-align: left;
 }
 
 .help-block {
 	margin: 0px;
 	width: 270px;
-	height: 34px;
-	border-color: #fff;
+	border: 0px;
+    background: none;
 	resize:none;
+    font-size: 0.8em;
 }
 
 #issue_description.description {
@@ -355,6 +379,7 @@ textarea.form-control.issue-details {
     padding: 10px;
     width: 310px;
 }
+
 /* END ISSUE DETAILS */
 
 /* ISSUE FILTER */
@@ -464,6 +489,12 @@ div.filter-buttons {
 	height: 100px;
 	width: 100px;
 }
+.img-thumbnail.admin-attachment.large {
+    height: 250px;
+    width: 250px;
+    margin-bottom: 30px;
+}
+
 .col-lg-6.admin-attachment {
 	paddig-right: 5px;
 	height: 100px;
@@ -606,7 +637,31 @@ h3.edit-profile {
 	color: #989898;
 	font-family: 'Josefin Sans', sans-serif;
     font-weight: normal;
-    font-size: 16px;	
+    font-size: 22px;
+    text-align: center;
+    float: left;
+    width: 33%;
+}
+.form-group.view-profile p.user-name {
+    font-size: 36px;
+    color: #d5445c;
+}
+.form-group.view-profile p.user-email {
+    font-size: 30px;
+    color: #777675;
+    font-style: italic;
+}
+.form-group.view-profile li.col-lg-12 {
+    text-align: left;
+    padding-left: 0px;
+}
+.form-group.view-profile li img {
+    max-width: 20px;
+    max-height: 20px;
+    margin-right: 20px;
+}
+.form-group.view-profile li button.edit-reset {
+    margin-bottom: 20px !important;
 }
 .container.edit-profile {
 	position:relative;
@@ -697,7 +752,6 @@ hr.edit-profile {
 }
 #manager_menu li {
     list-style-type: none;
-    padding-top: 25px;
 }
 button,
 html input[type="button"],
@@ -734,9 +788,7 @@ input[type="submit"] {
 #issue-details {
     display: none;
 }
-.help-block {
-    font-size: 0.8em;
-}
+
 .col-lg-3 {
     padding-top: 20px;
 }

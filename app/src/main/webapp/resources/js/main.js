@@ -21,6 +21,7 @@ require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
       SUBSCRIBER = 4;
       DELETED = 5;
       CATEGORY_NEW = "New";
+      MAX_IMG_SIZE = 5000000;
       CATEGORY_DELETED = "Deleted"
 
 

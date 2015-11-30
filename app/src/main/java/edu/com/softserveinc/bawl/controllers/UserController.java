@@ -6,6 +6,7 @@ import edu.com.softserveinc.bawl.models.IssueModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.HistoryService;
+import edu.com.softserveinc.bawl.services.ImageService;
 import edu.com.softserveinc.bawl.services.IssueService;
 import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
@@ -45,6 +46,9 @@ public class UserController {
 
   @Autowired
   private IssueService issueService;
+
+  @Autowired
+  private ImageService imageService;
 
   @RequestMapping("/all")
   @ResponseBody
