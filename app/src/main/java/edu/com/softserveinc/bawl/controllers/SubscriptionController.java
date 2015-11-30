@@ -59,9 +59,9 @@ public class SubscriptionController {
 			int issueId = subscriptionDTO.getIssueId();
 			existuserId = userService.getUserIdByEmail(email);
 			subscriptionService.createSubscription(issueId, existuserId);
-
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),existuserId);
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request), id);
+			responseDTO.setMessage("You have now been added to the mailing list. Please Confirm Your Email");
 
 		} else { System.out.println("## User is not exist");
 
@@ -71,6 +71,7 @@ public class SubscriptionController {
 
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),userModel.getId());
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
+			responseDTO.setMessage("Something wrong");
 			}
 
 		return responseDTO;
@@ -94,15 +95,16 @@ public class SubscriptionController {
 		try {
 			if (compareHash.equals(hash)) {
 				subscriptionService.validateSubscription ( subId );
-				responseDTO.setMessage("OK");
-				System.out.println("## OK");
+				responseDTO.setMessage("You have successfully signed. Have a nice day.");
+				System.out.println("## You have successfully signed. Have a nice day");
 			}else{
-				System.out.println("## Something wrong");
+				System.out.println("## The link has been corupted");
 				responseDTO.setMessage("Hash is not OK");
 
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex);
+			responseDTO.setMessage("Something wrong");
 		}
 		return responseDTO;
 	}
@@ -124,15 +126,10 @@ public class SubscriptionController {
 
 		try {
 			if (compareHash.equals(hash)) {
-//				subscriptionService.validateSubscription(subscriptionModel);
-//				responseDTO.setMessage("OK");
-//				System.out.println("## OK");
 
-
-//				UserModel userModel = userService.getByLogin(currentUserLoginName);
 				SubscriptionModel subscriptionModel1 = subscriptionService.getById(subId);
 				System.out.println("## subscriptionModel1 = "+subscriptionModel1);
-				subscriptionModel1.setIsValid(1);
+				subscriptionModel1.setIsValid(true);
 				subscriptionService.editSubscription(subscriptionModel1);
 
 			}else{
@@ -144,7 +141,4 @@ public class SubscriptionController {
 		}
 		return responseDTO;
 	}
-
-
-
 }

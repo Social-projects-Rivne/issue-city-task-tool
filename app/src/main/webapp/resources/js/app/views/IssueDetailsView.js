@@ -36,6 +36,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					'click [name="resolve"]': 'changeStatus',
 					'click [name*="send-folower-email"]': 'subscribe'
 
+
 				},
 				//event for btn Resolve
 				changeStatus: function(e){
@@ -56,7 +57,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 								if($('#notificationModal')) {
 									$('#notificationModal').remove();
 								}
-								$('body').append(that.notificationTemplate( { 'data': { 'message': 'Error!' } } ));
+								$('body').append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 							}});
 				},
@@ -69,7 +70,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					//notitfication
 					if($('#notificationModal'))
 						$('#notificationModal').remove();
-					$('body').append(this.notificationTemplate( { 'data': { 'message': "Thank you for your email subscription. You have now been added to the mailing list!" } } ));
+					$('body').append(this.notificationTemplate( { 'data': response }));
 					$('#notificationModal').modal();
 				},
 
