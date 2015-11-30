@@ -19,6 +19,7 @@ require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
       MANAGER = 2;
       ADMIN = 3;
       SUBSCRIBER = 4;
+      DELETED = 5;
       CATEGORY_NEW = "New";
       CATEGORY_DELETED = "Deleted"
 

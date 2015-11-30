@@ -101,18 +101,27 @@ public class UserController {
     return userModel;
   }
 
-  @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @ResponseBody
-  public ResponseEntity removeUserAction(@PathVariable int id) {
+  public @ResponseBody ResponseDTO removeUserAction(
+          @PathVariable int id) {
     ResponseDTO responseDTO = new ResponseDTO();
-    try{
-      userService.deleteUser(id);
-      return new ResponseEntity(responseDTO.withMessage(SUCCESS_DELETE), HttpStatus.OK);
+    try {
+      List<UserModel> adminModelList = userService.getByRoleId(UserRole.ADMIN);
+      if (adminModelList.size() > 1 || userService.getById(id).getRole() == UserRole.USER ||
+              userService.getById(id).getRole() == UserRole.MANAGER ||
+              userService.getById(id).getRole() == UserRole.SUBSCRIBER ){
+        userService.deleteUser(id);
+        UserModel userModel = userService.getById(id);
+        getMandrillMail().sendSimpleMessage(MailPatterns.DELETE_ACCOUNT_PATTERN, userModel);
+        responseDTO.setMessage("User was successfully deleted");
+      } else {
+        responseDTO.setMessage("Fail. At least one Admin must be in system!");
+      }
     } catch (Exception ex) {
-      return new ResponseEntity(responseDTO.withMessage(FAILURE_DELETE), HttpStatus.NOT_ACCEPTABLE);
-
+      responseDTO.setMessage("Some problem occured! User was not deleted");
     }
+    return responseDTO;
   }
 
   @RequestMapping(value = "/current", method = RequestMethod.GET)

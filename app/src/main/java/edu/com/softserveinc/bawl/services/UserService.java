@@ -18,7 +18,7 @@ public interface UserService {
 	UserModel getById(int id);
 
 	List<UserModel> getByRoleId (UserRole userRole);
-	
+
 	UserModel getByLogin(String login);
 
 	List<UserModel> loadUsersList();
