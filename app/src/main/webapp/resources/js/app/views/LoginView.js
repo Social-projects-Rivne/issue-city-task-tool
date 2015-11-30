@@ -12,7 +12,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				events: {
 					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
-					'click .form-group #btn-close' : 'hideLoginForm',
+					'click .panel #btn-close' : 'hideLoginForm',
 					'click .input-group-addon' : 'passwordToggle'
 
 				},
