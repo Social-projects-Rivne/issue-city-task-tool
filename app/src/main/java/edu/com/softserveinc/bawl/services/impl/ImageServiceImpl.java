@@ -70,7 +70,7 @@ public class ImageServiceImpl implements ImageService{
   @Override
   public byte[] getUserAvatarOrDefault(String filePath) throws IOException {
     String path = null;
-    if ( !StringUtils.isEmpty(filePath) ){
+    if ( !StringUtils.isEmpty(filePath) && !filePath.equals(DEFAULT_IMG)){
       path = BASE_URL + PATH_LOCAL_AVATAR + filePath;
     } else {
       path = BASE_URL + PATH_WEB_APP + PATH_LOCAL_AVATAR + NO_AVATAR_PNG;

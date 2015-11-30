@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
 		if(user != null){
 			return user.getAvatar();
 		}
-		return "";
+		return ImageServiceImpl.DEFAULT_IMG;
 	}
 
 	@Override
