@@ -22,8 +22,14 @@
             <div class="panel-heading  navbar-default">
                 <div class="panel-title" style=" color: #fff !important;
                                                         font-family: 'Josefin Sans', sans-serif;
-                                                        font-size: 1.2em;">Sign Up
+                                                        font-size: 1.2em;
+                                                        display: inline">Sign Up
                 </div>
+                <span id="reg_btn-close" class="btn btn-primary" style=" background-color: #F5192F; text-align: right"><p style="color: #fff !important;
+                                                                                                            font-family: 'Josefin Sans', sans-serif;
+                                                                                                            font-size: 1.3em;
+                                                                                                            text-align: right">x</p></span>
+                <a href="#" style="color: #fff !important; font-family: 'Josefin Sans', sans-serif; font-size: 1.3em; text-align: right">x</a>
             </div>
 
             <div class="panel-body">
@@ -31,28 +37,32 @@
                 </div>
 
                 <form class="form-horizontal" id="signUpForm" method="" action="">
+                    <div class="title" id="title"><p style=" color: #F5192F;
+                                                                font-size: 16px;
+                                                                text-align: center;
+                                                                padding: 13px">YOUR PROFILE</p></div>
 
 					<!--Name-->
-					<div class="input-group" id="login">
+					<div class="input-group" id="login" style="display: block">
 						<span class="input-group-addon"><label for="name" class="col-sm-1 control-label">Name</label></span>
 						<input name="name" id="reg_name" type="text" class="form-control" placeholder="Enter your name"required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$"title="The first character must be a letter. (3-20 characters)">
 					</div>
 					
 					<!--Email-->
-					 <div class="input-group" id="login">
+					 <div class="input-group" id="login" style="display: block">
 						<span class="input-group-addon"><label for="login" class="col-sm-3 control-label">Email</label></span>
 						<input id="reg_email" type="emai" name="email"  class="form-control" placeholder="Enter your email" required pattern="^\S+@\S+\.\S+$" title="example@mail.com">
 					</div>
 
 					<!--login-->
-					 <div class="input-group" id="login">
+					 <div class="input-group" id="login" style="display: block">
 						<span class="input-group-addon"><label for="login" class="col-sm-2 control-label">Login</label></span>
 						<input id="reg_login" type="text" name="login" class="form-control" placeholder="Enter your login" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$"title="The first character must be a letter. (4-20 characters)">
 					</div>
 
 					 <!--Password-->
 
-					 <div class="input-group" id="login">
+					 <div class="input-group" id="login" style="display: block">
 						<span class="input-group-addon"><label for="login" class="col-sm-0 control-label">Password</label></span>
 							<input id="reg_password" type="password" class="form-control" name="password" data-toggle="Enter yourpassword" placeholder="Enter your password"required pattern="^(?=.*\d)[0-9a-zA-Z]{8,}$" title="Your password should be a minimum of 8 character long and must contain at least one number">
 
@@ -64,7 +74,6 @@
 					<div style="margin-top:5px" class="form-group">
 						<div class="col-sm-12 controls btnCenter">
 							<button id="reg_submit" class="btn btn-success" type="submit">Sign Up</button>
-							<button id="reg_btn-close" class="btn btn-primary" type="button">Close</button>
 						</div>
 					</div>
                 </form>                
