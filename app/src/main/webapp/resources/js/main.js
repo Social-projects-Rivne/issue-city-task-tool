@@ -1,11 +1,11 @@
 require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
       'view/MapView', 'view/AddIssueView', 'view/ManagerView', 'view/AdminView', 'view/CategoryManageView',
       'view/LoginView', 'view/IssueFilterView', 'view/StatisticView',
-      'view/UserProfileView', 'view/ImageEditorView', 'view/UserRegistrationView', 'view/HistoryView'],
+      'view/UserProfileView', 'view/UserRegistrationView', 'view/HistoryView'],
     function ($, _, Backbone, Router, BackboneRouteControl,
               MapView, AddIssueView, ManagerView, AdminView, CategoryManageView,
               LoginView, IssueFilterView, StatisticView,
-              UserProfileView, ImageEditorView, UserRegistrationView, HistoryView) {
+              UserProfileView, UserRegistrationView, HistoryView) {
 
       router = null;
       adminView = null;
@@ -41,7 +41,6 @@ require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
         issueFilterView = new IssueFilterView({el: "#container"});
         statisticView = new StatisticView({el: 'body'});
         viewUserProfile = new UserProfileView({el: "#container"});
-        imageEditorView = new ImageEditorView({el: 'body'});
         historyView = new HistoryView();
         validator = Validator();
 
