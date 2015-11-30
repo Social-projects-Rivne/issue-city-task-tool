@@ -20,6 +20,7 @@ require(['jquery', 'underscore', 'backbone', 'router', 'backbone_route_control',
       ADMIN = 3;
       SUBSCRIBER = 4;
       CATEGORY_NEW = "New";
+      MAX_IMG_SIZE = 5000000;
       CATEGORY_DELETED = "Deleted"
 
 

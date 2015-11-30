@@ -20,10 +20,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
 						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){
-							$("#comment-input-form").hide()
+							$("#comment-input-form").hide();
+                            $(".resolve-btn").show();
 						}
 						else {
-							$("#comment-input-form").show()
+							$("#comment-input-form").show();
+                            $(".resolve-btn").hide();
 						}
 						that.$el.fadeIn();
 						$('[name*="subscribe"]').popover();

@@ -10,7 +10,8 @@ public enum UserRole {
     USER("User"),
     MANAGER("Manager"),
     ADMIN("Admin"),
-    SUBSCRIBER("Subscriber");
+    SUBSCRIBER("Subscriber"),
+    DELETED("Deleted");
 
     private static final Map<Integer, UserRole> USER_ROLE_MAP = Maps.newHashMap();
 

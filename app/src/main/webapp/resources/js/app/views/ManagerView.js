@@ -18,7 +18,7 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
-					'click #left_admin_panel #manager_log_out':'logOut',
+					'click #manager_log_out':'AppController.logout',
 					'click #all_issues': 'allIssues',
 					'click #newest_issues': 'newestIssues',
 					'click #resolved_issues': 'resolvedIssues'
@@ -67,7 +67,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				// render template for manager search
 				searchRender: function(){
- 					console.log('search rendered');
  					this.categoriesCollection.fetch({success: function(){
 						that.categoriesCollection = new CategoryCollection(that.categoriesCollection.where( {state : CATEGORY_NEW}));
 						that.$('#issue-filter').append(that.searchTemplate({"categories":that.categoriesCollection.toJSON()}));
@@ -153,57 +152,40 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				issueFilter: function(){
 					this.issues = mapView.model;
 					//checking filters
-					console.log("Name is " + $('#issue-filter #name').prop("checked"));
-					console.log("Keyword is " + $('#issue-filter #keyword').prop("checked"));
-					console.log("Status is " + $('#issue-filter #status').prop("checked") + ' id = ' + $('#issue-filter #status-filter').val());
-					console.log("Category is " + $('#issue-filter #category').prop("checked"));
-					console.log("Priority is " + $('#issue-filter #priority').prop("checked") + ' id = ' + $('#issue-filter #priority-filter').val());
-
 					//filter by status (it work when raido btn Status checked)
 					if ($('#issue-filter #status').prop("checked")) {//!!!
 						var issuesFilterList = new IssueCollection();
 						this.issues.each(function(issue){
 							if(issue.get('status') == $('#issue-filter #status-filter').val()){
-								console.log(issue);
 								issuesFilterList.add(issue);
 							}
 						});
-						console.log(issuesFilterList);
 						this.issues = issuesFilterList;
-						console.log(this.issues);
 						this.issueTableRender();
 					};
 
 					//search by name (it work when raido btn Name checked)
 					if( $('#issue-filter #name').prop("checked")) {
-						console.log("where Name is = " + $('#issue-filter #text-value-issue-filter').val());
 						var issuesFilterList = new IssueCollection();
 						this.issues.each(function(issue){
 							if(issue.get('name') == $('#issue-filter #text-value-issue-filter').val()){
-								console.log(issue);
 								issuesFilterList.add(issue);
 							}
 						});
-						console.log(issuesFilterList);
 						this.issues = issuesFilterList;
-						console.log(this.issues);
 						this.issueTableRender();
 					};
 
 					//search by keyword (it work when raido btn Keyword checked)
 					if( $('#issue-filter #keyword').prop("checked")) {
-						console.log("where Keyword is = " + $('#issue-filter #text-value-issue-filter').val());
 						var issuesFilterList = new IssueCollection();
 						this.issues.each(function(issue){
 							if((issue.get('name').match($('#issue-filter #text-value-issue-filter').val()) != null) ||
 							 (issue.get('description').match($('#issue-filter #text-value-issue-filter').val()) != null)){
-								console.log(issue);
 								issuesFilterList.add(issue);
 							}
 						});
-						console.log(issuesFilterList);
 						this.issues = issuesFilterList;
-						console.log(this.issues);
 						this.issueTableRender();
 					};
 
@@ -213,13 +195,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						// it must be filtred with findWhere
 						this.issues.each(function(issue){
 							if(issue.get('categoryId') == $('#issue-filter #categories').val()){
-								console.log(issue);
 								issuesFilterList.add(issue);
 							}
 						});
-						console.log(issuesFilterList);
 						this.issues = issuesFilterList;
-						console.log(this.issues);
 						this.issueTableRender();
 					};
 
@@ -228,13 +207,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						var issuesFilterList = new IssueCollection();
 						this.issues.each(function(issue){
 							if(issue.get('priorityId') == $('#issue-filter #priority-filter').val()){
-								console.log(issue);
 								issuesFilterList.add(issue);
 							}
 						});
-						console.log(issuesFilterList);
 						this.issues = issuesFilterList;
-						console.log(this.issues);
 						this.issueTableRender();
 					};
 				},
@@ -294,47 +270,32 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 				allIssues: function (e) {
 					this.issues = mapView.model;
-					var issuesFilterList = new IssueCollection();
-					this.issues.each(function(issue){
-						if(issue.get('status') == "NEW" || issue.get('status') == "APPROVED" || issue.get('status') == "TO_RESOLVE" || issue.get('status') == "DELETED"){
-							console.log(issue);
-							issuesFilterList.add(issue);
-						}
-					});
-					console.log(issuesFilterList);
-					this.issues = issuesFilterList;
-					console.log(this.issues);
-					this.issueTableRender();
+					this.issues.fetch({success: function(){
+						that.issueTableRender();
+					}});
 				},
 
 				newestIssues: function (e) {
 					this.issues = mapView.model;
-					var issuesFilterList = new IssueCollection();
-					this.issues.each(function (issue) {
-						if (issue.get('status') == "NEW") {
-							console.log(issue);
-							issuesFilterList.add(issue);
-						}
-					});
-					console.log(issuesFilterList);
-					this.issues = issuesFilterList;
-					console.log(this.issues);
-					this.issueTableRender();
+					this.issues.fetch({success: function(){
+						var issuesFilterList = new IssueCollection();
+						that.issues.each(function (issue) {
+							if (issue.get('status') == "NEW") {
+								issuesFilterList.add(issue);
+							}
+						});
+						that.issues = issuesFilterList;
+						that.issueTableRender();
+					}});
 				},
 
 				resolvedIssues: function (e) {
-					this.issues = mapView.model;
-					var issuesFilterList = new IssueCollection({urlRoot : "issue/resolved"});
-					this.issues.each(function (issue) {
-						if (issue.get('status') == "RESOLVED") {
-							console.log(issue);
-							issuesFilterList.add(issue);
-						}
-					});
-					console.log(issuesFilterList);
-					this.issues = issuesFilterList;
-					console.log(this.issues);
-					this.issueTableRender();
+					this.issuesResolvedList = new IssueCollection();
+					this.issuesResolvedList.url = "issue/resolved";
+					this.issuesResolvedList.fetch({success: function(){
+						that.issues = that.issuesResolvedList;
+						that.issueTableRender();
+					}});
 				},
 
 				showEditIssueForm: function(e){
@@ -342,14 +303,10 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					if($('#editIssueModal')) $('#editIssueModal').remove();
 
 					//get issue from collection by ID for load fields in template
-					issue= this.issues.get(e.currentTarget.id);//+
-					console.log (issue.toJSON()); //+
-
+					var issue= this.issues.get(e.currentTarget.id);
 					this.$el.append(this.editIssueTemplate({data: [ {issue: issue.toJSON()}, {categories: that.categories.toJSON()}, {statuses: that.statuses.toJSON()} ] }));
 
 					$('#editIssueModal').modal();
-					console.log ('--- --- data inserted from DB to fields ok'); //+
-
 					// assign jQuery selectors for variables for will use for validation below
 					issueDescription = $('#edit-issue-form-description');
 					issueAttachment = $('#edit-issue-form-attachments');
@@ -401,17 +358,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 						this.style.color = 'black';
 					});
 
-				},
-
-				logOut: function(){
-					$.ajax('auth/logout');
-					loginView.currentUser = null;
-					router.navigate('', {trigger:true});
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
-					that.$el.append(that.notificationTemplate( { 'data': { 'message': "You have been successfully logged out!" }} ));
-					$('#notificationModal').modal();
-					loginView.buttonsManage();
 				},
 
 				editIssue: function(e) {

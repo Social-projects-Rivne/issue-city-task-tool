@@ -13,7 +13,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				events: {
 					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
-					'click .form-group #btn-close' : 'hideLoginForm',
+					'click .panel #btn-close' : 'hideLoginForm',
 					'click .input-group-addon' : 'passwordToggle'
 
 				},
@@ -27,14 +27,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 
 				getCurrentUser: function(){
 					that = this;
-					$.ajax({ contentType:'applicetaion/json',
+					$.ajax({ contentType:'application/json',
 							 url: 'users/current',
 							 //when request done we create admin or manager view and rout user on his page
 							 success: function(data){
 								that.currentUser = new UserModel(data);
-								if(that.currentUser.get('avatar')==""){
-									that.currentUser.set({'avatar':'resources/img/avatar.png'});
-								}
 								that.buttonsManage();
 							}
 						});
@@ -62,7 +59,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						success: function(){
 							//get logined user model
 							$.ajax({
-								contentType:'applicetaion/json',
+								contentType:'application/json',
 								url: 'users/current',
 								//when request done we create admin or manager view and rout user on his page
 								success: function(data){
@@ -71,8 +68,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 									$('.navbar  #logout').show();
 									$('.navbar  #filter').show();
 									$('.navbar  #stat').show();
-									$('.navbar  #signUp').hide();
-									//routing by user's role
+                                    $('.navbar  #signUp').hide();
+                                    //routing by user's role
 
 									//If user didn't validate his email
 									if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)){
@@ -94,10 +91,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 									} else if(_.isEqual(that.currentUser.get('roleId'), MANAGER)){
 										managerView = new ManagerView({el:"#container"})
 										router.navigate('manager',{trigger:true});
-									}
-
-									if(_.isEmpty(that.currentUser.get('avatar'))){
-										that.currentUser.set({'avatar':'resources/img/avatar.png'});
 									}
 									that.hideLoginForm();
 									that.buttonsManage();
@@ -166,6 +159,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					encryptPass = arrLink[0];
 					user_id = arrLink[1];
 					var that = this;
+
 					this.currentUser = new UserModel({
 						id : user_id,
 						password : encryptPass
