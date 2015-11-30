@@ -99,6 +99,14 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByEmail(email).getId();
 	}
 
+	public String getAvatarByEmailOrDefault(String email) {
+		UserModel user = userDao.findByEmail(email);
+		if(user != null){
+			return user.getAvatar();
+		}
+		return "";
+	}
+
 	@Override
     public UserModel getCurrentUser() {
         String currentUserLoginName = SecurityContextHolder.getContext().getAuthentication().getName();

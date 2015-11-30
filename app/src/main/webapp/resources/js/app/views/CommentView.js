@@ -11,7 +11,7 @@ define(
 						
 						render: function() {
 							this.$el.html(this.template(this.model.toJSON()));
-							$(document.body.getElementsByClassName('comments')[0]).append(this.el);
+							$(document.body.getElementsByClassName('comments')[0]).prepend(this.el);
 							return this;
 						},
 						
@@ -20,7 +20,7 @@ define(
 									+ ' <label	class="comment_name"> <%= comment %> </label><hr width="100%" size="2">'),
 
 							this.$el.html(template(this.model.toJSON()));
-							$(document.body.getElementsByClassName('comments')[0]).append(this.el);
+							$(document.body.getElementsByClassName('comments')[0]).prepend(this.el);
 				}
 					});
 			

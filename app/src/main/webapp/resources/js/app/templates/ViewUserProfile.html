@@ -37,8 +37,9 @@
                     <!-- avatar column -->
                     <div class="form-group view-profile">
                         <img src="image/avatar" class="img-thumbnail admin-attachment large" alt="attachment_1"></br>
-                        <button  class="btn btn-mini under-avatar" type="file" name="file" id="input-avatar-load">Change Avatar</button>
-                        <button  class="btn btn-mini under-avatar" id="remove-avatar">Delete Avatar</button>
+                        <span  class="btn btn-mini under-avatar" id="show-select-file">Change Avatar</span>
+                        <span  class="btn btn-mini under-avatar" id="remove-avatar">Delete Avatar</span>
+                        <input type="file" name="file" id="input-avatar-load" style="visibility: hidden">
                     </div>
                      <!-- users data column -->
                      <div class="form-group view-profile">
@@ -53,8 +54,8 @@
                      <!-- buttons column -->
                      <div class="form-group view-profile">
                          <ul>
-                             <li><button  class="btn btn-mini edit-reset" id="profile">Edit profile</button></li>
-                             <li><button  class="btn btn-mini edit-reset" id="profile">Reset pass</button></li>
+                             <li><span  class="btn btn-mini edit-reset" id="edit-profile">Edit profile</button></span>
+                             <li><span  class="btn btn-mini edit-reset" id="reset-pass">Reset pass</button></span>
                          </ul>
                      </div>
                 </form>

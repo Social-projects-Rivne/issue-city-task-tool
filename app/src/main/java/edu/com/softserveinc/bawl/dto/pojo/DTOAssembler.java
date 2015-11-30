@@ -179,6 +179,7 @@ public class DTOAssembler {
         commentDTO.setComment(commentModel.getComment());
         commentDTO.setUserName(commentModel.getUserName());
         commentDTO.setEmail(commentModel.getEmail());
+        commentDTO.setAvatar(commentModel.getAvatar());
         return commentDTO;
     }
 

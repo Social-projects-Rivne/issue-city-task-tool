@@ -1,8 +1,5 @@
 var UserController = function(app) {
     return {
-        profile: function () {
-            profileView.render();
-        },
 
         viewprofile: function () {
             viewUserProfile.render();

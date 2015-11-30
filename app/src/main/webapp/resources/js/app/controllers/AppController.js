@@ -4,14 +4,6 @@ var AppController = function(app) {
             mapView.render();
         },
 
-        profile: function () {
-            profileView.render();
-        },
-
-        viewprofile: function () {
-            viewUserProfile.render();
-        },
-
         login: function () {
             loginView.render();
         },
