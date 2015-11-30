@@ -1,11 +1,12 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView', 
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView','model/SubscriptionsValidModel',
         'view/ManagerView','text!templates/login.html', 'text!templates/NotificationTemplate.html'],
-		function($, _, Backbone, UserModel, AdminView, ManagerView, LoginTemplate, NotificationTemplate) {
+		function($, _, Backbone, UserModel, AdminView,SubscriptionsValidModel, ManagerView, LoginTemplate, NotificationTemplate) {
 			var that = null;
 			var LoginView = Backbone.View.extend({
-				
+
 				loginTemplate: _.template(LoginTemplate),
 				currentUser: null,
+				currentSubscription:null,
 				notificationTemplate: _.template(NotificationTemplate),
 
 
@@ -16,12 +17,12 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					'click .input-group-addon' : 'passwordToggle'
 
 				},
-				
+
 				initialize: function() {
 					this.getCurrentUser();
 					$('.login.modal').empty();
 					$('.login.modal').append(this.loginTemplate);
-					
+
 				},
 
 				getCurrentUser: function(){
@@ -189,8 +190,88 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 							$('#notificationModal').modal();
 						}
 					});
+				},
+///////////
 
-				}
+				confirmSubscription: function(link) {
+					console.log("hallo from subs");
+					arrLink = link.split("&id=");
+					encryptHash = arrLink[0];
+					subscription_id = arrLink[1];
+					var that = this;
+
+					console.log(encryptHash);
+					console.log(subscription_id);
+
+					this.currentSubscriptions = new SubscriptionsValidModel({
+						hash : encryptHash,
+						id:    subscription_id
+					});
+					that = this;
+					$.ajax({
+						url: "/subscriptions/valid",
+						type: "POST",
+						data: JSON.stringify(this.currentSubscriptions),
+						dataType: "json", contentType: "application/json; charset=utf-8",
+
+						success: function(response) {
+							router.navigate('', {trigger:true});
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate( { 'data': response }));
+							$('#notificationModal').modal();
+						},
+						error: function(response) {
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate( { 'data': response }));
+							$('#notificationModal').modal();
+						}
+					});
+
+				},
+
+				deleteSubscription: function(link) {
+					console.log("hallo from deleteSubscription");
+					arrLink = link.split("&id=");
+					encryptHash = arrLink[0];
+					subscription_id = arrLink[1];
+					var that = this;
+
+					console.log(encryptHash);
+					console.log(subscription_id);
+
+					this.currentSubscriptions = new SubscriptionsValidModel({
+						hash : encryptHash,
+						id:    subscription_id
+					});
+					that = this;
+					$.ajax({
+						url: "/subscriptions/delete/",
+						type: "POST",
+						data: JSON.stringify(this.currentSubscriptions),
+						dataType: "json", contentType: "application/json; charset=utf-8",
+
+						success: function(data,response) {
+							router.navigate('', {trigger:true});
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate( { 'data': response }));
+							$('#notificationModal').modal();
+						},
+						error: function(data,response) {
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							that.$el.append(that.notificationTemplate( { 'data': response }));
+							$('#notificationModal').modal();
+						}
+					});
+
+				}	//end of -->deleteSubscription
 			});
 			
 			return LoginView;

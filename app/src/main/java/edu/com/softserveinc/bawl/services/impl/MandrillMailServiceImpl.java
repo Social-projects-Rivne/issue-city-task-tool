@@ -137,34 +137,22 @@ public class MandrillMailServiceImpl implements MailService {
             MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
         }
 
-
-
     // This metod need for sending ssubsciptions
-    /// / @Override
+    @Override
     public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId){
 
-        String email = subscriptionDTO.getEmail();              System.out.println("## email = "+email);
-        String name = "name";                                   System.out.println("## name = "+name);
-        int issueId = subscriptionDTO.getIssueId();             System.out.println("## issueId = "+ issueId);
-        int id = subscriptionDTO.getId();                       System.out.println("## id = "+ id);
-        //TODO // Need to get id from database;
+        String email = subscriptionDTO.getEmail();
+        String name = "Name";
+        int issueId = subscriptionDTO.getIssueId();
 
-        String hash =   DigestUtils.md5Hex(email + subId + issueId); System.out.println("## hash= "+ hash);
+        String hash =   DigestUtils.md5Hex(email + subId + issueId);
 
-        String link = "http://localhost:8080/#"+subId+"/validsub/"+ hash;
-
-//        String link =   rootURL
-//                        + properties.getProperty("mail.confirmation_url")
-//                        + subscriptionDTO
-//                        + "&id="
-//                        + subscriptionDTO.getId();
+        String link =   rootURL + properties.getProperty("mail.subconfirmation_url")+hash +"&id="+subId;
 
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-
                 .setPattern(MailPatterns.REGISTRATION_PATTERN, name, link)
                 .setRecipients(new MandrillRecipient(name, email))
                 .build();
-
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
