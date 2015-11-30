@@ -5,10 +5,15 @@
                 <div align="right">
                     <button id="close-block-button-for-issue-details" type="button" class="close" aria-label="Close"
                             onclick="hide('issue-details-container')">&times;</button>
-                    <button type="submit" class="btn  btn-mini resolve-subscribe resolve-btn" name="resolve" id="<%= id %>">Resolve</button>
-                    <button  class="btn  btn-mini resolve-subscribe" name="subscribe" id="<%= id %>" title="Subscribe on this issue" data-placement="bottom" data-html="true" data-toggle="popover"  data-content=" Enter your e-mail <div class='input-group'><input id='folower-email' type='text' class='form-control'><span  id='<%= id %>' name='send-folower-email' class='btn btn-default input-group-addon'>Subcribe</span></div>" >Subscribe</button>
+                    <button type="submit" class="btn  btn-mini resolve-subscribe resolve-btn-btn" name="resolve" id="<%= id %>">Resolve</button>
 
+                    <button  id= "subscribeU"class="btn  btn-mini resolve-subscribe-user" name="subscribe" id="<%= id %>" title="Subscribe on this issue" data-placement="bottom" data-html="true" data-toggle="popover"  data-content=" Enter your e-mail <div class='input-group'><input id='folower-email' type='text' class='form-control'><span  id='<%= id %>' name='send-folower-email' class='btn btn-default input-group-addon'>Subcribe</span></div>" >SubscribeU</button>
+
+                    <button id= "subscribeS" class="btn  btn-mini resolve-subscribe-sub" name="subscribe" id="<%= id %>" title="Subscribe on this issue" data-placement="bottom" data-html="true" data-toggle="popover"  data-content=" Enter your e-mail <div class='input-group'><input id='folower-email' type='text' class='form-control'><span  id='<%= id %>' name='send-folower-email' class='btn btn-default input-group-addon'>Subcribe</span></div>" >SubscribeS</button>
                 </div>
+
+
+                <!--Label issue_name-->
                 <div class="lbl-issue-name" align="center">
                     <label id="issue_name"> <%= name %> </label>
                 </div>
@@ -86,6 +91,7 @@
                     </div>
                 </div>
             </div>
+
             <script>
                 function hide(target) {
                     document.getElementById(target).style.display = 'none';

@@ -20,15 +20,21 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
 						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){
+							// user
 							$("#comment-input-form").hide();
                             $(".resolve-btn").show();
+
+                            $(".resolve-subscribe-user").show();
+                            $(".resolve-subscribe-sub").hide();
 						}
-						else {
-							$("#comment-input-form").show();
-                            $(".resolve-btn").hide();
+						else {// sub
+							$(".resolve-subscribe-user").hide();
+							$(".resolve-subscribe-sub").show();
+							$('[name*="subscribe"]').popover();
 						}
 						that.$el.fadeIn();
-						$('[name*="subscribe"]').popover();
+
+
 					} } );
 					return this;
 				},
@@ -66,12 +72,31 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 
 				//Subscribe method
 				subscribe: function(e){
-					var folowerEmail = $('[id="folower-email"]').val();
-					console.log(folowerEmail);
-					$.ajax({url:"/subscriptions/add", method:'POST', contentType:'application/json',data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'})
+
+					if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // user
+
+						console.log("## email = "+loginView.currentUser.get("email"));
+						console.log("## issueId = "+loginView.currentUser.get("issueId"));
+
+						//console.log("email");
+
+					}
+					else { // sub
+
+						var folowerEmail = $('[id="folower-email"]').val();
+						var issueId = e.currentTarget.id;
+
+						console.log("## folowerEmail = "+ folowerEmail);
+
+					}
+					$.ajax({
+						url:"/subscriptions/add",
+						method:'POST', contentType:'application/json',
+						data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'
+					})
+
 					//notitfication
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
+					if($('#notificationModal'))$('#notificationModal').remove();
 					$('body').append(this.notificationTemplate( { 'data': response }));
 					$('#notificationModal').modal();
 				},

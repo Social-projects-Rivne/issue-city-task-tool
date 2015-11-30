@@ -61,11 +61,11 @@ public class SubscriptionController {
 			subscriptionService.createSubscription(issueId, existuserId);
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),existuserId);
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request), id);
-			responseDTO.setMessage("You have now been added to the mailing list. Please Confirm Your Email");
+			responseDTO.setMessage("Thank you for you subscription! On you email sends letter with further instructions ");
 
 		} else { System.out.println("## User is not exist");
 
-			UserModel userModel = new UserModel("Name1", subscriptionDTO.getEmail(), email.substring(0, email.indexOf("@")), 4, "Pass", "Ava");
+			UserModel userModel = new UserModel("USER_NAME", subscriptionDTO.getEmail(), email.substring(0, email.indexOf("@")), 4, "Pass", null);
 			userModel = userService.addSubscriber(userModel);
 			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
 
@@ -95,8 +95,8 @@ public class SubscriptionController {
 		try {
 			if (compareHash.equals(hash)) {
 				subscriptionService.validateSubscription ( subId );
-				responseDTO.setMessage("You have successfully signed. Have a nice day.");
-				System.out.println("## You have successfully signed. Have a nice day");
+				responseDTO.setMessage("You have successfully subscribe. Have a nice day.");
+				System.out.println("## You have successfully subscribe. Have a nice day");
 			}else{
 				System.out.println("## The link has been corupted");
 				responseDTO.setMessage("Hash is not OK");
