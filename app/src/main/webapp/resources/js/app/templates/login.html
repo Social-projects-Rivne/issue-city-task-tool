@@ -2,14 +2,10 @@
     <div class="panel" id="login-container" style="border: 0px;">
         <div class="panel-heading  navbar-default">
             <div class="panel-title" style=" color: #fff !important; font-family: 'Josefin Sans', sans-serif; font-size: 1.4em;">Log in
-                <!-- <div style="float:right; font-size: 80%; position: relative; top:-10px;"><a href="#" class="forgot">Forgot password?</a>
-                </div> -->
                 <button id="btn-close" class="close" type="button" style=" opacity:1; text-align: right;">
                     <img src="resources\img\login_close.png">
                 </button>
             </div>
-            <!--<button id="close-block-button-for-login" type="button" class="close" aria-label="Close"
-                    onclick="hide('login-container')">&times;</button>-->
         </div>
         <div class="panel-body">
             <div style="display:none" id="login-alert" class="alert alert-danger col-sm-6"></div>
@@ -32,36 +28,24 @@
                     <input id="password" type="password" class="form-control" name="j_password" data-toggle="password" placeholder="Password" size="30" style="padding-left: 5px; border-color: #d5445c; height: 30px;">
                     <input type="text" class="form-control" style="display: none;">
                 </div>
-                <!-- <div class="input-group" id="login">
-                    <div class="checkbox">
-                        <label>
-                            <input id="login-remember" type="checkbox" name="_spring_security_remember_me" value="1" style="position: relative; right: 10px;">Remember me
-                        </label>
-                    </div>
-                </div> -->
+
                 <div class="col-sm-12">
                     <label id="loginMessage"></label>
                 </div>
                 <div style="margin-top:5px" class="form-group">
                     <!-- Buttons -->
                     <div class="col-sm-12 controls btnCenter">
-
-                        <!-- changed from <a> to <button> -->
-                        <button id="btn-login" class="btn btn-success" type="button">Login</button>
-
-                        <!--<button id="btn-close" class="btn btn-primary" type="button">Close</button>-->
-                    </div>
-                </div>
-                <!-- <div class="form-group">
-                    <div class="col-md-12 control">
-                        <div style="border-top: 1px solid#888; padding-top:5px; font-size:85%">
-                            Don't have an account!
-                            <a>
-                                            Sign Up Here
-                                        </a>
+                        <div style="float: left; margin-left: 70px; padding: 0px;">
+                            <ul style="padding:0px; margin:0px;">
+                                <li><a>Create an account</a></li>
+                                <li><a>I forgot my password</a></li>
+                            </ul>
+                        </div>
+                        <div style="float: right; margin-right: 70px; padding: 0px;">
+                            <button id="btn-login" class="btn btn-success" type="button">Login</button>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </form>
         </div>
     </div>
