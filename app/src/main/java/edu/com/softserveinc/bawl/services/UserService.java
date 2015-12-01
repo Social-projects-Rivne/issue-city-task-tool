@@ -18,7 +18,7 @@ public interface UserService {
 	UserModel getById(int id);
 
 	List<UserModel> getByRoleId (UserRole userRole);
-	
+
 	UserModel getByLogin(String login);
 
 	List<UserModel> loadUsersList();
@@ -32,5 +32,7 @@ public interface UserService {
 	public int getUserIdByEmail(String email);
 
 	public UserModel addSubscriber(UserModel user);
+
+	public String getAvatarByEmailOrDefault(String email);
 
 }

@@ -179,6 +179,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
+								adminView.render();
 							},
 							error: function() {
 								if($('#notificationModal')) $('#notificationModal').remove();
@@ -198,6 +199,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
+								adminView.render();
 							},
 							error: function() {
 								if($('#notificationModal')) $('#notificationModal').remove();

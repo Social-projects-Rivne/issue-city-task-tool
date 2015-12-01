@@ -74,8 +74,10 @@ public class ImageController {
   @ResponseBody
   public ResponseEntity<byte[]> getOwnAvatar() {
     byte [] bytes = null;
+    UserModel user = getCurrentUser();
     try {
-      bytes = imageService.getUserAvatarOrDefault(getCurrentUser().getAvatar());
+      String fileName = user != null ? user.getAvatar() : "";
+      bytes = imageService.getUserAvatarOrDefault(fileName);
     } catch (IOException e) {
       return new ResponseEntity<>(bytes, HttpStatus.CONFLICT);
     }
@@ -97,7 +99,7 @@ public class ImageController {
     return responseDTO;
   }
 
-  @RequestMapping(value="avatar/{fileName}", method = RequestMethod.GET)
+  @RequestMapping(value="avatar/{fileName:.+}", method = RequestMethod.GET)
   @ResponseBody
   public ResponseEntity<byte[]> getUserAvatar(@PathVariable String fileName) {
     byte [] bytes = null;

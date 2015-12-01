@@ -118,6 +118,11 @@ td > input {
     background: rgba(253, 245, 246, 1);
 }
 
+.issue-table thead {
+    color: #ffffff;
+    background-color: rgb(233, 84, 110);
+}
+
 .category-table thead {
     color: #ffffff;
     background-color: rgb(233, 84, 110);
@@ -162,8 +167,9 @@ div#login.input-group {
 }
 
 div.col-sm-12.controls.btnCenter {
-    text-align: center;
-    padding: 10px;
+    text-align: right;
+    padding-top: 15px;
+    padding-right: 73px;
 }
 
 /* ADD ISSUE */
@@ -324,7 +330,6 @@ button.btn.btn-mini.resolve-subscribe-sub{
 
 .comments table {
     border: 0px;
-    width: 300px;
 }
 .comments table td{
     text-align: left;
@@ -842,6 +847,16 @@ a.forgot {
 #bawl-login {
     padding-left: 40%;
     position: inherit;
+}
+#loginForm a {
+    text-align: left;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #d5445c;
+}
+#loginForm li {
+    text-align: left;
 }
 .panel {
 	border-radius: 0px;

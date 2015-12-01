@@ -14,6 +14,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					'click .navbar #login': 'showLoginForm',
 					'click .panel #btn-close' : 'hideLoginForm',
 					'click .input-group-addon' : 'passwordToggle'
+					'click .input-group-addon' : 'passwordToggle',
+					'click #create-account' : 'showSignUpForm'
+
 				},
 
 				initialize: function() {
@@ -46,6 +49,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					} else{
 						console.log('Fields is empty');
 					};
+				},
+
+				showSignUpForm: function() {
+					$(".login.modal").modal('hide');
+					router.navigate('user-reg', {trigger: true});
 				},
 
 				sendRegistrationRequest: function(userModel){

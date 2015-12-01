@@ -10,7 +10,6 @@ define([ 'jquery', 'underscore', 'backbone', 'collection/UserCollection', 'view/
 					'click #reset-filter'	: 'resetFilter',
 					'click #add-user'		: 'showAddUserForm',
 					'click .addFormConfirm'	: 'addUser',
-					'click #admin_log_out'	: 'AppController.logout',
 				},
 				
 				template: _.template(SearchTemplate),

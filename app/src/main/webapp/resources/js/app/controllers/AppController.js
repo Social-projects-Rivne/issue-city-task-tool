@@ -4,14 +4,6 @@ var AppController = function(app) {
             mapView.render();
         },
 
-        profile: function () {
-            profileView.render();
-        },
-
-        viewprofile: function () {
-            viewUserProfile.render();
-        },
-
         login: function () {
             loginView.render();
         },
@@ -30,6 +22,7 @@ var AppController = function(app) {
                     $('.navbar  #signUp').show();
                     $('.navbar  #login').show();
                     $('.navbar  #logout').hide();
+                    $('.navbar  #profile').hide();
                 }
             });
             mapView.render();
