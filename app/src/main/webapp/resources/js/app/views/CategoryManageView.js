@@ -47,12 +47,23 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 					var category = this.categories.get(e.currentTarget.id);
 					$("#container").append(this.categoryEditTemplate(category.toJSON()));
 					$("#editCategoryModal").modal();
+					var category = $('#edit-category-name');
+					category.on({
+						blur: function() {
+							validator.onCategoryBlur(this, validator.WRONG_CATEGORY);
+						},
+						focus: function() {
+							validator.onfocus(this,  validator.WRONG_CATEGORY);
+						}});
 					$('.editCategoryConfirm').click(this.showEditCategoryConfirmation);
 				},
 
 				showEditCategoryConfirmation: function(e) {
-					$("#container").append(that.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this category?' }, { 'id': e.currentTarget.id }, { 'action': 'edit category' } ] } ));
-					$('#confirmationModal').modal();
+					if ($('#confirmationModal')) $('#confirmationModal').remove();
+					if(validator.testCategoryField( $('#edit-category-name'), $('#error-edit-category'))){
+						$("#container").append(that.confirmationTemplate({'data': [{'message': 'Do you really want to edit this category?'}, {'id': e.currentTarget.id}, {'action': 'edit category'}]}));
+						$('#confirmationModal').modal();
+					}
 					return e;
 				},
 
@@ -67,13 +78,23 @@ define([ 'jquery', 'underscore', 'backbone', 'text!templates/CategoryManageTempl
 					if($('#addCategoryModal')) $('#addCategoryModal').remove();
 					$("#container").append(this.categoryAddTemplate());
 					$("#addCategoryModal").modal();
+					var category = $('#add-category-name');
+					category.on({
+						blur: function() {
+							validator.onCategoryBlur(this, validator.WRONG_CATEGORY);
+						},
+						focus: function() {
+							validator.onfocus(this, validator.WRONG_CATEGORY);
+						}});
 					$('.addCategoryConfirm').click(this.showAddCategoryConfirmation);
 				},
 
 				showAddCategoryConfirmation: function(e){
-					if($('#confirmationModal')) $('#confirmationModal').remove();
-					$("#container").append(that.confirmationTemplate( { 'data': [ { 'message': 'Do you really want add new category?' }, { 'id': e.currentTarget.id }, { 'action': 'add category' } ] } ));
-					$('#confirmationModal').modal();
+					if ($('#confirmationModal')) $('#confirmationModal').remove();
+					if(validator.testCategoryField( $('#add-category-name'), $('#error-add-category'))) {
+						$("#container").append(that.confirmationTemplate({'data': [{'message': 'Do you really want add new category?'}, {'id': e.currentTarget.id}, {'action': 'add category'}]}));
+						$('#confirmationModal').modal();
+					}
 					return e;
 				}
 

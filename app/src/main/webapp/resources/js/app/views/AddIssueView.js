@@ -11,9 +11,6 @@ define([
 
                 'use strict';
 
-                var FILL_FORM_MESSAGE = "Please fill the form correctly!";
-                var ERROR_FILL_FORM_CSS = "{'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}";
-                var ERROR_FILL_FIELD_CSS = "{'color', 'red'}";
                 var WRONG_NAME = 'Wrong name!';
                 var WRONG_CATEGORY = 'Wrong category!';
                 var WRONG_DESCRIPTION = 'Wrong description!';
@@ -61,7 +58,7 @@ define([
 						
 						issueCategory.on({
                             blur: function() {
-								validator.onblur(this, WRONG_CATEGORY);
+								validator.onCategoryBlur(this, WRONG_CATEGORY);
                             },
                             focus: function() {
 								validator.onfocus(this, WRONG_CATEGORY);
@@ -81,20 +78,8 @@ define([
 				},
 				
 				addIssue: function() {
-
-                    var testField = function(field, error) {
-                        if (!validator.FIELD_VALIDATE_PATTERN.test(field.val())) {
-                            field.val(WRONG_NAME);
-                            error.html(FILL_FORM_MESSAGE);
-                            field[0].style.cssText = ERROR_FILL_FIELD_CSS;
-                            error[0].style.cssText = ERROR_FILL_FORM_CSS;
-                            return false;
-                        }
-                        return true;
-                    }
-
-
-					if(testField( $('#issue-name'), $('#error')) && testField($('#issue-category'), $('#error')) && testField($('#issue-description'), $('#error'))) {
+					if(validator.testField( $('#issue-name'), $('#error-add-issue')) && validator.testCategoryField($('#issue-category'), $('#error-add-issue'))
+						&& validator.testField($('#issue-description'), $('#error-add-issue')) && !_.isEmpty($('#map-pointer').val())) {
 						this.model.set( {
                             mapPointer: $('#map-pointer').val(),
 							name: $('#issue-name').val(),

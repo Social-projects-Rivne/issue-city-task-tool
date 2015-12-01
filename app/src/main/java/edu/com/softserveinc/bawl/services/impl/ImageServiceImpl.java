@@ -34,6 +34,7 @@ public class ImageServiceImpl implements ImageService{
   public static final String [] arrTypes = {"img", "png", "jpg", "jpeg"};
   public static final String DEFAULT_IMG = "default";
 
+  //TODO remove or what?
   @Override
   public void cropImage() {
     BufferedImage srcImg = null;

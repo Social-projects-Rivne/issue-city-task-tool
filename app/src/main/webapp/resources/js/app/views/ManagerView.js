@@ -2,6 +2,12 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 		function($, bootstrap, _, Backbone, IssueCollection, ManagerTemplate, IssueTableTemplate, ManagerSearchTemplate, CategoryCollection, IssueModel, StatusCollection, NotificationTemplate, CategoryModel, ConfirmationTemplate, EditIssueTemplate) {
 			
 			var that = null;
+			var FILL_FORM_MESSAGE = "Please fill the form correctly!";
+			var ERROR_FILL_FORM_CSS = "{'color': 'red', 'textAlign': 'center', 'marginTop': '10px'}";
+			var ERROR_FILL_FIELD_CSS = "{'color', 'red'}";
+			var WRONG_NAME = 'Wrong name!';
+			var WRONG_CATEGORY = 'Wrong category!';
+			var WRONG_DESCRIPTION = 'Wrong description!';
 
 			var ManagerView = Backbone.View.extend({
 
@@ -10,8 +16,8 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'click #issue-filter  #reset-filter-issue': 'resetFilter',
 					'change .category': 'quickChangeCategory',
 					'change .status': 'quickChangeStatus',
-					'click .glyphicon-thumbs-up' : "quickChangeStatusOnApproved",
-					'click .glyphicon-thumbs-down' : "quickChangeStatusOnDisapproved",
+					'click #issue-table-body .glyphicon-thumbs-up' : "quickChangeStatusOnApproved",
+					'click #issue-table-body .glyphicon-thumbs-down' : "quickChangeStatusOnDisapproved",
 					'click .issue-table .btn.delete-issue': 'showRemoveIssueConfirmation',
 					'click .btn.view-on-map': 'viewOnMap',
 					'mouseenter .issue-table > tbody > tr  ' : 'issueFocus',
@@ -234,7 +240,11 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 				quickChangeStatus: function(e) {
 					this.issue = this.issues.get( e.currentTarget.id);
 					this.issue.set( {status: e.currentTarget.value});
-					this.issue.save();
+					this.issue.save({}, {
+						success: function(){
+							that.issueTableRender();
+						}
+					});
 				},
 
 				quickChangeStatusOnApproved: function(e) {
@@ -248,8 +258,11 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 							this.issue.set( {status: "RESOLVED"});
 							break;
 					}
-					this.issue.save();
-					this.render();
+					this.issue.save({}, {
+						success: function(){
+							that.issueTableRender();
+						}
+					});
 				},
 
 				quickChangeStatusOnDisapproved: function(e) {
@@ -307,81 +320,31 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 
 					$('#editIssueModal').modal();
 					// assign jQuery selectors for variables for will use for validation below
+					issueName= $('#edit-issue-form-name');
 					issueDescription = $('#edit-issue-form-description');
-					issueAttachment = $('#edit-issue-form-attachments');
-					issueCategory =	$('#edit-issue-form-category');
-					issueStatus = $('#edit-issue-form-status');
-					issuePriority =	$('#edit-issue-form-priority');
 
-					// RegExp validate for fields
-					issueDescription.on('blur', function() {
-						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
-							this.value = 'Wrong name!';
-							this.style.color = 'red';
-							}
-						});
-					issueDescription.on('focus', function() {
-						if (this.value == 'Wrong name!') this.value ='';
-						this.style.color = 'black';
-					});
-					issueAttachment.on('blur', function() {
-						//
-					});
-					issueAttachment.on('focus', function() {
-						if (this.value == 'Wrong name!') this.value ='';
-						this.style.color = 'black';
-					});
-					issueCategory.on('blur', function() {
-						//
-					});
-					issueCategory.on('focus', function() {
-						if (this.value == 'Wrong name!') this.value ='';
-						this.style.color = 'black';
-					});
-					issueStatus.on('blur', function() {
-						//
-					});
-					issueStatus.on('focus', function() {
-						if (this.value == 'Wrong name!') this.value ='';
-						this.style.color = 'black';
-					});
-					/*issuePriority.on('blur', function() {
-						//
-						if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(this.value)) {
-							this.value = 'Wrong name!';
-							this.style.color = 'red';
-							}
-						});*/
-					issuePriority.on('focus', function() {
-						if (this.value == 'Wrong name!') this.value ='';
-						this.style.color = 'black';
-					});
+					issueName.on({
+						blur : function() {
+							validator.onblur(this, WRONG_NAME);
+						},
+						focus : function() {
+							validator.onfocus(this, WRONG_NAME);
+						}});
+
+					issueDescription.on({
+						blur: function() {
+							validator.onblur(this, WRONG_DESCRIPTION);
+						},
+						focus : function() {
+							validator.onfocus(this, WRONG_DESCRIPTION);
+						}});
 
 				},
 
 				editIssue: function(e) {
-					var isValid = true;
-					if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueDescription.val())) {
-						issueDescription.val('Wrong value!').css('color', 'red');
-						isValid = false;
-					}
-					/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueAttachment.val())) {
-						issueAttachment.val('Wrong value!').css('color', 'red');
-						isValid = false;
-					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueCategory.val())) {
-						issueCategory.val('Wrong value!').css('color', 'red');
-						isValid = false;*/
-					/*if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issueStatus.val())) {
-						issueStatus.val('Wrong value!').css('color', 'red');
-						isValid = false;
-					}if (!/^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$/.test(issuePriority.val())) {
-						issuePriority.val('Wrong value!').css('color', 'red');
-						isValid = false;
-					}*/
-
-					if(isValid) {
+					if($('#confirmationModal')) $('#confirmationModal').remove();
+					if(validator.testField( $('#edit-issue-form-name'), $('#error-edit-issue')) && validator.testField($('#edit-issue-form-description'), $('#error-edit-issue'))) {
 						//call confirmation for edit issue
-						if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this issue?' }, { 'id': e.currentTarget.id }, { 'action': 'edit issue' } ] } ));
 						$('#confirmationModal').modal();
 					}
