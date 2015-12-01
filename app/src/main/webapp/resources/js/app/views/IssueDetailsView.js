@@ -72,26 +72,65 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 				},
 
 
-				subscribe: function(e){	//Subscribe method
+				subscribe: function(link){	//Subscribe method
+					var temp = link.currentTarget.id; //+
 
 					if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // user
-//!!!
-						var folowerEmail = loginView.currentUser.get("email");
-						//var issueId = loginView.currentUser.get("issueId");
-						console.log("## email = "+folowerEmail);
-						//console.log("## issueId = "+issueId);
 
-						//console.log("email");
+						var issueId  = temp;
+						var issueId22  = link.currentTarget.id;
+
+						var ss = link.toString();
+
+						var folowerEmail = loginView.currentUser.get("email"); //good
+						var rrissueId = loginView.currentUser.get("issueId"); //good
+						var rrid = loginView.currentUser.get("id"); //good
+						var rridw = link.currentText;
+
+						parser = document.createElement('a');
+						parser.href = link.toString();
+
+						console.log(parser.href);
+
+						hashArgs = parser.hash.split("/");
+
+						console.log(hashArgs[1], hashArgs[3]);
+
+
+
+
+
+
+
+
+						console.log("## folowerEmail = "+ 	folowerEmail);
+						console.log("## issueId = "+ 	issueId );
+						console.log("## ss = "+ 	ss);
+
+						console.log("## rrissueId = "+ 	rrissueId);
+						console.log("## rrid = "+ 	rrid);
+						console.log("## rridw = "+ 	rridw);
+
+
+
+
+
 
 					} else { // sub
-						var folowerEmail = $('[id="folower-email"]').val();
-						console.log("## folowerEmail = "+ folowerEmail);
+						var issueId  = link.currentTarget.id; //+
+						folowerEmail = $('[id="folower-email-s"]').val();
+
+						console.log("## issueId = "+ issueId);
+						console.log("## folowerEmail2= "+ folowerEmail);
 					}
+
+
+
 					$.ajax({
 						url: '/subscriptions/add',
 						method:'POST',
 						contentType:'application/json',
-						data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}',
+						data:'{"issueId":' + issueId + ',"email":"' + folowerEmail +'"}',
 						success: function(response) {
 							if($('#notificationModal')) {
 								$('#notificationModal').remove();

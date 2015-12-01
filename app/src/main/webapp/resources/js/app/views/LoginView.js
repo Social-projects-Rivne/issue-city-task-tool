@@ -9,13 +9,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 				currentSubscription:null,
 				notificationTemplate: _.template(NotificationTemplate),
 
-
 				events: {
 					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
 					'click .panel #btn-close' : 'hideLoginForm',
 					'click .input-group-addon' : 'passwordToggle'
-
 				},
 
 				initialize: function() {
@@ -191,7 +189,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						}
 					});
 				},
-///////////
 
 				confirmSubscription: function(link) {
 					console.log("hallo from subs");
