@@ -7,7 +7,7 @@ var UserController = function(app) {
 
 
         userReg: function () {
-            userRegView.render();
+            userRegView.render()
         },
 
         emailConfirm: function (link) {

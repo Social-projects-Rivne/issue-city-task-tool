@@ -2,6 +2,10 @@ var Validator = function()  {
     return {
         FIELD_VALIDATE_PATTERN : new RegExp("^[A-Z]([a-z0-9\\s]){3,64}$"),
         CATEGORY_VALIDATE_PATTERN : new RegExp("^([A-Za-z\\s])([a-z0-9\\s]){3,64}$"),
+        USER_NAME_VALIDATE_PATTERN : new RegExp("^[A-Za-z0-9]+[A-Za-z0-9\\s]+[A-Za-z0-9]+$"),
+        USER_LOGIN_VALIDATE_PATTERN : new RegExp("^[A-Za-z0-9_.-]+$"),
+        USER_EMAIL_VALIDATE_PATTERN : new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"),
+        USER_PASSWORD_VALIDATE_PATTERN : new RegExp("^([A-Za-z\\s])([a-z0-9\\s]){3,64}$"),
         //([A-Za-z0-9\\s]){4,64}
         //^([A-Za-z\s])([a-z0-9\s]){3,64}$
         FILL_FORM_MESSAGE : "Please fill the form correctly!",
@@ -13,6 +17,13 @@ var Validator = function()  {
 
         onblur: function(field, text) {
             if (!validator.FIELD_VALIDATE_PATTERN.test(field.value)) {
+                field.value = text;
+                field.style.color = 'red';
+            }
+        },
+
+        onblurPattern: function(field, text, pattern) {
+            if (!pattern.test(field.value)) {
                 field.value = text;
                 field.style.color = 'red';
             }
@@ -36,8 +47,15 @@ var Validator = function()  {
             if (!validator.FIELD_VALIDATE_PATTERN.test(field.val())) {
                 field.val = '';
                 error.html(validator.FILL_FORM_MESSAGE);
-                //field[0].style.cssText = validator.ERROR_FILL_FIELD_CSS;
-                //error[].style.cssText = validator.ERROR_FILL_FORM_CSS;
+                return false;
+            }
+            return true;
+        },
+
+        testFieldPattern : function(field, error, pattern) {
+            if (!pattern.test(field.val())) {
+                field.val = '';
+                error.html(validator.FILL_FORM_MESSAGE);
                 return false;
             }
             return true;

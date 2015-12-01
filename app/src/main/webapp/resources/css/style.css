@@ -118,6 +118,11 @@ td > input {
     background: rgba(253, 245, 246, 1);
 }
 
+.issue-table thead {
+    color: #ffffff;
+    background-color: rgb(233, 84, 110);
+}
+
 .category-table thead {
     color: #ffffff;
     background-color: rgb(233, 84, 110);

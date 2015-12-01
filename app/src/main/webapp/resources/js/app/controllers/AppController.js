@@ -22,6 +22,7 @@ var AppController = function(app) {
                     $('.navbar  #signUp').show();
                     $('.navbar  #login').show();
                     $('.navbar  #logout').hide();
+                    $('.navbar  #profile').hide();
                 }
             });
             mapView.render();
