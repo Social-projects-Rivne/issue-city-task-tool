@@ -22,7 +22,9 @@ public interface SubscriptionService {
 
 	public String getEmailFromSubId(int id);
 
-	public SubscriptionModel validateSubscription (int subId );
+	public SubscriptionModel validateSubscription (int subId);
+
+	public SubscriptionModel UnSubscription (int subId);
 
 	public int getSubscriptionId(int issueId, int userId);
 

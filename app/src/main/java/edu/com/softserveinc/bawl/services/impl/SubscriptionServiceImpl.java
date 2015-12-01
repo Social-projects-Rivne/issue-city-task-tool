@@ -85,9 +85,22 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		SubscriptionModel existantSubscription = subscriptionDao.findOne(subId);
 		existantSubscription.setIsValid(true);
 
-		System.out.println("## getIssueId = "+subId);
-		System.out.println("## existantSubscription = "+existantSubscription);
-		System.out.println("## existantSubscription = "+existantSubscription);
+		LOG.info("## getIssueId = "+subId);
+		LOG.info("## existantSubscription = " + existantSubscription);
+		LOG.info("## existantSubscription = " + existantSubscription);
+
+		return subscriptionDao.saveAndFlush(existantSubscription);
+	}
+
+	@Override
+	public SubscriptionModel UnSubscription (int subId ) {
+
+		SubscriptionModel existantSubscription = subscriptionDao.findOne(subId);
+		existantSubscription.setIsValid(false);
+
+		LOG.info("## getIssueId = "+subId);
+		LOG.info("## existantSubscription = " + existantSubscription);
+		LOG.info("## existantSubscription = "+existantSubscription);
 
 		return subscriptionDao.saveAndFlush(existantSubscription);
 	}
