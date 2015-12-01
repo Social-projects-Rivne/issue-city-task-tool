@@ -256,13 +256,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					id:    subscription_id
 				});
 				that = this;
+
 				$.ajax({
 					url: "/subscriptions/delete/",
 					type: "POST",
 					data: JSON.stringify(this.currentSubscriptions),
 					dataType: "json", contentType: "application/json; charset=utf-8",
 
-					success: function(data,response) {
+					success: function(response) {
 						router.navigate('', {trigger:true});
 						if($('#notificationModal')) {
 							$('#notificationModal').remove();
@@ -270,7 +271,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						that.$el.append(that.notificationTemplate( { 'data': response }));
 						$('#notificationModal').modal();
 					},
-					error: function(data,response) {
+					error: function(response) {
 						if($('#notificationModal')) {
 							$('#notificationModal').remove();
 						}

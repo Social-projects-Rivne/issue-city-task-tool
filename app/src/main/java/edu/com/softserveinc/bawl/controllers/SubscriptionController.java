@@ -54,7 +54,7 @@ public class SubscriptionController {
 
 		String email = subscriptionDTO.getEmail();
 
-		if (userService.isValidUser(email) == true) { System.out.println("## User Exist");
+		if (userService.isValidUser(email) == true) {System.out.println("## User Exist");
 
 			int issueId = subscriptionDTO.getIssueId();
 			existuserId = userService.getUserIdByEmail(email);
@@ -71,7 +71,7 @@ public class SubscriptionController {
 
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),userModel.getId());
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
-			responseDTO.setMessage("Something wrong");
+			responseDTO.setMessage("Thank you for you subscription! On you email sends letter with further instructions ");
 			}
 
 		return responseDTO;
@@ -98,7 +98,7 @@ public class SubscriptionController {
 				responseDTO.setMessage("You have successfully subscribe. Have a nice day.");
 				System.out.println("## You have successfully subscribe. Have a nice day");
 			}else{
-				System.out.println("## The link has been corupted");
+				System.out.println("## The link has been corrupted");
 				responseDTO.setMessage("Hash is not OK");
 
 			}
@@ -110,6 +110,7 @@ public class SubscriptionController {
 	}
 
 // http://localhost:8080/#subscriptions/valid/b62ff1e437345f7221967bf8b4d4b13f&id=11
+
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO deleteSub (
@@ -127,18 +128,17 @@ public class SubscriptionController {
 
 		try {
 			if (compareHash.equals(hash)) {
-
-				SubscriptionModel subscriptionModel1 = subscriptionService.getById(subId);
-				System.out.println("## subscriptionModel1 = "+subscriptionModel1);
-				subscriptionModel1.setIsValid(true);
-				subscriptionService.editSubscription(subscriptionModel1);
-
+				subscriptionService.validateSubscription(subId);
+				responseDTO.setMessage("You have successfully Unsubscribe. Have a nice day.");
+				System.out.println("## You have successfully Unsubscribe. Have a nice day");
 			}else{
-				System.out.println("## Something wrong");
+				System.out.println("## The link has been corrupted");
 				responseDTO.setMessage("Hash is not OK");
+
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex);
+			responseDTO.setMessage("Something wrong");
 		}
 		return responseDTO;
 	}
