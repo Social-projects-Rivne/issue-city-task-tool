@@ -26,6 +26,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 
                             $(".resolve-subscribe-user").show();
                             $(".resolve-subscribe-sub").hide();
+							$('[name*="subscribe"]').popover();
 						}
 						else {// sub
 							$(".resolve-subscribe-user").hide();
@@ -70,24 +71,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 							}});
 				},
 
-				//Subscribe method
-				subscribe: function(e){
+
+				subscribe: function(e){	//Subscribe method
 
 					if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // user
-
-						console.log("## email = "+loginView.currentUser.get("email"));
-						console.log("## issueId = "+loginView.currentUser.get("issueId"));
+//!!!
+						var folowerEmail = loginView.currentUser.get("email");
+						var issueId = loginView.currentUser.get("issueId");
+						console.log("## email = "+folowerEmail);
+						console.log("## issueId = "+issueId);
 
 						//console.log("email");
 
-					}
-					else { // sub
-
+					} else { // sub
 						var folowerEmail = $('[id="folower-email"]').val();
 						var issueId = e.currentTarget.id;
 
 						console.log("## folowerEmail = "+ folowerEmail);
-
+						console.log("## issueId = "+ issueId);
 					}
 					$.ajax({
 						url:"/subscriptions/add",
