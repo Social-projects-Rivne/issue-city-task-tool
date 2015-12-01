@@ -14,8 +14,8 @@
          },
          events: {
              'click #signUp' : 'showUserRegForm',
-             'click #reg_btn-close' : 'hideUserRegForm',
-             'click #reg_submit': 'onSubmit'
+             'click .panel #reg_btn-close' : 'hideUserRegForm',
+             'click #signUpBox #reg_submit': 'onSubmit'
          },
 
          onSubmit: function (e) {

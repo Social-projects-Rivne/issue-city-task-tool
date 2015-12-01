@@ -214,7 +214,9 @@ public class DTOAssembler {
 
         listIssueHistoryDto.addAll(
                 getListIssueHistoryDtos(
-                        historyService.getHistoriesByIssueID(issueModel.getId()) ,issueModel));
+                        historyService.getHistoriesByIssueID(issueModel.getId()), issueModel));
+
+        userHistoryIssuesForUserDTO.setHistory((scala.collection.immutable.List<IssueHistoryDTO>) listIssueHistoryDto);//???
 
         return userHistoryIssuesForUserDTO;
     }
