@@ -5,7 +5,6 @@ var UserController = function(app) {
             viewUserProfile.render();
         },
 
-
         userReg: function () {
             userRegView.render()
         },

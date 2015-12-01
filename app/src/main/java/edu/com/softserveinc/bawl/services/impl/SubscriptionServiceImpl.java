@@ -43,7 +43,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public String getHashSubscription(int subId){
-
 		String email = getEmailFromSubId(subId); 		// id ---> userId --> email
 		int issueId = getIssueIdFromSubId(subId);
 
@@ -109,7 +108,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public int getSubscriptionId(int issueId, int userId){
 		return (subscriptionDao.findByIssueIdAndUserId(issueId,userId)).getId();
 	}
-
 
 	@Override
 	public void editSubscription(SubscriptionModel subscriptionModel) {

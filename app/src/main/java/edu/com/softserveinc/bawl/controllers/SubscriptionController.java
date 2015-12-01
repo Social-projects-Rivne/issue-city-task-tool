@@ -3,9 +3,7 @@ package edu.com.softserveinc.bawl.controllers;
 import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
 import edu.com.softserveinc.bawl.dto.pojo.ValidationDTO;
-import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
-import edu.com.softserveinc.bawl.models.enums.UserRole;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import edu.com.softserveinc.bawl.services.UserService;
 import org.apache.log4j.Logger;
@@ -24,13 +22,12 @@ public class SubscriptionController {
 
 	public static final Logger LOG = Logger.getLogger(StatusController.class);
 
-	public static final String MESSAGE_TEXT_ADD = "New subscription";
-	public static final String SUCCESS_ADD = "was successfully added";
-	public static final String FAILURE_ADD = "was NOT added";
+	public static final String MESSAGE_TEXT_ADD = "Thank you for you subscription! On you email sends letter with further instructions ";
+	public static final String SUCCESS_ADD = "You have successfully subscribe. Have a nice day.";
+	public static final String FAILURE_ADD = "This link has been corrupted";
+	public static final String FAILURE_UNKNOWN = "Something wrong";
+	public static final String SUCCESS_DELL = "You have successfully Unsubscribe. Have a nice day.";
 
-	public static final String MESSAGE_TEXT_DELL = "The subscription";
-	public static final String SUCCESS_DELL = "was successfully delited";
-	public static final String FAILURE_DELL = "Some problem occured! was NOT added";
 	public int existuserId;
 
 	@Autowired
@@ -48,22 +45,20 @@ public class SubscriptionController {
 	ResponseDTO addSubscriptionAction(
 			@RequestBody	SubscriptionDTO subscriptionDTO,
 			 				ResponseDTO responseDTO,
-							SubscriptionModel subscriptionModel,
-							UserRole userRole ,
 							HttpServletRequest request) {
 
 		String email = subscriptionDTO.getEmail();
 
-		if (userService.isValidUser(email) == true) {System.out.println("## User Exist");
+		if (userService.isValidUser(email) == true) { LOG.info("## User Exist");
 
 			int issueId = subscriptionDTO.getIssueId();
 			existuserId = userService.getUserIdByEmail(email);
 			subscriptionService.createSubscription(issueId, existuserId);
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),existuserId);
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request), id);
-			responseDTO.setMessage("Thank you for you subscription! On you email sends letter with further instructions ");
+			responseDTO.setMessage(MESSAGE_TEXT_ADD);
 
-		} else { System.out.println("## User is not exist");
+		} else { LOG.info("## User is not exist");
 
 			UserModel userModel = new UserModel("USER_NAME", subscriptionDTO.getEmail(), email.substring(0, email.indexOf("@")), 4, "Pass", null);
 			userModel = userService.addSubscriber(userModel);
@@ -71,9 +66,8 @@ public class SubscriptionController {
 
 			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),userModel.getId());
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
-			responseDTO.setMessage("Thank you for you subscription! On you email sends letter with further instructions ");
+			responseDTO.setMessage(MESSAGE_TEXT_ADD);
 			}
-
 		return responseDTO;
 	}
 
@@ -81,30 +75,25 @@ public class SubscriptionController {
 		@ResponseBody
 		public ResponseDTO validation (
 				@RequestBody ValidationDTO validationDTO,
-							 SubscriptionModel subscriptionModel,
 							 ResponseDTO responseDTO) {
 
 			int subId = validationDTO.getId();
 			String hash = validationDTO.getHash();
 			String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
 
-		System.out.println("## "+subId);
-		System.out.println("## "+hash);
-		System.out.println("## compareHash = " + compareHash);
+		LOG.info("## " + subId); LOG.info("## " + hash); LOG.info("## compareHash = " + compareHash);
 
 		try {
 			if (compareHash.equals(hash)) {
 				subscriptionService.validateSubscription ( subId );
-				responseDTO.setMessage("You have successfully subscribe. Have a nice day.");
-				System.out.println("## You have successfully subscribe. Have a nice day");
+				responseDTO.setMessage(SUCCESS_ADD);
+				LOG.info("## " + SUCCESS_ADD);
 			}else{
-				System.out.println("## The link has been corrupted");
-				responseDTO.setMessage("Hash is not OK");
-
+				System.out.println("## " +FAILURE_ADD);
+				responseDTO.setMessage(FAILURE_ADD);
 			}
-		} catch (Exception ex) {
-			LOG.warn(ex);
-			responseDTO.setMessage("Something wrong");
+		} catch (Exception ex) { LOG.warn(ex);
+			responseDTO.setMessage(FAILURE_UNKNOWN);
 		}
 		return responseDTO;
 	}
@@ -113,30 +102,26 @@ public class SubscriptionController {
 	@ResponseBody
 	public ResponseDTO deleteSub (
 			@RequestBody ValidationDTO validationDTO,
-			SubscriptionModel subscriptionModel,
 			ResponseDTO responseDTO) {
 
 		int subId = validationDTO.getId();
 		String hash = validationDTO.getHash();
 		String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
 
-		System.out.println("## "+subId);
-		System.out.println("## "+hash);
-		System.out.println("## compareHash = " + compareHash);
+		LOG.info("## " + subId); LOG.info("## " + hash);LOG.info("## compareHash = " + compareHash);
 
 		try {
 			if (compareHash.equals(hash)) {
 				subscriptionService.UnSubscription(subId);
-				responseDTO.setMessage("You have successfully Unsubscribe. Have a nice day.");
-				LOG.info("## Successfully Unsubscribe.");
+				responseDTO.setMessage(SUCCESS_DELL);
+				LOG.info("## "+SUCCESS_DELL);
 			}else{
-				LOG.info("## The link has been corrupted");
-				responseDTO.setMessage("Hash is not OK");
-
+				LOG.info("##" + FAILURE_ADD);
+				responseDTO.setMessage(FAILURE_ADD);
 			}
 		} catch (Exception ex) {
 			LOG.warn(ex);
-			responseDTO.setMessage("Something wrong");
+			responseDTO.setMessage(FAILURE_UNKNOWN);
 		}
 		return responseDTO;
 	}
