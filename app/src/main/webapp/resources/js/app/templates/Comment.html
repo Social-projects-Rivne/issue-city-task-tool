@@ -1,7 +1,20 @@
 <div class="comment">
   <table>
-      <tr><td rowspan="2" class="for-avatar"><img src="image/avatar"></td><td><h4 class="media-heading"><%= userName %> (<%= email %>)</h4></td></tr>
-      <tr><td><textarea class="help-block" readonly> <%= comment %> </textarea></td></tr>
+      <tr>
+          <td rowspan="2" class="for-avatar">
+              <img src="image/avatar/<%= avatar%>"/>
+          </td>
+          <td>
+              <h4 class="media-heading"><%= userName %> (<%= email %>)</h4>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <textarea class="help-block" readonly>
+                  <%= comment %>
+              </textarea>
+          </td>
+      </tr>
   </table>
  <hr width="100%" size="2">
 </div>

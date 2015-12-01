@@ -179,6 +179,7 @@ public class DTOAssembler {
         commentDTO.setComment(commentModel.getComment());
         commentDTO.setUserName(commentModel.getUserName());
         commentDTO.setEmail(commentModel.getEmail());
+        commentDTO.setAvatar(commentModel.getAvatar());
         return commentDTO;
     }
 
@@ -213,7 +214,9 @@ public class DTOAssembler {
 
         listIssueHistoryDto.addAll(
                 getListIssueHistoryDtos(
-                        historyService.getHistoriesByIssueID(issueModel.getId()) ,issueModel));
+                        historyService.getHistoriesByIssueID(issueModel.getId()), issueModel));
+
+        userHistoryIssuesForUserDTO.setHistory((scala.collection.immutable.List<IssueHistoryDTO>) listIssueHistoryDto);//???
 
         return userHistoryIssuesForUserDTO;
     }

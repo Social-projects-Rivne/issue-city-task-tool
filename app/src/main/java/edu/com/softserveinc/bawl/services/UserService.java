@@ -33,4 +33,6 @@ public interface UserService {
 
 	public UserModel addSubscriber(UserModel user);
 
+	public String getAvatarByEmailOrDefault(String email);
+
 }

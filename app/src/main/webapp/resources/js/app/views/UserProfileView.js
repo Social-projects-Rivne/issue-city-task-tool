@@ -6,6 +6,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 				events: {
 					'click #admin_log_out'	: 'AppController.logout',
 					'change #input-avatar-load' : 'loadAvatar',
+					'click #show-select-file' : 'showSelectForm',
 					'click #show-edit-profile' : 'editProfile',
 					'click #remove-avatar': 'removeAvatar'
 				},
@@ -30,6 +31,10 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
 				editProfile: function() {
 					router.navigate('profile', {trigger : true})
+				},
+
+				showSelectForm: function(){
+					$("#input-avatar-load").click();
 				},
 
 				loadAvatar: function() {

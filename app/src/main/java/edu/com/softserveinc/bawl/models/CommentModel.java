@@ -3,11 +3,7 @@ package edu.com.softserveinc.bawl.models;
 import com.google.common.base.Objects;
 import org.apache.log4j.Logger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -32,6 +28,9 @@ public class CommentModel {
 
   @Column(name = "ISSUE_ID")
   private int issueId;
+
+  @Transient
+  private String avatar;
 
   public int getId() {
     return id;
@@ -73,6 +72,10 @@ public class CommentModel {
     this.email = email;
   }
 
+  public String getAvatar() {   return avatar;}
+
+  public void setAvatar(String avatar) { this.avatar = avatar;}
+
   public CommentModel withEmail(String email) {
     this.email = email;
     return this;
@@ -90,6 +93,11 @@ public class CommentModel {
 
   public CommentModel withUserName(String userName) {
     this.userName = userName;
+    return this;
+  }
+
+  public CommentModel withAvatar(String avatar){
+    this.avatar = avatar;
     return this;
   }
 

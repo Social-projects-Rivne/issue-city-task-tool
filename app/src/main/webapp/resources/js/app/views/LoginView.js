@@ -14,7 +14,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					'click #loginbox #btn-login': 'login',
 					'click .navbar #login': 'showLoginForm',
 					'click .panel #btn-close' : 'hideLoginForm',
-					'click .input-group-addon' : 'passwordToggle'
+					'click .input-group-addon' : 'passwordToggle',
+					'click #create-account' : 'showSignUpForm'
 
 				},
 
@@ -48,6 +49,11 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 					} else{
 						console.log('Fields is empty');
 					};
+				},
+
+				showSignUpForm: function() {
+					$(".login.modal").modal('hide');
+					router.navigate('user-reg', {trigger: true});
 				},
 
 				sendRegistrationRequest: function(userModel){
@@ -137,11 +143,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 						$('.navbar  #admin').hide();
 						$('.navbar  #manager').hide();
 						$('.navbar  #cry-out').hide();
+						$('.navbar  #profile').hide();
 						$('.navbar  #signUp').show();
 					} else {
 						$('.navbar  #login').hide();
 						$('.navbar  #cry-out').show();
 						$('.navbar  #signUp').hide();
+						$('.navbar  #profile').show();
+
 						if(_.isEqual(this.currentUser.get('roleId'),ADMIN)){
 							$('.navbar  #admin').show();
 							$('.navbar  #manager').show();

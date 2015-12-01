@@ -1,8 +1,5 @@
 var UserController = function(app) {
     return {
-        profile: function () {
-            profileView.render();
-        },
 
         viewprofile: function () {
             viewUserProfile.render();
@@ -10,7 +7,7 @@ var UserController = function(app) {
 
 
         userReg: function () {
-            userRegView.render();
+            userRegView.render()
         },
 
         emailConfirm: function (link) {

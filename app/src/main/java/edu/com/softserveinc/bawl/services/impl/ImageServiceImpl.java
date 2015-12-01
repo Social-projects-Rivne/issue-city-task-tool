@@ -32,7 +32,9 @@ public class ImageServiceImpl implements ImageService{
   public static final String NO_AVATAR_PNG = "no_avatar.png";
   public static final String PATH_WEB_APP = "webapps/ROOT/";
   public static final String [] arrTypes = {"img", "png", "jpg", "jpeg"};
+  public static final String DEFAULT_IMG = "default";
 
+  //TODO remove or what?
   @Override
   public void cropImage() {
     BufferedImage srcImg = null;
@@ -69,7 +71,7 @@ public class ImageServiceImpl implements ImageService{
   @Override
   public byte[] getUserAvatarOrDefault(String filePath) throws IOException {
     String path = null;
-    if ( !StringUtils.isEmpty(filePath)){
+    if ( !StringUtils.isEmpty(filePath) && !filePath.equals(DEFAULT_IMG)){
       path = BASE_URL + PATH_LOCAL_AVATAR + filePath;
     } else {
       path = BASE_URL + PATH_WEB_APP + PATH_LOCAL_AVATAR + NO_AVATAR_PNG;
