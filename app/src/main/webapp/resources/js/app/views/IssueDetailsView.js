@@ -77,31 +77,38 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // user
 //!!!
 						var folowerEmail = loginView.currentUser.get("email");
-						var issueId = loginView.currentUser.get("issueId");
+						//var issueId = loginView.currentUser.get("issueId");
 						console.log("## email = "+folowerEmail);
-						console.log("## issueId = "+issueId);
+						//console.log("## issueId = "+issueId);
 
 						//console.log("email");
 
 					} else { // sub
 						var folowerEmail = $('[id="folower-email"]').val();
-						var issueId = e.currentTarget.id;
-
 						console.log("## folowerEmail = "+ folowerEmail);
-						console.log("## issueId = "+ issueId);
 					}
 					$.ajax({
-						url:"/subscriptions/add",
-						method:'POST', contentType:'application/json',
-						data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'
-					})
+						url: '/subscriptions/add',
+						method:'POST',
+						contentType:'application/json',
+						data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}',
+						success: function(response) {
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							$(".signUp.modal").modal("hide");
+							$('body').append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+						},
+						error: function(){
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							$('body').append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
 
-					//notitfication
-					if($('#notificationModal'))$('#notificationModal').remove();
-					$('body').append(this.notificationTemplate( { 'data': response }));
-					$('#notificationModal').modal();
+						}});
 				},
-
 
 				addComment : function() {
 					var comment = new CommentModel;
