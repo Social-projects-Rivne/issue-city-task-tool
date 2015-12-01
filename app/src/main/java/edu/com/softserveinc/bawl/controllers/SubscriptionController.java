@@ -109,6 +109,7 @@ public class SubscriptionController {
 		return responseDTO;
 	}
 
+// http://localhost:8080/#subscriptions/valid/b62ff1e437345f7221967bf8b4d4b13f&id=11
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO deleteSub (
