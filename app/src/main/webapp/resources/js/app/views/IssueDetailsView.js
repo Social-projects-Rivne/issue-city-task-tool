@@ -19,22 +19,20 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						that.$el.hide();
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
-						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){
-							// user
+						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // --> user
 							$("#comment-input-form").hide();
                             $(".resolve-btn").show();
 
                             $(".resolve-subscribe-user").show();
                             $(".resolve-subscribe-sub").hide();
-							$('[name*="subscribe"]').popover();
+							//$('[name*="subscribe"]').popover();
 						}
-						else {// sub
+						else {//--> sub
 							$(".resolve-subscribe-user").hide();
 							$(".resolve-subscribe-sub").show();
 							$('[name*="subscribe"]').popover();
 						}
 						that.$el.fadeIn();
-
 
 					} } );
 					return this;
@@ -44,9 +42,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					'click #add_comment_button': 'addComment',
 					'click [name="resolve"]': 'changeStatus',
 					'click [name*="send-folower-email"]': 'subscribe'
-
-
 				},
+
 				//event for btn Resolve
 				changeStatus: function(e){
 					that = this;
@@ -71,60 +68,17 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 							}});
 				},
 
-
-				subscribe: function(link){	//Subscribe method
-					var temp = link.currentTarget.id; //+
+				subscribe: function(link){// Subscribe method
+					var issueId = link.currentTarget.id;
 
 					if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // user
-
-						var issueId  = temp;
-						var issueId22  = link.currentTarget.id;
-
-						var ss = link.toString();
-
-						var folowerEmail = loginView.currentUser.get("email"); //good
-						var rrissueId = loginView.currentUser.get("issueId"); //good
-						var rrid = loginView.currentUser.get("id"); //good
-						var rridw = link.currentText;
-
-						parser = document.createElement('a');
-						parser.href = link.toString();
-
-						console.log(parser.href);
-
-						hashArgs = parser.hash.split("/");
-
-						console.log(hashArgs[1], hashArgs[3]);
-
-
-
-
-
-
-
-
-						console.log("## folowerEmail = "+ 	folowerEmail);
-						console.log("## issueId = "+ 	issueId );
-						console.log("## ss = "+ 	ss);
-
-						console.log("## rrissueId = "+ 	rrissueId);
-						console.log("## rrid = "+ 	rrid);
-						console.log("## rridw = "+ 	rridw);
-
-
-
-
-
+						var folowerEmail = loginView.currentUser.get("email");
 
 					} else { // sub
-						var issueId  = link.currentTarget.id; //+
 						folowerEmail = $('[id="folower-email-s"]').val();
-
-						console.log("## issueId = "+ issueId);
-						console.log("## folowerEmail2= "+ folowerEmail);
 					}
-
-
+					console.log("## issueId = "+ issueId);
+					console.log("## folowerEmail= "+ folowerEmail);
 
 					$.ajax({
 						url: '/subscriptions/add',
@@ -145,7 +99,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 							}
 							$('body').append(that.notificationTemplate( { 'data': response } ));
 							$('#notificationModal').modal();
-
 						}});
 				},
 
