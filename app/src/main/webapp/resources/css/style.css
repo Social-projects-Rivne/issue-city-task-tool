@@ -162,8 +162,9 @@ div#login.input-group {
 }
 
 div.col-sm-12.controls.btnCenter {
-    text-align: center;
-    padding: 10px;
+    text-align: right;
+    padding-top: 15px;
+    padding-right: 73px;
 }
 
 /* ADD ISSUE */
