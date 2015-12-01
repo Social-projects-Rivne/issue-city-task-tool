@@ -24,5 +24,5 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 
         });
 
-        return ViewUserProfile;
+        return ViewUserHistory;
     })

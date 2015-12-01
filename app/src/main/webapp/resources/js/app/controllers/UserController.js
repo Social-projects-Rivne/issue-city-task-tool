@@ -1,8 +1,5 @@
 var UserController = function(app) {
     return {
-        profile: function () {
-            profileView.render();
-        },
 
         viewprofile: function () {
             viewUserProfile.render();
@@ -15,6 +12,14 @@ var UserController = function(app) {
 
         emailConfirm: function (link) {
             loginView.confirmEmail(link);
-        }
+        },
+
+        subConfirm: function (link) {
+            loginView.confirmSubscription(link);
+        },
+        subDelete: function (link) {
+            loginView.deleteSubscription(link);
+        },
+
     }
 }

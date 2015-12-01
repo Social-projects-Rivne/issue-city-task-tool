@@ -4,16 +4,11 @@ import edu.com.softserveinc.bawl.dto.pojo.CommentDTO;
 import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.CommentService;
-import org.apache.log4j.Logger;
+import edu.com.softserveinc.bawl.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +26,9 @@ public class CommentController {
   @Autowired
   private CommentService commentService;
 
+  @Autowired
+  private UserService userService;
+
   /**
    * Returns all issue comments
    * @param id issue id
@@ -41,6 +39,9 @@ public class CommentController {
   public ResponseEntity<List<CommentDTO>> getCommentsByIssueId(@RequestParam("issueId") int id) {
     try {
       final List<CommentModel> commentsByIssueId = commentService.getCommentsByIssueId(id);
+      commentsByIssueId.forEach(comment -> {
+        comment.setAvatar(userService.getAvatarByEmailOrDefault(comment.getEmail()));
+      });
       final List<CommentDTO> commentsFrom = DTOAssembler.getCommentsFrom(commentsByIssueId);
       return new ResponseEntity<>(commentsFrom, HttpStatus.OK);
     } catch (Exception e) {

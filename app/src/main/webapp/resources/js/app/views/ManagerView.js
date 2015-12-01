@@ -18,7 +18,6 @@ define([ 'jquery', 'bootstrap', 'underscore', 'backbone', 'collection/IssueColle
 					'mouseleave .issue-table > tbody > tr  ' : 'issueUnFocus',
 					'click .edit-issue'	: 'showEditIssueForm',
 					'click .editIssueConfirm' : 'editIssue',
-					'click #manager_log_out':'AppController.logout',
 					'click #all_issues': 'allIssues',
 					'click #newest_issues': 'newestIssues',
 					'click #resolved_issues': 'resolvedIssues'

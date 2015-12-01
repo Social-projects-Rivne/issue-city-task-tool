@@ -17,7 +17,6 @@ define([
                 var WRONG_NAME = 'Wrong name!';
                 var WRONG_CATEGORY = 'Wrong category!';
                 var WRONG_DESCRIPTION = 'Wrong description!';
-                var FIELD_VALIDATE_PATTERN = new RegExp("^[A-Za-z0-9]+[A-Za-z0-9\s]+[A-Za-z0-9]+$");
 			    var that;
                 var categoryCollection;
 	
@@ -54,40 +53,27 @@ define([
 						
                         issueName.on({
                             blur : function() {
-                                onblur(this, WRONG_NAME);
+                                validator.onblur(this, WRONG_NAME);
                             },
                             focus : function() {
-                                onfocus(this, WRONG_NAME);
+								validator.onfocus(this, WRONG_NAME);
                             }});
 						
 						issueCategory.on({
                             blur: function() {
-                                onblur(this, WRONG_CATEGORY);
+								validator.onblur(this, WRONG_CATEGORY);
                             },
                             focus: function() {
-                                onfocus(this, WRONG_CATEGORY);
+								validator.onfocus(this, WRONG_CATEGORY);
                             }});
 						
 						issueDescription.on({
                             blur: function() {
-                                onblur(this, WRONG_DESCRIPTION);
+								validator.onblur(this, WRONG_DESCRIPTION);
                             },
 						    focus : function() {
-                                onfocus(this, WRONG_DESCRIPTION);
+								validator.onfocus(this, WRONG_DESCRIPTION);
 						}});
-
-                        var onblur = function (field, text) {
-                            if (!FIELD_VALIDATE_PATTERN.test(field.value)) {
-                                field.value = text;
-                                field.style.color = 'red';
-                            }
-                        }
-                        var onfocus = function (field, text) {
-                            if (field.value == text) {
-                                field.value ='';
-                                field.style.color = 'black';
-                            }
-                        }
 
 					} } ); 
 					
@@ -97,7 +83,7 @@ define([
 				addIssue: function() {
 
                     var testField = function(field, error) {
-                        if (!FIELD_VALIDATE_PATTERN.test(field.val())) {
+                        if (!validator.FIELD_VALIDATE_PATTERN.test(field.val())) {
                             field.val(WRONG_NAME);
                             error.html(FILL_FORM_MESSAGE);
                             field[0].style.cssText = ERROR_FILL_FIELD_CSS;

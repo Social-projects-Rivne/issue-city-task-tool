@@ -829,6 +829,16 @@ a.forgot {
     padding-left: 40%;
     position: inherit;
 }
+#loginForm a {
+    text-align: left;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #d5445c;
+}
+#loginForm li {
+    text-align: left;
+}
 .panel {
 	border-radius: 0px;
 }

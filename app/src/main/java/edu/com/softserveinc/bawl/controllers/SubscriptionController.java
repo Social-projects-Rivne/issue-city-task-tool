@@ -2,6 +2,7 @@ package edu.com.softserveinc.bawl.controllers;
 
 import edu.com.softserveinc.bawl.dto.pojo.ResponseDTO;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
+import edu.com.softserveinc.bawl.dto.pojo.ValidationDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.models.enums.UserRole;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Random;
 
 import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
@@ -50,81 +50,95 @@ public class SubscriptionController {
 			 				ResponseDTO responseDTO,
 							SubscriptionModel subscriptionModel,
 							UserRole userRole ,
-			HttpServletRequest request
-	) {
+							HttpServletRequest request) {
 
 		String email = subscriptionDTO.getEmail();
 
-		if (userService.isValidUser(email) == true) { // true if user is exist
-			System.out.println("## User is Exist");
+		if (userService.isValidUser(email) == true) { System.out.println("## User Exist");
 
-				int issueId = subscriptionDTO.getIssueId();
-				existuserId = userService.getUserIdByEmail(email);
-				subscriptionService.createSubscription(issueId, existuserId);
-			//	subId = subscriptionModel.getId();	System.out.println("## SubId = "+subId);
+			int issueId = subscriptionDTO.getIssueId();
+			existuserId = userService.getUserIdByEmail(email);
+			subscriptionService.createSubscription(issueId, existuserId);
+			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),existuserId);
+			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request), id);
+			responseDTO.setMessage("You have now been added to the mailing list. Please Confirm Your Email");
 
-				System.out.println("## Subscrip" + subscriptionService.createSubscription(issueId, existuserId));
-			// TODO
-			int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
-			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
+		} else { System.out.println("## User is not exist");
 
-		} else { // false if user is not exist
-			System.out.println("## User is not exist");
-
-			UserModel userModel = new UserModel("Name1", subscriptionDTO.getEmail(), new Random().toString(), 4, "Pass", "Ava");
+			UserModel userModel = new UserModel("Name1", subscriptionDTO.getEmail(), email.substring(0, email.indexOf("@")), 4, "Pass", "Ava");
 			userModel = userService.addSubscriber(userModel);
 			subscriptionService.createSubscription(subscriptionDTO.getIssueId(), userModel.getId());
-			responseDTO.setMessage("This subscription was alredy exist");
 
-			// TODO
-			int id =  subscriptionModel.getId(); System.out.println("## SubId = "+id);
+			int id = subscriptionService.getSubscriptionId(subscriptionDTO.getIssueId(),userModel.getId());
 			getMandrillMail().sendSubNotification(subscriptionDTO, getBaseURL(request),id);
+			responseDTO.setMessage("Something wrong");
 			}
 
 		return responseDTO;
 	}
 
-	@RequestMapping(value = "/{id}/validSub/{hash}", method = RequestMethod.GET)
-	public  @ResponseBody ResponseDTO validation(
-				@PathVariable(value = "id") Integer id,
-				@PathVariable(value = "hash") Integer hash,
-			ResponseDTO responseDTO,SubscriptionModel subscriptionModel ) {
+		@RequestMapping(value = "/valid", method = RequestMethod.POST)
+		@ResponseBody
+		public ResponseDTO validation (
+				@RequestBody ValidationDTO validationDTO,
+							 SubscriptionModel subscriptionModel,
+							 ResponseDTO responseDTO) {
 
-		System.out.println("#####################################################################################");
-		System.out.println("Hallo from Spring");
-		System.out.println("#####################################################################################");
-		System.out.println("id = "+id+" hash = "+hash);
-;
-		System.out.println("## hasH"+subscriptionService.getHashSubscription(id));
+			int subId = validationDTO.getId();
+			String hash = validationDTO.getHash();
+			String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
 
-			if(hash.equals(subscriptionService.getHashSubscription(id))){
-				subscriptionService.validateSubscription(subscriptionModel);
-		}else{
-			 System.out.println("Something wrong");
-				return responseDTO;
-		}
-
+		System.out.println("## "+subId);
+		System.out.println("## "+hash);
+		System.out.println("## compareHash = " + compareHash);
 
 		try {
-			subscriptionService.delete(id);
-			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
-		} catch (Exception e) {
-			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
+			if (compareHash.equals(hash)) {
+				subscriptionService.validateSubscription ( subId );
+				responseDTO.setMessage("You have successfully signed. Have a nice day.");
+				System.out.println("## You have successfully signed. Have a nice day");
+			}else{
+				System.out.println("## The link has been corupted");
+				responseDTO.setMessage("Hash is not OK");
+
+			}
+		} catch (Exception ex) {
+			LOG.warn(ex);
+			responseDTO.setMessage("Something wrong");
 		}
 		return responseDTO;
 	}
 
-	@RequestMapping(value = "{id}/delete/{digest}", method = RequestMethod.POST)
-	public  @ResponseBody ResponseDTO unSubscription(
-			@PathVariable(value = "id") Integer id, @PathVariable(value = "digest") Integer digest,
-			ResponseDTO responseDTO ) {
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseDTO deleteSub (
+			@RequestBody ValidationDTO validationDTO,
+			SubscriptionModel subscriptionModel,
+			ResponseDTO responseDTO) {
+
+		int subId = validationDTO.getId();
+		String hash = validationDTO.getHash();
+		String compareHash = (subscriptionService.getHashSubscription(subId)).toString();
+
+		System.out.println("## "+subId);
+		System.out.println("## "+hash);
+		System.out.println("## compareHash = " + compareHash);
+
 		try {
-			subscriptionService.delete(id);
-			responseDTO.setMessage(MESSAGE_TEXT_DELL +" "+ SUCCESS_DELL);
-		} catch (Exception e) {
-			responseDTO.setMessage(MESSAGE_TEXT_DELL + " "+ FAILURE_DELL);
+			if (compareHash.equals(hash)) {
+
+				SubscriptionModel subscriptionModel1 = subscriptionService.getById(subId);
+				System.out.println("## subscriptionModel1 = "+subscriptionModel1);
+				subscriptionModel1.setIsValid(true);
+				subscriptionService.editSubscription(subscriptionModel1);
+
+			}else{
+				System.out.println("## Something wrong");
+				responseDTO.setMessage("Hash is not OK");
+			}
+		} catch (Exception ex) {
+			LOG.warn(ex);
 		}
 		return responseDTO;
 	}
-
 }
