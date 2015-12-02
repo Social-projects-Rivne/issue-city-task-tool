@@ -162,16 +162,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						isValid = false;
 					}
 					
-					if (!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(userEmail.val())) {
-						userEmail.val('Wrong email!').css('color', 'red');
-						isValid = false;
-					}
-					
-					if (!/^[A-Za-z0-9_.-]+$/.test(userLogin.val())) {
-						userLogin.val('Wrong login!').css('color', 'red');
-						isValid = false;
-					}
-					
 					if(isValid) {
                         if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'id': e.currentTarget.id }, { 'action': 'edit user' } ] } ));
@@ -205,6 +195,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 								adminView.render();
+								if(_.isEqual(loginView.currentUser.get("id"), model.get("id"))){
+									router.navigate("#logout", {trigger: true});
+								}
 							},
 							error: function() {
 								if($('#notificationModal')) $('#notificationModal').remove();
