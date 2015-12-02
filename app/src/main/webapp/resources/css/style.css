@@ -270,9 +270,23 @@ textarea.form-control.issue-details{
 	font-size: 1em;
 }
 
-button.btn.btn-mini.resolve-subscribe {
-	width: 60px;
-	height: 20px;
+button.btn.btn-mini.resolve-subscribe{
+	width: 64px;
+	height: 25px;
+	padding: 0px;
+	font-size: 0.8em;
+}
+
+button.btn.btn-mini.resolve-subscribe-user{
+	width: 64px;
+	height: 25px;
+	padding: 0px;
+	font-size: 0.8em;
+}
+
+button.btn.btn-mini.resolve-subscribe-sub{
+	width: 64px;
+	height: 25px;
 	padding: 0px;
 	font-size: 0.8em;
 }
@@ -782,7 +796,8 @@ input[type="submit"] {
 }
 #resolve_button {
     font-size: 0.7em;
-    width: 60px;
+    width: 64px;
+    height: 25px;
 }
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #ffffff;

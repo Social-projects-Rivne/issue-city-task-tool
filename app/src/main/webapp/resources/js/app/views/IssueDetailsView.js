@@ -19,16 +19,21 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						that.$el.hide();
 						that.$el.html(that.template(that.model.toJSON()));
 						commentListView.render(that.model.get('id'));
-						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){
+						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // --> user
 							$("#comment-input-form").hide();
                             $(".resolve-btn").show();
+
+                            $(".resolve-subscribe-user").show();
+                            $(".resolve-subscribe-sub").hide();
+							//$('[name*="subscribe"]').popover();
 						}
-						else {
-							$("#comment-input-form").show();
-                            $(".resolve-btn").hide();
+						else {//--> sub
+							$(".resolve-subscribe-user").hide();
+							$(".resolve-subscribe-sub").show();
+							$('[name*="subscribe"]').popover();
 						}
 						that.$el.fadeIn();
-						$('[name*="subscribe"]').popover();
+
 					} } );
 					return this;
 				},
@@ -37,9 +42,8 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 					'click #add_comment_button': 'addComment',
 					'click [name="resolve"]': 'changeStatus',
 					'click [name*="send-folower-email"]': 'subscribe'
-
-
 				},
+
 				//event for btn Resolve
 				changeStatus: function(e){
 					that = this;
@@ -64,18 +68,39 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 							}});
 				},
 
-				//Subscribe method
-				subscribe: function(e){
-					var folowerEmail = $('[id="folower-email"]').val();
-					console.log(folowerEmail);
-					$.ajax({url:"/subscriptions/add", method:'POST', contentType:'application/json',data:'{"issueId":' + e.currentTarget.id + ',"email":"' + folowerEmail +'"}'})
-					//notitfication
-					if($('#notificationModal'))
-						$('#notificationModal').remove();
-					$('body').append(this.notificationTemplate( { 'data': response }));
-					$('#notificationModal').modal();
-				},
+				subscribe: function(link){// Subscribe method
+					var issueId = link.currentTarget.id;
 
+					if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // user
+						var folowerEmail = loginView.currentUser.get("email");
+
+					} else { // sub
+						folowerEmail = $('[id="folower-email-s"]').val();
+					}
+					console.log("## issueId = "+ issueId);
+					console.log("## folowerEmail= "+ folowerEmail);
+
+					$.ajax({
+						url: '/subscriptions/add',
+						method:'POST',
+						contentType:'application/json',
+						data:'{"issueId":' + issueId + ',"email":"' + folowerEmail +'"}',
+						success: function(response) {
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							$(".signUp.modal").modal("hide");
+							$('body').append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+						},
+						error: function(){
+							if($('#notificationModal')) {
+								$('#notificationModal').remove();
+							}
+							$('body').append(that.notificationTemplate( { 'data': response } ));
+							$('#notificationModal').modal();
+						}});
+				},
 
 				addComment : function() {
 					var comment = new CommentModel;
