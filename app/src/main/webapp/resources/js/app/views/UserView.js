@@ -7,7 +7,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel' ],
 					this.$el.html("<td>" + this.model.get("login") + "</td>" +
 							"<td>" + this.model.get("email") + "</td>" +
 							"<td>" + this.model.get("name") + "</td>" +
-							"<td>" + this.model.get("#userRole") + "</td>" +
+							"<td>" + this.model.get("role") + "</td>" +
 							"<td>" +
 								"<div class='btn-toolbar'>" +
                     				"<div class='btn-group'>" +

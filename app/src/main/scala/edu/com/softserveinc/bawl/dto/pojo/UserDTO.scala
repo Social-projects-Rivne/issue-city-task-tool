@@ -10,4 +10,5 @@ class UserDTO extends ResponseDTO[UserDTO] {
   @BeanProperty  var roleId: Int = 0
   @BeanProperty  var avatar: String = null
   @BeanProperty  var password : String= null
+  @BeanProperty  var role : String= null
 }

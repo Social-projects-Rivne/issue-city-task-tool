@@ -76,7 +76,7 @@ public class UserController {
   public ResponseDTO editUserAction(@RequestBody UserDTO userDTO) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      UserModel userModel = new UserModel().withAvatar(userDTO.getAvatar()).withEmail(userDTO.getEmail())
+      UserModel userModel = userService.getById(userDTO.getId()).withAvatar(userDTO.getAvatar()).withEmail(userDTO.getEmail())
               .withLogin(userDTO.getLogin()).withName(userDTO.getName()).withPassword(userDTO.getPassword()).withRole(UserRole.getByRoleId(userDTO.getRoleId()));
       userService.editUser(userModel);
       getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(),

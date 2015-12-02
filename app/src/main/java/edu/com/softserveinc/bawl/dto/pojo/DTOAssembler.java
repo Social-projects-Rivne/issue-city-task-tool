@@ -40,6 +40,7 @@ public class DTOAssembler {
         userDTO.setLogin(userModel.getLogin());
         userDTO.setAvatar(userModel.getAvatar());
         userDTO.setRoleId(userModel.getRole().getId());
+        userDTO.setRole(userModel.getRole().getCaption());
         return userDTO;
     }
 
