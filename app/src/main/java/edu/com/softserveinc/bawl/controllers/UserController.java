@@ -150,18 +150,6 @@ public class UserController {
     }
   }
 
-//  @RequestMapping(value = "/changename/{name}", method = RequestMethod.GET)
-//  @ResponseBody
-//  public ResponseDTO changeUserName(@PathVariable int id, @PathVariable String name) {
-//    ResponseDTO responseDTO = new ResponseDTO();
-//    String currentUserLoginName = getCurrentUser().getName();
-//    UserModel userModel = userService.getByLogin(currentUserLoginName);
-//    userModel.setName(name);
-//    userService.editUser(userModel);
-//    responseDTO.setMessage("Name has been succesfully edited");
-//    return responseDTO;
-//  }
-
   @RequestMapping(value = "/changepass", method = RequestMethod.GET)
   @ResponseBody
   public ResponseDTO changeUserPassword() {
