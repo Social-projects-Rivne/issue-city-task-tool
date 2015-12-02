@@ -19,6 +19,9 @@ var UserController = function(app) {
         subDelete: function (link) {
             loginView.deleteSubscription(link);
         },
+        history:function(){
+            viewUserHistory.render();
+        }
 
     }
 }
