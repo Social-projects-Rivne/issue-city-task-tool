@@ -188,7 +188,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						} );
 					}
-					if(e.currentTarget.name == 'edit user') {
+					else if(e.currentTarget.name == 'edit user') {
 						this.model.get(e.currentTarget.id).set( {
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
@@ -208,6 +208,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						} );
 					}
+                    else if(e.currentTarget.name == 'profile edit user') {
+                        this.model.get(e.currentTarget.id).set( {
+                            name: $('#user-edit-name').val()
+                        } ).save( {}, {
+                                success: function(model, response) {
+                                    if($('#notificationModal')) $('#notificationModal').remove();
+                                    that.$el.append(that.notificationTemplate( { 'data': response } ));
+                                    $('#notificationModal').modal();
+                                    viewUserProfile.render();
+                                },
+                                error: function() {
+                                    if($('#notificationModal')) $('#notificationModal').remove();
+                                    that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Couldn\'t change name!' } } ));
+                                    $('#notificationModal').modal();
+                                }
+                            } );
+                    }
+
 					else if(e.currentTarget.name == 'delete issue') {
 						$.ajax({
 							url: '/issue/delete/' + e.currentTarget.id,
