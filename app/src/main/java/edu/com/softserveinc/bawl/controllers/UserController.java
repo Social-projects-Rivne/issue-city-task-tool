@@ -76,7 +76,7 @@ public class UserController {
   public ResponseDTO editUserAction(@RequestBody UserDTO userDTO) {
     ResponseDTO responseDTO = new ResponseDTO();
     try {
-      UserModel userModel = new UserModel().withAvatar(userDTO.getAvatar()).withEmail(userDTO.getEmail())
+      UserModel userModel = userService.getById(userDTO.getId()).withAvatar(userDTO.getAvatar()).withEmail(userDTO.getEmail())
               .withLogin(userDTO.getLogin()).withName(userDTO.getName()).withPassword(userDTO.getPassword()).withRole(UserRole.getByRoleId(userDTO.getRoleId()));
       userService.editUser(userModel);
       getMandrillMail().sendSimpleMessage(MailPatterns.UPDATE_ACCOUNT_PATTERN, userModel, userModel.getLogin(),
@@ -149,18 +149,6 @@ public class UserController {
       return userDTO.withMessage("Error");
     }
   }
-
-//  @RequestMapping(value = "/changename/{name}", method = RequestMethod.GET)
-//  @ResponseBody
-//  public ResponseDTO changeUserName(@PathVariable int id, @PathVariable String name) {
-//    ResponseDTO responseDTO = new ResponseDTO();
-//    String currentUserLoginName = getCurrentUser().getName();
-//    UserModel userModel = userService.getByLogin(currentUserLoginName);
-//    userModel.setName(name);
-//    userService.editUser(userModel);
-//    responseDTO.setMessage("Name has been succesfully edited");
-//    return responseDTO;
-//  }
 
   @RequestMapping(value = "/changepass", method = RequestMethod.GET)
   @ResponseBody

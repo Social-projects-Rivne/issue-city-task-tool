@@ -4,20 +4,18 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
         var ViewUserHistory = Backbone.View.extend({
 
             events: {
-                'click #admin_log_out'	: 'AppController.logout'
+                'click #admin_log_out'	: 'AppController.logout',
             },
 
-            viewUserProfileTemplate: _.template(ViewUserHistoryTemplate),
+            viewUserViewTemplate: _.template(ViewUserHistoryTemplate),
 
 
             initialize: function() {
 
             },
 
-            render: function(id) {
-                this.model = loginView.currentUser;
-                this.$el.html(this.viewUserProfileTemplate(this.model.toJSON()));
-                console.log(this.model);
+            render: function() {
+                1
             },
 
 
