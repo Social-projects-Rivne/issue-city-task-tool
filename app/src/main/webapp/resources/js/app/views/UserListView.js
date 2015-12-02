@@ -205,6 +205,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 								adminView.render();
+								if(_.isEqual(loginView.currentUser.get("id"), model.get("id"))){
+									router.navigate("#logout", {trigger: true});
+								}
 							},
 							error: function() {
 								if($('#notificationModal')) $('#notificationModal').remove();

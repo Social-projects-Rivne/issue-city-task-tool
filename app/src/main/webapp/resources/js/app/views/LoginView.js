@@ -78,7 +78,7 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'view/AdminView'
 								//routing by user's role
 
 								//If user didn't validate his email
-								if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)){
+								if(_.isEqual(that.currentUser.get('roleId'),USER_NOT_CONFIRMED)&&_.isEqual(that.currentUser.get('roleId'),DELETED) ){
 									$.ajax('auth/logout');
 									loginView.currentUser = null;
 									router.navigate('', {trigger:true});
