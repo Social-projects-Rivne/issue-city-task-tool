@@ -2,16 +2,15 @@ package edu.com.softserveinc.bawl.services;
 
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.UserModel;
 
 public interface MailService {
 
+	public void notifyForIssue(int issueId, String msg, String rootURL);
+
 	void sendMessage(MandrillHtmlMessage message);
 
-	void notifyForIssue(int issueId, String msg, String rootURL);
-
-	void notifyForIssue( UserNotificationDTO notificationDTO);
+	public void sendCommentNotiffication(String comment, int issueId);
 
 	void sendRegNotification(UserModel userModel, String rootURL);
 

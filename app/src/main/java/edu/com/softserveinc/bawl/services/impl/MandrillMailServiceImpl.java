@@ -1,5 +1,5 @@
 package edu.com.softserveinc.bawl.services.impl;
-import org.apache.commons.codec.digest.DigestUtils;
+
 import com.cribbstechnologies.clients.mandrill.exception.RequestFailedException;
 import com.cribbstechnologies.clients.mandrill.model.MandrillHtmlMessage;
 import com.cribbstechnologies.clients.mandrill.model.MandrillMessageRequest;
@@ -9,14 +9,16 @@ import com.cribbstechnologies.clients.mandrill.request.MandrillMessagesRequest;
 import com.cribbstechnologies.clients.mandrill.request.MandrillRESTRequest;
 import com.cribbstechnologies.clients.mandrill.util.MandrillConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.com.softserveinc.bawl.dao.SubscriptionDao;
 import edu.com.softserveinc.bawl.dto.pojo.SubscriptionDTO;
-import edu.com.softserveinc.bawl.dto.pojo.UserNotificationDTO;
 import edu.com.softserveinc.bawl.models.SubscriptionModel;
 import edu.com.softserveinc.bawl.models.UserModel;
 import edu.com.softserveinc.bawl.services.MailService;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
+import edu.com.softserveinc.bawl.services.UserService;
 import edu.com.softserveinc.bawl.utils.MailPatterns;
 import edu.com.softserveinc.bawl.utils.MessageBuilder;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
@@ -44,13 +46,20 @@ public class MandrillMailServiceImpl implements MailService {
     @Autowired
     private SubscriptionService subscriptionService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SubscriptionDao subscriptionDao;
+
+
     //TODO add this to get real url of application
     /*
     public static String getURLWithContextPath(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }*/
 
-    private static void initialize(){
+    private static void initialize() {
         properties = MessageBuilder.getProperties();
         config.setApiKey(properties.getProperty("mail.api_key"));
         config.setApiVersion(properties.getProperty("mail.api_version"));
@@ -63,8 +72,8 @@ public class MandrillMailServiceImpl implements MailService {
     }
 
     //TODO don't do this. you live in container so use beans approach
-    public static MandrillMailServiceImpl getMandrillMail(){
-        if (mailService == null){
+    public static MandrillMailServiceImpl getMandrillMail() {
+        if (mailService == null) {
             mailService = new MandrillMailServiceImpl();
             initialize(); // TODO must bi initialized by container
         }
@@ -72,7 +81,7 @@ public class MandrillMailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendRegNotification(UserModel userModel, String rootURL){
+    public void sendRegNotification(UserModel userModel, String rootURL) {
         String link = rootURL + properties.getProperty("mail.confirmation_url") +
                 userModel.getPassword() + "&id=" + userModel.getId();
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
@@ -82,7 +91,7 @@ public class MandrillMailServiceImpl implements MailService {
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
-    public void sendSimpleMessage(String pattern, UserModel userModel, String ... params){
+    public void sendSimpleMessage(String pattern, UserModel userModel, String... params) {
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                 .setPattern(pattern, params)
                 .setRecipients(new MandrillRecipient(userModel.getName(), userModel.getEmail()))
@@ -101,53 +110,40 @@ public class MandrillMailServiceImpl implements MailService {
         }
     }
 
-    @Override
+    @Override // TODO
     public void notifyForIssue(int issueId, String msg, String rootURL){
         UserModel userModel = new UserModel();
         Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
-        for (SubscriptionModel sub: subs){
-            String digest = org.springframework.util.DigestUtils.md5DigestAsHex(sub.toString().getBytes());
-            String link = rootURL + "subscriptions/" + sub.getId() + "/delete/" + digest;
+            String digest = org.springframework.util.DigestUtils.md5DigestAsHex(subs.toString().getBytes());
+            String link = rootURL + "subscriptions/"  + "/delete/" + digest;
             MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-                    .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(sub.getIssueId()), msg, link)
+                    .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(issueId), msg, link)
                     .setRecipient(userModel)
                     .build();
+        System.out.println("## mandrillMessage" + mandrillMessage);
             sendMessage(mandrillMessage);
         }
+
+
+    @Override // --> This method sending email from AdminPanel
+    public void simpleEmailSender(String email, String name, String subject, String messagePattern) {
+        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+                .setRecipients(new MandrillRecipient(name, email))
+                .setSubject(subject)
+                .setPattern(messagePattern)
+                .build();
+        MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
-    @Override
-    public void notifyForIssue( UserNotificationDTO notificationDTO){};
 
-    /**
-     * Seample Email Sender
-     *
-     * @param   email,
-     * @param   name,
-     * @param   subject,
-     * @param   messagePattern
-     */
-    @Override
-    public void  simpleEmailSender (String email, String name, String subject, String messagePattern){
-        MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-            .setRecipients(new MandrillRecipient(name, email))
-            .setSubject(subject)
-            .setPattern(messagePattern)
-            .build();
-            MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
-        }
-
-    // This metod need for sending ssubsciptions
-    @Override
-    public void sendSubNotification(SubscriptionDTO subscriptionDTO,String rootURL, int subId){
+    @Override // --> This metod need for sending subsciptions
+    public void sendSubNotification(SubscriptionDTO subscriptionDTO, String rootURL, int subId) {
 
         String email = subscriptionDTO.getEmail();
         String name = "Name";
         int issueId = subscriptionDTO.getIssueId();
-
-        String hash =   DigestUtils.md5Hex(email + subId + issueId);
-
-        String link =   rootURL + properties.getProperty("mail.subconfirmation_url")+hash +"&id="+subId;
+        String hash = DigestUtils.md5Hex(email + subId + issueId);
+        String link = rootURL + properties.getProperty("mail.subconfirmation_url") + hash + "&id=" + subId;
 
         MandrillHtmlMessage mandrillMessage = new MessageBuilder()
                 .setPattern(MailPatterns.REGISTRATION_PATTERN, name, link)
@@ -156,5 +152,9 @@ public class MandrillMailServiceImpl implements MailService {
         MandrillMailServiceImpl.getMandrillMail().sendMessage(mandrillMessage);
     }
 
-}
+    @Override // --> This metod need for sending CommentNotiffication
+    public void sendCommentNotiffication(String comment, int issueId) {
 
+    }
+
+}

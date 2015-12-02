@@ -23,10 +23,6 @@ import java.util.List;
 import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 import static edu.com.softserveinc.bawl.utils.MessageBuilder.getBaseURL;
 
-
-/**
- * Controller for user manipulation
- */
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -141,10 +137,15 @@ public class UserController {
   @ResponseBody
   public UserDTO submittedFromData(@RequestBody UserNotificationDTO userNotificationDTO, UserDTO userDTO) {
     try {
-      getMandrillMail().notifyForIssue(userNotificationDTO);
-      return userDTO.withMessage("Mail has been sent");
+      String email = userNotificationDTO.getEmail();
+      String name = "USERNAME";
+      String subject = userNotificationDTO.getSubject();
+      String messagePattern = userNotificationDTO.getMessage();
+      LOG.info("## " +" email = "+ email + " name = " + name +" subject = "+subject+" messagePattern = "+messagePattern);
+      getMandrillMail().simpleEmailSender(email,name,subject, messagePattern);
+        return userDTO.withMessage("Mail has been sent");
     } catch (Exception e) {
-      return userDTO.withMessage("Error");
+        return userDTO.withMessage("Error");
     }
   }
 

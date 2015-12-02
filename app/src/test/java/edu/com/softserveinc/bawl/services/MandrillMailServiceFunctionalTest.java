@@ -79,7 +79,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
         when(messageResponse.getStatus()).thenReturn(VALID_SENT_STATUS);
         when(sendMessageResponse.getList()).thenReturn(Arrays.asList(messageResponse));
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
-        when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
+      //  when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
 
         mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, StringUtils.EMPTY);
 
@@ -95,7 +95,7 @@ public class MandrillMailServiceFunctionalTest extends AbstractBawlFunctionalTes
         when(messageResponse.getStatus()).thenReturn(INVALID_SENT_STATUS);
         when(sendMessageResponse.getList()).thenReturn(Arrays.asList(messageResponse));
         when(messagesRequest.sendMessage(any(MandrillMessageRequest.class))).thenReturn(sendMessageResponse);
-        when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
+      //  when(subscriptionService.listByIssueId(1)).thenReturn(Arrays.asList(subscriptionModel));
 
         mailService.notifyForIssue(ISSUE_ID ,MESSAGE_PATTERN, StringUtils.EMPTY);
 

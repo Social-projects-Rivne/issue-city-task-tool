@@ -26,7 +26,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public SubscriptionModel createSubscription(int issueId, int userId) {
-		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndUserId(issueId,userId);
+		SubscriptionModel existantSubscription = subscriptionDao.findByIssueIdAndUserId(issueId, userId);
 		if (existantSubscription != null) {
 			return existantSubscription;
 		}
@@ -64,11 +64,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Collection <SubscriptionModel> listByIssueId(int issueId) {
-		return subscriptionDao.findByIssueId(issueId);
-	}
-
-	@Override
 	public int getIssueIdFromSubId(int id){
 		return subscriptionDao.findOne(id).getIssueId();
 	}
@@ -84,8 +79,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		SubscriptionModel existantSubscription = subscriptionDao.findOne(subId);
 		existantSubscription.setIsValid(true);
 
-		LOG.info("## getIssueId = "+subId);
-		LOG.info("## existantSubscription = " + existantSubscription);
+		LOG.info("## getIssueId = "+subId); LOG.info("## existantSubscription = " + existantSubscription);
 		LOG.info("## existantSubscription = " + existantSubscription);
 
 		return subscriptionDao.saveAndFlush(existantSubscription);
@@ -97,8 +91,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		SubscriptionModel existantSubscription = subscriptionDao.findOne(subId);
 		existantSubscription.setIsValid(false);
 
-		LOG.info("## getIssueId = "+subId);
-		LOG.info("## existantSubscription = " + existantSubscription);
+		LOG.info("## getIssueId = "+subId);LOG.info("## existantSubscription = " + existantSubscription);
 		LOG.info("## existantSubscription = "+existantSubscription);
 
 		return subscriptionDao.saveAndFlush(existantSubscription);
@@ -118,5 +111,26 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public SubscriptionModel getById(int id){
 		return subscriptionDao.findOne(id);
 	}
+
+
+//	@Override
+//	public void getListOfSubscriberForIssue(int issueId) {
+//	System.out.println("##" + issueId);
+//
+//		Collection <SubscriptionModel> subscriptionModels = subscriptionDao.findByIssueIdAndIsValid(issueId, true);
+//
+//		for (SubscriptionModel sub : subscriptionModels) {
+//			int userId = sub.getUserId();
+//			System.out.println("##"+userId);
+//		}
+//
+//	}
+
+
+	@Override
+	public Collection<SubscriptionModel> listByIssueId(int issueId) {
+		return subscriptionDao.findByIssueId(issueId);
+	}
+
 }
 
