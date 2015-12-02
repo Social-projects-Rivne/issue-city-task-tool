@@ -5,6 +5,7 @@ import edu.com.softserveinc.bawl.models.enums.UserRole;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -195,6 +196,52 @@ public class UserModel {
     public String getAvatar(){
 		return this.avatar;
 	}
+
+    public UserModel withName(String name){
+        if (StringUtils.isEmpty(name)) {
+            return this;
+        }
+        this.name = name;
+        return this;
+    }
+
+    public UserModel withLogin(String login){
+        if (StringUtils.isEmpty(login)) {
+            return this;
+        }
+        this.login = login;
+        return this;
+    }
+
+    public UserModel withPassword(String password){
+        if (StringUtils.isEmpty(password)) {
+            return this;
+        }
+        this.password = password;
+        return this;
+    }
+
+    public UserModel withAvatar(String avatar){
+        if (StringUtils.isEmpty(avatar)) {
+            return this;
+        }
+        this.avatar = avatar;
+        return this;
+    }
+
+    public UserModel withEmail(String email){
+        if (StringUtils.isEmpty(email)) {
+            return this;
+        }
+        this.email = email;
+        return this;
+    }
+
+    public UserModel withRole(UserRole role){
+        this.role = role;
+        return this;
+    }
+
 
 	@Override
 	public boolean equals(Object o) {
