@@ -9,6 +9,7 @@ var AppController = function(app) {
         },
 
         logout: function () {
+            loginView.currentUser = null;
             $.ajax({
                 url: 'auth/logout',
                 type: 'POST',

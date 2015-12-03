@@ -194,10 +194,18 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								if($('#notificationModal')) $('#notificationModal').remove();
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
-								adminView.render();
-								if(_.isEqual(loginView.currentUser.get("id"), model.get("id"))){
-									router.navigate("#logout", {trigger: true});
-								}
+								//check if user want to delete himself
+								$.ajax({ contentType:'application/json',
+									url: 'users/current',
+									success: function(data){
+										loginView.currentUser = new UserModel(data);
+										adminView.render();
+										if(_.isEqual(loginView.currentUser.get("roleId"), DELETED)){
+											router.navigate("#logout", {trigger: true});
+										}
+									}
+								});
+
 							},
 							error: function() {
 								if($('#notificationModal')) $('#notificationModal').remove();

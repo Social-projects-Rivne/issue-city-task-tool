@@ -111,16 +111,16 @@ public class MandrillMailServiceImpl implements MailService {
 
     @Override // TODO
     public void notifyForIssue(int issueId, String msg, String rootURL){
-        UserModel userModel = new UserModel();
-//        Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
-//            String digest = org.springframework.util.DigestUtils.md5DigestAsHex(subs.toString().getBytes());
-//            String link = rootURL + "subscriptions/"  + "/delete/" + digest;
-            MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-//               /     .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(issueId), msg, link)
-                    .setRecipient(userModel)
-                    .build();
-        System.out.println("## mandrillMessage" + mandrillMessage);
-            sendMessage(mandrillMessage);
+//        UserModel userModel = new UserModel();
+//          Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
+//              String digest = org.springframework.util.DigestUtils.md5DigestAsHex(subs.toString().getBytes());
+//              String link = rootURL + "subscriptions/"  + "/delete/" + digest;
+//            MandrillHtmlMessage mandrillMessage = new MessageBuilder()
+//    .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(issueId), msg, link)
+//                    .setRecipient(userModel)
+//                    .build();
+//        System.out.println("## mandrillMessage" + mandrillMessage);
+//            sendMessage(mandrillMessage);
         }
 
 
