@@ -30,6 +30,12 @@ ul.nav.navbar-nav:hover {
   transform: scale(1.1);
 } /* END NAVBAR */
 
+ul.nav.navbar-nav.dropDown:hover {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+} /* END NAVBAR */
+
 #statistics {
     width: 1262px;
 }
@@ -373,7 +379,6 @@ h4.media-heading {
 
 #issue_description.description {
 	margin: 5px;
-	height: 10px;
 }
 
 .share {
@@ -978,8 +983,14 @@ ul.dropDownMenu li{
     font-family: 'Josefin Sans', sans-serif;
     padding-top: 6px;
 }
-ul.dropDownMenu li a{
+ul.dropDownMenu li {
     color: white;
     padding-left: 12px;
+    text-decoration: none;
+}
+
+ul.dropDown a{
+    color: white;
+    display: block;
     text-decoration: none;
 }
