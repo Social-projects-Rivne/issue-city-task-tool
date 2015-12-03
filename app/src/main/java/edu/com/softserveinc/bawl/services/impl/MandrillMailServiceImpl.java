@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 @Service
@@ -51,7 +51,6 @@ public class MandrillMailServiceImpl implements MailService {
 
     @Autowired
     private SubscriptionDao subscriptionDao;
-
 
     //TODO add this to get real url of application
     /*
@@ -113,11 +112,11 @@ public class MandrillMailServiceImpl implements MailService {
     @Override // TODO
     public void notifyForIssue(int issueId, String msg, String rootURL){
         UserModel userModel = new UserModel();
-        Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
-            String digest = org.springframework.util.DigestUtils.md5DigestAsHex(subs.toString().getBytes());
-            String link = rootURL + "subscriptions/"  + "/delete/" + digest;
+//        Collection<SubscriptionModel> subs = subscriptionService.listByIssueId(issueId);
+//            String digest = org.springframework.util.DigestUtils.md5DigestAsHex(subs.toString().getBytes());
+//            String link = rootURL + "subscriptions/"  + "/delete/" + digest;
             MandrillHtmlMessage mandrillMessage = new MessageBuilder()
-                    .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(issueId), msg, link)
+//               /     .setPattern(MailPatterns.NOTIFY_FOR_ISSUE_PATTERN, String.valueOf(issueId), msg, link)
                     .setRecipient(userModel)
                     .build();
         System.out.println("## mandrillMessage" + mandrillMessage);
@@ -154,7 +153,28 @@ public class MandrillMailServiceImpl implements MailService {
 
     @Override // --> This metod need for sending CommentNotiffication
     public void sendCommentNotiffication(String comment, int issueId) {
+        System.out.println("## issueId = " + issueId);
 
+        try {
+            if(subscriptionDao.findByIssueId(issueId).isEmpty()){
+                System.out.println("## IS Empty");
+            }else {
+                List<SubscriptionModel> subscriptionModels = subscriptionDao.findByIssueId(issueId);
+
+                for (SubscriptionModel subscriptionModel : subscriptionModels) {
+                    if (subscriptionModel.getId() == 1) {
+
+                        String email = userService.getEmailByUserId(subscriptionModel.getUserId());
+                        String messagePattern = "messagePattern";
+                        simpleEmailSender(email, "Name", comment, messagePattern);
+
+                    } else {
+                        System.out.println("## Not found");
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Something wrong");}
     }
-
 }

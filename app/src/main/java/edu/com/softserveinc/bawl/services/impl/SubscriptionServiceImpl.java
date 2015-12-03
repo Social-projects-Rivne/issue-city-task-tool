@@ -77,7 +77,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public SubscriptionModel validateSubscription (int subId ) {
 
 		SubscriptionModel existantSubscription = subscriptionDao.findOne(subId);
-		existantSubscription.setIsValid(true);
+		existantSubscription.setIsValid(1);
 
 		LOG.info("## getIssueId = "+subId); LOG.info("## existantSubscription = " + existantSubscription);
 		LOG.info("## existantSubscription = " + existantSubscription);
@@ -89,7 +89,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public SubscriptionModel UnSubscription (int subId ) {
 
 		SubscriptionModel existantSubscription = subscriptionDao.findOne(subId);
-		existantSubscription.setIsValid(false);
+		existantSubscription.setIsValid(0);
 
 		LOG.info("## getIssueId = "+subId);LOG.info("## existantSubscription = " + existantSubscription);
 		LOG.info("## existantSubscription = "+existantSubscription);
@@ -101,6 +101,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public int getSubscriptionId(int issueId, int userId){
 		return (subscriptionDao.findByIssueIdAndUserId(issueId,userId)).getId();
 	}
+
+	@Override
+	public Collection getListOfValidIssuers(int issueId, int isValid){
+		return subscriptionDao.findByIssueIdAndIsValid(issueId,isValid);
+	}
+
+
 
 	@Override
 	public void editSubscription(SubscriptionModel subscriptionModel) {
@@ -125,12 +132,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 //		}
 //
 //	}
-
-
-	@Override
-	public Collection<SubscriptionModel> listByIssueId(int issueId) {
-		return subscriptionDao.findByIssueId(issueId);
-	}
 
 }
 

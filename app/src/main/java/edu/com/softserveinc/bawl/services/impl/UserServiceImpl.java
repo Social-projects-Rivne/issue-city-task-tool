@@ -61,6 +61,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public String getEmailByUserId(int userId) {
+		return userDao.findOne(userId).getEmail();
+	}
+
+
+	@Override
 	public List<UserModel> getByRoleId(UserRole userRole) {
 		return userDao.findByRole(userRole);
 

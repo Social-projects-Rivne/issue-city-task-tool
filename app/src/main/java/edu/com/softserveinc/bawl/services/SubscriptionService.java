@@ -12,7 +12,7 @@ public interface SubscriptionService {
 	
 	public void delete(int id);
 	
-	public Collection<SubscriptionModel> listByIssueId(int issueId);
+//	public Collection<SubscriptionModel> listByIssueId(int issueId);
 
 	public boolean isValidSubscription(int userId, int issueId);
 
@@ -31,5 +31,7 @@ public interface SubscriptionService {
 	public void editSubscription(SubscriptionModel subscriptionModel);
 
 	public SubscriptionModel getById(int id);
+
+	public Collection<SubscriptionModel> getListOfValidIssuers(int issueId, int isValid);
 
 }

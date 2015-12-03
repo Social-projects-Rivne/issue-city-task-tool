@@ -35,4 +35,6 @@ public interface UserService {
 
 	public String getAvatarByEmailOrDefault(String email);
 
+	public String getEmailByUserId(int userId);
+
 }

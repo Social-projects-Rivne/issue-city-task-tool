@@ -4,9 +4,7 @@ import edu.com.softserveinc.bawl.dto.pojo.CommentDTO;
 import edu.com.softserveinc.bawl.dto.pojo.DTOAssembler;
 import edu.com.softserveinc.bawl.models.CommentModel;
 import edu.com.softserveinc.bawl.services.CommentService;
-import edu.com.softserveinc.bawl.services.SubscriptionService;
 import edu.com.softserveinc.bawl.services.UserService;
-import edu.com.softserveinc.bawl.services.impl.SubscriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +15,6 @@ import java.util.List;
 
 import static edu.com.softserveinc.bawl.services.impl.MandrillMailServiceImpl.getMandrillMail;
 
-/**
- * Controller for issue comments
- */
 @RestController
 @RequestMapping(value = "comments")
 public class CommentController {
@@ -61,7 +56,7 @@ public class CommentController {
   @RequestMapping(value = "add", method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity<CommentDTO> addComment(@RequestBody final CommentDTO comment) {
-    SubscriptionService subscriptionService = new SubscriptionServiceImpl();
+  //  SubscriptionService subscriptionService = new SubscriptionServiceImpl();
 
     try {
       CommentModel commentModel =

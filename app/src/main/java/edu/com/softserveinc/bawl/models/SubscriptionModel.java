@@ -26,26 +26,26 @@ public class SubscriptionModel {
 	private int userId;
 
 	@Column(name = "ISVALID")
-	private boolean isValid;
+	private int isValid;
 
-	public SubscriptionModel() {}
+//	public SubscriptionModel() {}
 	
-
-	public SubscriptionModel(int issueId, String email, int userId, boolean isValid) {
-		this.issueId = issueId;
-		this.userId = userId;
-		this.isValid = isValid;
-	}
+//
+//	public SubscriptionModel(int issueId, String email, int userId, int isValid) {
+//		this.issueId = issueId;
+//		this.userId = userId;
+//		this.isValid = isValid;
+//	}
 
 	public SubscriptionModel(int issueId, int userId) {
 		this.issueId = issueId;
 		this.userId = userId;
 	}
-	public SubscriptionModel(int id,int issueId, int userId) {
-		this.issueId = issueId;
-		this.userId = userId;
-		this.id = id;
-	}
+//	public SubscriptionModel(int id,int issueId, int userId) {
+//		this.issueId = issueId;
+//		this.userId = userId;
+//		this.id = id;
+//	}
 
 	public int getUserId() {
 		return userId;
@@ -55,7 +55,7 @@ public class SubscriptionModel {
 		this.userId = userId;
 	}
 
-	public boolean isValid() {
+	public int isValid() {
 		return isValid;
 	}
 
@@ -75,11 +75,11 @@ public class SubscriptionModel {
 		this.issueId = issueId;
 	}
 
-	public boolean getIsValid() {
+	public int getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(boolean isValid) {
+	public void setIsValid(int isValid) {
 		this.isValid = isValid;
 	}
 
