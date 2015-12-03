@@ -106,9 +106,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public Collection getListOfValidIssuers(int issueId, int isValid){
 		return subscriptionDao.findByIssueIdAndIsValid(issueId,isValid);
 	}
-
-
-
+	
 	@Override
 	public void editSubscription(SubscriptionModel subscriptionModel) {
 		subscriptionDao.saveAndFlush(subscriptionModel);

@@ -3,7 +3,6 @@ package edu.com.softserveinc.bawl.controllers;
 import edu.com.softserveinc.bawl.AbstractBawlIntegrationTest;
 import edu.com.softserveinc.bawl.services.SubscriptionService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,15 +28,14 @@ public class SubscriptionControllerFunctionalTest  extends AbstractBawlIntegrati
         mockMvc = MockMvcBuilders.standaloneSetup(this.subscriptionController).build();
     }
 
-    @Ignore
+
     @Test
     public void testGetUserHistoryAction() throws Exception {
-        mockMvc.perform(post("/subscriptions/add")
+        mockMvc.perform(post("subscriptions/add")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body("{\"id\" : \"1\",\"issueId\" : \"1\",\"email\" : \"foo@foo\"}".getBytes()))
+                .body("{\"issueId\":\"1\",\"email\":\"857885@ukr.net\"}".getBytes()))
                 .andExpect(status().isOk());
-//        Mockito.verify(subscriptionService, Mockito.times(1)).create(1, "foo@foo");
-        Mockito.verify(subscriptionService, Mockito.times(1)).createSubscription(1,10);
+        Mockito.verify(subscriptionService, Mockito.times(1)).createSubscription(1,8);
     }
 
     @Test

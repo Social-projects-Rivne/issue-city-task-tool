@@ -28,7 +28,7 @@ public class SubscriptionServiceTest extends AbstractBawlFunctionalTest {
         SubscriptionModel mockSubscriptionModel = mock(SubscriptionModel.class);
         int issueId = 10;
         int userId=10;
-       subscriptionService.createSubscription(issueId, userId);
+        subscriptionService.createSubscription(issueId, userId);
         verify(subscriptionDao,times(1)).saveAndFlush(any(SubscriptionModel.class));
     }
 
@@ -39,12 +39,5 @@ public class SubscriptionServiceTest extends AbstractBawlFunctionalTest {
         verify(subscriptionDao,times(1)).delete(anyInt());
     }
 
-//    @Test
-//    public void testListByIssueId() throws Exception {
-//        int IssueId = 2;
-//        Collection <SubscriptionModel> findSubscription = subscriptionService.listByIssueId(IssueId);
-//        for(SubscriptionModel model :findSubscription){
-//            assertEquals(IssueId, model.getIssueId());
-//        }
-//    }
+
 }

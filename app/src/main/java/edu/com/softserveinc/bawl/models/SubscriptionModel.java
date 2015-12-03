@@ -28,24 +28,24 @@ public class SubscriptionModel {
 	@Column(name = "ISVALID")
 	private int isValid;
 
-//	public SubscriptionModel() {}
-	
-//
-//	public SubscriptionModel(int issueId, String email, int userId, int isValid) {
-//		this.issueId = issueId;
-//		this.userId = userId;
-//		this.isValid = isValid;
-//	}
+	public SubscriptionModel() {}
+
+
+	public SubscriptionModel(int issueId, String email, int userId, int isValid) {
+		this.issueId = issueId;
+		this.userId = userId;
+		this.isValid = isValid;
+	}
 
 	public SubscriptionModel(int issueId, int userId) {
 		this.issueId = issueId;
 		this.userId = userId;
 	}
-//	public SubscriptionModel(int id,int issueId, int userId) {
-//		this.issueId = issueId;
-//		this.userId = userId;
-//		this.id = id;
-//	}
+	public SubscriptionModel(int id,int issueId, int userId) {
+		this.issueId = issueId;
+		this.userId = userId;
+		this.id = id;
+	}
 
 	public int getUserId() {
 		return userId;
