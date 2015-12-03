@@ -22,12 +22,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/IssueModel','model/CommentMo
 						if (loginView.currentUser != null && loginView.currentUser.get("id") != null){ // --> user
 							$("#comment-input-form").hide();
                             $(".resolve-btn").show();
-
                             $(".resolve-subscribe-user").show();
                             $(".resolve-subscribe-sub").hide();
 							//$('[name*="subscribe"]').popover();
 						}
 						else {//--> sub
+							$("#comment-input-form").show();
+							$(".resolve-btn").hide();
 							$(".resolve-subscribe-user").hide();
 							$(".resolve-subscribe-sub").show();
 							$('[name*="subscribe"]').popover();
