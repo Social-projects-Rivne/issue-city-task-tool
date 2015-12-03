@@ -330,6 +330,7 @@ button.btn.btn-mini.resolve-subscribe-sub{
 
 .comments table {
     border: 0px;
+    margin-bottom: 10px;
 }
 .comments table td{
     text-align: left;
@@ -367,6 +368,7 @@ h4.media-heading {
     background: none;
 	resize:none;
     font-size: 0.8em;
+    padding-left: 5px;
 }
 
 #issue_description.description {
@@ -944,4 +946,40 @@ a.forgot {
 }
 a:hover {
     cursor: pointer;
+}
+
+/*Drop Down Menu*/
+ul.dropDown li{
+    float: left;
+    position: relative;
+}
+ul.dropDown li:hover{
+    background-color: #d5445c;
+}
+ul.dropDown li:hover ul.dropDownMenu li{
+    background-color: #d5445c;
+    display: block;
+}
+ul.dropDownMenu{
+    display: block;
+    position: absolute;
+    top: 27px;
+    left: -40px;
+    margin: 0px 0px;
+    padding: 0px 0px;
+}
+ul.dropDownMenu li{
+    display: none;
+    list-style: none;
+    width: 150px;
+    height: 40px;
+    text-align: left;
+    font-size: 15pt;
+    font-family: 'Josefin Sans', sans-serif;
+    padding-top: 6px;
+}
+ul.dropDownMenu li a{
+    color: white;
+    padding-left: 12px;
+    text-decoration: none;
 }

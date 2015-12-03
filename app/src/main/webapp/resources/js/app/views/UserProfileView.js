@@ -1,5 +1,5 @@
-define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/ViewUserProfile.html', 'text!templates/NotificationTemplate.html' ],
-		function($, _, Backbone,  UserModel, ViewUserProfileTemplate, NotificationTemplate) {
+define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/ViewUserProfile.html', 'text!templates/UserProfileEditTemplate.html', 'text!templates/ConfirmationTemplate.html', 'text!templates/NotificationTemplate.html' ],
+		function($, _, Backbone,  UserModel, ViewUserProfileTemplate, UserProfileEditTemplate, ConfirmationTemplate, NotificationTemplate) {
 			var that = null;
 			return Backbone.View.extend({
 				
@@ -7,11 +7,14 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 					'click #admin_log_out'	: 'AppController.logout',
 					'change #input-avatar-load' : 'loadAvatar',
 					'click #show-select-file' : 'showSelectForm',
-					'click #show-edit-profile' : 'editProfile',
+					/*'click #show-edit-profile' : 'editProfile',*/
+                    'click #edit-profile' : 'showEditProfileTemplate',
 					'click #remove-avatar': 'removeAvatar'
 				},
 
 				viewUserProfileTemplate : _.template(ViewUserProfileTemplate),
+                userProfileEditTemplate : _.template(UserProfileEditTemplate),
+                confirmationTemplate: _.template(ConfirmationTemplate),
 				notificationTemplate : _.template(NotificationTemplate),
 
 				initialize: function() {
@@ -85,9 +88,20 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'text!templates/
 							$('#notificationModal').modal();
 						}
 					});
-				}
+				},
 
-
+                showEditProfileTemplate: function(e){
+                    if($('#editProfileModal')) $('#editProfileModal').remove();
+                    $("#container").append(this.userProfileEditTemplate());
+                    $("#editProfileModal").modal();
+                    $('.editUserProfileConfirm').click(this.showEditProfileConfirmation);
+                },
+                showEditProfileConfirmation: function(e){
+                    if($('#confirmationModal')) $('#confirmationModal').remove();
+                    $("#container").append(that.confirmationTemplate( { 'data': [ { 'message': 'Are you sure you want to change your name?' }, { 'id': loginView.currentUser.get("id") }, { 'action': 'profile edit user' } ] } ));
+                    $('#confirmationModal').modal();
+                    return e;
+                }
 
 			});
 })

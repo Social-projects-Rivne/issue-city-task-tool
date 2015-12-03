@@ -72,13 +72,38 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 		             return false;
 				},
 
- 			getModel: function(){
-	    		var model = this.model.get($('#NottificationModal').data('userId'));
-	    		var email = model.get('email');
-	    		l(email);
-	    		l($.extend({email: email}, $("#submitForm").serializeJSON()));
-             	return new SendingNotificationModel($.extend({email: email}, $("#submitForm").serializeJSON()));
-         		},
+				getRoleById : function(roleId){
+					var role = "";
+					switch (roleId){
+						case USER_NOT_CONFIRMED :
+							role = "User not confirmed";
+							break;
+						case USER :
+							role = "User";
+							break;
+						case MANAGER :
+							role = "Manager";
+							break;
+						case ADMIN :
+							role = "Admin";
+							break;
+						case SUBSCRIBER :
+							role = "Subscriber";
+							break;
+						case DELETED :
+							role = "Deleted";
+							break;
+					}
+					return role;
+				},
+
+				getModel: function(){
+					var model = this.model.get($('#NottificationModal').data('userId'));
+					var email = model.get('email');
+					l(email);
+					l($.extend({email: email}, $("#submitForm").serializeJSON()));
+					return new SendingNotificationModel($.extend({email: email}, $("#submitForm").serializeJSON()));
+				},
 				
 				showEditForm: function(e) {
                     if($('#editModal')) $('#editModal').remove();
@@ -137,16 +162,6 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 						isValid = false;
 					}
 					
-					if (!/^[a-z0-9_.]+\@[a-z0-9]+\.[a-z0-9]+$/.test(userEmail.val())) {
-						userEmail.val('Wrong email!').css('color', 'red');
-						isValid = false;
-					}
-					
-					if (!/^[A-Za-z0-9_.-]+$/.test(userLogin.val())) {
-						userLogin.val('Wrong login!').css('color', 'red');
-						isValid = false;
-					}
-					
 					if(isValid) {
                         if($('#confirmationModal')) $('#confirmationModal').remove();
 						this.$el.append(this.confirmationTemplate( { 'data': [ { 'message': 'Do you really want to edit this user?' }, { 'id': e.currentTarget.id }, { 'action': 'edit user' } ] } ));
@@ -180,6 +195,9 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 								that.$el.append(that.notificationTemplate( { 'data': response } ));
 								$('#notificationModal').modal();
 								adminView.render();
+								if(_.isEqual(loginView.currentUser.get("id"), model.get("id"))){
+									router.navigate("#logout", {trigger: true});
+								}
 							},
 							error: function() {
 								if($('#notificationModal')) $('#notificationModal').remove();
@@ -188,12 +206,13 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						} );
 					}
-					if(e.currentTarget.name == 'edit user') {
+					else if(e.currentTarget.name == 'edit user') {
 						this.model.get(e.currentTarget.id).set( {
 							name: $('#userName').val(),
 							email: $('#userEmail').val(),
 							login: $('#userLogin').val(),
-							roleId: $('#userRole').val()
+							roleId: $('#userRole').val(),
+							role: this.getRoleById($('#userRole').val())
 						} ).save( {}, {
 							success: function(model, response) {
 								if($('#notificationModal')) $('#notificationModal').remove();
@@ -208,6 +227,24 @@ define([ 'jquery', 'underscore', 'backbone', 'model/UserModel', 'model/IssueMode
 							}
 						} );
 					}
+                    else if(e.currentTarget.name == 'profile edit user') {
+                        loginView.currentUser.set( {
+                            name: $('#user-edit-name').val()
+                        } ).save( {}, {
+                                success: function(model, response) {
+                                    if($('#notificationModal')) $('#notificationModal').remove();
+                                    that.$el.append(that.notificationTemplate( { 'data': response } ));
+                                    $('#notificationModal').modal();
+                                    viewUserProfile.render();
+                                },
+                                error: function() {
+                                    if($('#notificationModal')) $('#notificationModal').remove();
+                                    that.$el.append(that.notificationTemplate( { 'data': { 'message': 'Couldn\'t change name!' } } ));
+                                    $('#notificationModal').modal();
+                                }
+                            } );
+                    }
+
 					else if(e.currentTarget.name == 'delete issue') {
 						$.ajax({
 							url: '/issue/delete/' + e.currentTarget.id,

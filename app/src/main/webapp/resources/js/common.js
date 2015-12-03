@@ -48,6 +48,7 @@ requirejs.config({
     jquery_serialize: 'js/app/vendor/jquery.serializejson',
     markers: 'js/app/vendor/leaflet.awesome-markers',
     leaflet: 'js/app/vendor/leaflet',
+    masonry: 'js/app/vendor/masonry',
 
     /* Googl Server key*/
     googlkey: 'AIzaSyAa1n57LZd7gFR7cNc_YQD0sAaLZe6NDpc',

@@ -25,6 +25,7 @@ function (_, Backbone, BackboneRouteControl,
                 "viewprofile": "users#viewprofile",
                 "subscriptions/valid/*link": "users#subConfirm",
                 "subscriptions/delete/*link": "users#subDelete",
+                "history": "users#history",
             },
 
             initialize: function() {
